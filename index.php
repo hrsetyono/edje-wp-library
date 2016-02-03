@@ -17,4 +17,48 @@ class H {
     // $pt = new CPT($name, $args);
     $pt->init();
   }
+
+  // -----------
+  // MENU
+  // -----------
+
+  public static function remove_menu($list) {
+    $menu = new H_Menu($list);
+    $menu->remove();
+  }
+
+  public static function add_menus($args) {
+    $menu = new H_Menu($args);
+    $menu->add();
+  }
+
+  public static function add_menu($title, $args) {
+    $new_args = array(
+      $title => $args
+    );
+    H::add_menus($new_args);
+  }
+
+  public static function add_submenu($parent_title, $args) {
+    $new_args = array();
+    foreach($args as $value) {
+      $new_args[$value[0]] = array(
+        "slug" => $value[1],
+        "position" => "inside {$parent_title}"
+      );
+    }
+
+    H::add_menus($new_args);
+  }
+
+  public static function add_menu_counter($parent_title, $count_function) {
+    $new_args = array(
+      $parent_title => array(
+        "position" => "inside {$parent_title}",
+        "counter" => $count_function,
+      )
+    );
+
+    H::add_menus($new_args);
+  }
 }
