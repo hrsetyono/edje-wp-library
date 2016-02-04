@@ -37,12 +37,12 @@ class H_Menu {
       $position = $this->get_position($menu, $anchor);
 
       // if slug is specified, it's either menu or submenu
-      if($value["slug"]) {
+      if(isset( $value["slug"]) ) {
         switch($anchor[1]):
           // sub menu
           case "inside":
             $parent_slug = $menu[$position][2];
-            $submenu = array( array($title, $value["slug"]) );
+            $submenu = array($title => $value["slug"]);
             $this->add_submenu($parent_slug, $submenu);
             break;
 
@@ -62,12 +62,12 @@ class H_Menu {
       }
 
       // if has submenu
-      if($value["submenu"]) {
+      if(isset( $value["submenu"]) ) {
         $this->add_submenu($value["slug"], $value["submenu"]);
       }
 
       // If has counter
-      if($value["counter"]) {
+      if(isset( $value["counter"]) ) {
         $menu[$position][0] .= $this->add_counter($value["counter"]);
       }
     endforeach;
@@ -84,7 +84,7 @@ class H_Menu {
         $i = explode(" <", $value[0]); // sometimes has <span> HTML, so take the first one
 
         if(in_array($i[0], $args) ) {
-          unset($menu[$key]);
+          unset($menu[$index]);
         }
       }
     endforeach;
@@ -139,7 +139,7 @@ class H_Menu {
     // If position already occupied, add one
     do {
       $position += $increment;
-    } while($menu[$position]);
+    } while(isset( $menu[$position]) );
 
     return $position;
   }
@@ -151,9 +151,9 @@ class H_Menu {
     @param array $args - List of submenu in this format: array(name, slug)
   */
   private function add_submenu($parent_slug, $args) {
-    foreach($args as $a):
-      add_submenu_page($parent_slug, $a[0], $a[0],
-        "manage_options", $a[1]
+    foreach($args as $title => $slug):
+      add_submenu_page($parent_slug, $title, $title,
+        "manage_options", $slug
       );
     endforeach;
   }

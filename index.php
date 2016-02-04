@@ -41,9 +41,9 @@ class H {
 
   public static function add_submenu($parent_title, $args) {
     $new_args = array();
-    foreach($args as $value) {
-      $new_args[$value[0]] = array(
-        "slug" => $value[1],
+    foreach($args as $title => $slug) {
+      $new_args[$title] = array(
+        "slug" => $slug,
         "position" => "inside {$parent_title}"
       );
     }

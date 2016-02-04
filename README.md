@@ -16,7 +16,8 @@ Add new Admin menu
 
     H::add_menu("Home", array(
       "slug" => "post.php?post=10&action=edit",
-      "icon" => "dashicons-admin-home"  
+      "icon" => "dashicons-admin-home",
+      "position" => "above Pages"
     ));
 
 Put a Number counter besides an Admin menu
