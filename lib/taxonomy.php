@@ -36,8 +36,8 @@ class H_Taxonomy {
     // if plain text, form the array format
     if(is_string($args) ) {
       $args = array(
-        "label" => H_Util::to_title($name),
-        "slug" => H_Util::to_slug($name)
+        "label" => H_Util::to_title($args),
+        "slug" => H_Util::to_slug($args)
       );
     }
 
@@ -83,6 +83,4 @@ class H_Taxonomy {
 
     return $labels;
   }
-
-
 }

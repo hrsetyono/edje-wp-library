@@ -1,8 +1,8 @@
 === Edje WP Framework ===
 Contributors: hrsetyono
-Tags: framework, custom post type, template, templates
+Tags: framework, custom post type, admin, template, templates
 Requires at least: 4.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 Tested up to: 4.4.1
 PHP version: 5.3.0 or greater
 License: GPLv2 or later
