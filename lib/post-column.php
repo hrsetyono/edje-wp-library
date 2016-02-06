@@ -11,7 +11,7 @@ class H_PostColumn {
   // Add visible column in admin panel
   public function init() {
     $name = $this->name;
-    
+
     // create the WP filter name
     $name_create = "manage_" . $name . "_posts_columns"; // create column
     $name_fill = "manage_" . $name . "_posts_custom_column"; // fill column
@@ -120,6 +120,7 @@ class H_PostColumn {
     @return string - The content of the column
   */
   public function _filter_fill($name, $post_id) {
+    global $post;
     $columns = $this->columns;
 
     switch($name) {
@@ -129,13 +130,17 @@ class H_PostColumn {
       case "date":
         // do nothing, those are automatically filled
         break;
+
+      case "content":
+        echo get_the_excerpt();
+        break;
+
       case "thumbnail":
         $thumb = get_the_post_thumbnail($post_id, array(75, 75) );
         echo $thumb;
 
       // if custom field
       default:
-        global $post;
         $content = $columns[$name]["content"];
 
         // if function, run it

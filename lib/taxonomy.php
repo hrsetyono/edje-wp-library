@@ -1,12 +1,12 @@
 <?php
 
 class H_Taxonomy {
-  private $args;
   private $post_type;
+  private $args;
 
-  public function __construct($args, $post_type) {
-    $this->args = $args;
+  public function __construct($post_type, $args) {
     $this->post_type = $post_type;
+    $this->args = $args;
   }
 
   // Create taxonomy and it's filter

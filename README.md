@@ -32,5 +32,3 @@ Put a Number counter besides an Admin menu
 
       return count($posts);
     }
-
-~Current Version:0.2.1~

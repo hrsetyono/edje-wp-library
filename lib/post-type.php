@@ -29,7 +29,7 @@ class H_PostType {
 
     // If taxonomy is given
     if(isset($args["taxonomy"]) ) {
-      $tax = new H_Taxonomy($args["taxonomy"], $name);
+      $tax = new H_Taxonomy($name, $args["taxonomy"]);
       $tax->init();
     }
   }
