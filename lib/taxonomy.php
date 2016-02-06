@@ -41,7 +41,7 @@ class H_Taxonomy {
       );
     }
 
-    $labels = $this->create_labels($args["label"]);
+    $labels = $this->create_labels($args["label"], $args["slug"]);
 
     $wp_args = array(
       "labels" => $labels,
@@ -59,15 +59,20 @@ class H_Taxonomy {
     Create all the labels for Taxonomy text
 
     @param string $name - Singular name of the CPT
+    @param string $slug - The taxonomy slug
     @return array
   */
-  private function create_labels($label) {
+  private function create_labels($label, $slug) {
     $plural = Inflector::pluralize($label);
     $singular = $label;
 
+    $name = H_Util::to_title($slug);
+    $name_plural = Inflector::pluralize($name);
+
     $labels = array(
-      "name" => $plural,
-      "singular_name" => $singular,
+      "name" => $name_plural,
+      "singular_name" => $name,
+      "menu_name" => $plural,
       "all_items" => "All " . $plural,
       "edit_item" => "Edit " . $singular,
       "view_item" => "View " . $singular,

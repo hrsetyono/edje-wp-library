@@ -36,7 +36,7 @@ class H_PostFilter {
       foreach ($filters as $tax_slug) {
         // retrieve the taxonomy object
         $tax_obj = get_taxonomy($tax_slug);
-        $tax_name = $tax_obj->labels->name;
+        $tax_name = $tax_obj->labels->menu_name;
 
         // output html for taxonomy dropdown filter
         echo "<select name='".strtolower($tax_slug)."' id='".strtolower($tax_slug)."' class='postform'>";

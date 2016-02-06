@@ -5,7 +5,7 @@ Description: Collection of code to help developers customize WordPress into full
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.2.2
+Version: 0.3.0
 */
 
 require_once "lib/all.php";
@@ -53,21 +53,19 @@ class H {
   }
 
   public static function add_submenu($parent_title, $args) {
-    $new_args = array();
-    foreach($args as $title => $slug) {
-      $new_args[$title] = array(
-        "slug" => $slug,
-        "position" => "inside {$parent_title}"
-      );
-    }
-
+    $new_args = array(
+      $parent_title => array(
+        "position" => "on {$parent_title}",
+        "submenu" => $args
+      )
+    );
     H::add_menus($new_args);
   }
 
   public static function add_menu_counter($parent_title, $count_function) {
     $new_args = array(
       $parent_title => array(
-        "position" => "inside {$parent_title}",
+        "position" => "on {$parent_title}",
         "counter" => $count_function,
       )
     );
