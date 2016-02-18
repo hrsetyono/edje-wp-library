@@ -9,10 +9,7 @@ if ( ! defined( 'ABSPATH' ) || class_exists( 'WPGitHubUpdater' ) || class_exists
  *
  * @version 1.6
  * @author Joachim Kudish <info@jkudish.com>
- * @link http://jkudish.com
- * @package WP_GitHub_Updater
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @copyright Copyright (c) 2011-2013, Joachim Kudish
+ * https://github.com/radishconcepts/WordPress-GitHub-Plugin-Updater
  */
 class WP_GitHub_Updater {
 

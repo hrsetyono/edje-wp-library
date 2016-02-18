@@ -145,6 +145,7 @@ class H_PostColumn {
 
         // if function, run it
         if(isset($content) && is_callable($content) ) {
+          // TODO: add check whether ACF exists, if not, use native get_post_custom($id);
           $fields = get_fields($post_id);
           echo $content($post, $fields);
         }

@@ -1,8 +1,8 @@
-# Edje WP Framework
+# Edje WordPress
 
 ![Edje Wordpress](http://cdn.setyono.net/edge/wp-edge.jpg)
 
-WordPress allows tons of customization, but it's painfully complicated. Edje WP is a plugin to helps developers do that.
+WordPress is very customizable, but it's complicated to do so. This **plugin** helps developers by streamlining the function calls.
 
 Visit our [WIKI](https://github.com/hrsetyono/edje-wp/wiki) for full documentation.
 
