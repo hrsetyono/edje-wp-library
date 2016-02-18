@@ -10,25 +10,31 @@ Visit our [WIKI](https://github.com/hrsetyono/edje-wp/wiki) for full documentati
 
 Create new Custom Post Type (CPT)
 
-    H::register_post_type("product");
+```php
+H::register_post_type("product");
+```
 
 Add new Admin menu
 
-    H::add_menu("Home", array(
-      "slug" => "post.php?post=10&action=edit",
-      "icon" => "dashicons-admin-home",
-      "position" => "above Pages"
-    ));
+```php
+H::add_menu("Home", array(
+  "slug" => "post.php?post=10&action=edit",
+  "icon" => "dashicons-admin-home",
+  "position" => "above Pages"
+));
+```
 
 Put a Number counter besides an Admin menu
 
-    H::add_menu_counter("Posts", "count_drafted_posts");
+```php
+H::add_menu_counter("Posts", "count_drafted_posts");
 
-    function count_drafted_posts() {
-      $posts = Timber::get_posts(array(
-        "post_type" => "post",
-        "post_status" => "draft",
-      ));
+function count_drafted_posts() {
+  $posts = Timber::get_posts(array(
+    "post_type" => "post",
+    "post_status" => "draft",
+  ));
 
-      return count($posts);
-    }
+  return count($posts);
+}
+```

@@ -33,18 +33,23 @@ class H_Taxonomy {
     @return array
   */
   private function parse_args($args) {
-    $args = $this->check_raw_args($)
+    $args = $this->check_raw_args($args);
     $labels = $this->create_labels($args['label'], $args['name']);
 
     $wp_args = array(
       'name' => $args['name'],
       'labels' => $labels,
-      'slug' => $args['slug'],
+      'slug' => $args['name'],
       'show_ui' => true,
       'query_var' => true,
       'show_admin_column' => false,
       'hierarchical' => true,
     );
+
+    // if name and slug not the same, add rewrite
+    if($args['name'] !== $args['slug']) {
+      $wp_args['rewrite'] = array('slug' => $args['slug']);
+    }
 
     return $wp_args;
   }
