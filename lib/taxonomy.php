@@ -44,12 +44,11 @@ class H_Taxonomy {
       'query_var' => true,
       'show_admin_column' => false,
       'hierarchical' => true,
+      'rewrite' => array(
+        'slug' => H_Util::to_slug($args['slug']),
+        'with_front' => 'false'
+      )
     );
-
-    // if name and slug not the same, add rewrite
-    if($args['name'] !== $args['slug']) {
-      $wp_args['rewrite'] = array('slug' => $args['slug']);
-    }
 
     return $wp_args;
   }
@@ -75,9 +74,9 @@ class H_Taxonomy {
 
     // format the args
     $new_args = array(
-      'name' => H_Util::to_slug($args['name']),
+      'name' => H_Util::to_param($args['name']),
       'label' => H_Util::to_title($args['label']),
-      'slug' => H_Util::to_slug($args['slug'])
+      'slug' => H_Util::to_param($args['slug'])
     );
 
     return $new_args;
@@ -87,7 +86,7 @@ class H_Taxonomy {
     Create all the labels for Taxonomy text
 
     @param string $name - Singular name of the CPT
-    @param string $slug - The taxonomy slug
+    @param string $name - The taxonomy name
     @return array
   */
   private function create_labels($label, $name) {

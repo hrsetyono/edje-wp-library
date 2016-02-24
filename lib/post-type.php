@@ -6,7 +6,7 @@ class H_PostType {
   private $args;
 
   public function __construct($name, $args) {
-    $this->name = H_Util::to_slug($name);
+    $this->name = H_Util::to_param($name);
     $this->args = $args;
   }
 
@@ -22,14 +22,14 @@ class H_PostType {
     register_post_type($name, $wp_args);
 
     // if column ordering is given
-    if(isset($args["columns"]) ) {
-      $pc = new H_PostColumn($name, $args["columns"]);
+    if(isset($args['columns']) ) {
+      $pc = new H_PostColumn($name, $args['columns']);
       $pc->init();
     }
 
     // If taxonomy is given
-    if(isset($args["taxonomy"]) ) {
-      $tax = new H_Taxonomy($name, $args["taxonomy"]);
+    if(isset($args['taxonomy']) ) {
+      $tax = new H_Taxonomy($name, $args['taxonomy']);
       $tax->init();
     }
   }
@@ -48,25 +48,26 @@ class H_PostType {
     $menu_position = $this->get_menu_position();
 
     $wp_args = array(
-      "public" => true,
-      "labels" => $labels,
-      "capability_type" => "post",
-      "supports" => array(
-        "title",
-        "editor",
-        "custom-fields",
-        "thumbnail",
+      'public' => true,
+      'labels' => $labels,
+      'capability_type' => 'post',
+      'supports' => array(
+        'title',
+        'editor',
+        'custom-fields',
+        'thumbnail',
       ),
-      "rewrite" => array(
-        "with_front" => false
+      'rewrite' => array(
+        'slug' => H_Util::to_slug($name),
+        'with_front' => false
       ),
-      "menu_position" => $menu_position
+      'menu_position' => $menu_position
     );
 
     // add icon if given
-    if(isset($args["icon"]) ) {
-      $icon = str_replace("dashicons-", "", $args["icon"] );
-      $wp_args["menu_icon"] = "dashicons-" . $icon;
+    if(isset($args['icon']) ) {
+      $icon = str_replace('dashicons-', '', $args['icon'] );
+      $wp_args['menu_icon'] = 'dashicons-' . $icon;
     }
 
     return $wp_args;
@@ -75,26 +76,26 @@ class H_PostType {
   /*
     Create all the labels for CPT text
 
-    @param string $name - Singular name of the CPT
+    @param string $raw_name - Parameterized name of the CPT
     @return array
   */
-  private function create_labels($name) {
-    $name = ucfirst($name);
+  private function create_labels($raw_name) {
+    $name = H_Util::to_title($raw_name);
     $plural = Inflector::pluralize($name);
     $singular = $name;
 
     $labels = array(
-      "name" => $plural,
-      "singular_name" => $singular,
-      "all_items" => "All " . $plural,
-      "add_new_item" => "Add New " . $singular,
-      "edit_item" => "Edit " . $singular,
-      "new_item" => "New " . $singular,
-      "view_item" => "View " . $singular,
-      "search_items" => "Search " . $plural,
-      "not_found" => "No " . strtolower($plural) . " found",
-      "not_found_in_trash" => "No " . strtolower($plural) . " found in Trash",
-      "parent_item_colon" => "Parent " . $singular . ":",
+      'name' => $plural,
+      'singular_name' => $singular,
+      'all_items' => 'All ' . $plural,
+      'add_new_item' => 'Add New ' . $singular,
+      'edit_item' => 'Edit ' . $singular,
+      'new_item' => 'New ' . $singular,
+      'view_item' => 'View ' . $singular,
+      'search_items' => 'Search ' . $plural,
+      'not_found' => 'No ' . strtolower($plural) . ' found',
+      'not_found_in_trash' => 'No ' . strtolower($plural) . ' found in Trash',
+      'parent_item_colon' => 'Parent ' . $singular . ':',
     );
 
     return $labels;

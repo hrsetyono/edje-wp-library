@@ -13,14 +13,14 @@ class H_PostColumn {
     $name = $this->name;
 
     // create the WP filter name
-    $name_create = "manage_" . $name . "_posts_columns"; // create column
-    $name_fill = "manage_" . $name . "_posts_custom_column"; // fill column
-    $name_sortable = "manage_edit-" . $name . "_sortable_columns"; // enable sorting
+    $name_create = 'manage_' . $name . '_posts_columns'; // create column
+    $name_fill = 'manage_' . $name . '_posts_custom_column'; // fill column
+    $name_sortable = 'manage_edit-' . $name . '_sortable_columns'; // enable sorting
 
-    add_filter($name_create, array($this, "_filter_create") );
-    add_action($name_fill, array($this, "_filter_fill"), 10, 2);
-    add_filter($name_sortable, array($this, "_filter_sortable") );
-    add_filter("request", array($this, "_metakey_sortable") );
+    add_filter($name_create, array($this, '_filter_create') );
+    add_action($name_fill, array($this, '_filter_fill'), 10, 2);
+    add_filter($name_sortable, array($this, '_filter_sortable') );
+    add_filter('request', array($this, '_metakey_sortable') );
   }
 
   //////////
@@ -37,7 +37,7 @@ class H_PostColumn {
     foreach($args as $key => $value) {
       $text = is_string($key) ? $key : $value;
       $col = $this->format_arg($text, $value);
-      $columns[$col["slug"]] = $col;
+      $columns[$col['slug']] = $col;
     }
 
     return $columns;
@@ -51,22 +51,22 @@ class H_PostColumn {
   */
   private function format_arg($text, $value) {
     $col = array(
-      "slug" => "",
-      "title" => "",
-      "sortable" => false,
-      "editable" => false,
-      "content" => "",
+      'slug' => '',
+      'title' => '',
+      'sortable' => false,
+      'editable' => false,
+      'content' => '',
     );
 
     // if contains Caret, it's sortable
-    if(strpos($text, "^") ) {
-      $text = trim($text, "^");
-      $col["sortable"] = true;
+    if(strpos($text, '^') ) {
+      $text = trim($text, '^');
+      $col['sortable'] = true;
     }
 
-    $col["slug"] = H_Util::to_slug($text);
-    $col["title"] = H_Util::to_title($text);
-    $col["content"] = $value;
+    $col['slug'] = H_Util::to_param($text);
+    $col['title'] = H_Util::to_title($text);
+    $col['content'] = $value;
 
     return $col;
   }
@@ -79,8 +79,8 @@ class H_PostColumn {
   */
   private function get_sortable_columns($columns) {
     $sortable_columns = array_reduce($columns, function($result, $c) {
-      if($c["sortable"]) {
-        array_push($result, $c["slug"]);
+      if($c['sortable']) {
+        array_push($result, $c['slug']);
       }
 
       return $result;
@@ -103,10 +103,10 @@ class H_PostColumn {
 
     $list = array();
     foreach($columns as $col) {
-      $list[$col["slug"] ] = $col["title"];
+      $list[$col['slug'] ] = $col['title'];
     }
 
-    $list = array("cb" => $defaults["cb"]) + $list;
+    $list = array('cb' => $defaults['cb']) + $list;
     return $list;
   }
 
@@ -124,24 +124,24 @@ class H_PostColumn {
     $columns = $this->columns;
 
     switch($name) {
-      case "cb":
-      case "title":
-      case "author":
-      case "date":
+      case 'cb':
+      case 'title':
+      case 'author':
+      case 'date':
         // do nothing, those are automatically filled
         break;
 
-      case "content":
+      case 'content':
         echo get_the_excerpt();
         break;
 
-      case "thumbnail":
+      case 'thumbnail':
         $thumb = get_the_post_thumbnail($post_id, array(75, 75) );
         echo $thumb;
 
       // if custom field
       default:
-        $content = $columns[$name]["content"];
+        $content = $columns[$name]['content'];
 
         // if function, run it
         if(isset($content) && is_callable($content) ) {
@@ -186,18 +186,18 @@ class H_PostColumn {
 
       // loop through each term, linking to the 'edit posts' page for the specific term
       foreach ($terms as $term) {
-        $out[] = sprintf("<a href='%s'>%s</a>",
+        $out[] = sprintf('<a href="%s">%s</a>',
           esc_url( add_query_arg(
-            array("post_type" => $post->post_type, "type" => $term->slug), "edit.php")
+            array('post_type' => $post->post_type, 'type' => $term->slug), 'edit.php')
           ),
           esc_html( sanitize_term_field(
-            "name", $term->name, $term->term_id, "type", "display")
+            'name', $term->name, $term->term_id, 'type', 'display')
           )
         );
       }
 
       // join the terms, separating with comma
-      return join(", ", $out);
+      return join(', ', $out);
     }
   }
 
@@ -230,12 +230,12 @@ class H_PostColumn {
   public function _metakey_sortable ($vars) {
     $sortable_columns = $this->get_sortable_columns($this->columns);
 
-    $is_orderby_meta = isset($vars["orderby"]) && in_array($vars["orderby"], $sortable_columns);
+    $is_orderby_meta = isset($vars['orderby']) && in_array($vars['orderby'], $sortable_columns);
 
     if ($is_orderby_meta) {
       $vars = array_merge($vars, array(
-        "meta_key" => $vars["orderby"],
-        "orderby" => "meta_value"
+        'meta_key' => $vars['orderby'],
+        'orderby' => 'meta_value'
       ));
     }
     return $vars;

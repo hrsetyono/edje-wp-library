@@ -1,12 +1,12 @@
 <?php
 class H_Util {
   /*
-    Transform Title into Slug format (lower case, underscore)
+    Transform Title into Param format (lower case, underscore)
 
     @param $title
     @return string
   */
-  public static function to_slug($title) {
+  public static function to_param($title) {
     $slug = strtolower( str_replace(' ', '_', $title) );
     $slug = trim($slug, '^');
     return $slug;
@@ -23,6 +23,12 @@ class H_Util {
     $title = trim($title, '^');
     return $title;
   }
+
+  public static function to_slug($title) {
+    $slug = strtolower( str_replace('_', '-', $title) );
+    return $slug;
+  }
+
 }
 
 // PHP 5.5 Array Column

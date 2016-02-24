@@ -21,7 +21,7 @@ class H_Submenu {
 
     foreach($args as $title => $slug):
       add_submenu_page($parent_slug, $title, $title,
-        "manage_options", $slug
+        'manage_options', $slug
       );
     endforeach;
   }
