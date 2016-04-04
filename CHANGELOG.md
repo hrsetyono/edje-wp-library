@@ -1,3 +1,11 @@
+## 0.3.6
+
+- Fixed error when adding new menu without position.
+
+## 0.3.5
+
+- Added `slug` argument to custom post type.
+
 ## 0.3.4
 
 - Change double quote to single quote in PHP.

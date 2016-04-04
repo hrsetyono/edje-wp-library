@@ -49,15 +49,15 @@ class H_Menu {
       }
 
       // if has submenu
-      if(isset( $value['submenu'] )) {
-        $parent_slug = $menu[$position][2];
+      if(isset($value['submenu'] )) {
+        $parent_slug = isset($value['slug']) ? $value['slug'] : $menu[$position][2];
 
         $smenu = new H_Submenu($parent_slug, $value['submenu']);
         $smenu->add();
       }
 
       // If has counter
-      if(isset( $value['counter'] )) {
+      if(isset($value['counter'] )) {
         $menu[$position][0] .= $this->add_counter($value["counter"]);
       }
     endforeach;

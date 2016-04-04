@@ -44,8 +44,14 @@ class H_PostType {
     @return array
   */
   private function parse_args($name, $args) {
+    $slug = H_Util::to_slug($name);
     $labels = $this->create_labels($name);
     $menu_position = $this->get_menu_position();
+
+    // if slug is defined
+    if(isset($args['slug'] )) {
+      $slug = $args['slug'];
+    }
 
     $wp_args = array(
       'public' => true,
@@ -58,7 +64,7 @@ class H_PostType {
         'thumbnail',
       ),
       'rewrite' => array(
-        'slug' => H_Util::to_slug($name),
+        'slug' => $slug,
         'with_front' => false
       ),
       'menu_position' => $menu_position
