@@ -80,6 +80,15 @@ class H {
 // ---------------
 // Github updater
 // ---------------
+
+add_action('init', 'h_updater');
+function h_updater() {
+  if(is_admin() ) {
+    new GithubUpdater(__FILE__, 'hrsetyono', 'edje-wp');
+  }
+}
+
+/*
 add_action('init', 'h_updater');
 function h_updater() {
   require_once 'vendor/updater.php';
@@ -102,3 +111,4 @@ function h_updater() {
      new WP_GitHub_Updater($config);
   }
 }
+*/

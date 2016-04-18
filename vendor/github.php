@@ -1,21 +1,14 @@
 <?php
 
-class WPFDGitHubPluginUpdater {
+class GithubUpdater {
 
     private $slug;
-
     private $pluginData;
-
     private $username;
-
     private $repo;
-
     private $pluginFile;
-
     private $githubAPIResult;
-
     private $accessToken;
-
     private $pluginActivated;
 
     /**
