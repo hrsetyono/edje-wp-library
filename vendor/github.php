@@ -1,4 +1,6 @@
 <?php
+// GITHUB UPDATER
+// http://code.tutsplus.com/tutorials/distributing-your-plugins-in-github-with-automatic-updates--wp-34817
 
 class GithubUpdater {
 
@@ -110,8 +112,8 @@ class GithubUpdater {
 
 			// Plugin object
 			$obj = new stdClass();
-			$obj->slug = $this->slug;
-			$obj->new_version = $this->githubAPIResult->tag_name;
+      $obj->slug = $this->slug;
+      $obj->new_version = $this->githubAPIResult->tag_name;
 			$obj->url = $this->pluginData["PluginURI"];
 			$obj->package = $package;
 
@@ -134,15 +136,19 @@ class GithubUpdater {
 		$this->initPluginData();
 		$this->getRepoReleaseInfo();
 
-		if ( empty( $response->slug ) || $response->slug != $this->slug )
-		{
-		    return $false;
-		}
+    if (!isset($response->slug) || ($response->slug != $this->slug) ) {
+      return $false;
+    }
+
+		// if ( empty( $response->slug ) || $response->slug != $this->slug )
+		// {
+		//     return $false;
+		// }
 
 		// Add our plugin information
 		$response->last_updated = $this->githubAPIResult->published_at;
 		$response->slug = $this->slug;
-		$response->plugin_name  = $this->pluginData["Name"];
+		$response->name  = $this->pluginData["Name"];
 		$response->version = $this->githubAPIResult->tag_name;
 		$response->author = $this->pluginData["AuthorName"];
 		$response->homepage = $this->pluginData["PluginURI"];
@@ -159,6 +165,7 @@ class GithubUpdater {
 		}
 
 		$response->download_link = $downloadLink;
+
 		// Create tabs in the lightbox
 		$response->sections = array(
 			'Description' 	=> $this->pluginData["Description"],
