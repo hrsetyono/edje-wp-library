@@ -55,18 +55,42 @@ class H_PostColumn {
       'title' => '',
       'sortable' => false,
       'editable' => false,
+      'icon' => '',
       'content' => '',
     );
 
-    // if contains Caret, it's sortable
+    // if contains caret, it's sortable
     if(strpos($text, '^') ) {
       $text = trim($text, '^');
       $col['sortable'] = true;
     }
 
     $col['slug'] = H_Util::to_param($text);
-    $col['title'] = H_Util::to_title($text);
-    $col['content'] = $value;
+
+    // if comments, set the default icon
+    if($col['slug'] === 'comments') {
+      $col['icon'] = 'dashicons-admin-comments';
+    }
+
+    // if value is array, get [content], if not just put the plain value
+    if(is_array($value) ) {
+      $col['content'] = isset($value['content']) ? $value['content'] : $text;
+
+      // add icon if exist
+      if(isset($value['icon']) ) {
+        $col['icon'] = H_Util::to_icon($value['icon']);
+      }
+    } else {
+      $col['content'] = $value;
+    }
+
+    // if icon exist
+    $title = H_Util::to_title($text);
+    if($col['icon']) {
+      $title = "<span class='dashicons {$col['icon']}'></span> <span class='screen-reader-text'>{$title}</span>";
+    }
+
+    $col['title'] = $title;
 
     return $col;
   }
@@ -128,6 +152,9 @@ class H_PostColumn {
       case 'title':
       case 'author':
       case 'date':
+      case 'categories':
+      case 'comments':
+      case 'tags':
         // do nothing, those are automatically filled
         break;
 

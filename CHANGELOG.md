@@ -1,3 +1,8 @@
+## 0.3.7
+
+- Allow changes to Post and Page column.
+- Registering columns now accepts array with `icon` and `content` argument. **Icon** is string and **Content** is function that returns the shown value.
+
 ## 0.3.6
 
 - Fixed error when adding new menu without position.

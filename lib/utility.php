@@ -29,6 +29,11 @@ class H_Util {
     return $slug;
   }
 
+  public static function to_icon($name) {
+    $full_name = 'dashicons-' . str_replace('dashicons-', '', $name);
+    return $full_name;
+  }
+
 }
 
 // PHP 5.5 Array Column

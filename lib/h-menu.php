@@ -38,7 +38,7 @@ class H_Menu {
       }
 
       if(isset( $value['icon'] )) {
-        $icon = 'dashicons-' . str_replace('dashicons-', '', $value['icon']);
+        $icon = H_Util::to_icon($value['icon']);
       }
 
       // add top level menu if slug is specified
