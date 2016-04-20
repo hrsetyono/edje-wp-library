@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Automatically change WP Setting to our standard after activation.
+
 ## 0.3.7
 
 - Allow changes to Post and Page column.
