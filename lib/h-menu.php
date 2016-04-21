@@ -10,6 +10,8 @@ class H_Menu {
     Add new menu items
   */
   public function add() {
+    if(!is_admin() ) { return false; }
+
     add_action('admin_menu', array($this, '_add') );
   }
 
@@ -17,6 +19,8 @@ class H_Menu {
     Remove the admin menu by specifying the display text (case sensitive)
   */
   public function remove() {
+    if(!is_admin() ) { return false; }
+
     add_action('admin_menu', array($this, '_remove') );
   }
 

@@ -17,6 +17,8 @@ class H_PostFilter {
   }
 
   public function init() {
+    if(!is_admin() ) { return false; }
+
     add_action('restrict_manage_posts', array($this, 'my_restrict_manage_posts') );
   }
 

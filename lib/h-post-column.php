@@ -10,6 +10,8 @@ class H_PostColumn {
 
   // Add visible column in admin panel
   public function init() {
+    if(!is_admin()) { return false; }
+
     $name = $this->name;
 
     // create the WP filter name

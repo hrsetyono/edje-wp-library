@@ -1,3 +1,8 @@
+## 0.4.1
+
+- (Experimental) Added custom Row Action for any post type.
+- Add several `is_admin()` conditional so it won't run in front end.
+
 ## 0.4.0
 
 - Automatically change WP Setting to our standard after activation.

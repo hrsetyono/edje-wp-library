@@ -5,7 +5,7 @@ Description: Collection of code to help developers customize WordPress into full
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.4.0
+Version: 0.4.1
 */
 
 // Constant
@@ -29,9 +29,21 @@ class H {
     $tx->init();
   }
 
-  public static function register_columns($name, $args = array() ) {
+  public static function register_columns($name, $args) {
     $pc = new H_PostColumn($name, $args);
     $pc->init();
+  }
+
+  // ----- ACTIONS -----
+
+  public static function add_actions($post_type, $args) {
+    $pa = new H_PostAction($post_type, $args);
+    $pa->add();
+  }
+
+  public static function replace_actions($post_type, $args) {
+    $pa = new H_PostAction($post_type, $args);
+    $pa->replace();
   }
 
   // -----------

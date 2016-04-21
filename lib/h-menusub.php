@@ -16,6 +16,8 @@ class H_Submenu {
     @param array $args - List of submenu in this format: array(name, slug)
   */
   public function add() {
+    if(!is_admin() ) { return false; }
+    
     $parent_slug = $this->parent_slug;
     $args = $this->args;
 
