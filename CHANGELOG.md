@@ -1,3 +1,12 @@
+## 0.4.2
+
+New SEO Functionality:
+
+- All `<title>` matters are handled with this plugin. Your theme should only call `<title>wp_title();</title>`.
+- Site name is appended after post title with `|`. With the exception of frontpage.
+- Frontpage title overrides Site name.
+- Description, Facebook, and Twitter meta tags are appended automatically. It uses excerpt; if empty, fallback to Site description.
+
 ## 0.4.1
 
 - (Experimental) Added custom Row Action for any post type.

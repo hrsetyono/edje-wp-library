@@ -1,64 +1,86 @@
 <?php
 
-/*
-  When this plugin is activated, run this function
-*/
-register_activation_hook(H_PLUGIN_DIR, '_h_activate');
-function _h_activate() {
-  if(!get_option('h_initialized') ) {
-    add_option('h_initialized', false);
+class H_Install {
 
-    _h_create_default_page();
-    _h_set_default_setting();
-
-    update_option('h_initialized', true);
+  function __construct() {
+    register_activation_hook(H_PLUGIN_DIR, array($this, 'activation_hook') );
   }
-}
 
-/*
-  Create default page for HOME and BLOG
-*/
-function _h_create_default_page() {
-  $home = array(
-    'post_title' => 'Home',
-    'post_type' => 'page',
-    'post_status' => 'publish',
-    'post_author' => 1,
-  );
+  function activation_hook() {
+    $options = get_option('h_options');
 
-  $blog = array(
-    'post_title' => 'Blog',
-    'post_type' => 'page',
-    'post_status' => 'publish',
-    'post_author' => 1,
-  );
+    // if haven't been initialized
+    if(! isset($options['init']) ) {
+      $this->_create_default_page();
+      $this->_set_default_setting();
 
-  $home_id = wp_insert_post($home);
-  $blog_id = wp_insert_post($blog);
+      add_option('h_options', array('init' => true) );
+    }
+  }
 
-  // change page setting
-  update_option('show_on_front', 'page');
-  update_option('page_on_front', $home_id);
-  update_option('page_for_posts', $blog_id);
-}
+  /*
+    Create default page for HOME and BLOG
+  */
+  function _create_default_page() {
+    $frontpage_id = get_option('page_on_front');
+    $blogpage_id = get_option('page_for_posts');
 
-/*
-  Default setting for Standard website
-*/
-function _h_set_default_setting() {
-  // general
-  update_option('use_smiles', 0);
+    // if already exists, just change the title
+    if($frontpage_id) {
+      $args = array(
+        'ID' => $frontpage_id,
+        'post_title' => get_bloginfo()
+      );
 
-  // discussion
-  update_option('default_comment_status', 'closed');
+      wp_update_post($args);
+    }
+    // if not exists, create it
+    else {
+      $home = array(
+        'post_title' => get_bloginfo(),
+        'post_type' => 'page',
+        'post_status' => 'publish',
+        'post_author' => 1,
+      );
 
-  // media
-  update_option('medium_size_w', 0);
-  update_option('medium_size_h', 0);
+      $home_id = wp_insert_post($home);
+      update_option('show_on_front', 'page');
+      update_option('page_on_front', $home_id);
+    }
 
-  update_option('large_size_w', 0);
-  update_option('large_size_h', 0);
+    // create posts page if not set
+    if(!$blogpage_id) {
+      $blog = array(
+        'post_title' => 'Blog',
+        'post_type' => 'page',
+        'post_status' => 'publish',
+        'post_author' => 1,
+      );
 
-  update_option('medium_large_size_w', 0);
-  update_option('medium_large_size_h', 0);
+      $blog_id = wp_insert_post($blog);
+      update_option('page_for_posts', $blog_id);
+    }
+  }
+
+  /*
+    Default setting for Standard website
+  */
+  function _set_default_setting() {
+    // general
+    update_option('use_smiles', 0);
+
+    // discussion
+    update_option('default_comment_status', 'closed');
+
+    // media
+    update_option('medium_size_w', 0);
+    update_option('medium_size_h', 0);
+
+    update_option('large_size_w', 0);
+    update_option('large_size_h', 0);
+
+    update_option('medium_large_size_w', 0);
+    update_option('medium_large_size_h', 0);
+  }
+
 }
