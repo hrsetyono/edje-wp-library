@@ -42,7 +42,7 @@ class H_Menu {
       }
 
       if(isset( $value['icon'] )) {
-        $icon = H_Util::to_icon($value['icon']);
+        $icon = H_Elper::to_icon($value['icon']);
       }
 
       // add top level menu if slug is specified

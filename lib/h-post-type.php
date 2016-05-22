@@ -6,7 +6,7 @@ class H_PostType {
   private $args;
 
   public function __construct($name, $args) {
-    $this->name = H_Util::to_param($name);
+    $this->name = H_Elper::to_param($name);
     $this->args = $args;
   }
 
@@ -44,7 +44,7 @@ class H_PostType {
     @return array
   */
   private function parse_args($name, $args) {
-    $slug = H_Util::to_slug($name);
+    $slug = H_Elper::to_slug($name);
     $labels = $this->create_labels($name);
     $menu_position = $this->get_menu_position();
 
@@ -86,7 +86,7 @@ class H_PostType {
     @return array
   */
   private function create_labels($raw_name) {
-    $name = H_Util::to_title($raw_name);
+    $name = H_Elper::to_title($raw_name);
     $plural = Inflector::pluralize($name);
     $singular = $name;
 

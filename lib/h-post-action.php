@@ -112,7 +112,7 @@ class H_PostAction {
 
     foreach($new_actions as $key => $value) {
       $slug = is_int($key) ? $value : $key;
-      $title = H_Util::to_title($slug);
+      $title = H_Elper::to_title($slug);
 
       switch($slug) {
         case 'view':

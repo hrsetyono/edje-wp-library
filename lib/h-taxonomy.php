@@ -45,7 +45,7 @@ class H_Taxonomy {
       'show_admin_column' => false,
       'hierarchical' => true,
       'rewrite' => array(
-        'slug' => H_Util::to_slug($args['slug']),
+        'slug' => H_Elper::to_slug($args['slug']),
         'with_front' => 'false'
       )
     );
@@ -74,9 +74,9 @@ class H_Taxonomy {
 
     // format the args
     $new_args = array(
-      'name' => H_Util::to_param($args['name']),
-      'label' => H_Util::to_title($args['label']),
-      'slug' => H_Util::to_param($args['slug'])
+      'name' => H_Elper::to_param($args['name']),
+      'label' => H_Elper::to_title($args['label']),
+      'slug' => H_Elper::to_param($args['slug'])
     );
 
     return $new_args;
@@ -93,7 +93,7 @@ class H_Taxonomy {
     $plural = Inflector::pluralize($label);
     $singular = $label;
 
-    $title = H_Util::to_title($name);
+    $title = H_Elper::to_title($name);
     $title_plural = Inflector::pluralize($title);
 
     $labels = array(

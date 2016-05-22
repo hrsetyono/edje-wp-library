@@ -67,7 +67,7 @@ class H_PostColumn {
       $col['sortable'] = true;
     }
 
-    $col['slug'] = H_Util::to_param($text);
+    $col['slug'] = H_Elper::to_param($text);
 
     // if comments, set the default icon
     if($col['slug'] === 'comments') {
@@ -80,14 +80,14 @@ class H_PostColumn {
 
       // add icon if exist
       if(isset($value['icon']) ) {
-        $col['icon'] = H_Util::to_icon($value['icon']);
+        $col['icon'] = H_Elper::to_icon($value['icon']);
       }
     } else {
       $col['content'] = $value;
     }
 
     // if icon exist
-    $title = H_Util::to_title($text);
+    $title = H_Elper::to_title($text);
     if($col['icon']) {
       $title = "<span class='dashicons {$col['icon']}'></span> <span class='screen-reader-text'>{$title}</span>";
     }

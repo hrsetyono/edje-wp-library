@@ -1,5 +1,4 @@
 <?php
-require_once 'h-utility.php';
 require_once 'h-helper.php';
 
 require_once 'h-default.php';
