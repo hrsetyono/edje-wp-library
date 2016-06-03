@@ -9,8 +9,9 @@ class H_Install {
   function activation_hook() {
     $options = get_option('h_options');
 
-    // if haven't been initialized
-    if(! isset($options['init']) ) {
+
+    // if option not found OR haven't been initialized
+    if(!$options || !isset($options['init']) ) {
       $this->_create_default_page();
       $this->_set_default_setting();
 

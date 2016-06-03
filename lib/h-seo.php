@@ -5,6 +5,8 @@ class H_SEO {
     add_filter('wp_title', array($this, 'set_wp_title'), 100);
     add_action('wp_head', array($this, 'add_meta_tags'), 2);
 
+    // add_action('admin_init', array($this, 'add_meta_boxes') );
+
     // remove extra rss
     remove_action('wp_head', 'feed_links', 2 );
     remove_action('wp_head', 'feed_links_extra', 3 );
@@ -14,48 +16,59 @@ class H_SEO {
   }
 
   function set_wp_title($title) {
-    // use frontpage title on home
-    if(is_front_page() ) {
+    // use site name if on front+posts page
+    if(is_front_page() && is_home() ) {
+      return get_bloginfo();
+    }
+    // use frontpage title if on frontpage
+    elseif(is_front_page() ) {
       global $post;
       return $post->post_title;
     }
-
-    return $title . ' | ' . get_bloginfo();
+    // use post title + site name if on other page
+    else {
+      return $title . ' | ' . get_bloginfo();
+    }
   }
 
   /*
-    Add SEO Meta tags for description, open graph, and twitter card
+    Add description meta tag
   */
   function add_meta_tags() {
     global $post;
 
     $content = get_bloginfo('description');
-    $title = $post->post_title;
-    $site_name = get_bloginfo('name');
-
-    $thumbnail = has_post_thumbnail() ? wp_get_attachment_url(get_post_thumbnail_id($post->ID) ) : '';
 
     // if not front page, use excerpt from content
-    if(!is_front_page() ) {
+    if(!is_front_page() && $post) {
       $excerpt = $post->post_excerpt ? $post->post_excerpt : H_Elper::trim_content($post->post_content);
       $content = $excerpt ? $excerpt : $content;
     }
 
     echo "<meta name='description' content='$content'>";
+  }
 
-    echo "<meta property='og:type' content='article'>";
-    echo "<meta property='og:title' content='$title'>";
-    echo "<meta property='og:site_name' content='$site_name'>";
-    echo "<meta property='og:description' content='$content'>";
-    if($thumbnail) { echo "<meta property='og:image' content='$thumbnail'>"; }
+  /*
+    Create SEO Sidebox on all post edit
+  */
+  function add_meta_boxes() {
+    $post_types = array_reduce(get_post_types(), function($result, $i) {
+      // exclude some post types, especially from WooCommerce
+      $exclude = array('attachment', 'revision', 'nav_menu_item', 'product_variation', 'shop_order', 'shop_order_refund', 'shop_coupon', 'shop_webhook');
+      if(in_array($i, $exclude) ) {
+        return $result;
+      } else {
+        $result[] = $i;
+        return $result;
+      }
+    }, array() );
 
-    echo "<meta name='twitter:card' value='summary'>";
-    echo "<meta name='twitter:title' content='$title'>";
-    echo "<meta name='twitter:description' content='$content'>";
-    if($thumbnail) { echo "<meta name='twitter:image' content='$thumbnail'>"; }
+    add_meta_box('h-seo', __('SEO', 'h'), array($this, 'add_seo_box'), $post_types, 'side', 'low');
+  }
 
-    // echo "<meta name='twitter:site' content='@publisher_handle'>";
-    // echo "<meta name='twitter:creator' content='@author_handle'>";
+  function add_seo_box($post) {
+    echo "<p><strong>Description</strong></p>";
+    echo "<textarea name='excerpt' rows='4'></textarea>";
   }
 
   function redirect_canonical($url) {

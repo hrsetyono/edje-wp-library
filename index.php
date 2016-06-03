@@ -9,7 +9,7 @@ Version: 0.4.1
 */
 
 // Constant
-define('H_PLUGIN_DIR', __FILE__);
+define('H_PLUGIN_DIR', basename( dirname( __FILE__ ) ).'/'.basename( __FILE__ ) );
 
 require_once 'lib/all.php';
 require_once 'vendor/all.php';
@@ -19,9 +19,12 @@ $h_class = new H();
 // Main portal for calling all methods
 class H {
   function __construct() {
-    $default = new H_Default();
     $install = new H_Install();
-    $seo = new H_SEO();
+    $default = new H_Default();
+
+    if(!is_admin() ) {
+      $seo = new H_SEO();
+    }
   }
 
   // ----- POST TYPE -----

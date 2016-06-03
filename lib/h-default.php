@@ -36,8 +36,18 @@ class H_Default {
     return $args;
   }
 
-  function login_errors() {
-    return __('Sorry, your username or password is wrong', 'h');
+  function login_errors($error) {
+    global $errors;
+    $err_codes = $errors->get_error_codes();
+
+    $filters = array('invalid_username', 'incorrect_password', 'empty_password');
+
+    // if there is at least one filter that intersected with the error
+    if(count(array_intersect($filters, $err_codes) ) >= 1) {
+      return __('Sorry, your username or password is wrong', 'h');
+    } else {
+      return $error;
+    }
   }
 
   function remove_mediumlarge_size($sizes) {
