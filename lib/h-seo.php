@@ -2,7 +2,7 @@
 
 class H_SEO {
   function __construct() {
-    add_filter('wp_title', array($this, 'set_wp_title'), 100);
+    add_filter('wp_title', array($this, 'set_wp_title'), 100, 3);
     add_action('wp_head', array($this, 'add_meta_tags'), 2);
 
     // add_action('admin_init', array($this, 'add_meta_boxes') );
@@ -15,7 +15,7 @@ class H_SEO {
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
   }
 
-  function set_wp_title($title) {
+  function set_wp_title($title, $sep, $seplocation) {
     // use site name if on front+posts page
     if(is_front_page() && is_home() ) {
       return get_bloginfo();
@@ -24,6 +24,15 @@ class H_SEO {
     elseif(is_front_page() ) {
       global $post;
       return $post->post_title;
+    }
+    // reposition the tax name
+    elseif(is_tax() ) {
+      $term_title = single_term_title('', false);
+      $tax = get_taxonomy(get_query_var('taxonomy') );
+
+      $title = $term_title . ' - ' . $tax->labels->singular_name;
+
+      return $title . ' | ' . get_bloginfo();
     }
     // use post title + site name if on other page
     else {

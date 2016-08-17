@@ -62,7 +62,9 @@ class H_PostType {
         'editor',
         'custom-fields',
         'thumbnail',
+        'excerpt'
       ),
+      'has_archive' => true,
       'rewrite' => array(
         'slug' => $slug,
         'with_front' => false
