@@ -1,3 +1,8 @@
+## 0.5.0
+
+- Added Editor style.
+- Reorder Editor buttons.
+
 ## 0.4.2
 
 - Wordpress updated to v4.6

@@ -14,3 +14,4 @@ require_once 'h-menu.php';
 require_once 'h-menusub.php';
 
 require_once 'h-seo.php';
+require_once 'h-editor.php';

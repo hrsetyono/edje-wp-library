@@ -3,7 +3,7 @@
 class H_Install {
 
   function __construct() {
-    register_activation_hook(H_PLUGIN_DIR, array($this, 'activation_hook') );
+    register_activation_hook(H_DIR, array($this, 'activation_hook') );
   }
 
   function activation_hook() {

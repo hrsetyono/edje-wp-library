@@ -1,0 +1,98 @@
+// VAR
+$panel-bg: rgba(#e9eff3, 0.5);
+$panel-accent: #87a6bc;
+$panel-font: #4f748e;
+
+$font-color: #333; // #3d596d;
+
+$link: #00aadc;
+$link-hover: #78dcfa;
+
+/////
+
+body {
+  line-height: 1.7;
+  max-width: 840px;
+  margin: 10px 20px;
+  color: $font-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	clear: both;
+}
+
+a {
+  &:link,
+  &:visited {
+    color: $link;
+  }
+
+  &:hover,
+  &:active {
+    color: $link-hover;
+  }
+}
+
+p {
+  margin: 0 0 1.25em 0;
+}
+
+// Media Alignment
+
+.alignleft {
+  margin: 0 1em 0 0;
+}
+
+.alignright {
+  margin: 0 0 0 1em;
+}
+
+// Image with Caption
+
+dl.wp-caption,
+dl.wp-caption * {
+  box-sizing: border-box;
+}
+
+.wp-caption-dt img {
+  width: 100%;
+  padding: 5px;
+  background-color: $panel-bg;
+}
+
+.wp-caption-dd {
+  padding: 0.5em;
+  background-color: $panel-bg;
+  text-align: center;
+  font-style: italic;
+}
+
+// Blockquote
+
+blockquote {
+  margin: 1.5em 0;
+  padding: 1em;
+  padding-left: 1.5em;
+  border-left: 3px solid $panel-accent;
+  background-color: $panel-bg;
+
+  color: $panel-font;
+
+  p {
+    margin: 0;
+  }
+}
+
+
+// Gallery on active
+
+.mce-content-body *[contentEditable=false][data-mce-selected] {
+  background-color: $panel-bg;
+  outline-color: $panel-accent;
+  outline-style: dashed;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "edje-wp",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrsetyono/edje-wp.git"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "sass": "FOR /f \"delims=\" %v IN ('node -p \"require('edje').includePaths()[0]\"') DO node-sass -w assets/css -o assets/css --output-style compact --include-path \"%v\" ",
+    "sass-mac": "node-sass -w / -o / --include-paths $(node -p \"require('edje').includePaths()\")"
+  }
+}
