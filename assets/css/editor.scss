@@ -26,6 +26,10 @@ h6 {
 	clear: both;
 }
 
+h3 {
+  margin: 1em 0 0.5em;
+}
+
 a {
   &:link,
   &:visited {
@@ -42,20 +46,47 @@ p {
   margin: 0 0 1.25em 0;
 }
 
+ol ol {
+  list-style-type: lower-alpha;
+}
+
 // Media Alignment
 
+.alignleft,
+.alignright {
+  max-width: 50%;
+  margin-bottom: 1em;
+}
+
 .alignleft {
-  margin: 0 1em 0 0;
+  margin-right: 1em;
 }
 
 .alignright {
-  margin: 0 0 0 1em;
+  margin-left: 1em;
+}
+
+blockquote.alignleft,
+blockquote.alignright {
+  width: 300px;
 }
 
 // Image with Caption
 
-dl.wp-caption,
-dl.wp-caption * {
+.wp-caption {
+  margin-bottom: 1.25em;
+
+  &::before,
+  &::after {
+    content: "";
+    display: table;
+  }
+
+  &::after { clear: both; }
+}
+
+.wp-caption,
+.wp-caption * {
   box-sizing: border-box;
 }
 
@@ -69,7 +100,39 @@ dl.wp-caption * {
   padding: 0.5em;
   background-color: $panel-bg;
   text-align: center;
-  font-style: italic;
+}
+
+// Caption Reference, only works with alignnone
+
+.alignnone.refleft,
+.alignnone.refright {
+  .wp-caption-dt { width: calc(100% - 170px); }
+  .wp-caption-dt img { padding: 0; }
+  .wp-caption-dd {
+    width: 150px;
+
+    border: 1px solid $panel-accent;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+.alignnone.refleft {
+  .wp-caption-dt { float: right; }
+  .wp-caption-dd {
+    float: right;
+    margin-right: 20px;
+    text-align: right;
+  }
+}
+
+.alignnone.refright {
+  .wp-caption-dt { float: left; }
+  .wp-caption-dd {
+    float: left;
+    margin-left: 20px;
+    text-align: left;
+  }
 }
 
 // Blockquote

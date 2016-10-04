@@ -1,4 +1,9 @@
 <?php
+/*
+  Customize TinyMCE Editor
+
+  http://archive.tinymce.com/wiki.php/TinyMCE3x:Buttons/controls
+*/
 
 new H_Editor();
 

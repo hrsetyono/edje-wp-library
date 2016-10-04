@@ -1,3 +1,8 @@
+## 0.5.1
+
+- Add default sample post, created upon plugin activation for the first time
+- Added [row] and [column size="x"] shortcode that works with Edje Framework syntax.
+
 ## 0.5.0
 
 - Added Editor style.
@@ -5,7 +10,7 @@
 
 ## 0.4.2
 
-- Wordpress updated to v4.6
+- WordPress updated to v4.6
 
 New SEO Functionality:
 

@@ -2,7 +2,7 @@
 
 class H_SEO {
   function __construct() {
-    add_filter('wp_title', array($this, 'set_wp_title'), 100, 3);
+    add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
     add_action('wp_head', array($this, 'add_meta_tags'), 2);
 
     // add_action('admin_init', array($this, 'add_meta_boxes') );
