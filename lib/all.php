@@ -16,3 +16,4 @@ require_once 'h-menusub.php';
 require_once 'h-seo.php';
 require_once 'h-editor.php';
 require_once 'h-shortcode.php';
+require_once 'h-twig.php';

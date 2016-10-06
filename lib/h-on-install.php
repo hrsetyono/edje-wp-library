@@ -15,18 +15,18 @@ class H_Install {
     // if page not initialized
     if(!isset($options['init']) ) {
       $this->_create_default_page();
-      $this->_create_default_post();
+      // $this->_create_default_post();
       $this->_set_default_setting();
 
       $options['init'] = true;
     }
 
     // if post not initialized
-    // if(!isset($options['post_init']) ) {
-    //   $this->_create_default_post();
-    //
-    //   $options['post_init'] = true;
-    // }
+    if(!isset($options['post_init']) ) {
+      $this->_create_default_post();
+
+      $options['post_init'] = true;
+    }
 
     update_option('h_options', $options);
   }
@@ -77,13 +77,23 @@ class H_Install {
     Create sample post that also acts as guide to WordPress
   */
   function _create_default_post() {
-    wp_update_post(array(
-      'ID' => 1,
+    $args = array(
       'post_title' => 'Welcome to WordPress',
       'post_name' => 'welcome-to-wordpress',
+      'post_type' => 'post',
       'post_content' => $this->sample_content,
       'post_status' => 'publish'
-    ) );
+    );
+
+    // if post ID 1 exist
+    if(is_string(get_post_status(1)) ) {
+      $args['ID'] = 1;
+      wp_update_post($args);
+    }
+    else {
+      $args['import_id'] = 1;
+      wp_insert_post($args);
+    }
   }
 
   /*
