@@ -46,8 +46,18 @@ blockquote.alignleft, blockquote.alignright { width: 300px; }
 
 .alignnone.refright .wp-caption-dd { float: left; margin-left: 20px; text-align: left; }
 
-blockquote { margin: 1.5em 0; padding: 1em; padding-left: 1.5em; border-left: 3px solid #87a6bc; background-color: rgba(233, 239, 243, 0.5); color: #4f748e; }
+blockquote { margin: 1.25em 0; padding: 1em; padding-left: 1.5em; border-left: 3px solid #87a6bc; background-color: rgba(233, 239, 243, 0.5); color: #4f748e; }
 
 blockquote p { margin: 0; }
 
-.mce-content-body *[contentEditable=false][data-mce-selected] { background-color: rgba(233, 239, 243, 0.5); outline-color: #87a6bc; outline-style: dashed; }
+table { margin-bottom: 1.25em; }
+
+.mce-content-body *[data-wpview-type="gallery"] { padding: 1em; padding-bottom: 0; box-sizing: border-box; }
+
+.mce-content-body *[data-wpview-type="gallery"] .gallery { padding: 0; margin: 0 -0.5em; }
+
+.mce-content-body *[data-wpview-type="gallery"] .gallery-item { padding: 0 0.5em; margin-bottom: 1em; }
+
+.mce-content-body *[data-wpview-type="gallery"] img { display: inline-block; vertical-align: middle; }
+
+.mce-content-body *[data-wpview-type="gallery"][data-mce-selected] { background-color: rgba(233, 239, 243, 0.5); outline-color: #87a6bc; outline-style: dashed; }

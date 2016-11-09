@@ -144,7 +144,6 @@ class H_PostAction {
 
       $args[$slug] = array('title' => $title, 'content' => $content);
     }
-
     return $args;
   }
 

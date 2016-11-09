@@ -7,6 +7,8 @@
   For the full license information, view the LICENSE file that was distributed with this source code.
 */
 
+if(class_exists('Parsedown') ) { return false; }
+
 class Parsedown {
   const version = '1.5.4';
 

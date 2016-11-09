@@ -1,5 +1,6 @@
 <?php
 
+new H_Default();
 class H_Default {
   function __construct() {
     // remove wp meta tag

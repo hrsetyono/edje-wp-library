@@ -138,7 +138,7 @@ blockquote.alignright {
 // Blockquote
 
 blockquote {
-  margin: 1.5em 0;
+  margin: 1.25em 0;
   padding: 1em;
   padding-left: 1.5em;
   border-left: 3px solid $panel-accent;
@@ -151,10 +151,36 @@ blockquote {
   }
 }
 
+// Table
+
+table {
+  margin-bottom: 1.25em;
+}
 
 // Gallery on active
 
-.mce-content-body *[contentEditable=false][data-mce-selected] {
+.mce-content-body *[data-wpview-type="gallery"] {
+  padding: 1em;
+  padding-bottom: 0;
+  box-sizing: border-box;
+
+  .gallery {
+    padding: 0;
+    margin: 0 -0.5em;
+  }
+
+  .gallery-item {
+    padding: 0 0.5em;
+    margin-bottom: 1em;
+  }
+
+  img {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.mce-content-body *[data-wpview-type="gallery"][data-mce-selected] {
   background-color: $panel-bg;
   outline-color: $panel-accent;
   outline-style: dashed;

@@ -9,6 +9,8 @@
   - http://www2.gsu.edu/~wwwesl/egw/crump.htm
 */
 
+if(class_exists('Inflector') ) { return false; }
+
 class Inflector {
   static $plural = array(
     '/(quiz)$/i'               => '$1zes',

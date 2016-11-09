@@ -19,7 +19,7 @@ class H_Editor {
     Add custom CSS to editor area
   */
   function add_editor_style() {
-    add_editor_style(H_URL . '/assets/css/editor.css');
+    add_editor_style(H_URL . '/assets/css/h-editor.css');
   }
 
   /*

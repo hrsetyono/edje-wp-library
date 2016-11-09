@@ -11,6 +11,7 @@ class H_Shortcode {
     add_shortcode('column', array($this, 'column') );
 
     add_filter('the_content', array($this, 'grid_unautop'), 100);
+    add_filter('acf_the_content', array($this, 'grid_unautop'), 100);
   }
 
   /*
@@ -43,10 +44,36 @@ class H_Shortcode {
     return '<h-column class="column-shortcode ' . $class . '">' . do_shortcode($content) . '</h-column>';
   }
 
+  function grid_unautop($content) {
+    $shortcodes = apply_filters('h_unautop_shortcodes', array('h-row', 'h-column') );
+
+    // if no h-row
+    if(!strpos($content, $shortcodes[0]) ) {
+      return $content;
+    }
+
+    foreach($shortcodes as $sc) {
+      $trim_list = array (
+        '<p><' . $sc => '<' .$sc,
+        '<p></' . $sc => '</' .$sc,
+        $sc . '></p>' => $sc . '>',
+        $sc . '><br />' => $sc . '>',
+      );
+
+      $content = strtr($content, $trim_list);
+
+      // remove the remaining </p> after <h-column class="...">
+      // preg_match("/<{$sc}[^<]+(<\/p>)/", $content, $matches); // get without p
+
+      $content = preg_replace("/(<{$sc}[^<]+)<\/p>/", '$1', $content);
+    }
+    return $content;
+  }
+
   /*
     Fix Paragraph tag wrapping the ROW and COLUMN shortcode
   */
-  function grid_unautop($content) {
+  function grid_unautop2($content) {
     $shortcodes = array('h-row', 'h-column');
 
     // if no h-row
@@ -67,7 +94,7 @@ class H_Shortcode {
 
       // remove the remaining </p> after <h-column class="...">
       preg_match("/(<{$sc}[^<]+)/", $content, $matches); // get without p
-      $content = preg_replace("/<{$sc}[^<]+<\/p>/", $matches[0], $content);
+      $content = preg_replace("/<{$sc}[^<]+<p><\/p>/", $matches[0], $content);
     }
 
     return $content;

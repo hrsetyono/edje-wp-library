@@ -1,3 +1,7 @@
+## 0.5.2
+
+- Automatically add JSON LD Microdata on Post and Product
+
 ## 0.5.1
 
 - Add default sample post, created upon plugin activation for the first time

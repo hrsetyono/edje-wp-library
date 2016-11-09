@@ -1,9 +1,21 @@
 <?php
+/*
+*  Outputs extra meta tags for SEO purposes.
+*/
 
-class H_SEO {
+new H_SEO_Meta();
+
+class H_SEO_Meta {
   function __construct() {
     add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
-    add_action('wp_head', array($this, 'add_meta_tags'), 2);
+
+    if(is_plugin_active('jetpack/jetpack.php') ) {
+      add_filter('jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
+      add_filter('jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
+    }
+    else {
+      add_action('wp_head', array($this, 'custom_meta_tags'), 2);
+    }
 
     // add_action('admin_init', array($this, 'add_meta_boxes') );
 
@@ -15,6 +27,16 @@ class H_SEO {
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
   }
 
+  /*
+    Modify "title" tag in head
+
+    @filter wp_title
+    @param str $title - Current title
+    @param str $sep - Separator
+    @param str $seplocation
+
+    @return str - Modified title
+  */
   function set_wp_title($title, $sep, $seplocation) {
     // use site name if on front+posts page
     if(is_front_page() && is_home() ) {
@@ -42,8 +64,10 @@ class H_SEO {
 
   /*
     Add description meta tag
+
+    @filter wp_head
   */
-  function add_meta_tags() {
+  function custom_meta_tags() {
     global $post;
 
     $content = get_bloginfo('description');
@@ -55,6 +79,32 @@ class H_SEO {
     }
 
     echo "<meta name='description' content='$content'>";
+  }
+
+  /*
+    Add a new tag to Jetpack's list. If og:description doesn't exist, do not add any new tag
+
+    @filter jetpack_open_graph_tags
+    @param arr $tags - Existing list
+    @return arr - Added list
+  */
+  function jetpack_meta_tags($tags) {
+    if ( isset( $tags['og:description'] ) ) {
+      $tags['description'] = $tags['og:description'];
+    }
+    return $tags;
+  }
+
+  /*
+    Replace property="description" by name="description" in the new tag.
+
+    @filter jetpack_open_graph_output
+    @param str $og_tag - The description tag
+    @return str - The modified description tag
+  */
+  function jetpack_meta_output($og_tag) {
+    $og_tag = str_replace( 'property="description"', 'name="description"', $og_tag );
+    return $og_tag;
   }
 
   /*
@@ -80,6 +130,11 @@ class H_SEO {
     echo "<textarea name='excerpt' rows='4'></textarea>";
   }
 
+  /*
+    Prevent URL guessing
+
+    @filter redirect_canonical
+  */
   function redirect_canonical($url) {
     if (is_404() ) { return false; }
     return $url;

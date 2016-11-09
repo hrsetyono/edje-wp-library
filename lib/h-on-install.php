@@ -1,5 +1,6 @@
 <?php
 
+new H_Install();
 class H_Install {
 
   function __construct() {
@@ -107,11 +108,11 @@ class H_Install {
     update_option('default_comment_status', 'closed');
 
     // media
-    update_option('medium_size_w', 0);
-    update_option('medium_size_h', 0);
+    update_option('medium_size_w', 400);
+    update_option('medium_size_h', 400);
 
-    update_option('large_size_w', 0);
-    update_option('large_size_h', 0);
+    update_option('large_size_w', 1200);
+    update_option('large_size_h', 1200);
 
     update_option('medium_large_size_w', 0);
     update_option('medium_large_size_h', 0);

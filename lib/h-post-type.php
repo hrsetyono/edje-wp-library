@@ -22,7 +22,7 @@ class H_PostType {
     register_post_type($name, $wp_args);
 
     // if column ordering is given
-    if(isset($args['columns']) ) {
+    if(is_admin() && isset($args['columns']) ) {
       $pc = new H_PostColumn($name, $args['columns']);
       $pc->init();
     }
@@ -32,6 +32,24 @@ class H_PostType {
       $tax = new H_Taxonomy($name, $args['taxonomy']);
       $tax->init();
     }
+
+    // Add this post type to Jetpack's sitemap
+    if(isset($args['sitemap']) ) {
+      add_filter('jetpack_sitemap_post_types', array($this, 'jetpack_add_cpt') );
+    }
+
+    // Allow REST API access
+    if(isset($args['rest_api']) ) {
+      add_filter('rest_api_allowed_post_types', array($this, 'jetpack_add_cpt') );
+    }
+  }
+
+  /*
+    Add CPT to Jetpack list
+  */
+  function jetpack_add_cpt($types) {
+    $types[] = $this->name;
+    return $types;
   }
 
   //////////
@@ -60,9 +78,9 @@ class H_PostType {
       'supports' => array(
         'title',
         'editor',
-        'custom-fields',
         'thumbnail',
-        'excerpt'
+        'excerpt',
+        'revisions'
       ),
       'has_archive' => true,
       'rewrite' => array(

@@ -19,8 +19,10 @@ class H_Taxonomy {
     register_taxonomy($wp_args['name'], $post_type, $wp_args);
 
     // add taxonomy filter
-    $pf = new H_PostFilter($post_type, $wp_args['name']);
-    $pf->init();
+    if(is_admin() ) {
+      $pf = new H_PostFilter($post_type, $wp_args['name']);
+      $pf->init();
+    }
   }
 
   //////////
