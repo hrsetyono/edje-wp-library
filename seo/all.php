@@ -1,7 +1,7 @@
 <?php
-include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-
-if(!is_admin() ) {
-  require_once 'meta-tags.php';
-  require_once 'microdata.php';
+if(is_admin() ) {
+  require_once 'h-metabox.php';
+} else {
+  require_once 'h-metatags.php';
+  require_once 'h-microdata.php';
 }

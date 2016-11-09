@@ -5,7 +5,7 @@ Description: Collection of code to help developers customize WordPress into full
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.5.2
+Version: 0.5.2b
 */
 
 // exit if accessed directly
@@ -15,9 +15,14 @@ if(!defined('ABSPATH') ) { exit; }
 define('H_URL', plugin_dir_url(__FILE__) );
 define('H_DIR', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
-require_once 'lib/all.php';
-require_once 'seo/all.php';
+// enable checking if plugin active
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+
 require_once 'vendor/all.php';
+require_once 'lib/all.php';
+require_once 'post-type/all.php';
+require_once 'seo/all.php';
 
 /*
   Main portal for calling all static methods

@@ -33,7 +33,8 @@ class H_SEO_Microdata {
     }
 
     // create base JSON
-    $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large');
+    // TODO: decide whether large or medium image
+    $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium');
     $schema = array(
       '@context' => 'http://schema.org',
       'name' => $post->post_title,

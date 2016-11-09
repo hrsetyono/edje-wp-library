@@ -17,8 +17,6 @@ class H_SEO_Meta {
       add_action('wp_head', array($this, 'custom_meta_tags'), 2);
     }
 
-    // add_action('admin_init', array($this, 'add_meta_boxes') );
-
     // remove extra rss
     remove_action('wp_head', 'feed_links', 2 );
     remove_action('wp_head', 'feed_links_extra', 3 );
@@ -31,11 +29,11 @@ class H_SEO_Meta {
     Modify "title" tag in head
 
     @filter wp_title
-    @param str $title - Current title
-    @param str $sep - Separator
-    @param str $seplocation
 
-    @return str - Modified title
+    @param string $title - Current title
+    @param string $sep - Separator
+    @param string $seplocation
+    @return string - Modified title
   */
   function set_wp_title($title, $sep, $seplocation) {
     // use site name if on front+posts page
@@ -85,8 +83,8 @@ class H_SEO_Meta {
     Add a new tag to Jetpack's list. If og:description doesn't exist, do not add any new tag
 
     @filter jetpack_open_graph_tags
-    @param arr $tags - Existing list
-    @return arr - Added list
+    @param array $tags - Existing list
+    @return array - Added list
   */
   function jetpack_meta_tags($tags) {
     if ( isset( $tags['og:description'] ) ) {
@@ -99,35 +97,12 @@ class H_SEO_Meta {
     Replace property="description" by name="description" in the new tag.
 
     @filter jetpack_open_graph_output
-    @param str $og_tag - The description tag
-    @return str - The modified description tag
+    @param string $og_tag - The description tag
+    @return string - The modified description tag
   */
   function jetpack_meta_output($og_tag) {
     $og_tag = str_replace( 'property="description"', 'name="description"', $og_tag );
     return $og_tag;
-  }
-
-  /*
-    Create SEO Sidebox on all post edit
-  */
-  function add_meta_boxes() {
-    $post_types = array_reduce(get_post_types(), function($result, $i) {
-      // exclude some post types, especially from WooCommerce
-      $exclude = array('attachment', 'revision', 'nav_menu_item', 'product_variation', 'shop_order', 'shop_order_refund', 'shop_coupon', 'shop_webhook');
-      if(in_array($i, $exclude) ) {
-        return $result;
-      } else {
-        $result[] = $i;
-        return $result;
-      }
-    }, array() );
-
-    add_meta_box('h-seo', __('SEO', 'h'), array($this, 'add_seo_box'), $post_types, 'side', 'low');
-  }
-
-  function add_seo_box($post) {
-    echo "<p><strong>Description</strong></p>";
-    echo "<textarea name='excerpt' rows='4'></textarea>";
   }
 
   /*
