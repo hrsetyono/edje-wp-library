@@ -7,7 +7,7 @@ new H_SEO_Metabox();
 class H_SEO_Metabox {
 
   function __construct() {
-    add_action('admin_init', array($this, 'add_meta_boxes') );
+    // add_action('admin_init', array($this, 'add_meta_boxes') );
   }
 
   /*

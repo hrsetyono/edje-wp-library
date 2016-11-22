@@ -2,7 +2,7 @@ body { line-height: 1.7; max-width: 840px; margin: 10px 20px; color: #333; }
 
 h1, h2, h3, h4, h5, h6 { clear: both; }
 
-h3 { margin: 1em 0 0.5em; }
+h3 { margin: 1em 0; }
 
 a:link, a:visited { color: #00aadc; }
 
@@ -12,13 +12,15 @@ p { margin: 0 0 1.25em 0; }
 
 ol ol { list-style-type: lower-alpha; }
 
+hr { display: block; height: 1px; border: 0; border-top: #87a6bc 1px solid; margin: 2.5em 0; padding: 0; }
+
 .alignleft, .alignright { max-width: 50%; margin-bottom: 1em; }
 
 .alignleft { margin-right: 1em; }
 
 .alignright { margin-left: 1em; }
 
-blockquote.alignleft, blockquote.alignright { width: 300px; }
+blockquote.alignleft, blockquote.alignright { width: 300px; margin-bottom: 0.5em; }
 
 .wp-caption { margin-bottom: 1.25em; }
 
@@ -52,12 +54,16 @@ blockquote p { margin: 0; }
 
 table { margin-bottom: 1.25em; }
 
-.mce-content-body *[data-wpview-type="gallery"] { padding: 1em; padding-bottom: 0; box-sizing: border-box; }
+table th, table td { padding: 3px 6px; }
 
-.mce-content-body *[data-wpview-type="gallery"] .gallery { padding: 0; margin: 0 -0.5em; }
+.wpview.wpview-wrap { padding: 1em; padding-bottom: 0; box-sizing: border-box; }
 
-.mce-content-body *[data-wpview-type="gallery"] .gallery-item { padding: 0 0.5em; margin-bottom: 1em; }
+.wpview.wpview-wrap iframe, .wpview.wpview-wrap embed, .wpview.wpview-wrap object, .wpview.wpview-wrap video { margin-bottom: 0.5em; }
 
-.mce-content-body *[data-wpview-type="gallery"] img { display: inline-block; vertical-align: middle; }
+.wpview.wpview-wrap .gallery { padding: 0; margin: 0 -0.5em; }
 
-.mce-content-body *[data-wpview-type="gallery"][data-mce-selected] { background-color: rgba(233, 239, 243, 0.5); outline-color: #87a6bc; outline-style: dashed; }
+.wpview.wpview-wrap .gallery-item { padding: 0 0.5em; margin-bottom: 1em; }
+
+.wpview.wpview-wrap img { display: inline-block; vertical-align: middle; }
+
+.wpview.wpview-wrap[data-mce-selected] { background-color: rgba(233, 239, 243, 0.5); outline-color: #87a6bc; outline-style: dashed; }

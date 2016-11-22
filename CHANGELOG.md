@@ -1,3 +1,7 @@
+## 0.5.3
+
+- Change logo in Login page if `custom_logo` is set in Customizer.
+
 ## 0.5.2
 
 - Automatically add JSON LD Microdata on Post and Product

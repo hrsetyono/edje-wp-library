@@ -26,18 +26,31 @@ class H_Default {
     add_filter('wp_terms_checklist_args', array($this, 'fix_terms_checklist'), 1, 2);
 
     // change login error
-    add_filter('login_errors', array($this, 'login_errors') );
+    add_filter('login_errors', array($this, 'change_login_errors_message') );
 
     // Remove the annoying WP 4.4 Medium-Large size
     add_filter('intermediate_image_sizes_advanced', array($this, 'remove_mediumlarge_size') );
+
+    // Modify login page
+    add_action('login_head', array($this, 'modify_login_page') );
   }
 
+  /*
+    Prevent reordering of Category checklist
+
+    @filter wp_terms_checklist_args
+  */
   function fix_terms_checklist($args, $post_id) {
     $args['checked_ontop'] = false;
     return $args;
   }
 
-  function login_errors($error) {
+  /*
+    Change the error message when signing in
+
+    @filter login_errors
+  */
+  function change_login_errors_message($error) {
     global $errors;
     $err_codes = $errors->get_error_codes();
 
@@ -51,8 +64,37 @@ class H_Default {
     }
   }
 
+  /*
+    Remove "medium_large" image size
+
+    @filter intermediate_image_sizes_advanced
+  */
   function remove_mediumlarge_size($sizes) {
     unset($sizes['medium_large']);
     return $sizes;
+  }
+
+  /*
+    Customize the Login page
+
+    @filter login_head
+  */
+  function modify_login_page() {
+    $logo_id = get_theme_mod('custom_logo');
+
+    // if logo exists
+    if($logo_id):
+      $logo = wp_get_attachment_image_src($logo_id , 'full');
+      ?>
+      <style>
+        .login h1 a {
+          background-position: center center;
+          background-size: contain;
+          background-image: url("<?php echo $logo[0]; ?>");
+          width: 250px;
+        }
+      </style>
+      <?php
+    endif;
   }
 }

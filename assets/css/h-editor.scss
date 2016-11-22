@@ -27,7 +27,7 @@ h6 {
 }
 
 h3 {
-  margin: 1em 0 0.5em;
+  margin: 1em 0;
 }
 
 a {
@@ -50,6 +50,15 @@ ol ol {
   list-style-type: lower-alpha;
 }
 
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: $panel-accent 1px solid;
+  margin: 2.5em 0;
+  padding: 0;
+}
+
 // Media Alignment
 
 .alignleft,
@@ -69,6 +78,7 @@ ol ol {
 blockquote.alignleft,
 blockquote.alignright {
   width: 300px;
+  margin-bottom: 0.5em;
 }
 
 // Image with Caption
@@ -155,14 +165,25 @@ blockquote {
 
 table {
   margin-bottom: 1.25em;
+
+  th, td {
+    padding: 3px 6px;
+  }
 }
 
 // Gallery on active
 
-.mce-content-body *[data-wpview-type="gallery"] {
+.wpview.wpview-wrap {
   padding: 1em;
   padding-bottom: 0;
   box-sizing: border-box;
+
+  iframe,
+  embed,
+  object,
+  video {
+    margin-bottom: 0.5em;
+  }
 
   .gallery {
     padding: 0;
@@ -180,7 +201,7 @@ table {
   }
 }
 
-.mce-content-body *[data-wpview-type="gallery"][data-mce-selected] {
+.wpview.wpview-wrap[data-mce-selected] {
   background-color: $panel-bg;
   outline-color: $panel-accent;
   outline-style: dashed;
