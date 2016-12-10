@@ -4,7 +4,6 @@
 */
 
 new H_SEO_Meta();
-
 class H_SEO_Meta {
   function __construct() {
     add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);

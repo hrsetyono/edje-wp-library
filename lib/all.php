@@ -14,5 +14,6 @@ if(is_admin() ) {
 // public
 else {
   require_once 'h-shortcode.php';
-  require_once 'h-twig.php';
+  require_once 'h-jetpack.php';
+  require_once 'h-timber.php';
 }

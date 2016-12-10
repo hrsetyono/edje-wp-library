@@ -46,6 +46,8 @@ class H_PostType {
 
   /*
     Add CPT to Jetpack list
+
+    @filter jetpack_sitemap_post_types
   */
   function jetpack_add_cpt($types) {
     $types[] = $this->name;

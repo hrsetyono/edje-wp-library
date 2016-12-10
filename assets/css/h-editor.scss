@@ -83,6 +83,10 @@ blockquote.alignright {
 
 // Image with Caption
 
+[class*="wp-image-"] {
+  background-color: #eee;
+}
+
 .wp-caption {
   margin-bottom: 1.25em;
 

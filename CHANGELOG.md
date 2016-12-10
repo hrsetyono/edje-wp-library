@@ -1,6 +1,9 @@
 ## 0.5.3
 
 - Change logo in Login page if `custom_logo` is set in Customizer.
+- Change some default Jetpack and Timber's behavior.
+- When WooCommerce is installed, automatically add `product` to Sitemap.
+- Remove reordering of Editor buttons due to same feature implemented in WP 4.7.
 
 ## 0.5.2
 
