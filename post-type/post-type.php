@@ -4,6 +4,7 @@ $h_menu_position = 30;
 class H_PostType {
   private $name;
   private $args;
+  private $wp_args;
 
   public function __construct($name, $args) {
     $this->name = H_Elper::to_param($name);
@@ -18,6 +19,7 @@ class H_PostType {
     $args = $this->args;
 
     $wp_args = $this->parse_args($name, $args);
+    $this->wp_args = $wp_args;
 
     register_post_type($name, $wp_args);
 
@@ -42,6 +44,11 @@ class H_PostType {
     if(isset($args['rest_api']) ) {
       add_filter('rest_api_allowed_post_types', array($this, 'jetpack_add_cpt') );
     }
+
+    // If dashboard args is empty OR not false
+    if(!isset($args['dashboard']) || $args['dashboard'] !== false) {
+      add_action('dashboard_glance_items', array($this, 'add_custom_post_glance') );
+    }
   }
 
   /*
@@ -52,6 +59,25 @@ class H_PostType {
   function jetpack_add_cpt($types) {
     $types[] = $this->name;
     return $types;
+  }
+
+  /*
+    Add new item on At-a-Glance dashboard widgets
+
+    @action dashboard_glance_items
+  */
+  function add_custom_post_glance() {
+    $pt = $this->name;
+    if(!post_type_exists($pt) ) { return false; };
+
+    $wp_args = $this->wp_args;
+    $icon = $wp_args['menu_icon'];
+
+    $num_posts = wp_count_posts($pt);
+    $num = number_format_i18n($num_posts->publish);
+    $text = _n($wp_args['labels']['singular_name'], $wp_args['labels']['name'], intval($num_posts->publish) );
+
+    echo '<li class="'.$icon.' dashicons-before"><a href="edit.php?post_type='.$pt.'">'.$num.' '.$text.'</a></li>';
   }
 
   //////////
@@ -89,7 +115,7 @@ class H_PostType {
         'slug' => $slug,
         'with_front' => false
       ),
-      'menu_position' => $menu_position
+      'menu_position' => $menu_position,
     );
 
     // add icon if given

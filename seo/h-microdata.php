@@ -8,7 +8,7 @@
 new H_SEO_Microdata();
 class H_SEO_Microdata {
   function __construct() {
-    add_filter('the_content', array($this, 'add_microdata') );
+    add_action('wp_footer', array($this, 'add_microdata') );
   }
 
   /*
@@ -51,7 +51,7 @@ class H_SEO_Microdata {
     $target_fn = $targets[$post->post_type];
     $schema = $target_fn($schema, $post);
 
-    return $content . '<script type="application/ld+json">' . json_encode($schema) . '</script>';
+    echo $content . '<script type="application/ld+json">' . json_encode($schema) . '</script>';
   }
 
   /////

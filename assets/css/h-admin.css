@@ -1,0 +1,3 @@
+#dashboard_right_now li[class*="dashicons"]::before { padding-right: 5px; color: #82878c; }
+
+#dashboard_right_now li[class*="dashicons"] a::before, #dashboard_right_now li[class*="dashicons"] > span::before { content: ''; padding: 0; }

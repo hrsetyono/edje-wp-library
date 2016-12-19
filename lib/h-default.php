@@ -25,14 +25,14 @@ class H_Default {
     // fixed the positioning of category checklist
     add_filter('wp_terms_checklist_args', array($this, 'fix_terms_checklist'), 1, 2);
 
-    // change login error
     add_filter('login_errors', array($this, 'change_login_errors_message') );
 
     // Remove the annoying WP 4.4 Medium-Large size
     add_filter('intermediate_image_sizes_advanced', array($this, 'remove_mediumlarge_size') );
 
-    // Modify login page
     add_action('login_head', array($this, 'modify_login_page') );
+
+    add_action('admin_bar_menu', array($this, 'remove_wp_logo'), 999);
   }
 
   /*
@@ -96,5 +96,14 @@ class H_Default {
       </style>
       <?php
     endif;
+  }
+
+  /*
+    Remove Wordpress logo in admin bar
+
+    @filter admin_bar_menu
+  */
+  function remove_wp_logo($wp_admin_bar) {
+    $wp_admin_bar->remove_node( 'wp-logo' );
   }
 }

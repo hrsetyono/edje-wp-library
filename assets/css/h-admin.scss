@@ -1,1 +1,14 @@
-// Add CSS for admin panel here
+// Allow custom icon on "At a Glance" dashboard
+#dashboard_right_now li[class*="dashicons"] {
+
+  &::before {
+    padding-right: 5px;
+    color: #82878c;
+  }
+
+  a::before,
+  > span::before {
+    content: '';
+    padding: 0;
+  }
+}

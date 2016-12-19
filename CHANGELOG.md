@@ -1,13 +1,19 @@
+## 0.5.3b
+
+- [SEO] Move JSON LD microdata to wp_footer instead of directly under the_content.
+- [Widget] Text widget will use markdown if "Auto add paragraph" is not checked.
+- [Admin] Added CPT to "At a Glance" widget in dashboard.
+
 ## 0.5.3
 
 - Change logo in Login page if `custom_logo` is set in Customizer.
 - Change some default Jetpack and Timber's behavior.
-- When WooCommerce is installed, automatically add `product` to Sitemap.
+- [Woo] When WooCommerce is installed, automatically add `product` to Sitemap.
 - Remove reordering of Editor buttons due to same feature implemented in WP 4.7.
 
 ## 0.5.2
 
-- Automatically add JSON LD Microdata on Post and Product
+- [SEO] Automatically add JSON LD Microdata on Post and Product
 
 ## 0.5.1
 
