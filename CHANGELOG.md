@@ -1,3 +1,10 @@
+## 0.5.4
+
+- [SEO] If Yoast installed, disable the custom meta tags by Jetpack.
+- [Shortcode] Remove empty <p> tag when using shortcode.
+- [CPT] Automatically add custom taxonomy to Column List.
+- [Editor] Make very small heading (H5, H6) bigger in Editor.
+
 ## 0.5.3b
 
 - [SEO] Move JSON LD microdata to wp_footer instead of directly under the_content.

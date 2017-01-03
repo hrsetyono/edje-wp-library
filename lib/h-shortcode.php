@@ -10,8 +10,20 @@ class H_Shortcode {
     add_shortcode('row', array($this, 'row') );
     add_shortcode('column', array($this, 'column') );
 
-    add_filter('the_content', array($this, 'grid_unautop'), 100);
-    add_filter('acf_the_content', array($this, 'grid_unautop'), 100);
+    /////
+
+    // remove empty <p>
+    remove_filter('the_content', 'wpautop');
+    add_filter('the_content', 'wpautop', 99);
+    add_filter('the_content', 'shortcode_unautop', 100);
+
+    remove_filter('acf_the_content', 'wpautop');
+    add_filter('acf_the_content', 'wpautop', 99);
+    add_filter('acf_the_content', 'shortcode_unautop', 100);
+
+    // remove empty <p> between row and column
+    add_filter('the_content', array($this, 'grid_unautop'), 101);
+    add_filter('acf_the_content', array($this, 'grid_unautop'), 101);
   }
 
   /*

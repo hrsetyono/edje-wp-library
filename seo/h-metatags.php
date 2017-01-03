@@ -6,6 +6,20 @@
 new H_SEO_Meta();
 class H_SEO_Meta {
   function __construct() {
+    // remove extra rss
+    remove_action('wp_head', 'feed_links', 2 );
+    remove_action('wp_head', 'feed_links_extra', 3 );
+
+    // prevent url guessing
+    add_filter('redirect_canonical', array($this, 'redirect_canonical') );
+
+    // If Yoast installed, disable custom meta tags
+    if(is_plugin_active('wordpress-seo-premium/wp-seo-premium.php') || is_plugin_active('yoast-seo-premium/wp-seo-premium.php') ) {
+      add_filter('jetpack_enable_open_graph', '__return_false');
+      return false;
+    }
+
+    // thse code below, only run when yoast not installed
     add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
 
     if(is_plugin_active('jetpack/jetpack.php') ) {
@@ -15,13 +29,6 @@ class H_SEO_Meta {
     else {
       add_action('wp_head', array($this, 'custom_meta_tags'), 2);
     }
-
-    // remove extra rss
-    remove_action('wp_head', 'feed_links', 2 );
-    remove_action('wp_head', 'feed_links_extra', 3 );
-
-    // prevent url guessing
-    add_filter('redirect_canonical', array($this, 'redirect_canonical') );
   }
 
   /*

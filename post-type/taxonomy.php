@@ -44,7 +44,7 @@ class H_Taxonomy {
       'slug' => $args['name'],
       'show_ui' => true,
       'query_var' => true,
-      'show_admin_column' => false,
+      'show_admin_column' => true,
       'hierarchical' => true,
       'rewrite' => array(
         'slug' => H_Elper::to_slug($args['slug']),
