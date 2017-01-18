@@ -5,7 +5,7 @@ Description: Collection of code to help developers customize WordPress into full
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.5.4
+Version: 0.5.5
 */
 
 // exit if accessed directly

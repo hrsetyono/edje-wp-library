@@ -106,6 +106,7 @@ class H_Install {
 
     // discussion
     update_option('default_comment_status', 'closed');
+    update_option('thread_comments_depth', 2);
 
     // media
     update_option('medium_size_w', 480);

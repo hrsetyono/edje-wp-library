@@ -1,3 +1,12 @@
+## 0.5.5
+
+- [Shortcode] Automatically unautop all shortcodes.
+- [On Install] Threaded comments set to 2.
+
+## 0.5.4b
+
+- [Shortcode] Add `class` attribute to [column]
+
 ## 0.5.4
 
 - [SEO] If Yoast installed, disable the custom meta tags by Jetpack.
