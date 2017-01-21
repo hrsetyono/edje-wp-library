@@ -8,7 +8,7 @@
 new H_SEO_Microdata();
 class H_SEO_Microdata {
   function __construct() {
-    add_action('wp_footer', array($this, 'add_microdata') );
+    add_action('wp_head', array($this, 'add_microdata'), 100);
   }
 
   /*
@@ -21,9 +21,10 @@ class H_SEO_Microdata {
   function add_microdata($content) {
     global $post;
 
+    // Each post type has the function to customize microdata
     $targets = apply_filters('h_seo_microdata', array(
       'post' => array($this, 'get_post_microdata'),
-      'product' => array($this, 'get_post_microdata')
+      'product' => array($this, 'get_product_microdata')
     ) );
 
     // if not targeted, abort
@@ -33,25 +34,51 @@ class H_SEO_Microdata {
     }
 
     // create base JSON
-    // TODO: decide whether large or medium image
-    $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium');
+    $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'large');
+    $logo = wp_get_attachment_image_src(get_theme_mod('custom_logo') , 'full');
+    $user = get_userdata($post->post_author, 'display_name');
+
+    // var_dump($user->get('twitter'));
+
     $schema = array(
       '@context' => 'http://schema.org',
       'name' => $post->post_title,
       'url' => get_permalink($post),
+      'description' => $post->post_excerpt ? $post->post_excerpt : wp_trim_words($post->post_content, 25),
       'image' => array(
         '@type' => 'ImageObject',
         'url' => $image[0],
         'width' => $image[1],
         'height' => $image[2]
       ),
+      'author' => array(
+        '@type' => 'Person',
+        'name' => $user->data->display_name,
+        'url' => $user->data->user_url,
+        'description' => $user->get('description'),
+        'image' => array(
+          '@type' => 'ImageObject',
+          'url' => get_avatar_url($user->data->user_email)
+        ),
+        'sameAs' => array(
+          $user->data->user_url,
+          $user->get('twitter') ? 'https://twitter.com/' . $user->get('twitter') : '',
+          $user->get('facebook'),
+          $user->get('googleplus')
+        ),
+      ),
+      'publisher' => array(
+        '@type' => 'Organization',
+        'name' => get_bloginfo(),
+        'logo' => $logo[0]
+      ),
     );
 
-    // run the function
-    $target_fn = $targets[$post->post_type];
-    $schema = $target_fn($schema, $post);
+    // Select the specified function for that post type
+    $target_function = $targets[$post->post_type];
+    $schema = $target_function($schema, $post);
 
-    echo $content . '<script type="application/ld+json">' . json_encode($schema) . '</script>';
+    echo $content . '<script type="application/ld+json">' . json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . '</script>';
   }
 
   /////
@@ -65,13 +92,7 @@ class H_SEO_Microdata {
       'headline' => $post->post_title,
       'datePublished' => $post->post_date,
       'dateModified' => $post->post_modified,
-      'articleBody' => wp_trim_words($post->post_content, 16),
-      'author' => get_the_author_meta('display_name', $post->post_author),
-      'publisher' => array(
-        '@type' => 'Organization',
-        'name' => get_bloginfo()
-        // TODO: need logo
-      ),
+
       'mainEntityOfPage' => array(
         '@type' => 'WebPage',
         '@id' => get_permalink($post)
@@ -85,15 +106,17 @@ class H_SEO_Microdata {
     Get microdata for Product
   */
   private function get_product_microdata($schema, $post) {
-    $schema['@type'] = 'Product';
-    $schema['description'] = $post->post_excerpt;
+    $addon = array(
+      '@type' => 'Product'
+    );
 
+    // get WC data
     $currency = get_woocommerce_currency();
     $price = $post->custom['_price'];
 
-    // if variation
+    // if variation, add price range
     if(is_array($price) ) {
-      $schema['offers'] = array(
+      $addon['offers'] = array(
         '@type' => 'Offer',
         'priceSpecification' => array(
           '@type' => 'PriceSpecification',
@@ -103,15 +126,17 @@ class H_SEO_Microdata {
           'priceCurrency' => $currency
         )
       );
-    } else {
-      $schema['offers'] = array(
+    }
+    // if single product, add single price
+    else {
+      $addon['offers'] = array(
         '@type' => 'Offer',
         'price' => $price,
         'priceCurrency' => $currency
       );
     }
 
-    return $schema;
+    return array_merge($schema, $addon);
   }
 }
 /*

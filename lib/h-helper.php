@@ -1,6 +1,8 @@
 <?php
-class H_Elper {
+// enable checking if plugin active
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
+class H_Elper {
   /*
     Transform Title into Param format (lower case, underscore)
     @param $title
@@ -56,6 +58,45 @@ class H_Elper {
     }
     $text = htmlentities($text, ENT_QUOTES);
     return $text;
+  }
+
+  /*
+    Check whether a plugin is active
+
+    @param $slug string - The slug of a plugin, it's a pre-determinated keyword.
+    @return bool
+  */
+  static function is_plugin_active($slug) {
+    $path = array();
+
+    switch($slug) {
+      case 'yoast':
+        array_push($path,
+          'wordpress-seo/wp-seo.php',
+          'wordpress-seo-premium/wp-seo-premium.php',
+          'wordpress-seo-premium-trial/wp-seo-premium.php'
+        );
+        break;
+
+      case 'jetpack':
+        $path[] = 'jetpack/jetpack.php';
+        break;
+
+      case 'woocommerce':
+        $path[] = 'woocommerce/woocommerce.php';
+        break;
+
+      case 'timber':
+        $path[] = 'timber-library/timber.php';
+        break;
+    }
+
+    // if at least 1 is active, returns true
+    foreach($path as $p) {
+      if(is_plugin_active($p) ) { return true; }
+    }
+
+    return false;
   }
 }
 

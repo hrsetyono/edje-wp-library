@@ -14,7 +14,7 @@ class H_SEO_Meta {
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
 
     // If Yoast installed, disable custom meta tags
-    if(is_plugin_active('wordpress-seo-premium/wp-seo-premium.php') || is_plugin_active('yoast-seo-premium/wp-seo-premium.php') ) {
+    if(H_elper::is_plugin_active('yoast') ) {
       add_filter('jetpack_enable_open_graph', '__return_false');
       return false;
     }
@@ -22,7 +22,7 @@ class H_SEO_Meta {
     // thse code below, only run when yoast not installed
     add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
 
-    if(is_plugin_active('jetpack/jetpack.php') ) {
+    if(H_elper::is_plugin_active('jetpack') ) {
       add_filter('jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
       add_filter('jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
     }

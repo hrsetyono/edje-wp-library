@@ -1,3 +1,8 @@
+## 0.5.6
+
+- [SEO] Extend microdata according to Ghost.org standard.
+- [SEO] Added social media fields in User Profile. Disabled when Yoast is installed.
+
 ## 0.5.5
 
 - [Shortcode] Automatically unautop all shortcodes.

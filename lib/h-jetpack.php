@@ -3,7 +3,7 @@
   Modify Jetpack modules
 */
 
-if(is_plugin_active('jetpack/jetpack.php') ) {
+if(H_elper::is_plugin_active('jetpack') ) {
   new H_Jetpack();
 }
 
@@ -11,9 +11,10 @@ class H_Jetpack {
 
   function __construct() {
     add_filter('wp', array($this, 'remove_related_posts'), 20);
+    add_action('wp_head', array($this, 'enqueue_script'), 1);
 
-    // if woocommerce active
-    if(is_plugin_active('woocommerce/woocommerce.php') ) {
+    // add woocommerce to sitemap
+    if(H_elper::is_plugin_active('woocommerce') ) {
       add_filter('jetpack_sitemap_post_types', 'add_woocommerce_to_sitemap');
     }
   }
@@ -41,5 +42,13 @@ class H_Jetpack {
   function add_woocommerce_to_sitemap($post_types) {
     $post_types[] = 'product';
     return $post_types;
+  }
+
+  /*
+    Enqueue additional script when Jetpack is active
+  */
+  function enqueue_script() {
+    // add social logos in all pages
+    wp_enqueue_style('social-logos');
   }
 }
