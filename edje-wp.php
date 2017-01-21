@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Edje WordPress
-Description: Collection of code to help developers customize WordPress into full-fledged CMS.
+Description: Library to helps customize WordPress. Designed to work with Timber and Jetpack.
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
