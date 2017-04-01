@@ -13,11 +13,17 @@ class H_Install {
     // create empty option if doesn't exist
     if(!$options) { add_option('h_options', array() ); }
 
+    // TODO: init always true, need to test deleting h_options
+    // var_dump($options);
+    // exit();
+
     // if page not initialized
     if(!isset($options['init']) ) {
       $this->_create_default_page();
       // $this->_create_default_post();
       $this->_set_default_setting();
+
+      $this->_create_default_nav();
 
       $options['init'] = true;
     }
@@ -72,6 +78,71 @@ class H_Install {
       $blog_id = wp_insert_post($blog);
       update_option('page_for_posts', $blog_id);
     }
+  }
+
+  /*
+    Create default navigation menu
+  */
+  function _create_default_nav() {
+    $navs = array(
+      // MAIN
+      array(
+        'name' => 'Main',
+        'location' => 'main-menu',
+        'items' => array(
+          array(
+            'menu-item-title' => 'Home',
+            'menu-item-url' => home_url(),
+            'menu-item-status' => 'publish'
+          )
+        )
+      ),
+
+      // SOCIAL
+      array(
+        'name' => 'Social',
+        'location' => 'social-menu',
+        'items' => array(
+          array(
+            'menu-item-title' => 'facebook',
+            'menu-item-url' => 'https://www.facebook.com/username',
+            'menu-item-status' => 'publish'
+          ),
+          array(
+            'menu-item-title' => 'twitter',
+            'menu-item-url' => 'https://twitter.com/username',
+            'menu-item-status' => 'publish'
+          ),
+          array(
+            'menu-item-title' => 'google-plus',
+            'menu-item-url' => 'https://plus.google.com/+username',
+            'menu-item-status' => 'publish'
+          )
+        )
+      ),
+    );
+
+    $locations = get_theme_mod('nav_menu_locations');
+
+    foreach($navs as $nav):
+      // var_dump($nav);
+      // exit();
+      // if doesn't exist AND the location isn't occupied
+      if(! wp_get_nav_menu_object($nav['name'] && !has_nav_menu($nav['location'])) ) {
+        // create empty menu
+        $menu_id = wp_create_nav_menu($nav['name']);
+
+        // add menu items
+        foreach($nav['items'] as $item) {
+          wp_update_nav_menu_item($menu_id, 0, $item);
+        }
+
+        // set the menu location
+        $locations[$nav['location']] = $menu_id;
+        set_theme_mod('nav_menu_locations', $locations);
+      }
+    endforeach;
+
   }
 
   /*

@@ -3,6 +3,8 @@
 require_once 'h-helper.php';
 require_once 'h-default.php';
 
+require_once 'h-customizer.php';
+
 // admin
 if(is_admin() ) {
   require_once 'h-on-install.php';
@@ -10,6 +12,7 @@ if(is_admin() ) {
   require_once 'h-admin-default.php';
   require_once 'h-menu.php';
   require_once 'h-menusub.php';
+
 }
 // public
 else {

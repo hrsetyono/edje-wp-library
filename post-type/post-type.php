@@ -99,17 +99,17 @@ class H_PostType {
       $slug = $args['slug'];
     }
 
+    // init support and merge if any
+    $supports = array('title', 'editor', 'thumbnail', 'excerpt', 'revisions');
+    if(isset($args['supports'] )) {
+      $supports = array_merge($supports, $args['supports']);
+    }
+
     $wp_args = array(
       'public' => true,
       'labels' => $labels,
       'capability_type' => 'post',
-      'supports' => array(
-        'title',
-        'editor',
-        'thumbnail',
-        'excerpt',
-        'revisions'
-      ),
+      'supports' => $supports,
       'has_archive' => true,
       'rewrite' => array(
         'slug' => $slug,

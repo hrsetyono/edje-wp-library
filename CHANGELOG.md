@@ -1,3 +1,8 @@
+## 0.5.7
+
+- New Customizer module.
+- [Customizer] Added HEAD and FOOTER customizer, good for adding Google Analytics and such.
+
 ## 0.5.6
 
 - [SEO] Extend microdata according to Ghost.org standard.
