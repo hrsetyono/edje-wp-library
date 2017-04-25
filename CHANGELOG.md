@@ -1,3 +1,7 @@
+## 0.6.0
+
+- [CPT] Added `supports` parameter. Wiki has been updated with this new information [here](https://github.com/hrsetyono/edje-wp/wiki/Custom-Post-Type)
+
 ## 0.5.7
 
 - New Customizer module.

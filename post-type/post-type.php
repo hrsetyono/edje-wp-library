@@ -21,6 +21,25 @@ class H_PostType {
     $wp_args = $this->parse_args($name, $args);
     $this->wp_args = $wp_args;
 
+    // Check Support
+    if(isset($args['supports']) ) {
+      // Add this post type to Jetpack's sitemap
+      if(in_array('jetpack-sitemap', $args['supports']) ) {
+        add_filter('jetpack_sitemap_post_types', array($this, 'jetpack_add_cpt') );
+      }
+
+      // Allow REST API access
+      if(in_array('jetpack-api', $args['supports']) ) {
+        add_filter('rest_api_allowed_post_types', array($this, 'jetpack_add_cpt') );
+      }
+
+      // if behave like Page
+      if(in_array('page-attributes', $args['supports']) ) {
+        $wp_args['hierarchical'] = true;
+      }
+    }
+
+    // register
     register_post_type($name, $wp_args);
 
     // if column ordering is given
@@ -33,21 +52,6 @@ class H_PostType {
     if(isset($args['taxonomy']) ) {
       $tax = new H_Taxonomy($name, $args['taxonomy']);
       $tax->init();
-    }
-
-    // Add this post type to Jetpack's sitemap
-    if(isset($args['sitemap']) ) {
-      add_filter('jetpack_sitemap_post_types', array($this, 'jetpack_add_cpt') );
-    }
-
-    // Allow REST API access
-    if(isset($args['rest_api']) ) {
-      add_filter('rest_api_allowed_post_types', array($this, 'jetpack_add_cpt') );
-    }
-
-    // If dashboard args is empty OR not false
-    if(!isset($args['dashboard']) || $args['dashboard'] !== false) {
-      add_action('dashboard_glance_items', array($this, 'add_custom_post_glance') );
     }
   }
 
