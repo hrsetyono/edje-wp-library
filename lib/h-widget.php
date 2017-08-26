@@ -25,7 +25,7 @@ class H_Widget {
       $text = $pd->text($text);
     }
 
-    return $text;
+    return do_shortcode($text);
   }
 
 }

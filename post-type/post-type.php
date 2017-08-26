@@ -37,6 +37,10 @@ class H_PostType {
       if(in_array('page-attributes', $args['supports']) ) {
         $wp_args['hierarchical'] = true;
       }
+
+      if(in_array('dashboard-count', $args['supports']) ) {
+        add_action('dashboard_glance_items', array($this, 'add_custom_post_glance') );
+      }
     }
 
     // register
@@ -104,7 +108,7 @@ class H_PostType {
     }
 
     // init support and merge if any
-    $supports = array('title', 'editor', 'thumbnail', 'excerpt', 'revisions');
+    $supports = array('title', 'editor', 'thumbnail', 'excerpt', 'dashboard-count');
     if(isset($args['supports'] )) {
       $supports = array_merge($supports, $args['supports']);
     }

@@ -1,3 +1,9 @@
+## 0.6.1
+
+- [CPT] Support for `dashboard-count` is now on by default.
+- [SEO] Fixed microdata error on `product` post type that's not created by WooCommerce.
+- [SEO] Added WooCommerce product to Jetpack's sitemap.
+
 ## 0.6.0
 
 - [CPT] Added `supports` parameter. Wiki has been updated with this new information [here](https://github.com/hrsetyono/edje-wp/wiki/Custom-Post-Type)

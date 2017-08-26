@@ -51,16 +51,20 @@ class H_Default {
     @filter login_errors
   */
   function change_login_errors_message($error) {
-    global $errors;
-    $err_codes = $errors->get_error_codes();
-
-    $filters = array('invalid_username', 'incorrect_password', 'empty_password');
-
-    // if there is at least one filter that intersected with the error
-    if(count(array_intersect($filters, $err_codes) ) >= 1) {
+    if(is_string($error) ) {
       return __('Sorry, your username or password is wrong', 'h');
     } else {
-      return $error;
+      global $errors;
+      $err_codes = $errors->get_error_codes();
+
+      $filters = array('invalid_username', 'incorrect_password', 'empty_password');
+
+      // if there is at least one filter that intersected with the error
+      if(count(array_intersect($filters, $err_codes) ) >= 1) {
+        return __('Sorry, your username or password is wrong', 'h');
+      } else {
+        return $error;
+      }
     }
   }
 

@@ -15,7 +15,7 @@ class H_Jetpack {
 
     // add woocommerce to sitemap
     if(H_elper::is_plugin_active('woocommerce') ) {
-      add_filter('jetpack_sitemap_post_types', 'add_woocommerce_to_sitemap');
+      add_filter('jetpack_sitemap_post_types', array($this, 'add_woocommerce_to_sitemap') );
     }
   }
 

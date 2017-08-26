@@ -21,11 +21,16 @@ class H_SEO_Microdata {
   function add_microdata($content) {
     global $post;
 
-    // Each post type has the function to customize microdata
-    $targets = apply_filters('h_seo_microdata', array(
-      'post' => array($this, 'get_post_microdata'),
-      'product' => array($this, 'get_product_microdata')
-    ) );
+    // the function to run when it's on these Single Post page
+    $targets = array('post' => array($this, 'get_post_microdata') );
+
+    // add WooCommerce microdata
+    if(H_elper::is_plugin_active('woocommerce') ) {
+      $targets['product'] = array($this, 'get_product_microdata');
+    }
+
+    // allow others to hook into this
+    $targets = apply_filters('h_seo_microdata', $targets);
 
     // if not targeted, abort
     $is_targetted = isset($post) && array_key_exists($post->post_type, $targets);
