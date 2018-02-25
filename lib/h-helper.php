@@ -1,8 +1,11 @@
 <?php
 // enable checking if plugin active
-include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-class H_Elper {
+/*
+  Helper class for internal use
+*/
+class _H {
   /*
     Transform Title into Param format (lower case, underscore)
     @param $title

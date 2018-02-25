@@ -5,7 +5,7 @@
 * Validator: https://search.google.com/structured-data/testing-tool/u/0/
 */
 
-new H_SEO_Microdata();
+// new H_SEO_Microdata();
 class H_SEO_Microdata {
   function __construct() {
     add_action('wp_head', array($this, 'add_microdata'), 100);
@@ -25,7 +25,7 @@ class H_SEO_Microdata {
     $targets = array('post' => array($this, 'get_post_microdata') );
 
     // add WooCommerce microdata
-    if(H_elper::is_plugin_active('woocommerce') ) {
+    if(_H::is_plugin_active('woocommerce') ) {
       $targets['product'] = array($this, 'get_product_microdata');
     }
 

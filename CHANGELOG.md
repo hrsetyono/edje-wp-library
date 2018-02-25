@@ -1,3 +1,20 @@
+## 0.7.0
+
+- [CPT] Support `rest-api` will create endpoint with the slug at its base URL.
+- [CPT] Added support `hidden` that will hide single post view.
+- [Customizer] NEW FEATURE! Check out the [wiki for detail](https://github.com/hrsetyono/wp-edje/wiki/Customizer)
+
+## 0.6.3
+
+- [CPT] Fixed `supports` arguments not being read.
+- [On Install] Change the name of default navigation.
+
+## 0.6.2
+
+- Disable microdata
+- [CPT] `jetpack-api` support is renamed to `rest-api` when creating CPT.
+- [CPT] Add **supports** argument when creating Custom Taxonomy. For now it only has one available value: `rest-api`.
+
 ## 0.6.1
 
 - [CPT] Support for `dashboard-count` is now on by default.

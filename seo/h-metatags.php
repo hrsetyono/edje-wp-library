@@ -14,7 +14,7 @@ class H_SEO_Meta {
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
 
     // If Yoast installed, disable custom meta tags
-    if(H_elper::is_plugin_active('yoast') ) {
+    if(_H::is_plugin_active('yoast') ) {
       add_filter('jetpack_enable_open_graph', '__return_false');
       return false;
     }
@@ -22,7 +22,7 @@ class H_SEO_Meta {
     // thse code below, only run when yoast not installed
     add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
 
-    if(H_elper::is_plugin_active('jetpack') ) {
+    if(_H::is_plugin_active('jetpack') ) {
       add_filter('jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
       add_filter('jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
     }
@@ -78,7 +78,7 @@ class H_SEO_Meta {
 
     // if not front page, use excerpt from content
     if(!is_front_page() && $post) {
-      $excerpt = $post->post_excerpt ? $post->post_excerpt : H_Elper::trim_content($post->post_content);
+      $excerpt = $post->post_excerpt ? $post->post_excerpt : _H::trim_content($post->post_content);
       $content = $excerpt ? $excerpt : $content;
     }
 

@@ -1,23 +1,20 @@
 <?php
-
-new H_Shortcode();
-
-///// SHORTCODE /////
-
+/*
+  EDJE default shortcode
+*/
 class H_Shortcode {
-
   function __construct() {
-    add_shortcode('row', array($this, 'row') );
-    add_shortcode('column', array($this, 'column') );
+    add_shortcode( 'row', array($this, 'row') );
+    add_shortcode( 'column', array($this, 'column') );
 
     // remove empty <p> on shortcode
-    remove_filter('the_content', 'wpautop');
-    add_filter('the_content', 'wpautop', 5);
-    add_filter('the_content', array($this, 'shortcode_unautop'), 10);
+    remove_filter( 'the_content', 'wpautop' );
+    add_filter( 'the_content', 'wpautop', 5 );
+    add_filter( 'the_content', array($this, 'shortcode_unautop'), 10 );
 
-    remove_filter('acf_the_content', 'wpautop');
-    add_filter('acf_the_content', 'wpautop');
-    add_filter('acf_the_content', array($this, 'shortcode_unautop'));
+    remove_filter( 'acf_the_content', 'wpautop' );
+    add_filter( 'acf_the_content', 'wpautop' );
+    add_filter( 'acf_the_content', array($this, 'shortcode_unautop') );
   }
 
   /*
@@ -30,11 +27,11 @@ class H_Shortcode {
       Content
     [/column][/row]
   */
-  function row($atts, $content = null) {
+  function row( $atts, $content = null ) {
     return '<h-row>' . do_shortcode($content) . '</h-row>';
   }
 
-  function column($atts, $content = null) {
+  function column( $atts, $content = null ) {
     $a = shortcode_atts( array(
       'size' => null,
       'large' => null,
@@ -56,12 +53,12 @@ class H_Shortcode {
   }
 
 
-  function shortcode_unautop($content) {
-    return strtr($content, [
+  function shortcode_unautop( $content ) {
+    return strtr($content, array(
       '<p>[' => '[',
       ']</p>' => ']',
       ']<br />' => ']',
       '<p>[/' => '[/'
-    ]);
+    ) );
   }
 }

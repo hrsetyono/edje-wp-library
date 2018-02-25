@@ -31,11 +31,11 @@ class H_Taxonomy {
     Parse the passed arguments into WP compatible one
 
     @param string $name
-    @param array $args
+    @param array $raw - The raw arguments
     @return array
   */
-  private function parse_args($args) {
-    $args = $this->check_raw_args($args);
+  private function parse_args($raw) {
+    $args = $this->check_raw_args($raw);
     $labels = $this->create_labels($args['label'], $args['name']);
 
     $wp_args = array(
@@ -47,10 +47,17 @@ class H_Taxonomy {
       'show_admin_column' => true,
       'hierarchical' => true,
       'rewrite' => array(
-        'slug' => H_Elper::to_slug($args['slug']),
+        'slug' => _H::to_slug($args['slug']),
         'with_front' => 'false'
       )
     );
+
+    // Check Support
+    if(isset($raw['supports']) ) {
+      if(in_array('rest-api', $raw['supports']) ) {
+        $wp_args['show_in_rest'] = true;
+      }
+    }
 
     return $wp_args;
   }
@@ -76,9 +83,9 @@ class H_Taxonomy {
 
     // format the args
     $new_args = array(
-      'name' => H_Elper::to_param($args['name']),
-      'label' => H_Elper::to_title($args['label']),
-      'slug' => H_Elper::to_param($args['slug'])
+      'name' => _H::to_param($args['name']),
+      'label' => _H::to_title($args['label']),
+      'slug' => _H::to_param($args['slug'])
     );
 
     return $new_args;
@@ -95,7 +102,7 @@ class H_Taxonomy {
     $plural = Inflector::pluralize($label);
     $singular = $label;
 
-    $title = H_Elper::to_title($name);
+    $title = _H::to_title($name);
     $title_plural = Inflector::pluralize($title);
 
     $labels = array(

@@ -1,8 +1,11 @@
 <?php
-class H_Menu {
+/*
+  Add / Remove item from Admin side panel
+*/
+class H_SidePanel {
   private $args;
 
-  public function __construct($args) {
+  function __construct( $args ) {
     $this->args = $args;
   }
 
@@ -42,7 +45,7 @@ class H_Menu {
       }
 
       if(isset( $value['icon'] )) {
-        $icon = H_Elper::to_icon($value['icon']);
+        $icon = _H::to_icon($value['icon']);
       }
 
       // add top level menu if slug is specified
@@ -56,7 +59,7 @@ class H_Menu {
       if(isset($value['submenu'] )) {
         $parent_slug = isset($value['slug']) ? $value['slug'] : $menu[$position][2];
 
-        $smenu = new H_Submenu($parent_slug, $value['submenu']);
+        $smenu = new H_SidePanel_Sub($parent_slug, $value['submenu']);
         $smenu->add();
       }
 
@@ -142,4 +145,37 @@ class H_Menu {
 
     return $position;
   }
+}
+
+/*
+  Add / Remove sub-item from Admin side panel
+*/
+class H_SidePanel_Sub {
+  private $parent_slug;
+  private $args;
+
+  public function __construct( $parent_slug, $args ) {
+    $this->parent_slug = $parent_slug;
+    $this->args = $args;
+  }
+
+  /*
+    Add submenu page to a parent menu
+
+    @param string $parent_slug
+    @param array $args - List of submenu in this format: array(name, slug)
+  */
+  public function add() {
+    if( !is_admin() ) { return false; }
+
+    $parent_slug = $this->parent_slug;
+    $args = $this->args;
+
+    foreach( $args as $title => $slug ) {
+      add_submenu_page( $parent_slug, $title, $title,
+        'manage_options', $slug
+      );
+    }
+  }
+
 }

@@ -1,10 +1,10 @@
 <?php
-
-new H_Install();
-class H_Install {
-
+/*
+  Functions to run after plugin is activated
+*/
+class H_OnActivate {
   function __construct() {
-    register_activation_hook(H_BASE, array($this, 'activation_hook') );
+    register_activation_hook( H_BASE, array($this, 'activation_hook') );
   }
 
   function activation_hook() {
@@ -87,8 +87,8 @@ class H_Install {
     $navs = array(
       // MAIN
       array(
-        'name' => 'Main',
-        'location' => 'main-menu',
+        'name' => 'Main Nav',
+        'location' => 'main-nav',
         'items' => array(
           array(
             'menu-item-title' => 'Home',
@@ -100,8 +100,8 @@ class H_Install {
 
       // SOCIAL
       array(
-        'name' => 'Social',
-        'location' => 'social-menu',
+        'name' => 'Social Nav',
+        'location' => 'social-nav',
         'items' => array(
           array(
             'menu-item-title' => 'facebook',

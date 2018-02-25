@@ -9,7 +9,7 @@ class H_SEO_Profile {
   function __construct() {
 
     // add social link if yoast not installed
-    if(! H_elper::is_plugin_active('yoast') ) {
+    if(! _H::is_plugin_active('yoast') ) {
       add_filter('user_contactmethods', array($this, 'add_social_contactmethods'), 10, 1);
     }
   }

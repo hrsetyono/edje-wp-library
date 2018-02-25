@@ -1,5 +1,5 @@
 <?php
-if(is_admin() ) {
+if( is_admin() ) {
   require_once 'h-metabox.php';
   require_once 'h-profile.php';
 } else {

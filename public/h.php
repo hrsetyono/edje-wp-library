@@ -1,26 +1,5 @@
 <?php
 /*
-Plugin Name: Edje WordPress
-Description: Library to helps customize WordPress. Designed to work with Timber and Jetpack.
-Plugin URI: http://github.com/hrsetyono/edje-wp
-Author: The Syne Studio
-Author URI: http://thesyne.com/
-Version: 0.6.1
-*/
-
-// exit if accessed directly
-if(!defined('ABSPATH') ) { exit; }
-
-// Constant
-define('H_URL', plugin_dir_url(__FILE__) );
-define('H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
-
-require_once 'vendor/all.php';
-require_once 'lib/all.php';
-require_once 'post-type/all.php';
-require_once 'seo/all.php';
-
-/*
   Main portal for calling all static methods
 */
 class H {
@@ -49,14 +28,14 @@ class H {
 
   ///// ACTIONS - TODO: still not working
 
-  static function add_actions($post_type, $actions) {
+  static function add_actions( $post_type, $actions ) {
     if(!is_admin() ) { return false; }
 
-    $pa = new H_PostAction($post_type, $actions);
+    $pa = new H_PostAction( $post_type, $actions );
     $pa->add();
   }
 
-  static function replace_actions($post_type, $actions) {
+  static function replace_actions( $post_type, $actions ) {
     if(!is_admin() ) { return false; }
 
     $pa = new H_PostAction($post_type, $actions);
@@ -65,17 +44,17 @@ class H {
 
   ///// ADMIN MENU
 
-  static function remove_menu($list) {
+  static function remove_menu( $args ) {
     if(!is_admin() ) { return false; }
 
-    $menu = new H_Menu($list);
+    $menu = new H_SidePanel( $args );
     $menu->remove();
   }
 
-  static function add_menus($args) {
+  static function add_menus( $args ) {
     if(!is_admin() ) { return false; }
 
-    $menu = new H_Menu($args);
+    $menu = new H_SidePanel( $args );
     $menu->add();
   }
 
@@ -85,10 +64,10 @@ class H {
     $new_args = array(
       $title => $args
     );
-    H::add_menus($new_args);
+    H::add_menus( $new_args );
   }
 
-  static function add_submenu($parent_title, $args) {
+  static function add_submenu( $parent_title, $args ) {
     if(!is_admin() ) { return false; }
 
     $new_args = array(
@@ -97,7 +76,7 @@ class H {
         'submenu' => $args
       )
     );
-    H::add_menus($new_args);
+    H::add_menus( $new_args );
   }
 
   static function add_menu_counter($parent_title, $count_function) {
@@ -110,6 +89,18 @@ class H {
       )
     );
 
-    H::add_menus($new_args);
+    H::add_menus( $new_args );
+  }
+
+
+  ///// CUSTOMIZER
+
+  /*
+
+
+    @param obj $wp_customize - WP_Customize object from customize_register action.
+  */
+  static function customizer( $wp_customize ) {
+    return new H_Customizer( $wp_customize );
   }
 }
