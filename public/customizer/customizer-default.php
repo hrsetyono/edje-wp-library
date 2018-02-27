@@ -23,16 +23,17 @@ class H_Customizer_Default {
   function head_footer_code( $wp_customize ) {
     $c = H::customizer( $wp_customize );
 
-    $c->add_section( 'head_footer', array(
-      'description' => __('Add custom code for Head and Footer area', 'h'),
+    $c->add_section( 'h_head_footer', array(
+      'title' => __( 'Head & Footer Code', 'h' ),
+      'description' => __( 'Add custom code for Head and Footer area', 'h' ),
     ) );
 
     $c->add_option( 'h[head_code]', 'code_editor htmlmixed', array(
-      'label' => __('HEAD code', 'h'),
+      'label' => __( 'HEAD code', 'h' ),
     ) );
 
     $c->add_option( 'h[footer_code]', 'code_editor htmlmixed', array(
-      'label' => __('FOOTER code', 'h'),
+      'label' => __( 'FOOTER code', 'h' ),
     ) );
   }
 

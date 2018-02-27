@@ -12,7 +12,9 @@ class _H {
     @return string
   */
   static function to_param($title) {
-    $slug = strtolower( str_replace(' ', '_', $title) );
+    $target_replace = array( ' ', '[', ']' );
+
+    $slug = strtolower( str_replace( $target_replace, '_', $title) );
     $slug = trim($slug, '^');
     return $slug;
   }
