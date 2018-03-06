@@ -95,6 +95,12 @@ class H_Customizer {
     );
 
     $this->wp->add_setting( $name, $args );
+
+    // add pencil button
+    $this->wp->selective_refresh->add_partial( $name, array(
+      'selector' => '#' . _H::to_param( $name ),
+      'render_callback' => '__return_false',
+    ) );
   }
 
 

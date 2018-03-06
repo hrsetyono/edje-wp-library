@@ -1,3 +1,7 @@
+## 0.7.1
+
+- [Customizer] Wrap the setting with ID selector to show pencil icon. Example: setting name is `phone_no`, so add `id="phone_no"` to the wrapper.
+
 ## 0.7.0
 
 - [CPT] Support `rest-api` will create endpoint with the slug at its base URL.

@@ -47,6 +47,8 @@ class H_Customizer_Default {
     $c->add_option( 'logo_mobile', 'image' );
   }
 
+  /////
+
   /*
     Add extra code to HEAD and FOOTER
   */
