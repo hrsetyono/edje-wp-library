@@ -140,6 +140,10 @@ class H_Customizer {
         $control = new WP_Customize_Image_Control( $this->wp, $name, $args );
         break;
 
+      case 'cropped_image':
+        $control = new WP_Customize_Cropped_Image_Control( $this->wp, $name, $args );
+        break;
+
       case 'color':
         $control = new WP_Customize_Color_Control( $this->wp, $name, $args );
         break;

@@ -1,3 +1,8 @@
+## 0.7.2
+
+- [CSS] Version string is removed to get better score at Pingdom
+
+
 ## 0.7.1
 
 - [Customizer] Wrap the setting with ID selector to show pencil icon. Example: setting name is `phone_no`, so add `id="phone_no"` to the wrapper.

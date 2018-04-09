@@ -35,6 +35,9 @@ class H_Customizer_Default {
     $c->add_option( 'h[footer_code]', 'code_editor htmlmixed', array(
       'label' => __( 'FOOTER code', 'h' ),
     ) );
+
+    $c->set_section( 'title_tagline' );
+    $c->add_option( 'h[crop]', 'cropped_image' );
   }
 
   /*
