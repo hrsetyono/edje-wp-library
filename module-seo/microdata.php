@@ -5,7 +5,6 @@
 * Validator: https://search.google.com/structured-data/testing-tool/u/0/
 */
 
-// new H_SEO_Microdata();
 class H_SEO_Microdata {
   function __construct() {
     add_action('wp_head', array($this, 'add_microdata'), 100);

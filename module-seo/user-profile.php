@@ -3,8 +3,6 @@
 *  Outputs extra meta tags for SEO purposes.
 */
 
-new H_SEO_Profile();
-
 class H_SEO_Profile {
   function __construct() {
 

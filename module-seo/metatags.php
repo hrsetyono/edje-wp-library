@@ -3,12 +3,11 @@
 *  Outputs extra meta tags for SEO purposes.
 */
 
-new H_SEO_Meta();
 class H_SEO_Meta {
   function __construct() {
     // remove extra rss
-    remove_action('wp_head', 'feed_links', 2 );
-    remove_action('wp_head', 'feed_links_extra', 3 );
+    remove_action( 'wp_head', 'feed_links', 2 );
+    remove_action( 'wp_head', 'feed_links_extra', 3 );
 
     // prevent url guessing
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
@@ -22,7 +21,7 @@ class H_SEO_Meta {
     // thse code below, only run when yoast not installed
     add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
 
-    if(_H::is_plugin_active('jetpack') ) {
+    if( _H::is_plugin_active('jetpack') ) {
       add_filter('jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
       add_filter('jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
     }

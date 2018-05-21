@@ -3,7 +3,6 @@
   Add SEO metabox on the side
 */
 
-new H_SEO_Metabox();
 class H_SEO_Metabox {
 
   function __construct() {

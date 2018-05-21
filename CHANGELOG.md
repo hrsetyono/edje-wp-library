@@ -1,3 +1,7 @@
+## 0.8.0
+
+- Organize files into module directory. Preparation to have Jetpack-like setting page.
+
 ## 0.7.2
 
 - [CSS] Version string is removed to get better score at Pingdom
