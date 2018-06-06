@@ -1,3 +1,7 @@
+## 0.8.1
+
+- Fixed Fatal error due to class not found.
+
 ## 0.8.0
 
 - Organize files into module directory. Preparation to have Jetpack-like setting page.

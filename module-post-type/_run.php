@@ -9,10 +9,12 @@ add_action( 'admin_init', '_run_admin_h_posttype' );
 function _run_h_posttype() {
   require_once H_PATH . '/module-post-type/post-type.php';
   require_once H_PATH . '/module-post-type/taxonomy.php';
-}
 
-function _run_admin_h_posttype() {
+  // todo should only run in admin
   require_once H_PATH . '/module-post-type/post-column.php';
   require_once H_PATH . '/module-post-type/post-filter.php';
   require_once H_PATH . '/module-post-type/post-action.php';
+}
+
+function _run_admin_h_posttype() {
 }

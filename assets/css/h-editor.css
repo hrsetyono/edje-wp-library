@@ -24,6 +24,10 @@ ol ol { list-style-type: lower-alpha; }
 
 hr { display: block; height: 1px; border: 0; border-top: #87a6bc 1px solid; margin: 2.5em 0; padding: 0; }
 
+pre { padding: 1em; background-color: rgba(233, 239, 243, 0.5); }
+
+code { background-color: rgba(233, 239, 243, 0.5) !important; }
+
 .alignleft, .alignright { max-width: 50%; margin-bottom: 1em; }
 
 .alignleft { margin-right: 1em; }

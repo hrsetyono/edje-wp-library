@@ -5,13 +5,14 @@ Description: Library to helps customize WordPress. Designed to work with Timber 
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.8.0
+Version: 0.8.1
 */
 
 // exit if accessed directly
 if( !defined('ABSPATH') ) { exit; }
 
 // Constant
+define( 'H_VERSION', '0.8.1' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );

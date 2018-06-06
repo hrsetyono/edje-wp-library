@@ -65,6 +65,15 @@ hr {
   padding: 0;
 }
 
+pre {
+  padding: 1em;
+  background-color: $panel-bg;
+}
+
+code {
+  background-color: $panel-bg !important;
+}
+
 // Media Alignment
 
 .alignleft,

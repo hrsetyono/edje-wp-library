@@ -17,9 +17,14 @@ function _run_h_default() {
     require_once H_PATH . '/module-change-default/h-jetpack.php';
     new H_Jetpack();
   }
+
+
+  if( is_admin() ) {
+    require_once H_PATH . '/module-change-default/h-default-admin.php';
+    new H_DefaultAdmin();
+  }
 }
 
 function _run_admin_h_default() {
-  require_once H_PATH . '/module-change-default/h-default-admin.php';
-  new H_DefaultAdmin();
+
 }

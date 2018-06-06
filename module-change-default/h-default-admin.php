@@ -5,7 +5,9 @@
 class H_DefaultAdmin {
   function __construct() {
     add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
-    add_action( 'admin_init', array($this, 'add_editor_style') );
+
+    add_action( 'admin_init', array($this, 'add_classic_editor_style') );
+    // add_action( 'enqueue_block_editor_assets', array($this, 'add_editor_style') );
 
     // remove emoji
     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
@@ -30,15 +32,23 @@ class H_DefaultAdmin {
     @action admin_enqueu_scripts
   */
   function admin_enqueue_scripts() {
-    wp_enqueue_style('h-admin', H_URL . '/assets/css/h-admin.css');
+    wp_enqueue_style( 'h-admin', H_URL . '/assets/css/h-admin.css' );
   }
 
   /*
-    Add custom CSS to editor area
+    Add custom CSS to Editor area
     @action admin_init
   */
+  function add_classic_editor_style() {
+    add_editor_style( H_URL . '/assets/css/h-editor.css' );
+  }
+
+  /*
+    Add custom CSS to Gutenberg Editor
+    @action enqueue_block_editor_assets
+  */
   function add_editor_style() {
-    add_editor_style(H_URL . '/assets/css/h-editor.css');
+    // wp_enqueue_style( 'h-editor', H_URL . '/assets/css/h-editor.css', false, H_VERSION, 'all' );
   }
 
   /*
