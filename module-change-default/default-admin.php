@@ -1,8 +1,8 @@
-<?php
+<?php namespace h;
 /*
   Change default setting that affect Admin panel
 */
-class H_DefaultAdmin {
+class Default_Admin {
   function __construct() {
     add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
 

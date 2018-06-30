@@ -1,14 +1,14 @@
-<?php
+<?php namespace h;
 /*
 *  Outputs extra meta tags for SEO purposes.
 */
 
-class H_SEO_Profile {
+class SEO_Profile {
   function __construct() {
 
     // add social link if yoast not installed
-    if(! _H::is_plugin_active('yoast') ) {
-      add_filter('user_contactmethods', array($this, 'add_social_contactmethods'), 10, 1);
+    if( !\_H::is_plugin_active('yoast') ) {
+      add_filter( 'user_contactmethods', array($this, 'add_social_contactmethods'), 10, 1 );
     }
   }
 
@@ -17,7 +17,7 @@ class H_SEO_Profile {
 
     @filter user_contactmethods
   */
-  public function add_social_contactmethods($contactmethods) {
+  public function add_social_contactmethods( $contactmethods ) {
     $contactmethods['googleplus'] = __('Google+ URL', 'h');
     $contactmethods['twitter'] = __('Twitter Username (without @)', 'h');
     $contactmethods['facebook'] = __('Facebook URL', 'h');

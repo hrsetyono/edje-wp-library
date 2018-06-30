@@ -1,4 +1,4 @@
-<?php
+<?php namespace h;
 /*
   Allow visual editor on Customizer panel
 */
@@ -9,7 +9,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 
 		@link https://github.com/maddisondesigns/customizer-custom-controls
 	*/
-	class H_Customize_TinyMCE_Control extends WP_Customize_Control {
+	class Customizer_TinyMCE_Control extends WP_Customize_Control {
 		/*
 			Enqueue JS and CSS
 		*/
@@ -33,7 +33,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 		  Render the control in the customizer
 		*/
 		public function render_content() {
-			$id = _H::to_param( $this->id );
+			$id = \_H::to_param( $this->id );
 		?>
 			<div class="tinymce-control">
 				<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>

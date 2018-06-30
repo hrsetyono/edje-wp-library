@@ -1,9 +1,9 @@
-<?php
+<?php namespace h;
 /*
 *  Outputs extra meta tags for SEO purposes.
 */
 
-class H_SEO_Meta {
+class SEO_Meta {
   function __construct() {
     // remove extra rss
     remove_action( 'wp_head', 'feed_links', 2 );
@@ -13,20 +13,20 @@ class H_SEO_Meta {
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
 
     // If Yoast installed, disable custom meta tags
-    if(_H::is_plugin_active('yoast') ) {
+    if( \_H::is_plugin_active('yoast') ) {
       add_filter('jetpack_enable_open_graph', '__return_false');
       return false;
     }
 
     // thse code below, only run when yoast not installed
-    add_filter('wp_title', array($this, 'set_wp_title'), 10, 3);
+    add_filter( 'wp_title', array($this, 'set_wp_title'), 10, 3 );
 
-    if( _H::is_plugin_active('jetpack') ) {
-      add_filter('jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
-      add_filter('jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
+    if( \_H::is_plugin_active('jetpack') ) {
+      add_filter( 'jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
+      add_filter( 'jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
     }
     else {
-      add_action('wp_head', array($this, 'custom_meta_tags'), 2);
+      add_action( 'wp_head', array($this, 'custom_meta_tags'), 2 );
     }
   }
 
@@ -77,7 +77,7 @@ class H_SEO_Meta {
 
     // if not front page, use excerpt from content
     if(!is_front_page() && $post) {
-      $excerpt = $post->post_excerpt ? $post->post_excerpt : _H::trim_content($post->post_content);
+      $excerpt = $post->post_excerpt ? $post->post_excerpt : \_H::trim_content($post->post_content);
       $content = $excerpt ? $excerpt : $content;
     }
 

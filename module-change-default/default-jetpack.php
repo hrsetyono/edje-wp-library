@@ -1,15 +1,14 @@
-<?php
+<?php namespace h;
 /*
   Modify Jetpack modules
 */
-
-class H_Jetpack {
+class Default_Jetpack {
   function __construct() {
     add_filter( 'wp', array($this, 'remove_related_posts'), 20 );
     add_action( 'wp_head', array($this, 'enqueue_script'), 1 );
 
     // add woocommerce to sitemap
-    if( _H::is_plugin_active('woocommerce') ) {
+    if( \_H::is_plugin_active('woocommerce') ) {
       add_filter( 'jetpack_sitemap_post_types', array($this, 'add_woocommerce_to_sitemap') );
     }
   }

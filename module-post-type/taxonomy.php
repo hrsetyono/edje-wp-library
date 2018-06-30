@@ -1,10 +1,12 @@
-<?php
-
-class H_Taxonomy {
+<?php namespace h;
+/*
+  Create custom taxonomy
+*/
+class Taxonomy {
   private $post_type;
   private $args;
 
-  public function __construct($post_type, $args) {
+  public function __construct( $post_type, $args ) {
     $this->post_type = $post_type;
     $this->args = $args;
   }
@@ -14,13 +16,13 @@ class H_Taxonomy {
     $args = $this->args;
     $post_type = $this->post_type;
 
-    $wp_args = $this->parse_args($args);
+    $wp_args = $this->parse_args( $args );
 
-    register_taxonomy($wp_args['name'], $post_type, $wp_args);
+    register_taxonomy( $wp_args['name'], $post_type, $wp_args );
 
     // add taxonomy filter
-    if(is_admin() ) {
-      $pf = new H_PostFilter($post_type, $wp_args['name']);
+    if( is_admin() ) {
+      $pf = new Post_Filter( $post_type, $wp_args['name'] );
       $pf->init();
     }
   }
@@ -34,9 +36,9 @@ class H_Taxonomy {
     @param array $raw - The raw arguments
     @return array
   */
-  private function parse_args($raw) {
-    $args = $this->check_raw_args($raw);
-    $labels = $this->create_labels($args['label'], $args['name']);
+  private function parse_args( $raw ) {
+    $args = $this->check_raw_args( $raw );
+    $labels = $this->create_labels( $args['label'], $args['name'] );
 
     $wp_args = array(
       'name' => $args['name'],
@@ -47,14 +49,14 @@ class H_Taxonomy {
       'show_admin_column' => true,
       'hierarchical' => true,
       'rewrite' => array(
-        'slug' => _H::to_slug($args['slug']),
+        'slug' => \_H::to_slug( $args['slug'] ),
         'with_front' => 'false'
       )
     );
 
     // Check Support
-    if(isset($raw['supports']) ) {
-      if(in_array('rest-api', $raw['supports']) ) {
+    if( isset( $raw['supports']) ) {
+      if( in_array( 'rest-api', $raw['supports'] ) ) {
         $wp_args['show_in_rest'] = true;
       }
     }
@@ -68,24 +70,24 @@ class H_Taxonomy {
 
     @return array - The complete and formatted args
   */
-  function check_raw_args($args) {
+  function check_raw_args( $args ) {
     // if plain text, form the array format
-    if(is_string($args) ) {
+    if( is_string( $args ) ) {
       $args = array(
         'name' => $args, 'label' => $args, 'slug' => $args
       );
     }
     else {
       // complete the args by adding the missing one
-      $args['name'] = isset($args['name']) ? $args['name'] : $args['slug'];
-      $args['slug'] = isset($args['slug']) ? $args['slug'] : $args['name'];
+      $args['name'] = isset( $args['name'] ) ? $args['name'] : $args['slug'];
+      $args['slug'] = isset( $args['slug'] ) ? $args['slug'] : $args['name'];
     }
 
     // format the args
     $new_args = array(
-      'name' => _H::to_param($args['name']),
-      'label' => _H::to_title($args['label']),
-      'slug' => _H::to_param($args['slug'])
+      'name' => \_H::to_param( $args['name'] ),
+      'label' => \_H::to_title( $args['label'] ),
+      'slug' => \_H::to_param( $args['slug'] )
     );
 
     return $new_args;
@@ -98,12 +100,12 @@ class H_Taxonomy {
     @param string $name - The taxonomy name
     @return array
   */
-  private function create_labels($label, $name) {
-    $plural = Inflector::pluralize($label);
+  private function create_labels( $label, $name ) {
+    $plural = \Inflector::pluralize( $label );
     $singular = $label;
 
-    $title = _H::to_title($name);
-    $title_plural = Inflector::pluralize($title);
+    $title = \_H::to_title( $name );
+    $title_plural = \Inflector::pluralize( $title );
 
     $labels = array(
       'name' => $title_plural,
@@ -117,9 +119,9 @@ class H_Taxonomy {
       'parent_item' => 'Parent ' . $singular,
       'search_items' => 'Search ' . $plural,
       'popular_items' => NULL,
-      'add_or_remove_items' => 'Add or remove ' . strtolower($plural),
-      'choose_from_most_used' => 'Choose from the most used ' . strtolower($plural),
-      'not_found' => 'No ' . strtolower($plural) . ' found'
+      'add_or_remove_items' => 'Add or remove ' . strtolower( $plural ),
+      'choose_from_most_used' => 'Choose from the most used ' . strtolower( $plural ),
+      'not_found' => 'No ' . strtolower( $plural ) . ' found'
     );
 
     return $labels;

@@ -1,8 +1,8 @@
-<?php
+<?php namespace h;
 /*
   Add default customizer option
 */
-class H_Customizer_Default {
+class Customizer_Default {
   private $option;
 
   function __construct() {
@@ -21,7 +21,7 @@ class H_Customizer_Default {
     @param obj $wp_customize
   */
   function head_footer_code( $wp_customize ) {
-    $c = H::customizer( $wp_customize );
+    $c = \H::customizer( $wp_customize );
 
     $c->add_section( 'h_head_footer', array(
       'title' => __( 'Head & Footer Code', 'h' ),

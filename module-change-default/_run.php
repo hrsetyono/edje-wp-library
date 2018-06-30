@@ -9,22 +9,20 @@ add_action( 'admin_init', '_run_admin_h_default' );
 /////
 
 function _run_h_default() {
-  require_once H_PATH . '/module-change-default/h-default.php';
-  new H_Default();
+  require_once H_PATH . '/module-change-default/default-public.php';
+  new \h\Default_Public();
 
   // if not in admin AND jetpack is installed
   if( !is_admin() && _H::is_plugin_active('jetpack') ) {
-    require_once H_PATH . '/module-change-default/h-jetpack.php';
-    new H_Jetpack();
-  }
-
-
-  if( is_admin() ) {
-    require_once H_PATH . '/module-change-default/h-default-admin.php';
-    new H_DefaultAdmin();
+    require_once H_PATH . '/module-change-default/default-jetpack.php';
+    new \h\Default_Jetpack();
   }
 }
 
 function _run_admin_h_default() {
+  require_once H_PATH . '/module-change-default/default-codemirror.php';
+  require_once H_PATH . '/module-change-default/default-admin.php';
 
+  new \h\Default_Admin();
+  new \h\Default_Codemirror();
 }

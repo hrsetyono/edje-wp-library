@@ -1,8 +1,8 @@
-<?php
+<?php namespace h;
 /*
   Change default setting that affect Frontend side
 */
-class H_Default {
+class Default_Public {
   function __construct() {
     // remove wp meta tag
     remove_action( 'wp_head', 'wp_generator' );

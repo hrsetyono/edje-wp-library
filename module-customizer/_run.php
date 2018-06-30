@@ -8,10 +8,10 @@ add_action( 'admin_init', '_run_admin_h_customizer' );
 
 function _run_h_customizer() {
   require_once H_PATH . '/module-customizer/customizer.php';
-  require_once H_PATH . '/module-customizer/default-customizer.php';
+  require_once H_PATH . '/module-customizer/customizer-default.php';
   require_once H_PATH . '/module-customizer/customizer-tinymce.php';
 
-  new H_Customizer_Default();
+  new \h\Customizer_Default();
 }
 
 function _run_admin_h_customizer() {

@@ -1,8 +1,8 @@
-<?php
+<?php namespace h;
 /*
   Add / Remove sub-item from Admin side panel
 */
-class H_SidePanel_Sub {
+class Sidepanel_Sub {
   private $parent_slug;
   private $args;
 

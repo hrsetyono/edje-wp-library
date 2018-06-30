@@ -1,5 +1,6 @@
 screenshot/
 npm-debug.log
+module-web-push/vendor/
 
 # Others
 sql/

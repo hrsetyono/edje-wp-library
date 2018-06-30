@@ -1,9 +1,9 @@
-<?php
+<?php namespace h;
 /*
   Add SEO metabox on the side
 */
 
-class H_SEO_Metabox {
+class SEO_Metabox {
 
   function __construct() {
     // add_action('admin_init', array($this, 'add_meta_boxes') );

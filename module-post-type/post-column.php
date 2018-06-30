@@ -1,16 +1,19 @@
-<?php
-class H_PostColumn {
+<?php namespace h;
+/*
+  Add custom column to CPT listing table
+*/
+class Post_Column {
   private $name;
   private $columns;
 
-  public function __construct($name, $column_args) {
+  public function __construct( $name, $column_args ) {
     $this->name = $name;
-    $this->columns = $this->parse_args($column_args);
+    $this->columns = $this->parse_args( $column_args );
   }
 
   // Add visible column in admin panel
   public function init() {
-    if(!is_admin()) { return false; }
+    if( !is_admin() ) { return false; }
 
     $name = $this->name;
 
@@ -19,10 +22,10 @@ class H_PostColumn {
     $name_fill = 'manage_' . $name . '_posts_custom_column'; // fill column
     $name_sortable = 'manage_edit-' . $name . '_sortable_columns'; // enable sorting
 
-    add_filter($name_create, array($this, '_filter_create') );
-    add_action($name_fill, array($this, '_filter_fill'), 10, 2);
-    add_filter($name_sortable, array($this, '_filter_sortable') );
-    add_filter('request', array($this, '_metakey_sortable') );
+    add_filter( $name_create, array($this, '_filter_create') );
+    add_action( $name_fill, array($this, '_filter_fill'), 10, 2 );
+    add_filter( $name_sortable, array($this, '_filter_sortable') );
+    add_filter( 'request', array($this, '_metakey_sortable') );
   }
 
   //////////
@@ -33,13 +36,13 @@ class H_PostColumn {
     @param array $args - Original column args
     @return array - The parsed and neat column data
   */
-  private function parse_args($args) {
+  private function parse_args( $args ) {
     $columns = array();
 
-    foreach($args as $key => $value) {
-      $text = is_string($key) ? $key : $value;
-      $col = $this->format_arg($text, $value);
-      $columns[$col['slug']] = $col;
+    foreach( $args as $key => $value ) {
+      $text = is_string( $key ) ? $key : $value;
+      $col = $this->format_arg( $text, $value );
+      $columns[ $col['slug'] ] = $col;
     }
 
     return $columns;
@@ -51,7 +54,7 @@ class H_PostColumn {
     @param string $text - Either the key or value of Columns arg, whichever is string
     @return array - The formatted argument
   */
-  private function format_arg($text, $value) {
+  private function format_arg( $text, $value ) {
     $col = array(
       'slug' => '',
       'title' => '',
@@ -62,12 +65,12 @@ class H_PostColumn {
     );
 
     // if contains caret, it's sortable
-    if(strpos($text, '^') ) {
-      $text = trim($text, '^');
+    if( strpos($text, '^') ) {
+      $text = trim( $text, '^' );
       $col['sortable'] = true;
     }
 
-    $col['slug'] = _H::to_param($text);
+    $col['slug'] = \_H::to_param( $text );
 
     // if comments, set the default icon
     if($col['slug'] === 'comments') {
@@ -75,20 +78,20 @@ class H_PostColumn {
     }
 
     // if value is array, get [content], if not just put the plain value
-    if(is_array($value) ) {
-      $col['content'] = isset($value['content']) ? $value['content'] : $text;
+    if( is_array($value) ) {
+      $col['content'] = isset( $value['content'] ) ? $value['content'] : $text;
 
       // add icon if exist
-      if(isset($value['icon']) ) {
-        $col['icon'] = _H::to_icon($value['icon']);
+      if( isset( $value['icon'] ) ) {
+        $col['icon'] = \_H::to_icon( $value['icon'] );
       }
     } else {
       $col['content'] = $value;
     }
 
     // if icon exist
-    $title = _H::to_title($text);
-    if($col['icon']) {
+    $title = \_H::to_title( $text );
+    if( $col['icon'] ) {
       $title = "<span class='dashicons {$col['icon']}'></span> <span class='screen-reader-text'>{$title}</span>";
     }
 
@@ -145,11 +148,11 @@ class H_PostColumn {
 
     @return string - The content of the column
   */
-  public function _filter_fill($name, $post_id) {
+  public function _filter_fill( $name, $post_id ) {
     global $post;
     $columns = $this->columns;
 
-    switch($name) {
+    switch( $name ) {
       case 'cb':
       case 'title':
       case 'author':
@@ -165,22 +168,22 @@ class H_PostColumn {
         break;
 
       case 'thumbnail':
-        $thumb = get_the_post_thumbnail($post_id, array(75, 75) );
+        $thumb = get_the_post_thumbnail( $post_id, array(75, 75) );
         echo $thumb;
 
       // if custom field
       default:
-        $content = $columns[$name]['content'];
+        $content = $columns[ $name ]['content'];
 
         // if function, run it
-        if(isset($content) && is_callable($content) ) {
+        if( isset( $content ) && is_callable( $content ) ) {
           // TODO: add check whether ACF exists, if not, use native get_post_custom($id);
-          $fields = get_fields($post_id);
-          echo $content($post, $fields);
+          $fields = get_fields( $post_id );
+          echo $content( $post, $fields );
         }
         // if plain string, look for the custom field
         else {
-          $output = $this->_get_meta_content($name, $post_id);
+          $output = $this->_get_meta_content( $name, $post_id );
           echo $output;
         }
 
@@ -196,28 +199,28 @@ class H_PostColumn {
 
     @return string - Plain text or HTML to be echoed out.
   */
-  private static function _get_meta_content($name, $post_id) {
+  private static function _get_meta_content( $name, $post_id ) {
     global $post;
 
-    $meta = get_field($name, $post_id);
-    $terms = get_the_terms($post_id, $name);
+    $meta = get_field( $name, $post_id );
+    $terms = get_the_terms( $post_id, $name );
 
     // is a term if no error and has been ticked
-    $is_terms = !isset($terms->errors) && $terms;
+    $is_terms = !isset( $terms->errors ) && $terms;
 
     // if the column is a custom field
-    if($meta) {
+    if( $meta ) {
       return $meta;
     }
     // if the column is a term
-    elseif ($is_terms) {
+    elseif( $is_terms ) {
       $out = array();
 
       // loop through each term, linking to the 'edit posts' page for the specific term
-      foreach ($terms as $term) {
+      foreach( $terms as $term ) {
         $out[] = sprintf('<a href="%s">%s</a>',
           esc_url( add_query_arg(
-            array('post_type' => $post->post_type, 'type' => $term->slug), 'edit.php')
+            array( 'post_type' => $post->post_type, 'type' => $term->slug ), 'edit.php' )
           ),
           esc_html( sanitize_term_field(
             'name', $term->name, $term->term_id, 'type', 'display')
@@ -226,7 +229,7 @@ class H_PostColumn {
       }
 
       // join the terms, separating with comma
-      return join(', ', $out);
+      return join( ', ', $out );
     }
   }
 
@@ -237,11 +240,11 @@ class H_PostColumn {
     @return array - The updated sortable column list
   */
 
-  public function _filter_sortable($defaults) {
-    $sortable_columns = $this->get_sortable_columns($this->columns);
+  public function _filter_sortable( $defaults ) {
+    $sortable_columns = $this->get_sortable_columns( $this->columns );
 
-    foreach($sortable_columns as $sc) {
-      $defaults[$sc] = $sc;
+    foreach( $sortable_columns as $sc ) {
+      $defaults[ $sc ] = $sc;
     }
     return $defaults;
   }
@@ -256,13 +259,13 @@ class H_PostColumn {
 
     TODO: bug with Complex column
   */
-  public function _metakey_sortable ($vars) {
-    $sortable_columns = $this->get_sortable_columns($this->columns);
+  public function _metakey_sortable( $vars ) {
+    $sortable_columns = $this->get_sortable_columns( $this->columns );
 
-    $is_orderby_meta = isset($vars['orderby']) && in_array($vars['orderby'], $sortable_columns);
+    $is_orderby_meta = isset( $vars['orderby'] ) && in_array( $vars['orderby'], $sortable_columns );
 
-    if ($is_orderby_meta) {
-      $vars = array_merge($vars, array(
+    if( $is_orderby_meta ) {
+      $vars = array_merge( $vars, array(
         'meta_key' => $vars['orderby'],
         'orderby' => 'meta_value'
       ));

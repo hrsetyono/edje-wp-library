@@ -1,11 +1,14 @@
-<?php
-class H_PostAction {
+<?php namespace h;
+/*
+  Add extra call-to-action on CPT listing (that appears on hover)
+*/
+class Post_Action {
   private $post_type;
   private $actions;
 
   private $redirect_uri;
 
-  public function __construct($post_type, $actions) {
+  public function __construct( $post_type, $actions ) {
     $this->post_type = $post_type;
     $this->actions = $actions;
   }
@@ -13,14 +16,14 @@ class H_PostAction {
   public function add() {
     if(!is_admin()) { return false; }
 
-    add_filter('post_row_actions', array($this, '_add_row_actions'), null, 2);
+    add_filter( 'post_row_actions', array($this, '_add_row_actions'), null, 2 );
     $this->_add_hooks();
   }
 
   public function replace() {
     if(!is_admin()) { return false; }
 
-    add_filter('post_row_actions', array($this, '_replace_row_actions'), null, 2);
+    add_filter( 'post_row_actions', array($this, '_replace_row_actions'), null, 2 );
     $this->_add_hooks();
   }
 
@@ -34,12 +37,12 @@ class H_PostAction {
 
     @return (array) - Actions with new link(s) added.
   */
-  function _add_row_actions($actions, $post) {
+  function _add_row_actions( $actions, $post ) {
     $valid = $post->post_type === $this->post_type && $post->post_status !== 'trash';
-    if($valid) {
-      $args = $this->_parse_for_actions($actions, $post);
+    if( $valid ) {
+      $args = $this->_parse_for_actions( $actions, $post );
 
-      foreach($args as $slug => $value) {
+      foreach( $args as $slug => $value ) {
         $actions[$slug] = $value['content'];
       }
     }
@@ -55,15 +58,15 @@ class H_PostAction {
 
     @return (array) - New replaced actions
   */
-  function _replace_row_actions($actions, $post) {
+  function _replace_row_actions( $actions, $post ) {
     $valid = $post->post_type === $this->post_type && $post->post_status !== 'trash';
-    if($valid) {
-      $args = $this->_parse_for_actions($actions, $post);
+    if( $valid ) {
+      $args = $this->_parse_for_actions( $actions, $post );
 
       // since it's replacing, start from clean array
       $actions = array();
-      foreach($args as $slug => $value) {
-        $actions[$slug] = $value['content'];
+      foreach( $args as $slug => $value ) {
+        $actions[ $slug ] = $value['content'];
       }
     }
 
@@ -73,15 +76,14 @@ class H_PostAction {
 
   private function _add_hooks() {
     $args = $this->_parse_for_hooks();
-    foreach($args as $name => $callback) {
-
+    foreach( $args as $name => $callback ) {
       // admin_action_xxx can be called by passing in admin_url with the param ?action=xxx
-      add_action('admin_action_' . $name, function() use ($callback) {
+      add_action( 'admin_action_' . $name, function() use ( $callback ) {
         $post_id = isset($_GET['post']) ? $_GET['post'] : $_POST['post'];
         $redirect_uri = isset($_GET['redirect_uri']) ? $_GET['redirect_uri'] : '';
 
         $callback($post_id);
-        wp_redirect(admin_url($redirect_uri, 'http'), 301);
+        wp_redirect( admin_url($redirect_uri, 'http'), 301 );
       });
     }
   }
@@ -93,8 +95,8 @@ class H_PostAction {
     $args = array();
     $actions = $this->actions;
 
-    foreach($actions as $key => $value) {
-      if(is_callable($value) && is_null($value(null)) ) {
+    foreach( $actions as $key => $value ) {
+      if( is_callable( $value ) && is_null( $value(null) ) ) {
         $name = 'h_action_' . $key;
         $args[$name] = $value;
       }
@@ -106,19 +108,19 @@ class H_PostAction {
   /*
     Format the passed arguments for Row action creation.
   */
-  private function _parse_for_actions($actions, $post) {
+  private function _parse_for_actions( $actions, $post ) {
     $args = array();
     $new_actions = $this->actions;
 
-    foreach($new_actions as $key => $value) {
-      $slug = is_int($key) ? $value : $key;
-      $title = _H::to_title($slug);
+    foreach( $new_actions as $key => $value ) {
+      $slug = is_int( $key ) ? $value : $key;
+      $title = \_H::to_title($slug);
 
-      switch($slug) {
+      switch( $slug ) {
         case 'view':
         case 'edit':
         case 'trash':
-          $content = $actions[$slug];
+          $content = $actions[ $slug ];
           break;
 
         case 'quickedit':
@@ -128,7 +130,7 @@ class H_PostAction {
 
         default:
           // if a function AND return null
-          if(is_callable($value) && is_null($value(null)) ) {
+          if( is_callable($value) && is_null( $value(null) ) ) {
             $redirect_uri = $this->_get_redirect_uri();
 
             $action_name = "h_action_{$slug}";
@@ -137,12 +139,12 @@ class H_PostAction {
             $content = "<a href='{$href}'>{$title}</a>";
           }
           else {
-            $href = $value($post->ID);
+            $href = $value( $post->ID );
             $content = "<a href='{$href}'>{$title}</a>";
           }
       }
 
-      $args[$slug] = array('title' => $title, 'content' => $content);
+      $args[ $slug ] = array( 'title' => $title, 'content' => $content );
     }
     return $args;
   }
@@ -151,10 +153,10 @@ class H_PostAction {
     Get redirect URI after clicking
   */
   private function _get_redirect_uri() {
-    $paged = isset($_GET['paged']) ? $_GET['paged'] : '';
+    $paged = isset( $_GET['paged'] ) ? $_GET['paged'] : '';
     $uri = "edit.php?post_type={$this->post_type}";
 
-    if($paged) {
+    if( $paged ) {
       $uri .= "&paged={$paged}";
     }
 

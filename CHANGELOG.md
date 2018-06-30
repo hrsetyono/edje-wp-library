@@ -1,3 +1,7 @@
+## 0.8.2
+
+- Namespaced all modules with "h". No changes needed on Theme code.
+
 ## 0.8.1
 
 - Fixed Fatal error due to class not found.

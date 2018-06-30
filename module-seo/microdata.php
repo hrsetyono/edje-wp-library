@@ -1,13 +1,13 @@
-<?php
+<?php namespace h;
 /*
 * Add microdata to Posts and Products automatically
 *
 * Validator: https://search.google.com/structured-data/testing-tool/u/0/
 */
 
-class H_SEO_Microdata {
+class SEO_Microdata {
   function __construct() {
-    add_action('wp_head', array($this, 'add_microdata'), 100);
+    add_action( 'wp_head', array($this, 'add_microdata'), 100 );
   }
 
   /*
@@ -17,14 +17,14 @@ class H_SEO_Microdata {
     @param str $content - The WP Content
     @return str
   */
-  function add_microdata($content) {
+  function add_microdata( $content ) {
     global $post;
 
     // the function to run when it's on these Single Post page
     $targets = array('post' => array($this, 'get_post_microdata') );
 
     // add WooCommerce microdata
-    if(_H::is_plugin_active('woocommerce') ) {
+    if( \_H::is_plugin_active('woocommerce') ) {
       $targets['product'] = array($this, 'get_product_microdata');
     }
 

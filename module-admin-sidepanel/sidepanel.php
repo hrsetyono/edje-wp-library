@@ -1,8 +1,8 @@
-<?php
+<?php namespace h;
 /*
   Add / Remove item from Admin side panel
 */
-class H_SidePanel {
+class Sidepanel {
   private $args;
 
   function __construct( $args ) {
@@ -45,7 +45,7 @@ class H_SidePanel {
       }
 
       if(isset( $value['icon'] )) {
-        $icon = _H::to_icon($value['icon']);
+        $icon = \_H::to_icon($value['icon']);
       }
 
       // add top level menu if slug is specified
@@ -59,7 +59,7 @@ class H_SidePanel {
       if(isset($value['submenu'] )) {
         $parent_slug = isset($value['slug']) ? $value['slug'] : $menu[$position][2];
 
-        $smenu = new H_SidePanel_Sub($parent_slug, $value['submenu']);
+        $smenu = new Sidepanel_Sub($parent_slug, $value['submenu']);
         $smenu->add();
       }
 

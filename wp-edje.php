@@ -5,7 +5,7 @@ Description: Library to helps customize WordPress. Designed to work with Timber 
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.8.1
+Version: 0.8.2
 */
 
 // exit if accessed directly
@@ -27,6 +27,7 @@ function run_wp_edje() {
   require_once 'module-customizer/_run.php';
   require_once 'module-admin-sidepanel/_run.php';
   require_once 'module-change-default/_run.php';
+  require_once 'module-web-push/_run.php';
 
   require_once 'admin/h-on-activate.php';
   new H_OnActivate();
@@ -45,52 +46,61 @@ class H {
 
   ///// POST TYPE
 
-  static function register_post_type($name, $args = array() ) {
-    $pt = new H_PostType($name, $args);
+  static function register_post_type( $name, $args = array() ) {
+    $pt = new \h\Post_Type( $name, $args );
     $pt->init();
   }
 
-  static function register_taxonomy($name, $args) {
-    $tx = new H_Taxonomy($name, $args);
+  static function register_taxonomy( $name, $args ) {
+    $tx = new \h\Taxonomy( $name, $args );
     $tx->init();
   }
 
-  static function register_columns($name, $args) {
-    if(!is_admin() ) { return false; }
+  static function register_columns( $name, $args ) {
+    if( !is_admin() ) { return false; }
 
-    $pc = new H_PostColumn($name, $args);
+    $pc = new \h\Post_Column( $name, $args );
     $pc->init();
   }
 
   ///// ACTIONS - TODO: still not working
 
   static function add_actions( $post_type, $actions ) {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    $pa = new H_PostAction( $post_type, $actions );
+    $pa = new \h\Post_Action( $post_type, $actions );
     $pa->add();
   }
 
   static function replace_actions( $post_type, $actions ) {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    $pa = new H_PostAction($post_type, $actions);
+    $pa = new \h\Post_Action( $post_type, $actions );
     $pa->replace();
   }
+
+
+  ///// NOTIFICATION
+
+  static function send_push_message( $title, $body ) {
+    $web_push = new \h\Web_Push( $_GET['id'] );
+    $web_push->send( $title, $body );
+  }
+
 
   ///// ADMIN MENU
 
   static function remove_menu( $args ) {
     if(!is_admin() ) { return false; }
 
-    $menu = new H_SidePanel( $args );
+    $menu = new \h\Sidepanel( $args );
     $menu->remove();
   }
 
   static function add_menus( $args ) {
     if(!is_admin() ) { return false; }
 
-    $menu = new H_SidePanel( $args );
+    $menu = new \h\Sidepanel( $args );
     $menu->add();
   }
 
@@ -136,6 +146,6 @@ class H {
     @param obj $wp_customize - WP_Customize object from customize_register action.
   */
   static function customizer( $wp_customize ) {
-    return new H_Customizer( $wp_customize );
+    return new \h\Customizer( $wp_customize );
   }
 }

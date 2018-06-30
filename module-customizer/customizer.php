@@ -1,10 +1,10 @@
-<?php
+<?php namespace h;
 /*
   Wrapper for WP Customizer
 
   https://github.com/hrsetyono/wp-edje/wiki/Customizer
 */
-class H_Customizer {
+class Customizer {
   private $wp; // $wp_customize object
   private $section;
 
@@ -21,7 +21,7 @@ class H_Customizer {
   public function add_section( $name, $args = array() ) {
     // create args and replace default with passed one, if any.
     $default_args = array(
-      'title' => _H::to_title( $name ),
+      'title' => \_H::to_title( $name ),
     );
     $args = array_merge( $default_args, $args );
 
@@ -98,7 +98,7 @@ class H_Customizer {
 
     // add pencil button
     $this->wp->selective_refresh->add_partial( $name, array(
-      'selector' => '#' . _H::to_param( $name ),
+      'selector' => '#' . \_H::to_param( $name ),
       'render_callback' => '__return_false',
     ) );
   }
@@ -114,7 +114,7 @@ class H_Customizer {
   private function add_control( $name, $control_type, $args ) {
     // create args and replace default with passed one, if any.
     $default_args = array(
-      'label' => _H::to_title( $name ),
+      'label' => \_H::to_title( $name ),
       'section' => $this->section,
       'settings' => $name,
     );

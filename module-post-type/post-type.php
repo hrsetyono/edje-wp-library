@@ -1,13 +1,16 @@
-<?php
+<?php namespace h;
+/*
+  Crate custom post type
+*/
 $h_sidepanel_position = 30;
 
-class H_PostType {
+class Post_Type {
   private $name;
   private $args;
   private $wp_args;
 
   public function __construct( $name, $args ) {
-    $this->name = _H::to_param( $name );
+    $this->name = \_H::to_param( $name );
     $this->args = $args;
   }
 
@@ -25,7 +28,7 @@ class H_PostType {
 
     // if column ordering is given
     if( is_admin() && isset( $args['columns'] ) ) {
-      $pc = new H_PostColumn( $name, $args['columns'] );
+      $pc = new Post_Column( $name, $args['columns'] );
       $pc->init();
     }
 
@@ -35,7 +38,7 @@ class H_PostType {
     // If taxonomy is given
     // DEPRECATED @0.6.2 - Use separate function instead https://github.com/hrsetyono/edje-wp/wiki/Custom-Taxonomy
     if( isset( $args['taxonomy'] ) ) {
-      $tax = new H_Taxonomy( $name, $args['taxonomy'] );
+      $tax = new Taxonomy( $name, $args['taxonomy'] );
       $tax->init();
     }
   }
@@ -70,7 +73,7 @@ class H_PostType {
     @return array
   */
   private function parse_args( $name, $raw ) {
-    $slug = _H::to_slug( $name );
+    $slug = \_H::to_slug( $name );
     $labels = $this->parse_labels( $name );
 
     $menu_position = $this->get_menu_position();
@@ -153,8 +156,8 @@ class H_PostType {
     @return array
   */
   private function parse_labels( $raw_name ) {
-    $name = _H::to_title( $raw_name );
-    $plural = Inflector::pluralize( $name );
+    $name = \_H::to_title( $raw_name );
+    $plural = \Inflector::pluralize( $name );
     $singular = $name;
 
     $labels = array(
@@ -166,8 +169,8 @@ class H_PostType {
       'new_item' => 'New ' . $singular,
       'view_item' => 'View ' . $singular,
       'search_items' => 'Search ' . $plural,
-      'not_found' => 'No ' . strtolower($plural) . ' found',
-      'not_found_in_trash' => 'No ' . strtolower($plural) . ' found in Trash',
+      'not_found' => 'No ' . strtolower( $plural ) . ' found',
+      'not_found_in_trash' => 'No ' . strtolower( $plural ) . ' found in Trash',
       'parent_item_colon' => 'Parent ' . $singular . ':',
     );
 

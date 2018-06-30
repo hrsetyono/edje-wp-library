@@ -1,0 +1,25 @@
+{
+  "name": "edje/web-push",
+  "type": "library",
+  "description": "Web Push module for Edje WP plugin",
+  "keywords": ["push", "notifications", "web", "WebPush", "Push API"],
+  "homepage": "https://github.com/web-push-libs/web-push-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Henner Setyono",
+      "email": "henner@setyono.net"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "sngrl/php-firebase-cloud-messaging": "dev-master"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4" : {
+      "Minishlink\\WebPush\\" : "src"
+    }
+  }
+}
