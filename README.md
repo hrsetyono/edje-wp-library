@@ -2,39 +2,43 @@
 
 ![Edje Wordpress](http://cdn.setyono.net/edge/wp-edge.jpg)
 
-WordPress is very customizable, but it's complicated to do so. This **plugin** helps developers by streamlining the function calls.
+Simplify WordPress complicated functions.
 
-Visit our [WIKI](https://github.com/hrsetyono/edje-wp/wiki) for full documentation.
+## Requirement
+
+- PHP 5.6+
+- WordPress 4.9+
 
 ## Sample Features
 
-Create new Custom Post Type (CPT)
+Create new Custom Post Type
 
 ```php
-H::register_post_type("product");
+H::register_post_type( 'product' );
 ```
 
-Add new Admin menu
+Add new Admin Sidebar menu:
 
 ```php
-H::add_menu("Home", array(
-  "slug" => "post.php?post=10&action=edit",
-  "icon" => "dashicons-admin-home",
-  "position" => "above Pages"
+H::add_menu( 'Home'  array(
+  'slug' => 'post.php?post=10&action=edit',
+  'icon' => 'dashicons-admin-home',
+  'position' => 'above Pages'
 ));
 ```
 
-Put a Number counter besides an Admin menu
+Sending push notification after publishing new post:
 
 ```php
-H::add_menu_counter("Posts", "count_drafted_posts");
+add_action( 'publish_post', 'after_publish_notify_users', 10, 2 );
 
-function count_drafted_posts() {
-  $posts = Timber::get_posts(array(
-    "post_type" => "post",
-    "post_status" => "draft",
-  ));
-
-  return count($posts);
+function after_publish_notify_users( $id, $post ) {
+  $payload = array(
+    'title' => $post->post_title,
+    'body' => $post->post_excerpt,
+  );
+  H::send_push( $payload );
 }
 ```
+
+## Visit our [WIKI](https://github.com/hrsetyono/edje-wp/wiki) for full documentation.

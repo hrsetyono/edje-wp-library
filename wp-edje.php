@@ -5,7 +5,7 @@ Description: Library to helps customize WordPress. Designed to work with Timber 
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.8.2
+Version: 0.9.0
 */
 
 // exit if accessed directly
@@ -27,7 +27,6 @@ function run_wp_edje() {
   require_once 'module-customizer/_run.php';
   require_once 'module-admin-sidepanel/_run.php';
   require_once 'module-change-default/_run.php';
-  require_once 'module-web-push/_run.php';
 
   require_once 'admin/h-on-activate.php';
   new H_OnActivate();
@@ -80,12 +79,18 @@ class H {
   }
 
 
-  ///// NOTIFICATION
+  ///// WEB PUSH
 
-  static function send_push_message( $title, $body ) {
-    $web_push = new \h\Web_Push( $_GET['id'] );
-    $web_push->send( $title, $body );
+  static function send_push( $payload, $target = null ) {
+    if( !class_exists('H_WebPush') ) {
+      throw new Exception("Edje Web-Push plugin hasn't been installed.");
+      return false;
+    }
+
+    $push = new \h\WebPush_Send();
+    $push->send( $payload, $target );
   }
+
 
 
   ///// ADMIN MENU

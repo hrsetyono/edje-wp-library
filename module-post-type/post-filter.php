@@ -12,7 +12,7 @@ class Post_Filter {
     $this->post_type = $post_type;
     $this->taxonomy = $taxonomy;
 
-    $this->post_taxonomies = array( $post_type => array($taxonomy) );
+    $this->post_taxonomies = array( $post_type => array( $taxonomy ) );
   }
 
   public function init() {

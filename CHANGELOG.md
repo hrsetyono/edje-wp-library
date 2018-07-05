@@ -1,3 +1,8 @@
+## 0.9.0
+
+- New feature! Integration with [WP Edje Web-Push](https://github.com/hrsetyono/wp-edje-web-push)
+- [CPT] Refactor CPT Column code.
+
 ## 0.8.2
 
 - Namespaced all modules with "h". No changes needed on Theme code.
