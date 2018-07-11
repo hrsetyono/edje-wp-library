@@ -35,12 +35,15 @@ class Post_Column {
     if( is_string( $arg ) ) {
       $this->columns = $this->_parse_args( array($arg) );
     }
-    // if array AND has Title
+    // if array AND has Name
     elseif( is_array( $arg ) && isset( $arg['name'] ) ) {
       $args = isset( $arg['content'] )
         ? array( $arg['name'] => $arg['content'] )
         : array( $arg['name'] );
       $this->columns = $this->_parse_args( $args );
+    } else {
+      var_dump( 'ERROR - H::add_column has invalid arguments' );
+      return false;
     }
 
     $this->_manage_columns( array($this, '_add') );
