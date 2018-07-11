@@ -1,8 +1,8 @@
 <?php namespace h;
 /*
-  Add / Remove item from Admin side panel
+  Add / Remove item from Admin side navigation
 */
-class Sidepanel {
+class Sidenav {
   private $args;
 
   function __construct( $args ) {
@@ -13,75 +13,76 @@ class Sidepanel {
     Add new menu items
   */
   public function add() {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    add_action('admin_menu', array($this, '_add') );
+    add_action( 'admin_menu', array($this, '_add') );
   }
 
   /*
     Remove the admin menu by specifying the display text (case sensitive)
   */
   public function remove() {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    add_action('admin_menu', array($this, '_remove') );
+    add_action( 'admin_menu', array($this, '_remove') );
   }
 
   /////////
 
   public function _add() {
+    global $menu;
+    end( $menu );
+
     $args = $this->args;
 
-    global $menu;
-    end($menu);
-
-    foreach($args as $title => $value):
+    foreach( $args as $title => $value ):
       $position = null;
       $icon = null;
 
       // get position if specified
-      if(isset( $value['position'] )) {
-        $position = $this->get_position($menu, $value['position']);
+      if( isset( $value['position'] ) ) {
+        $position = $this->get_position( $menu, $value['position'] );
       }
 
-      if(isset( $value['icon'] )) {
-        $icon = \_H::to_icon($value['icon']);
+      if( isset( $value['icon'] ) ) {
+        $icon = \_H::to_icon( $value['icon'] );
       }
 
       // add top level menu if slug is specified
-      if(isset( $value['slug'] )) {
-        add_menu_page($title, $title, 'manage_options',
+      if( isset( $value['slug'] ) ) {
+        add_menu_page( $title, $title, 'manage_options',
           $value['slug'], null, $icon, $position
         );
       }
 
       // if has submenu
-      if(isset($value['submenu'] )) {
-        $parent_slug = isset($value['slug']) ? $value['slug'] : $menu[$position][2];
+      if( isset($value['submenu'] ) ) {
+        $parent_slug = isset( $value['slug'] ) ? $value['slug'] : $menu[ $position ][2];
 
-        $smenu = new Sidepanel_Sub($parent_slug, $value['submenu']);
+        $smenu = new Sidenav_Sub( $parent_slug, $value['submenu'] );
         $smenu->add();
       }
 
       // If has counter
-      if(isset($value['counter'] )) {
-        $menu[$position][0] .= $this->add_counter($value["counter"]);
+      if( isset( $value['counter'] ) ) {
+        $menu[ $position ][0] .= $this->add_counter( $value['counter'] );
       }
+
     endforeach;
   }
 
   public function _remove() {
-    $args = $this->args;
-
     global $menu;
     end($menu);
 
-    foreach($menu as $index => $value):
-      if($value[0]) {
-        $i = explode(' <', $value[0]); // sometimes has <span> HTML, so take the first one
+    $args = $this->args;
 
-        if(in_array($i[0], $args) ) {
-          unset($menu[$index]);
+    foreach( $menu as $index => $value ):
+      if( $value[0] ) {
+        $i = explode( ' <', $value[0] ); // sometimes has <span> HTML, so take the first one
+
+        if( in_array( $i[0], $args ) ) {
+          unset( $menu[ $index ] );
         }
       }
     endforeach;
@@ -92,11 +93,10 @@ class Sidepanel {
   /*
     Add a Counter to the menu item
 
-    @param array $menu_item - A single item from global $menu
-    @param function $count_function - A callback that returns integer
+    @param $count_cb (function) - A callback that returns integer
   */
-  private function add_counter($count_function) {
-    $count = $count_function();
+  private function add_counter( $count_cb ) {
+    $count = $count_cb();
     return " <span class='update-plugins count-$count'><span class='plugin-count'>$count</span></span>";
   }
 

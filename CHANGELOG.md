@@ -1,3 +1,8 @@
+## 0.9.1
+
+- [Column] Added `H::add_column()` for appending a column with new `>` symbol for positioning. [Read more](https://github.com/hrsetyono/wp-edje/wiki/Table-Columns).
+- [Column] Renamed `H::register_columns()` to `H::override_columns()`. The prior now become the alias of the latter.
+
 ## 0.9.0
 
 - New feature! Integration with [WP Edje Web-Push](https://github.com/hrsetyono/wp-edje-web-push)

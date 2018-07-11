@@ -3,64 +3,131 @@
   Add custom column to CPT listing table
 */
 class Post_Column {
-  private $name;
+  private $post_type;
   private $columns;
 
-  public function __construct( $name, $column_args ) {
-    $this->name = $name;
-    $this->columns = $this->parse_args( $column_args );
-  }
+  public function __construct() {}
 
-  // Add visible column in admin panel
-  function init() {
-    if( !is_admin() ) { return false; }
+  /*
+    Override all columns from the post type table.
+    @since 0.9.0
 
-    $name = $this->name;
+    @param $post_type (string)
+    @param $args (array) - List of columns
+  */
+  function override( $post_type, $args ) {
+    $this->post_type = $post_type;
+    $this->columns = $this->_parse_args( $args );
 
-    // create the WP filter name
-    $name_create = 'manage_' . $name . '_posts_columns'; // create column
-    $name_fill = 'manage_' . $name . '_posts_custom_column'; // fill column
-    $name_sortable = 'manage_edit-' . $name . '_sortable_columns'; // enable sorting
-
-    add_filter( $name_create, array($this, 'create_columns') );
-    add_action( $name_fill, array($this, 'fill_columns'), 10, 2 );
-    add_filter( $name_sortable, array($this, 'enable_sort_columns') );
-    add_filter( 'request', array($this, 'allow_sort_by_metakey') );
+    $this->_manage_columns( array($this, '_override') );
   }
 
   /*
-    List out all the columns in accepted format
+    Append a column to the post type table. Placed before "date".
+
+    @param $post_type (string)
+    @param $arg (string / array) - Keyword or Argument for the new column
+  */
+  function add( $post_type, $arg ) {
+    $this->post_type = $post_type;
+
+    // if keyword
+    if( is_string( $arg ) ) {
+      $this->columns = $this->_parse_args( array($arg) );
+    }
+    // if array AND has Title
+    elseif( is_array( $arg ) && isset( $arg['name'] ) ) {
+      $args = isset( $arg['content'] )
+        ? array( $arg['name'] => $arg['content'] )
+        : array( $arg['name'] );
+      $this->columns = $this->_parse_args( $args );
+    }
+
+    $this->_manage_columns( array($this, '_add') );
+  }
+
+
+  /////
+
+  /*
+    Manage filters and actions to create custom columns
+
+    @param $manage_cb (function) - Callback to create column orders.
+  */
+  function _manage_columns( $manage_cb ) {
+    $manage_columns = "manage_{$this->post_type}_posts_columns";
+    $fill_columns = "manage_{$this->post_type}_posts_custom_column";
+    $sortable_columns = "manage_edit-{$this->post_type}_sortable_columns";
+
+    add_filter( $manage_columns, $manage_cb, 100 );
+    add_action( $fill_columns, array($this, '_fill_columns'), 10, 2 );
+    add_filter( $sortable_columns, array($this, '_enable_sort_columns') );
+    add_filter( 'request', array($this, '_allow_sort_by_metakey') );
+  }
+
+  /*
+    @filter manage_CPT_posts_columns
 
     @param array $defaults - The current column list
-
     @return array - The new list
   */
-  function create_columns( $defaults ) {
+  function _override( $defaults ) {
     $columns = $this->columns;
 
     $list = array();
-    foreach( $columns as $col ) {
-      $list[$col['slug'] ] = $col['title'];
+    foreach( $columns as $c ) {
+      $list[ $c['slug'] ] = $c['name'];
     }
 
-    $list = array('cb' => $defaults['cb']) + $list;
+    $list = array( 'cb' => $defaults['cb'] ) + $list;
     return $list;
   }
 
   /*
+    @filter manage_CPT_posts_columns
+
+    @param array $defaults - The current column list
+    @return array - The updated list
+  */
+  function _add( $defaults ) {
+    $column = reset( $this->columns );
+
+    // if position is specified
+    $position = isset( $column['position'] ) ? $column['position'] : false;
+    if( $position && isset( $defaults[ $position ]) ) {
+
+      $list = array();
+      foreach( $defaults as $slug => $col ) {
+        $list[ $slug ] = $col;
+
+        // if loop have reached the position
+        if( $position == $slug ) {
+          $list[ $column['slug'] ] = $column['name'];
+        }
+      }
+      return $list;
+    }
+    // if no position
+    else {
+      $defaults[ $column['slug'] ] = $column['name'];
+      return $defaults;
+    }
+  }
+
+  /*
     Fill the column, row by row
+    @action manage_CPT_posts_custom_column
 
-    @param string $name - The column slug registered at filter_create()
-    @param int $post_id - The post ID of current row
-    @param array $columns - Passed columns data
-
+    @param $slug (string) - The column slug registered at filter_create()
+    @param $post_id (int) - The post ID of current row
     @return string - The content of the column
   */
-  function fill_columns( $name, $post_id ) {
+  function _fill_columns( $slug, $post_id ) {
     global $post;
     $columns = $this->columns;
+    if( !isset( $columns[ $slug ] ) ) { return false; }
 
-    switch( $name ) {
+    switch( $slug ) {
       case 'cb':
       case 'title':
       case 'author':
@@ -82,7 +149,7 @@ class Post_Column {
 
       // if custom field
       default:
-        $content = $columns[ $name ]['content'];
+        $content = $columns[ $slug ]['content'];
 
         // if function, run it
         if( isset( $content ) && is_callable( $content ) ) {
@@ -92,7 +159,7 @@ class Post_Column {
         }
         // if plain string, look for the custom field
         else {
-          $output = $this->_get_meta_content( $name, $post_id );
+          $output = $this->_get_meta_content( $slug, $post_id );
           echo $output;
         }
 
@@ -102,45 +169,46 @@ class Post_Column {
 
 
 
-    /*
-      Apply sorting to List header
-      @params array $defaults - Sortable column list
+  /*
+    Apply sorting to List header
+    @filter manage_edit-CPT_sortable_columns
 
-      @return array - The updated sortable column list
-    */
+    @params array $defaults - Sortable column list
+    @return array - The updated sortable column list
+  */
 
-    function enable_sort_columns( $defaults ) {
-      $sortable_columns = $this->get_sortable_columns( $this->columns );
+  function _enable_sort_columns( $defaults ) {
+    $sortable_columns = $this->_get_sortable_columns( $this->columns );
 
-      foreach( $sortable_columns as $sc ) {
-        $defaults[ $sc ] = $sc;
-      }
-      return $defaults;
+    foreach( $sortable_columns as $sc ) {
+      $defaults[ $sc ] = $sc;
     }
+    return $defaults;
+  }
 
-    /*
-      Add parameters to allow sorting by Custom field
+  /*
+    Add parameters to allow sorting by Custom field
+    @filter request
 
-      @param array $vars - The WP Args
-      @param array $sortable_columns - Sortable column data
+    @param array $vars - The WP Args
+    @param array $sortable_columns - Sortable column data
+    @return array - The modified $vars to include sorting method
 
-      @return array - The modified $vars to include sorting method
+    TODO: bug with Complex column
+  */
+  function _allow_sort_by_metakey( $vars ) {
+    $sortable_columns = $this->_get_sortable_columns( $this->columns );
 
-      TODO: bug with Complex column
-    */
-    function allow_sort_by_metakey( $vars ) {
-      $sortable_columns = $this->get_sortable_columns( $this->columns );
+    $is_orderby_meta = isset( $vars['orderby'] ) && in_array( $vars['orderby'], $sortable_columns );
 
-      $is_orderby_meta = isset( $vars['orderby'] ) && in_array( $vars['orderby'], $sortable_columns );
-
-      if( $is_orderby_meta ) {
-        $vars = array_merge( $vars, array(
-          'meta_key' => $vars['orderby'],
-          'orderby' => 'meta_value'
-        ));
-      }
-      return $vars;
+    if( $is_orderby_meta ) {
+      $vars = array_merge( $vars, array(
+        'meta_key' => $vars['orderby'],
+        'orderby' => 'meta_value'
+      ));
     }
+    return $vars;
+  }
 
   /////
 
@@ -150,15 +218,15 @@ class Post_Column {
     @param array $args - Original column args
     @return array - The parsed and neat column data
   */
-  private function parse_args( $args ) {
+  private function _parse_args( $args ) {
     $columns = array();
 
     foreach( $args as $key => $value ) {
       // Since the array is mix between Key-Value and Single, the Key become integer for single array
       // We need to replace it with the value
-      $title = is_int( $key ) ? $value : $key;
+      $name = is_int( $key ) ? $value : $key;
 
-      $col = $this->format_arg( $title, $value );
+      $col = $this->_format_arg( $name, $value );
       $columns[ $col['slug'] ] = $col;
     }
 
@@ -168,35 +236,36 @@ class Post_Column {
   /*
     Format an argument into neat array
 
-    @param $title (string)
-    @param $value (string) -
-
+    @param $name (string) - The column header name
+    @param $value (string / function)
     @return array - The formatted argument
   */
-  private function format_arg( $title, $value ) {
+  private function _format_arg( $name, $value ) {
     $col = array(
-      'title' => '',
+      'name' => '',
       'slug' => '',
       'content' => $value,
-      'sortable' => preg_match( '/\^/', $title ) ? true : false,
-      'icon' => preg_match( '/#(dashicons-.+)/', $title, $matches ) ? $matches[1] : '',
+      'sortable' => preg_match( '/\^/', $name ) ? true : false,
+      'icon' => preg_match( '/#(dashicons-\S+)/', $name, $matches ) ? $matches[1] : '',
+      'position' => preg_match( '/>(\S+)/', $name, $matches ) ? $matches[1] : '',
     );
 
-    // clean title
-    $title = preg_replace( '/#dashicons-.+|\^|\s/', '', $title );
+    // clean name
+    $name = preg_replace( '/#dashicons-\S+|\^|>\S+/', '', $name );
+    $name = trim( $name );
 
     // format slug
-    $col['slug'] = \_H::to_param( $title );
+    $col['slug'] = \_H::to_param( $name );
     if( $col['slug'] === 'comments' ) { // Comments always goes with icon
       $col['icon'] = 'dashicons-admin-comments';
     }
 
-    // format title
-    $title = \_H::to_title( $title );
+    // format name
+    $name = \_H::to_title( $name );
     if( $col['icon'] ) {
-      $title = "<span class='dashicons {$col['icon']}'></span> <span class='screen-reader-text'>{$title}</span>";
+      $name = "<span class='dashicons {$col['icon']}'></span> <span class='screen-reader-text'>{$name}</span>";
     }
-    $col['title'] = $title;
+    $col['name'] = $name;
 
     return $col;
   }
@@ -207,7 +276,7 @@ class Post_Column {
     @param array $columns - All column data
     @return array - List of sortable column's slug.
   */
-  private function get_sortable_columns( $columns ) {
+  private function _get_sortable_columns( $columns ) {
     $sortable_columns = array_reduce( $columns, function($result, $c) {
       if( $c['sortable'] ) {
         $result[] = $c['slug'];

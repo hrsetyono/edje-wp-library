@@ -5,7 +5,7 @@ Description: Library to helps customize WordPress. Designed to work with Timber 
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.9.0
+Version: 0.9.1
 */
 
 // exit if accessed directly
@@ -25,7 +25,7 @@ function run_wp_edje() {
   require_once 'module-seo/_run.php';
   require_once 'module-post-type/_run.php';
   require_once 'module-customizer/_run.php';
-  require_once 'module-admin-sidepanel/_run.php';
+  require_once 'module-admin-sidenav/_run.php';
   require_once 'module-change-default/_run.php';
 
   require_once 'admin/h-on-activate.php';
@@ -37,6 +37,8 @@ function run_wp_edje() {
 
 /*
   Main portal for calling all static methods
+
+  You can find detailed info and examples here: https://github.com/hrsetyono/wp-edje/wiki/
 */
 class H {
   function __construct() {
@@ -45,24 +47,54 @@ class H {
 
   ///// POST TYPE
 
-  static function register_post_type( $name, $args = array() ) {
-    $pt = new \h\Post_Type( $name, $args );
+  static function register_post_type( $post_type, $args = array() ) {
+    $pt = new \h\Post_Type( $post_type, $args );
     $pt->init();
   }
 
-  static function register_taxonomy( $name, $args ) {
-    $tx = new \h\Taxonomy( $name, $args );
+  static function register_taxonomy( $post_type, $args ) {
+    $tx = new \h\Taxonomy( $post_type, $args );
     $tx->init();
   }
 
-  static function register_columns( $name, $args ) {
+  ///// POST COLUMNS
+
+  /*
+    Override all columns in the Post Type table with this one
+
+    @param $post_type (string)
+    @param $args (array) - List of columns
+  */
+  static function override_columns( $post_type, $args ) {
     if( !is_admin() ) { return false; }
 
-    $pc = new \h\Post_Column( $name, $args );
-    $pc->init();
+    $pc = new \h\Post_Column();
+    $pc->override( $post_type, $args );
   }
 
-  ///// ACTIONS - TODO: still not working
+  // Alias for replace_columns
+  static function register_columns( $post_type, $args ) {
+    self::replace_columns( $post_type, $args );
+  }
+
+  /*
+    Append a column to the Post Type table
+    @since 0.9.0
+
+    @param $post_type (string).
+    @param $title (string) - Column title, or slug of Custom Fields.
+    @param $value (function) - Optional. If $title is already slug of custom fields, this can be null.
+  */
+  static function add_column( $post_type, $title, $value = null ) {
+    if( !is_admin() ) { return false; }
+
+    $pc = new \h\Post_Column();
+    $pc->add( $post_type, $title, $value );
+  }
+
+
+  ///// ACTIONS
+  // TODO: still not working
 
   static function add_actions( $post_type, $actions ) {
     if( !is_admin() ) { return false; }
@@ -79,38 +111,24 @@ class H {
   }
 
 
-  ///// WEB PUSH
-
-  static function send_push( $payload, $target = null ) {
-    if( !class_exists('H_WebPush') ) {
-      throw new Exception("Edje Web-Push plugin hasn't been installed.");
-      return false;
-    }
-
-    $push = new \h\WebPush_Send();
-    $push->send( $payload, $target );
-  }
-
-
-
-  ///// ADMIN MENU
+  ///// ADMIN SIDENAV
 
   static function remove_menu( $args ) {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    $menu = new \h\Sidepanel( $args );
+    $menu = new \h\Sidenav( $args );
     $menu->remove();
   }
 
   static function add_menus( $args ) {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    $menu = new \h\Sidepanel( $args );
+    $menu = new \h\Sidenav( $args );
     $menu->add();
   }
 
-  static function add_menu($title, $args) {
-    if(!is_admin() ) { return false; }
+  static function add_menu( $title, $args ) {
+    if( !is_admin() ) { return false; }
 
     $new_args = array(
       $title => $args
@@ -119,38 +137,50 @@ class H {
   }
 
   static function add_submenu( $parent_title, $args ) {
-    if(!is_admin() ) { return false; }
+    if( !is_admin() ) { return false; }
 
-    $new_args = array(
+    H::add_menus( array(
       $parent_title => array(
         'position' => "on $parent_title",
         'submenu' => $args
       )
-    );
-    H::add_menus( $new_args );
+    ) );
   }
 
-  static function add_menu_counter($parent_title, $count_function) {
-    if(!is_admin() ) { return false; }
+  static function add_menu_counter( $parent_title, $count_cb ) {
+    if( !is_admin() ) { return false; }
 
-    $new_args = array(
+    H::add_menus( array(
       $parent_title => array(
         'position' => "on $parent_title",
-        'counter' => $count_function,
+        'counter' => $count_cb,
       )
-    );
-
-    H::add_menus( $new_args );
+    ) );
   }
+
 
 
   ///// CUSTOMIZER
 
   /*
     Inititate Edje customizer object
-    @param obj $wp_customize - WP_Customize object from customize_register action.
+    @param $wp_customize (Obj) - WP_Customize object from customize_register action.
   */
   static function customizer( $wp_customize ) {
     return new \h\Customizer( $wp_customize );
   }
+
+
+  ///// WEB PUSH
+
+  static function send_push( $payload, $target = null ) {
+    if( !class_exists('H_WebPush') ) {
+      var_dump( 'ERROR: Edje Web-Push plugin is not installed.' );
+      return false;
+    }
+
+    $push = new \h\WebPush_Send();
+    $push->send( $payload, $target );
+  }
+
 }
