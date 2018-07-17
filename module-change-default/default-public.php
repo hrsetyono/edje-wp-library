@@ -24,9 +24,6 @@ class Default_Public {
     add_filter( 'login_errors', array($this, 'change_login_errors_message') );
     add_action( 'login_head', array($this, 'modify_login_page') );
 
-    // add default theme support
-    add_action( 'after_setup_theme', array($this, 'add_theme_support') );
-
     // remove query strings
     add_filter( 'script_loader_src', array($this, 'remove_script_version'), 15, 1 );
     add_filter( 'style_loader_src', array($this, 'remove_script_version'), 15, 1 );
@@ -58,13 +55,6 @@ class Default_Public {
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
       wp_enqueue_script( 'comment-reply' );
     }
-  }
-
-  /*
-    Default theme support that all of our sites have
-  */
-  function add_theme_support() {
-
   }
 
   /*

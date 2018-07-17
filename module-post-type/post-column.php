@@ -156,8 +156,7 @@ class Post_Column {
 
         // if function, run it
         if( isset( $content ) && is_callable( $content ) ) {
-          // TODO: add check whether ACF exists, if not, use native get_post_custom($id);
-          $fields = \get_fields( $post_id );
+          $fields = get_post_custom( $post_id );
           echo $content( $post, $fields );
         }
         // if plain string, look for the custom field

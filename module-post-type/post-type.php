@@ -28,8 +28,8 @@ class Post_Type {
 
     // if column ordering is given
     if( is_admin() && isset( $args['columns'] ) ) {
-      $pc = new Post_Column( $name, $args['columns'] );
-      $pc->init();
+      $pc = new Post_Column();
+      $pc->override( $name, $args['columns'] );
     }
 
     // add post count in dashboard widget

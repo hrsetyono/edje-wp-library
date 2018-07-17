@@ -9,7 +9,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 
 		@link https://github.com/maddisondesigns/customizer-custom-controls
 	*/
-	class Customizer_TinyMCE_Control extends WP_Customize_Control {
+	class Customize_TinyMCE_Control extends \WP_Customize_Control {
 		/*
 			Enqueue JS and CSS
 		*/

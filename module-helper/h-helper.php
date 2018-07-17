@@ -95,6 +95,10 @@ class _H {
       case 'timber':
         $path[] = 'timber-library/timber.php';
         break;
+
+      case 'acf':
+        $path[] = 'advanced-custom-fields-pro/acf.php';
+        break;
     }
 
     // if at least 1 is active, returns true

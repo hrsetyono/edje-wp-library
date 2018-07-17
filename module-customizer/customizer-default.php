@@ -9,15 +9,15 @@ class Customizer_Default {
     $this->option = get_option( 'h' );
 
     add_action( 'customize_register', array($this, 'head_footer_code') );
-    add_action( 'customize_register', array($this, 'mobile_logo') );
+    add_action( 'customize_register', array($this, 'site_identity') );
 
     $this->add_code();
   }
 
   /*
     Create the setting that adds extra code to Head and Footer
-
     @action customize_register
+
     @param obj $wp_customize
   */
   function head_footer_code( $wp_customize ) {
@@ -37,14 +37,22 @@ class Customizer_Default {
     ) );
   }
 
+
   /*
-    Add items in Customizer
+    Add Theme Color and Mobile Logo
   */
-  function mobile_logo( $wp_customize ) {
-    $c = H::customizer( $wp_customize );
+  function site_identity( $wp_customize ) {
+    $c = \H::customizer( $wp_customize );
 
     $c->set_section( 'title_tagline' );
-    $c->add_option( 'logo_mobile', 'image' );
+    $c->add_option( 'logo_mobile', 'image', array(
+      'priority' => 9,
+    ) );
+
+    $c->add_theme_mod( 'background_color', 'color', array(
+      'label' => 'Theme Color',
+      'description' => 'Used for taskbar color in Mobile browser'
+    ) );
   }
 
   /////

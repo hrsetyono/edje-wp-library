@@ -133,36 +133,36 @@ class Customizer {
           ),
         );
 
-        $control = new WP_Customize_Code_Editor_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Code_Editor_Control( $this->wp, $name, $args );
         break;
 
       case 'image':
-        $control = new WP_Customize_Image_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Image_Control( $this->wp, $name, $args );
         break;
 
       case 'cropped_image':
-        $control = new WP_Customize_Cropped_Image_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Cropped_Image_Control( $this->wp, $name, $args );
         break;
 
       case 'color':
-        $control = new WP_Customize_Color_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Color_Control( $this->wp, $name, $args );
         break;
 
       case 'upload':
-        $control = new WP_Customize_Upload_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Upload_Control( $this->wp, $name, $args );
         break;
 
       case 'background_image':
-        $control = new WP_Customize_Background_Image_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Background_Image_Control( $this->wp, $name, $args );
         break;
 
       case 'header_image':
-        $control = new WP_Customize_Header_Image_Control( $this->wp, $name, $args );
+        $control = new \WP_Customize_Header_Image_Control( $this->wp, $name, $args );
         break;
 
       // custom
       case 'visual_editor':
-        $control = new H_Customize_TinyMCE_Control( $this->wp, $name, $args );
+        $control = new Customize_TinyMCE_Control( $this->wp, $name, $args );
         break;
 
       //  text, checkbox, radio, select, textarea, dropdown-pages, email, url, number, hidden, date.

@@ -12,22 +12,25 @@ class SEO_Meta {
     // prevent url guessing
     add_filter('redirect_canonical', array($this, 'redirect_canonical') );
 
-    // If Yoast installed, disable custom meta tags
+    // add theme_color tag
+    add_action( 'wp_head', array($this, 'add_color_tag'), 2 );
+
+    // If Yoast installed, use its SEO tag
     if( \_H::is_plugin_active('yoast') ) {
       add_filter('jetpack_enable_open_graph', '__return_false');
-      return false;
     }
-
-    // thse code below, only run when yoast not installed
-    add_filter( 'wp_title', array($this, 'set_wp_title'), 10, 3 );
-
-    if( \_H::is_plugin_active('jetpack') ) {
+    // If Jetpack is installed, use its SEO tag
+    elseif( \_H::is_plugin_active('jetpack') ) {
+      add_filter( 'wp_title', array($this, 'set_wp_title'), 10, 3 );
       add_filter( 'jetpack_open_graph_tags', array($this, 'jetpack_meta_tags') );
       add_filter( 'jetpack_open_graph_output', array($this, 'jetpack_meta_output') );
     }
+    // Else, use custom SEO tag
     else {
-      add_action( 'wp_head', array($this, 'custom_meta_tags'), 2 );
+      add_filter( 'wp_title', array($this, 'set_wp_title'), 10, 3 );
+      add_action( 'wp_head', array($this, 'add_seo_tag'), 2 );
     }
+
   }
 
   /*
@@ -66,22 +69,33 @@ class SEO_Meta {
   }
 
   /*
-    Add description meta tag
-
+    Add custom SEO tag
     @filter wp_head
   */
-  function custom_meta_tags() {
+  function add_seo_tag() {
     global $post;
-
-    $content = get_bloginfo('description');
+    $description = get_bloginfo('description');
 
     // if not front page, use excerpt from content
-    if(!is_front_page() && $post) {
-      $excerpt = $post->post_excerpt ? $post->post_excerpt : \_H::trim_content($post->post_content);
-      $content = $excerpt ? $excerpt : $content;
+    if( !is_front_page() && $post ) {
+      $excerpt = $post->post_excerpt ? $post->post_excerpt : \_H::trim_content( $post->post_content );
+      $description = $excerpt ? $excerpt : $description;
     }
 
-    echo "<meta name='description' content='$content'>";
+    echo "<meta name='description' content='$description'>";
+
+
+  }
+
+  /*
+    Add custom meta tag
+    @filter wp_head
+  */
+  function add_color_tag() {
+    $color = get_background_color();
+    if( $color ) {
+      echo "<meta name='theme-color' content='#$color'>";
+    }
   }
 
   /*

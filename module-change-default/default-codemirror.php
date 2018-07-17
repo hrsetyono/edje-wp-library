@@ -4,7 +4,8 @@
 */
 class Default_Codemirror {
   function __construct() {
-    if( DISALLOW_FILE_EDIT ) { return false; }
+    global $pagenow;
+    if( DISALLOW_FILE_EDIT || $pagenow !== 'theme-editor.php' ) { return false; }
 
     add_filter( 'wp_theme_editor_filetypes', array($this, 'allow_editing_twig') );
     add_filter( 'wp_code_editor_settings', array($this, 'change_editor_settings'), 10, 2 );

@@ -1,3 +1,9 @@
+## 0.9.2
+
+- [Customizer] Fixed crash due to Namespacing
+- [Customizer] Added `background_color` theme mod to Site Identity tab.
+- [MetaTag] Added `theme_color` meta tag if `background_color` theme mod is filled.
+
 ## 0.9.1
 
 - [Column] Added `H::add_column()` for appending a column with new `>` symbol for positioning. [Read more](https://github.com/hrsetyono/wp-edje/wiki/Table-Columns).
