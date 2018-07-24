@@ -7,7 +7,6 @@ class Default_Admin {
     add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
 
     add_action( 'admin_init', array($this, 'add_classic_editor_style') );
-    // add_action( 'enqueue_block_editor_assets', array($this, 'add_editor_style') );
 
     // remove emoji
     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
@@ -41,14 +40,6 @@ class Default_Admin {
   */
   function add_classic_editor_style() {
     add_editor_style( H_URL . '/assets/css/h-editor.css' );
-  }
-
-  /*
-    Add custom CSS to Gutenberg Editor
-    @action enqueue_block_editor_assets
-  */
-  function add_editor_style() {
-    // wp_enqueue_style( 'h-editor', H_URL . '/assets/css/h-editor.css', false, H_VERSION, 'all' );
   }
 
   /*

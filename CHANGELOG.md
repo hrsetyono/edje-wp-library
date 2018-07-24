@@ -1,3 +1,7 @@
+## 0.9.3
+
+- [Default] Fixed some actions not running due to misplacement.
+
 ## 0.9.2
 
 - [Customizer] Fixed crash due to Namespacing
