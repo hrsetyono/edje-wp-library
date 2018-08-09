@@ -1,3 +1,7 @@
+## 0.9.4
+
+- Update deprecated Twig Helper so it won't show warning.
+
 ## 0.9.3
 
 - [Default] Fixed some actions not running due to misplacement.

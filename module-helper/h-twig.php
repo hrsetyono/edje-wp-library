@@ -19,21 +19,19 @@ class H_Twig {
     @filter get_twig
   */
   function add_to_twig( $twig ) {
-    $twig->addExtension(new Twig_Extension_StringLoader() );
-
     // Parse Markdown
-    $twig->addFilter('markdown', new Twig_Filter_Function( array( $this, 'filter_markdown') ) );
+    $twig->addFilter( new Twig_SimpleFilter( 'markdown', array( $this, 'filter_markdown') ) );
 
-    // only if DEBUG is true
-    if (defined('WP_DEBUG') && WP_DEBUG === true) {
+    // only if set to Debug mode
+    if( defined('WP_DEBUG') && WP_DEBUG === true ) {
       // Dump the object
-      $twig->addFilter('dump', new Twig_Filter_Function(function($object) {
-        var_dump($object);
+      $twig->addFilter( new Twig_SimpleFilter( 'dump', function( $object ) {
+        var_dump( $object );
       }) );
 
       // Dump all methods available in the object
-      $twig->addFilter('methods', new Twig_Filter_Function(function($object) {
-        var_dump(get_class_methods($object) );
+      $twig->addFilter( new Twig_SimpleFilter( 'methods', function( $object ) {
+        var_dump( get_class_methods( $object ) );
       }) );
     }
 
