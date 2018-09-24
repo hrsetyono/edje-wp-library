@@ -47,10 +47,6 @@ class Default_Public {
     // remove embedding post from other blog
     wp_deregister_script( 'wp-embed' );
 
-    // remove jetpack spinner
-    wp_deregister_script( 'jquery.spin' );
-    wp_deregister_script( 'spin' );
-
     // Enable comment's reply form
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
       wp_enqueue_script( 'comment-reply' );

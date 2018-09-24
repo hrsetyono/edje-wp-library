@@ -45,18 +45,18 @@ class SEO_Meta {
   */
   function set_wp_title($title, $sep, $seplocation) {
     // use site name if on front+posts page
-    if(is_front_page() && is_home() ) {
+    if( is_front_page() && is_home() ) {
       return get_bloginfo();
     }
     // use frontpage title if on frontpage
-    elseif(is_front_page() ) {
+    elseif( is_front_page() ) {
       global $post;
       return $post->post_title;
     }
     // reposition the tax name
-    elseif(is_tax() ) {
-      $term_title = single_term_title('', false);
-      $tax = get_taxonomy(get_query_var('taxonomy') );
+    elseif( is_tax() ) {
+      $term_title = single_term_title( '', false );
+      $tax = get_taxonomy( get_query_var('taxonomy') );
 
       $title = $term_title . ' - ' . $tax->labels->singular_name;
 
@@ -74,17 +74,17 @@ class SEO_Meta {
   */
   function add_seo_tag() {
     global $post;
-    $description = get_bloginfo('description');
+    $description = '';
 
     // if not front page, use excerpt from content
     if( !is_front_page() && $post ) {
       $excerpt = $post->post_excerpt ? $post->post_excerpt : \_H::trim_content( $post->post_content );
       $description = $excerpt ? $excerpt : $description;
+    } else {
+      $description = get_bloginfo( 'description' );
     }
 
     echo "<meta name='description' content='$description'>";
-
-
   }
 
   /*
@@ -130,7 +130,7 @@ class SEO_Meta {
     @filter redirect_canonical
   */
   function redirect_canonical($url) {
-    if (is_404() ) { return false; }
+    if( is_404() ) { return false; }
     return $url;
   }
 }

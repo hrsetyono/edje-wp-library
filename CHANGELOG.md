@@ -1,3 +1,8 @@
+## 0.9.5
+
+- Removed unnecessary `init` and `admin_init` actions when it can be run without.
+- [Default] Jetpack default CSS is removed. Sharing CSS and JS is now served from this plugin, after being simplified.
+
 ## 0.9.4
 
 - Update deprecated Twig Helper so it won't show warning.

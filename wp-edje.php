@@ -5,7 +5,7 @@ Description: Library to helps customize WordPress. Designed to work with Timber 
 Plugin URI: http://github.com/hrsetyono/edje-wp
 Author: The Syne Studio
 Author URI: http://thesyne.com/
-Version: 0.9.4
+Version: 0.9.5
 */
 
 // exit if accessed directly
@@ -21,7 +21,6 @@ run_wp_edje();
 
 function run_wp_edje() {
   require_once 'module-helper/_run.php';
-
   require_once 'module-seo/_run.php';
   require_once 'module-post-type/_run.php';
   require_once 'module-customizer/_run.php';
@@ -72,9 +71,9 @@ class H {
     $pc->override( $post_type, $args );
   }
 
-  // Alias for replace_columns
+  // Alias for override_columns
   static function register_columns( $post_type, $args ) {
-    self::replace_columns( $post_type, $args );
+    self::override_columns( $post_type, $args );
   }
 
   /*
@@ -128,17 +127,14 @@ class H {
   }
 
   static function add_menu( $title, $args ) {
-    if( !is_admin() ) { return false; }
-
     $new_args = array(
       $title => $args
     );
+
     H::add_menus( $new_args );
   }
 
   static function add_submenu( $parent_title, $args ) {
-    if( !is_admin() ) { return false; }
-
     H::add_menus( array(
       $parent_title => array(
         'position' => "on $parent_title",
@@ -148,8 +144,6 @@ class H {
   }
 
   static function add_menu_counter( $parent_title, $count_cb ) {
-    if( !is_admin() ) { return false; }
-
     H::add_menus( array(
       $parent_title => array(
         'position' => "on $parent_title",

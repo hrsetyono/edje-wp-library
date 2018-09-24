@@ -27,9 +27,8 @@ class Post_Type {
     register_post_type( $name, $this->wp_args );
 
     // if column ordering is given
-    if( is_admin() && isset( $args['columns'] ) ) {
-      $pc = new Post_Column();
-      $pc->override( $name, $args['columns'] );
+    if( isset( $args['columns'] ) ) {
+      \H::override_columns( $name, $args['columns'] );
     }
 
     // add post count in dashboard widget

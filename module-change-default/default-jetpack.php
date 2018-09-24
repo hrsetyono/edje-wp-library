@@ -8,11 +8,17 @@ class Default_Jetpack {
     if( !\_H::is_plugin_active('jetpack') ) { return false; }
 
     add_action( 'init', array($this, 'init') );
+
+    add_action( 'wp_head', array($this, 'wp_head'), 2 );
+    add_action( 'wp_footer', array($this, 'wp_footer') );
+    add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
+
+    // disable jetpack css
+    add_filter( 'jetpack_implode_frontend_css', '__return_false' );
   }
 
   function init() {
     add_filter( 'wp', array($this, 'remove_related_posts'), 20 );
-    add_action( 'wp_head', array($this, 'enqueue_script'), 1 );
 
     // add woocommerce to sitemap
     if( \_H::is_plugin_active('woocommerce') ) {
@@ -45,9 +51,37 @@ class Default_Jetpack {
   }
 
   /*
-    Enqueue additional script when Jetpack is active
+    Remove redundant JS and CSS
+    @action wp_head 2
   */
-  function enqueue_script() {
-    wp_enqueue_style('social-logos');  // add social logos in all pages
+  function wp_head() {
+    wp_dequeue_script( 'devicepx' );
+    wp_dequeue_style( 'sharedaddy' );
+  }
+
+  /*
+    Enqueue additional JS and CSS
+    @action wp_enqueue_scripts
+  */
+  function enqueue_scripts() {
+    wp_enqueue_style( 'social-logos' );  // add social logos in all pages
+    wp_enqueue_style( 'h-jetpack', H_URL . '/assets/css/h-jetpack.css' );
+
+    wp_enqueue_script( 'h-jetpack', H_URL . '/assets/js/h-jetpack.js', array('jquery'), false, true );
+  }
+
+  /*
+    Remove redundant CSS and JS
+    @action wp_footer
+  */
+  function wp_footer() {
+    wp_dequeue_style( 'jetpack-responsive-videos-style' );
+    wp_dequeue_script( 'jetpack-responsive-videos-script' );
+
+    wp_deregister_script( 'sharing-js' );
+
+    // disable spinner when infinite loading is enabled
+    wp_deregister_script( 'jquery.spin' );
+    wp_deregister_script( 'spin' );
   }
 }
