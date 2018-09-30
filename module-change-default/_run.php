@@ -16,5 +16,7 @@ if( is_admin() ) {
 // if not in admin
 else {
   require_once H_PATH . '/module-change-default/default-jetpack.php';
+  require_once H_PATH . '/module-change-default/default-seo.php';
   new \h\Default_Jetpack();
+  new \h\Default_SEO();
 }

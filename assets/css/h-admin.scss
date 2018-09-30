@@ -12,3 +12,19 @@
     padding: 0;
   }
 }
+
+///// The SEO Framework
+
+// disable advance setting
+
+.tsf-flex-nav-tab-wrapper,
+body.js .tsf-flex-nav-tab-wrapper {
+  display: none;
+}
+
+// hide some tooltip in post listing
+.tsf-seo-bar-inner-wrap {
+  .tsf-tooltip-wrap:nth-child(n+3) {
+    display: none;
+  }
+}

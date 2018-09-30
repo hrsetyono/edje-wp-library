@@ -1,3 +1,7 @@
+## 0.9.6
+
+- [SEO] Removed SEO module. Please use "The SEO Framework" plugin instead
+
 ## 0.9.5
 
 - Removed unnecessary `init` and `admin_init` actions when it can be run without.

@@ -1,16 +1,11 @@
 ///// SHARING
 
 $social-logos: (
-  twitter: (#00acee, '\f202'),
-    // twitter-alt: #28a9e0,
+  twitter: (#00acee, '\f202', 'twitter-alt'),
   facebook: (#3b5998, '\f203'),
-  google-plus-1: (#dd4b39, '\f218'),
-    // google-plus: #dd4b39,
-    // google-plus-alt: #dd4b39,
-  pinterest: (#ca1f27, '\f210'),
-    // pinterest-alt: #bd081c,
-  jetpack-whatsapp: (#25d366, '\f608'),
-    // whatsapp: #25d366,
+  google-plus-1: (#dd4b39, '\f218', 'google-plus'),
+  pinterest: (#ca1f27, '\f210', 'pinterest-alt'),
+  jetpack-whatsapp: (#25d366, '\f608', 'whatsapp'),
   skype: (#00aff0, '\f220'),
   pocket: (#ee4056, '\f224'),
   linkedin: (#0077b5, '\f207'),
@@ -77,10 +72,6 @@ $social-logos: (
     &.share-more::before { margin-right: 4px; }
   }
 
-  &:hover {
-    color: white;
-  }
-
   &:active {
     border-top-width: 2px;
     border-bottom-width: 1px;
@@ -126,7 +117,13 @@ $social-logos: (
 
 @each $name, $values in $social-logos {
   .social-logo.social-logo__#{ $name }:hover::before {
-    background-color: nth($values, 1);
+    color: nth($values, 1);
+  }
+
+  @if length($values) > 2 {
+    .social-logo.social-logo__#{ nth($values,3) }:hover::before {
+      color: nth($values, 1);
+    }
   }
 
   // Sharedaddy color

@@ -3,7 +3,7 @@
 *  Outputs extra meta tags for SEO purposes.
 */
 
-class SEO_Meta {
+class Default_SEO {
   function __construct() {
     // remove extra rss
     remove_action( 'wp_head', 'feed_links', 2 );
@@ -16,7 +16,7 @@ class SEO_Meta {
     add_action( 'wp_head', array($this, 'add_color_tag'), 2 );
 
     // If Yoast installed, use its SEO tag
-    if( \_H::is_plugin_active('yoast') ) {
+    if( \_H::is_plugin_active('tsf') || \_H::is_plugin_active('yoast') ) {
       add_filter('jetpack_enable_open_graph', '__return_false');
     }
     // If Jetpack is installed, use its SEO tag

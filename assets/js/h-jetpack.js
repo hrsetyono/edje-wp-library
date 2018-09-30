@@ -25,6 +25,35 @@
 })( jQuery );
 
 /*
+  WP Comment Form
+*/
+(function( $ ) {
+  document.addEventListener( 'DOMContentLoaded', commentFormToggle );
+
+  /*
+    Open Comment Form and add Placeholder to the textarea
+  */
+  function commentFormToggle() {
+    // exit if comment form not found
+    if( $('#reply-title').length <= 0 ) { return false; }
+
+    var replyTitle = document.getElementById( 'reply-title' ).childNodes;
+    var replyTo = replyTitle[1].childNodes[0].nodeValue;
+    var placeholder = replyTitle[0].nodeValue + (replyTo ? replyTo : '') + '…';
+
+    $('.comment-form textarea').attr( 'placeholder', placeholder );
+    $('.comment-form').on( 'click', activateForm );
+    $('.comment-reply-link').on( 'click', activateForm );
+
+    function activateForm( e ) {
+      var $form = $('.comment-form');
+      $form.addClass('active');
+      $form.off('click').find('textarea').focus();
+    }
+  }
+})( jQuery );
+
+/*
   Responsive Videos
   @version 6.5
 */

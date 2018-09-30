@@ -84,6 +84,11 @@ class _H {
         );
         break;
 
+      case 'the-seo-framework':
+      case 'tsf':
+        $path[] = 'autodescription/autodescription.php';
+        break;
+
       case 'jetpack':
         $path[] = 'jetpack/jetpack.php';
         break;
