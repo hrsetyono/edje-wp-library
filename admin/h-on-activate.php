@@ -229,7 +229,7 @@ Images work too! Click "Add Media" button which is above the buttons row. Simply
 
 Want to add <strong>caption</strong>? That's easy too. Click on the image then click the Pencil icon, you'll find the Caption field in the popup box.
 
-[caption id="" align="alignnone" width="800"]<img src="http://cdn.setyono.net/edjewp/sample-image.jpg" alt="Help Google recognize what this image is" width="800" height="400" /> This is a caption![/caption]
+[caption id="" align="alignnone" width="800"]<img src="https://picsum.photos/800/400" alt="Help Google recognize what this image is" width="800" height="400" /> This is a caption![/caption]
 <h3>Quoting</h3>
 <blockquote>Wisdomous - it's definitely a word.</blockquote>
 Sometimes a link isn't enough, you want to quote someone on what they've said. It was probably very wisdomous. Is wisdomous a word? Find out in a future release when we introduce spellcheck! For now - it's definitely a word.
@@ -239,7 +239,22 @@ Click the Line (-) button and you've got yourself a fancy new divider. Aw yeah.
 <hr />
 
 <h3>Advanced Usage</h3>
-Coming Soon...
+
+<strong>GRID</strong> - Split the content into 12 columns which can be distributed.
+
+[grid size="4 start"]
+
+<img src="https://picsum.photos/400/400" alt="Help Google recognize what this image is" />
+
+[/grid]
+
+[grid size="8 end"]
+
+This text is under 8 columns while the image next door is 4.
+
+You may ask "Why don't you just align the image to the left?" The thing is, Grid doesn't limit you to image and when the text exceed's the image, it doesn't wrap below it.
+
+[/grid]
 
 That should be enough to get you started. Have fun - and let us know what you think :)
 EOD;

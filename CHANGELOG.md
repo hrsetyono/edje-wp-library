@@ -1,3 +1,9 @@
+## 1.0.0
+
+- [WP] Added [grid] shortcode. [Read more](https://github.com/hrsetyono/wp-edje/wiki/Shortcodes)
+- [WP] Shortcode [row] and [column] has been removed.
+- [WP] Removed custom wpautop that's causing Gutenberg post to not render well.
+
 ## 0.9.6
 
 - [SEO] Removed SEO module. Please use "The SEO Framework" plugin instead

@@ -117,12 +117,12 @@ $social-logos: (
 
 @each $name, $values in $social-logos {
   .social-logo.social-logo__#{ $name }:hover::before {
-    color: nth($values, 1);
+    color: nth($values, 1) !important;
   }
 
   @if length($values) > 2 {
     .social-logo.social-logo__#{ nth($values,3) }:hover::before {
-      color: nth($values, 1);
+      color: nth($values, 1) !important;
     }
   }
 

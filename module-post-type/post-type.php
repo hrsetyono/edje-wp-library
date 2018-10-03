@@ -26,7 +26,7 @@ class Post_Type {
     // register
     register_post_type( $name, $this->wp_args );
 
-    // if column ordering is given
+    // if columns ordering is given
     if( isset( $args['columns'] ) ) {
       \H::override_columns( $name, $args['columns'] );
     }
