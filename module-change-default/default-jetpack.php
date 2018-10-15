@@ -15,7 +15,10 @@ class Default_Jetpack {
 
     // disable jetpack css
     add_filter( 'jetpack_implode_frontend_css', '__return_false' );
+
+    add_filter( 'jetpack_lazy_images_blacklisted_classes', array($this, 'blacklisted_lazyload_classes') );
   }
+
 
   function init() {
     add_filter( 'wp', array($this, 'remove_related_posts'), 20 );
@@ -65,9 +68,16 @@ class Default_Jetpack {
   */
   function enqueue_scripts() {
     wp_enqueue_style( 'social-logos' );  // add social logos in all pages
-    wp_enqueue_style( 'h-jetpack', H_URL . '/assets/css/h-jetpack.css' );
-
     wp_enqueue_script( 'h-jetpack', H_URL . '/assets/js/h-jetpack.js', array('jquery'), false, true );
+  }
+
+  /*
+    Prevent lazyloading some classes
+    @filter jetpack_lazy_images_blacklisted_classes
+  */
+  function blacklisted_lazyload_classes( $classes ) {
+    $classes[] = 'custom-logo';
+    return $classes;
   }
 
   /*

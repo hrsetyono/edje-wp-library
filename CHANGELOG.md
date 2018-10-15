@@ -1,8 +1,14 @@
+## 1.0.1
+
+- [Sharing] Removed the Jetpack Sharing CSS, now can be found in Edje Theme.
+- [Customizer] Mobile Logo only appears with theme support `h-logo-mobile`.
+- [Admin Bar] Removed the Gravatar to make loading faster
+
 ## 1.0.0
 
-- [WP] Added [grid] shortcode. [Read more](https://github.com/hrsetyono/wp-edje/wiki/Shortcodes)
-- [WP] Shortcode [row] and [column] has been removed.
-- [WP] Removed custom wpautop that's causing Gutenberg post to not render well.
+- [Shortcode] Added `grid` shortcode. [Read more](https://github.com/hrsetyono/wp-edje/wiki/Shortcodes)
+- [Shortcode] Shortcode `row` and `column` has been removed.
+- [Shortcode] Removed custom wpautop that's causing Gutenberg post to not render well.
 
 ## 0.9.6
 

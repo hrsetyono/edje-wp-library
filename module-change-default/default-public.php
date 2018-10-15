@@ -27,6 +27,15 @@ class Default_Public {
     // remove query strings
     add_filter( 'script_loader_src', array($this, 'remove_script_version'), 15, 1 );
     add_filter( 'style_loader_src', array($this, 'remove_script_version'), 15, 1 );
+
+    // remove gravatar in admin bar (slow loading)
+    add_action( 'admin_bar_menu', function() {
+		  add_filter( 'pre_option_show_avatars', '__return_zero' );
+	  }, 0 );
+
+    add_action( 'admin_bar_menu', function() {
+		  remove_filter( 'pre_option_show_avatars', '__return_zero' );
+	  }, 10 );
   }
 
   /*

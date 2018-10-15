@@ -45,9 +45,12 @@ class Customizer_Default {
     $c = \H::customizer( $wp_customize );
 
     $c->set_section( 'title_tagline' );
-    $c->add_option( 'logo_mobile', 'image', array(
-      'priority' => 9,
-    ) );
+
+    if( current_theme_supports('h-logo-mobile') ) {
+      $c->add_option( 'logo_mobile', 'image', array(
+        'priority' => 9,
+      ) );
+    }
 
     $c->add_theme_mod( 'background_color', 'color', array(
       'label' => 'Theme Color',
