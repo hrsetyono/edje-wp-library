@@ -26,7 +26,7 @@ class _H {
     @return string
   */
   static function to_title( $slug ) {
-    $title = ucwords( str_replace( '_', ' ', $slug ) );
+    $title = ucwords( str_replace( array('_', '-'), ' ', $slug ) );
     $title = trim( $title, '^' );
     return $title;
   }
@@ -99,6 +99,10 @@ class _H {
 
       case 'timber':
         $path[] = 'timber-library/timber.php';
+        $path[] = 'timber-library-150/timber.php';
+        $path[] = 'timber-library-160/timber.php';
+        $path[] = 'timber-library-170/timber.php';
+        $path[] = 'timber-library-180/timber.php';
         break;
 
       case 'acf':

@@ -47,19 +47,13 @@ class Taxonomy {
       'show_ui' => true,
       'query_var' => true,
       'show_admin_column' => true,
+      'show_in_rest' => true,
       'hierarchical' => true,
       'rewrite' => array(
         'slug' => \_H::to_slug( $args['slug'] ),
         'with_front' => 'false'
       )
     );
-
-    // Check Support
-    if( isset( $raw['supports']) ) {
-      if( in_array( 'rest-api', $raw['supports'] ) ) {
-        $wp_args['show_in_rest'] = true;
-      }
-    }
 
     return $wp_args;
   }

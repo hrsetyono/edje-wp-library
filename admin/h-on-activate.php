@@ -195,68 +195,143 @@ class H_OnActivate {
     Sample Blog post
   */
   private $sample_content = <<<EOD
-  You're live! Nice. We've put together a little post to introduce you to the WordPress and get you started. You can manage your content by signing in to the admin area at "your-site.com/wp-admin/". When you arrive, you can go to Posts to either add new post or edit existing one from the list.
-<h2>Getting Started</h2>
-WordPress uses a text editor which is similar to the one in MS Word. Essentially, it's a user-friendly way to manage your post formatting as you write!
+<!-- wp:paragraph -->
+<p>
 
-Writing in the editor is really easy. In the panel above, you will see a row of buttons that can be used to format the content. Where appropriate, you can use <i>CTRL+I</i> or <strong>CTRL+B</strong> as formatting shortcut.
+You're live! Nice. We've put together a little post to introduce you to the WordPress and get you started. You can manage your content by signing in to the admin area at "your-site.com/wp-admin/". When you arrive, you can go to Posts to&nbsp;either add new post or edit existing one from the list.
 
-There's a list feature too. For example:
-<ul>
- 	<li>Item number one</li>
- 	<li>Item number two
-<ul>
- 	<li>Press Tab to create nested list</li>
-</ul>
-</li>
- 	<li>A final item</li>
-</ul>
-or with numbers!
-<ol>
- 	<li>Remember to buy some milk</li>
- 	<li>Drink the milk
-<ol>
- 	<li>Make sure it's not expired</li>
- 	<li>Finish in one gulp</li>
-</ol>
-</li>
- 	<li>Tweet that I remembered to buy the milk, and drank it</li>
-</ol>
+</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>Getting Started </h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>WordPress uses blocks to create website content. Click the (+) button and you will see available blocks. Go ahead and experiment it yourself.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Writing in the editor is really easy. In paragraph block, you will see a row of buttons above that can be used to format the content. Where appropriate, you can use <em>CTRL+I</em>&nbsp;or&nbsp;<strong>CTRL+B</strong>&nbsp;as formatting shortcut.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link" href="https://pixelstudio.id">This is a Button block</a></div>
+<!-- /wp:button -->
+
+<!-- wp:paragraph -->
+<p>There's&nbsp;a List block too. For example:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Item number one</li><li>Item number two <ul><li>Press the Indent button to create nested list </li></ul></li><li>A final item</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Or with numbers!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li>Remember to buy some milk</li><li>Drink the milk <ol><li>Make sure it's not expired</li><li>Finish in one gulp </li></ol></li><li>Tweet that I remembered to buy the milk and drank it</li></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
 <h3>Links</h3>
-Want to link to a source? No problem. Paste in url, like <a href="http://wordpress.org/">http://wordpress.org</a> then click the Link button - it'll automatically be linked up. But if you want to customise your anchor text, you can do that too! Here's a link to <a href="http://wordpress.org/">the WordPress website</a>. Neat.
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Want to link to a source? No problem. Paste in url, like <a href="https://wordpress.com/">https://wordpress.com/</a> then select it and click the Link button - it'll automatically be linked up.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>You can also customise your anchor text. Here's a link to <a href="http://wordpress.org/">the WordPress website</a>. Neat.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
 <h3>What about Images?</h3>
-Images work too! Click "Add Media" button which is above the buttons row. Simply drag-and-drop the image from your PC to the popup box.
+<!-- /wp:heading -->
 
-Want to add <strong>caption</strong>? That's easy too. Click on the image then click the Pencil icon, you'll find the Caption field in the popup box.
+<!-- wp:paragraph -->
+<p>You can simply drag and drop the image to this editor. Or select Image block and choose how you want to add it.</p>
+<!-- /wp:paragraph -->
 
-[caption id="" align="alignnone" width="800"]<img src="https://picsum.photos/800/400" alt="Help Google recognize what this image is" width="800" height="400" /> This is a caption![/caption]
+<!-- wp:paragraph -->
+<p>Want to add <strong>caption</strong>? That's easy too. Click on the Image block and you will see "Write Caption" field below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image -->
+<figure class="wp-block-image"><img src="https://picsum.photos/800/400" alt=""/><figcaption>This is a caption</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
 <h3>Quoting</h3>
-<blockquote>Wisdomous - it's definitely a word.</blockquote>
-Sometimes a link isn't enough, you want to quote someone on what they've said. It was probably very wisdomous. Is wisdomous a word? Find out in a future release when we introduce spellcheck! For now - it's definitely a word.
+<!-- /wp:heading -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p>Wisdomous - it's definitely a word.</p></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:paragraph -->
+<p>Sometimes a link isn't enough, you want to quote someone on what they've said. It was probably very wisdomous. Is wisdomous a word? Find out in a future release when we introduce spellcheck! For now - it's definitely a word.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
 <h3>Ready for a Break?</h3>
-Click the Line (-) button and you've got yourself a fancy new divider. Aw yeah.
+<!-- /wp:heading -->
 
-<hr />
+<!-- wp:paragraph -->
+<p>Select Separator block and you've got yourself a fancy new divider. Aw yeah.</p>
+<!-- /wp:paragraph -->
 
-<h3>Advanced Usage</h3>
+<!-- wp:separator -->
+<hr class="wp-block-separator"/>
+<!-- /wp:separator -->
 
-<strong>GRID</strong> - Split the content into 12 columns which can be distributed.
+<!-- wp:heading -->
+<h2>Gallery</h2>
+<!-- /wp:heading -->
 
-[grid size="4 start"]
+<!-- wp:paragraph -->
+<p>Select Gallery block and choose the images. Then click the block and you can configure it from the sidebar</p>
+<!-- /wp:paragraph -->
 
-<img src="https://picsum.photos/400/400" alt="Help Google recognize what this image is" />
+<!-- wp:gallery {"columns":3,"linkTo":"media"} -->
+<ul class="wp-block-gallery columns-3 is-cropped"><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1037"><img src="https://picsum.photos/600/400?image=1037" alt="" data-id="504"  class="wp-image-504"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1061"><img src="https://picsum.photos/600/400?image=1061" alt="" data-id="506" class="wp-image-506"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1036"><img src="https://picsum.photos/600/400?image=1036" alt="" data-id="507" class="wp-image-507"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1043"><img src="https://picsum.photos/600/400?image=1043" alt="" data-id="505" class="wp-image-505"/></a></figure></li></ul>
+<!-- /wp:gallery -->
 
-[/grid]
+<!-- wp:heading -->
+<h2>Columns Layout</h2>
+<!-- /wp:heading -->
 
-[grid size="8 end"]
+<!-- wp:columns -->
+<div class="wp-block-columns has-2-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image -->
+<figure class="wp-block-image"><img src="https://picsum.photos/300/400" alt=""/></figure>
+<!-- /wp:image -->
 
-This text is under 8 columns while the image next door is 4.
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
 
-You may ask "Why don't you just align the image to the left?" The thing is, Grid doesn't limit you to image and when the text exceed's the image, it doesn't wrap below it.
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>Columns is a tidy way to place image on the left or right.</p>
+<!-- /wp:paragraph -->
 
-[/grid]
+<!-- wp:paragraph -->
+<p>Currently it only supports same size column, but you can kinda customize it by adding CSS Class in Advanced tab.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:paragraph -->
+<p>
 
 That should be enough to get you started. Have fun - and let us know what you think :)
+
+</p>
+<!-- /wp:paragraph -->
 EOD;
 
 }

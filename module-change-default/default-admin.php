@@ -5,6 +5,7 @@
 class Default_Admin {
   function __construct() {
     add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
+    add_action( 'enqueue_block_editor_assets', array($this, 'gutenberg_enqueue_scripts') );
 
     add_action( 'admin_init', array($this, 'add_classic_editor_style') );
 
@@ -32,6 +33,14 @@ class Default_Admin {
   */
   function admin_enqueue_scripts() {
     wp_enqueue_style( 'h-admin', H_URL . '/assets/css/h-admin.css' );
+  }
+
+  /*
+    Enqueue CSS and JS to gutenberg editor
+    @action enqueue_block_editor_assets
+  */
+  function gutenberg_enqueue_scripts() {
+    wp_enqueue_style( 'h-gutenberg', H_URL . '/assets/css/h-gutenberg.css', array( 'wp-edit-blocks' ) );
   }
 
   /*

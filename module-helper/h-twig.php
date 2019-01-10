@@ -20,7 +20,12 @@ class H_Twig {
   */
   function add_to_twig( $twig ) {
     // Parse Markdown
-    $twig->addFilter( new Twig_SimpleFilter( 'markdown', array( $this, 'filter_markdown') ) );
+    // {{ post.content | markdown }}
+    $twig->addFilter( new Twig_SimpleFilter( 'markdown', function($text) {
+      $pd = new Parsedown();
+      $text_compiled = $pd->text($text);
+      return do_shortcode( $text_compiled );
+    } ) );
 
     // only if set to Debug mode
     if( defined('WP_DEBUG') && WP_DEBUG === true ) {
@@ -36,18 +41,6 @@ class H_Twig {
     }
 
     return $twig;
-  }
-
-
-  /*
-    Convert Markdown syntax
-    {{ post.content | markdown }}
-  */
-  function filter_markdown( $text ) {
-    $pd = new Parsedown();
-    $text_compiled = $pd->text($text);
-
-    return do_shortcode( $text_compiled );
   }
 
 }
