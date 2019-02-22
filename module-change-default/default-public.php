@@ -24,10 +24,6 @@ class Default_Public {
     add_filter( 'login_errors', array($this, 'change_login_errors_message') );
     add_action( 'login_head', array($this, 'modify_login_page') );
 
-    // remove query strings TODO: disabled because it breaks Gutenberg from saving ACF field
-    // add_filter( 'script_loader_src', array($this, 'remove_script_version'), 15, 1 );
-    // add_filter( 'style_loader_src', array($this, 'remove_script_version'), 15, 1 );
-
     // remove gravatar in admin bar (slow loading)
     add_action( 'admin_bar_menu', function() {
 		  add_filter( 'pre_option_show_avatars', '__return_zero' );

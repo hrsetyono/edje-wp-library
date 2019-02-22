@@ -41,6 +41,7 @@ class Default_Admin {
   */
   function gutenberg_enqueue_scripts() {
     wp_enqueue_style( 'h-gutenberg', H_URL . '/assets/css/h-gutenberg.css', array( 'wp-edit-blocks' ) );
+    wp_enqueue_script( 'h-gutenberg', H_URL . '/assets/js/h-gutenberg.js', array( 'wp-blocks', 'wp-element', 'jquery' ), false, true );
   }
 
   /*

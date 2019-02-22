@@ -13,14 +13,10 @@ class H_OnActivate {
     // create empty option if doesn't exist
     if(!$options) { add_option('h_options', array() ); }
 
-    // TODO: init always true, need to test deleting h_options
-    // var_dump($options);
-    // exit();
-
     // if page not initialized
     if(!isset($options['init']) ) {
       $this->_create_default_page();
-      // $this->_create_default_post();
+      $this->_create_default_post();
       $this->_set_default_setting();
 
       $this->_create_default_nav();

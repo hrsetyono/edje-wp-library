@@ -10,10 +10,15 @@
   .acf-table {
     font-size: 13px;
   }
+}
 
+.acf-block-fields {
   // Add color to Message Field (temporarily used as Header)
-  .acf-field-message {
+  > .acf-field-message:first-child {
     background-color: rgba(#0073aa, .2);
+    transition: all .25s ease-in-out;
+
+    &:hover { background-color: rgba(#0073aa, .4); }
 
     #editor & {
       padding: 8px 20px;
@@ -28,7 +33,7 @@
     }
   }
 
-  .acf-field-message p {
+  > .acf-field-message p {
     margin: 0;
   }
 }

@@ -20,6 +20,8 @@ define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 run_wp_edje();
 
 function run_wp_edje() {
+  if( !class_exists('Timber') ) { return false; }
+
   require_once 'module-helper/_run.php';
   require_once 'module-post-type/_run.php';
   require_once 'module-customizer/_run.php';
@@ -38,6 +40,8 @@ function run_wp_edje() {
 
   You can find detailed info and examples here: https://github.com/hrsetyono/wp-edje/wiki/
 */
+if( !class_exists('H') ):
+
 class H {
   function __construct() {
 
@@ -177,3 +181,5 @@ class H {
   }
 
 }
+
+endif; // class_exists
