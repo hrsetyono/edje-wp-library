@@ -31,7 +31,11 @@ class Default_Public {
 
     add_action( 'admin_bar_menu', function() {
 		  remove_filter( 'pre_option_show_avatars', '__return_zero' );
-	  }, 10 );
+    }, 10 );
+    
+    // TODO: Clashes with CDN making the CSS and JS hard to update
+    // add_filter( 'script_loader_src', array($this, 'remove_script_version'), 15 );
+    // add_filter( 'style_loader_src', array($this, 'remove_script_version'), 15 );
   }
 
   /*

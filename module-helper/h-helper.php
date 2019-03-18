@@ -7,21 +7,8 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 */
 class _H {
   /*
-    Transform Title into Param format (lower case, underscore)
-    @param $title
-    @return string
-  */
-  static function to_param( $title ) {
-    $targets = array( ' ', '[' , ']' );
-    $replace_with = array( '_', '_', '' );
-
-    $slug = strtolower( str_replace( $targets, $replace_with, $title ) );
-    $slug = trim( $slug, '^' );
-    return $slug;
-  }
-
-  /*
     Transform Slug into Title format (first letter capitalized, space)
+    
     @param $slug
     @return string
   */
@@ -31,11 +18,32 @@ class _H {
     return $title;
   }
 
-  static function to_slug( $title ) {
-    $slug = strtolower( str_replace( '_', '-', $title ) );
+  /*
+    Transform Title into Slug format (lower case, underscore)
+    @param $text
+    @return string
+  */
+  static function to_slug( $text ) {
+    $targets = array( ' ', '[' , ']' );
+    $replace_with = array( '_', '_', '' );
+
+    $slug = strtolower( str_replace( $targets, $replace_with, $text ) );
+    $slug = trim( $slug, '^' );
     return $slug;
   }
 
+  /*
+    Alias for to_slug
+  */
+  static function to_param( $title ) {
+    return self::to_slug( $title );
+  }
+
+  /*
+    Transform text to dashicons icon.
+
+    DEPRECATED - replace the one in sidenav.php too
+  */
   static function to_icon( $name ) {
     $full_name = 'dashicons-' . str_replace( 'dashicons-', '', $name );
     return $full_name;

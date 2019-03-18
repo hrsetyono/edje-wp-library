@@ -1,10 +1,16 @@
 <?php
 /*
   Functions to run after plugin is activated
+
+  You need to define EDJE variable to true in WP Config
+
+      define( 'EDJE', true );
 */
-class H_OnActivate {
+class H_ActivationHook {
   function __construct() {
-    register_activation_hook( H_BASE, array($this, 'activation_hook') );
+    if( defined( 'EDJE' ) ) {
+      register_activation_hook( H_BASE, array($this, 'activation_hook') );
+    }
   }
 
   function activation_hook() {

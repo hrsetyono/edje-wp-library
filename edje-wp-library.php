@@ -1,36 +1,33 @@
 <?php
 /*
-Plugin Name: WordPress Edje
-Description: Library to helps customize WordPress. Designed to work with Timber and Jetpack.
-Plugin URI: http://github.com/hrsetyono/edje-wp
-Author: The Syne Studio
-Author URI: http://thesyne.com/
-Version: 1.0.1
+Plugin Name: Edje WP Library
+Description: Simplify WordPress complicated functions. Designed to work with Timber.
+Plugin URI: http://github.com/hrsetyono/edje-wp-library
+Author: Pixel Studio
+Author URI: https://pixelstudio.id
+Version: 2.0.0
 */
 
-// exit if accessed directly
-if( !defined('ABSPATH') ) { exit; }
+if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '0.9.6' );
+define( 'H_VERSION', '2.0.0' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
-run_wp_edje();
 
-function run_wp_edje() {
-  if( !class_exists('Timber') ) { return false; }
-
+// Only run after other plugins are loaded
+add_action( 'plugins_loaded' , function() {
   require_once 'module-helper/_run.php';
   require_once 'module-post-type/_run.php';
   require_once 'module-customizer/_run.php';
   require_once 'module-admin-sidenav/_run.php';
   require_once 'module-change-default/_run.php';
 
-  require_once 'admin/h-on-activate.php';
-  new H_OnActivate();
-}
+  require_once 'activation-hook.php';
+  new H_ActivationHook();
+} );
 
 
 /////
@@ -38,7 +35,7 @@ function run_wp_edje() {
 /*
   Main portal for calling all static methods
 
-  You can find detailed info and examples here: https://github.com/hrsetyono/wp-edje/wiki/
+  You can find detailed info and examples here: https://github.com/hrsetyono/edje-wp-library/wiki/
 */
 if( !class_exists('H') ):
 
@@ -49,14 +46,14 @@ class H {
 
   ///// POST TYPE
 
-  static function register_post_type( $post_type, $args = array() ) {
-    $pt = new \h\Post_Type( $post_type, $args );
-    $pt->init();
+  static function register_post_type( $name, $args = array() ) {
+    $pt = new \h\Post_Type( $name, $args );
+    $pt->register();
   }
 
-  static function register_taxonomy( $post_type, $args ) {
-    $tx = new \h\Taxonomy( $post_type, $args );
-    $tx->init();
+  static function register_taxonomy( $name, $args ) {
+    $tx = new \h\Taxonomy( $name, $args );
+    $tx->register();
   }
 
   ///// POST COLUMNS
