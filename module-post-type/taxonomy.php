@@ -3,98 +3,51 @@
   Create custom taxonomy
 */
 class Taxonomy {
-  private $post_type;
+  private $tax_name;
   private $args;
+  private $labels;
+  private $wp_args;
+  private $post_type;
 
-  public function __construct( $post_type, $args ) {
-    $this->post_type = $post_type;
-    $this->args = $args;
+
+  public function __construct( $name, $args = [] ) {
+    $this->tax_name = \_H::to_slug( $name );
+    
+    $this->args = array_merge( [
+      'post_type' => 'post',
+      'label' => \_H::to_title( $name ),
+      'slug' => $this->tax_name,
+    ], $args );
+
+    $this->post_type = $this->args['post_type'];
+
+    $this->labels = $this->_create_labels( $this->tax_name, $this->args['label'] );
+    $this->wp_args = $this->_create_wp_args();
   }
 
-  // Create taxonomy and it's filter
-  public function init() {
-    $args = $this->args;
-    $post_type = $this->post_type;
-
-    $wp_args = $this->parse_args( $args );
-
-    register_taxonomy( $wp_args['name'], $post_type, $wp_args );
+  /*
+    Create taxonomy and the Post table filter
+  */
+  public function register() {
+    register_taxonomy( $this->tax_name, $this->post_type, $this->wp_args );
 
     // add taxonomy filter
     if( is_admin() ) {
-      $pf = new Post_Filter( $post_type, $wp_args['name'] );
-      $pf->init();
+      $pf = new Post_Filter( $this->post_type, $this->tax_name );
+      $pf->add();
     }
   }
 
   //////////
 
   /*
-    Parse the passed arguments into WP compatible one
-
-    @param string $name
-    @param array $raw - The raw arguments
-    @return array
-  */
-  private function parse_args( $raw ) {
-    $args = $this->check_raw_args( $raw );
-    $labels = $this->create_labels( $args['label'], $args['name'] );
-
-    $wp_args = array(
-      'name' => $args['name'],
-      'labels' => $labels,
-      'slug' => $args['name'],
-      'show_ui' => true,
-      'query_var' => true,
-      'show_admin_column' => true,
-      'show_in_rest' => true,
-      'hierarchical' => true,
-      'rewrite' => array(
-        'slug' => \_H::to_slug( $args['slug'] ),
-        'with_front' => 'false'
-      )
-    );
-
-    return $wp_args;
-  }
-
-  /*
-    Make sure the args is complete, also parameterize or titleize each of them
-    @param array $args - The taxonomy args
-
-    @return array - The complete and formatted args
-  */
-  function check_raw_args( $args ) {
-    // if plain text, form the array format
-    if( is_string( $args ) ) {
-      $args = array(
-        'name' => $args, 'label' => $args, 'slug' => $args
-      );
-    }
-    else {
-      // complete the args by adding the missing one
-      $args['name'] = isset( $args['name'] ) ? $args['name'] : $args['slug'];
-      $args['slug'] = isset( $args['slug'] ) ? $args['slug'] : $args['name'];
-    }
-
-    // format the args
-    $new_args = array(
-      'name' => \_H::to_param( $args['name'] ),
-      'label' => \_H::to_title( $args['label'] ),
-      'slug' => \_H::to_param( $args['slug'] )
-    );
-
-    return $new_args;
-  }
-
-  /*
     Create all the labels for Taxonomy text
 
-    @param string $name - Singular name of the CPT
-    @param string $name - The taxonomy name
+    @param $name (string)
+    @param $label (string) - Custom display name for the CPT
     @return array
   */
-  private function create_labels( $label, $name ) {
+  private function _create_labels( $name, $label ) {
     $plural = \Inflector::pluralize( $label );
     $singular = $label;
 
@@ -119,5 +72,32 @@ class Taxonomy {
     );
 
     return $labels;
+  }
+
+  /*
+    Create the Arguments that is compatible with the WP function
+
+    @return array
+  */
+  private function _create_wp_args() {
+    $name = $this->tax_name;
+    $args = $this->args;
+
+    $wp_args = array(
+      'name' => $name,
+      'labels' => $this->labels,
+      'slug' => $name,
+      'show_ui' => true,
+      'query_var' => true,
+      'show_admin_column' => true,
+      'show_in_rest' => true,
+      'hierarchical' => true,
+      'rewrite' => array(
+        'slug' => \_H::to_slug( $args['slug'] ),
+        'with_front' => 'false'
+      )
+    );
+
+    return $wp_args;
   }
 }

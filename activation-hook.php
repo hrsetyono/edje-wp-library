@@ -1,85 +1,107 @@
 <?php
 /*
   Functions to run after plugin is activated
-*/
-class H_OnActivate {
-  function __construct() {
-    register_activation_hook( H_BASE, array($this, 'activation_hook') );
-  }
 
+  You need to define EDJE variable to true in WP Config
+
+      define( 'EDJE', true );
+*/
+class H_Hook {
+  /*
+    Run when the plugin is activated
+  */
   function activation_hook() {
     $options = get_option('h_options');
 
     // create empty option if doesn't exist
-    if(!$options) { add_option('h_options', array() ); }
+    if( !$options ) {
+      add_option('h_options', [] );
+    }
 
-    // if page not initialized
-    if(!isset($options['init']) ) {
-      $this->_create_default_page();
-      $this->_create_default_post();
+    // If first time activation
+    if( !isset($options['init'] ) ) {
+      $this->_create_frontpage();
+      $this->_create_blogpage();
+
       $this->_set_default_setting();
-
       $this->_create_default_nav();
 
       $options['init'] = true;
     }
 
-    // if post not initialized
-    if(!isset($options['post_init']) ) {
+    // If sample post never created before
+    if( !isset($options['post_init']) ) {
       $this->_create_default_post();
 
       $options['post_init'] = true;
     }
 
-    update_option('h_options', $options);
+    update_option( 'h_options', $options );
   }
 
+
   /*
-    Create default page for HOME and BLOG
+    Run when the plugin is deactivated
   */
-  function _create_default_page() {
-    $frontpage_id = get_option('page_on_front');
-    $blogpage_id = get_option('page_for_posts');
+  function deactivation_hook() {
+
+  }
+
+  /////
+
+  /*
+    Create default Frontpage
+  */
+  private function _create_frontpage() {
+    $frontpage_id = get_option( 'page_on_front' );
 
     // if already exists, just change the title
-    if($frontpage_id) {
-      $args = array(
+    if( $frontpage_id ) {
+      $args = [
         'ID' => $frontpage_id,
         'post_title' => get_bloginfo()
-      );
+      ];
 
-      wp_update_post($args);
+      wp_update_post( $args );
     }
-    // if not exists, create it
+    // if does not exists, create it
     else {
-      $home = array(
+      $home = [
         'post_title' => get_bloginfo(),
         'post_type' => 'page',
         'post_status' => 'publish',
-      );
+      ];
 
-      $home_id = wp_insert_post($home);
-      update_option('show_on_front', 'page');
-      update_option('page_on_front', $home_id);
+      $home_id = wp_insert_post( $home );
+      update_option( 'show_on_front', 'page' );
+      update_option( 'page_on_front', $home_id );
     }
+  }
 
-    // create posts page if not set
-    if(!$blogpage_id) {
-      $blog = array(
+  /*
+    Create default Blog page
+  */
+  private function _create_blogpage() {
+    $blogpage_id = get_option( 'page_for_posts' );
+
+    // If does not exists, create one
+    if( !$blogpage_id ) {
+      $blog = [
         'post_title' => 'Blog',
         'post_type' => 'page',
         'post_status' => 'publish',
-      );
+      ];
 
-      $blog_id = wp_insert_post($blog);
-      update_option('page_for_posts', $blog_id);
+      $blog_id = wp_insert_post( $blog );
+      update_option( 'page_for_posts', $blog_id );
     }
   }
+
 
   /*
     Create default navigation menu
   */
-  function _create_default_nav() {
+  private function _create_default_nav() {
     $navs = array(
       // MAIN
       array(
@@ -121,8 +143,6 @@ class H_OnActivate {
     $locations = get_theme_mod('nav_menu_locations');
 
     foreach($navs as $nav):
-      // var_dump($nav);
-      // exit();
       // if doesn't exist AND the location isn't occupied
       if(! wp_get_nav_menu_object($nav['name'] && !has_nav_menu($nav['location'])) ) {
         // create empty menu
@@ -142,32 +162,33 @@ class H_OnActivate {
   }
 
   /*
-    Create sample post that also acts as guide to WordPress
+    Create sample post content
   */
-  function _create_default_post() {
-    $args = array(
+  private function _create_default_post() {
+    $args = [
       'post_title' => 'Welcome to WordPress',
       'post_name' => 'welcome-to-wordpress',
       'post_type' => 'post',
       'post_content' => $this->sample_content,
       'post_status' => 'publish'
-    );
+    ];
 
-    // if post ID 1 exist
-    if(is_string(get_post_status(1)) ) {
+    // if post ID 1 exist, edit it
+    if( is_string(get_post_status(1)) ) {
       $args['ID'] = 1;
-      wp_update_post($args);
+      wp_update_post( $args );
     }
+    // if does not exist, create new post with ID 1
     else {
       $args['import_id'] = 1;
-      wp_insert_post($args);
+      wp_insert_post( $args );
     }
   }
 
   /*
     Default setting for Standard website
   */
-  function _set_default_setting() {
+  private function _set_default_setting() {
     // general
     update_option('use_smiles', 0);
 

@@ -12,13 +12,12 @@ class Default_Public {
     // remove emoji
     remove_action( 'wp_print_styles', 'print_emoji_styles' );
     remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-
     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
     remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
-    // remove default js or css
-    add_action( 'wp_enqueue_scripts', array($this, 'enqueue_script'), 9999 );
+    // remove default js or css 
+    add_action( 'wp_enqueue_scripts', array($this, 'change_default_scripts'), 9999 );
 
     // modify login
     add_filter( 'login_errors', array($this, 'change_login_errors_message') );
@@ -31,7 +30,11 @@ class Default_Public {
 
     add_action( 'admin_bar_menu', function() {
 		  remove_filter( 'pre_option_show_avatars', '__return_zero' );
-	  }, 10 );
+    }, 10 );
+    
+    // TODO: Clashes with CDN making the CSS and JS hard to update
+    // add_filter( 'script_loader_src', array($this, 'remove_script_version'), 15 );
+    // add_filter( 'style_loader_src', array($this, 'remove_script_version'), 15 );
   }
 
   /*
@@ -48,9 +51,11 @@ class Default_Public {
     Change some default CSS or JS
     @action wp_enqueue_scripts
   */
-  function enqueue_script() {
-    // remove embedding post from other blog
-    wp_deregister_script( 'wp-embed' );
+  function change_default_scripts() {
+    if ( !is_admin() ) {
+      wp_deregister_script( 'wp-embed' );
+      // wp_deregister_script( 'jquery-ui-core' );
+    }
 
     // Enable comment's reply form
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

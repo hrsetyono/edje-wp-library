@@ -1,6 +1,8 @@
 <?php namespace h;
 /*
   Add extra call-to-action on CPT listing (that appears on hover)
+
+  TODO: Still work in progress
 */
 class Post_Action {
   private $post_type;

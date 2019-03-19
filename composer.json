@@ -1,0 +1,20 @@
+{
+  "name": "pixelstudio/edje-wp-library",
+  "version": "2.0.0",
+  "description": "Plugin to simplify WordPress complicated functions.",
+  "keywords": ["wordpress", "plugin", "library"],
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/hrsetyono/edje-wp-library/",
+  "authors": [
+    {
+      "name": "Pixel Studio",
+      "email": "info@pixelstudio.id",
+      "homepage": "https://pixelstudio.id"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.0.0",
+    "composer/installers": ">=1.6.0"
+  }
+}

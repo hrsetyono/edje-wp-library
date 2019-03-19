@@ -15,7 +15,7 @@ class Post_Filter {
     $this->post_taxonomies = array( $post_type => array( $taxonomy ) );
   }
 
-  public function init() {
+  public function add() {
     if( !is_admin() ) { return false; }
 
     add_action( 'restrict_manage_posts', array( $this, 'my_restrict_manage_posts' ) );
