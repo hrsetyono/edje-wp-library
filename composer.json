@@ -1,6 +1,6 @@
 {
   "name": "pixelstudio/edje-wp-library",
-  "description": "Simplify WordPress complicated functions.",
+  "description": "Plugin to simplify WordPress complicated functions.",
   "keywords": ["wordpress", "plugin", "library"],
   "type": "wordpress-plugin",
   "homepage": "https://github.com/hrsetyono/edje-wp-library/",

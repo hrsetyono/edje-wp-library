@@ -50,31 +50,6 @@ class _H {
   }
 
   /*
-    Trim Post content into SEO friendly description. Only trim until nearest word.
-
-    @param string $text - The raw post content
-    @param int $char_number - Max characters
-    @return string - The trimmed content
-  */
-  static function trim_content( $text, $char_number ='156' ) {
-    $text = html_entity_decode( $text, ENT_QUOTES );
-    if( strlen($text) > $char_number ) {
-      $text = substr( $text, 0, $char_number );
-      $text = substr( $text, 0, strrpos( $text, ' ' ) );
-
-      $punctuation = '.!?:;,-'; // punctuation you want removed
-
-      $text = (strspn(strrev($text),  $punctuation) != 0)
-              ?
-              substr($text, 0, -strspn(strrev($text),  $punctuation))
-              :
-              $text;
-    }
-    $text = htmlentities( $text, ENT_QUOTES );
-    return $text;
-  }
-
-  /*
     Check whether a plugin is active
 
     @param $slug string - The slug of a plugin, it's a pre-determinated keyword.
@@ -124,33 +99,5 @@ class _H {
     }
 
     return false;
-  }
-}
-
-// PHP 5.5 Array Column
-if (! function_exists('array_column') ) {
-  function array_column( array $input, $columnKey, $indexKey = null ) {
-    $array = array();
-    foreach ( $input as $value ) {
-      if( ! isset( $value[$columnKey] ) ) {
-        trigger_error('Key "$columnKey" does not exist in array');
-        return false;
-      }
-      if( is_null( $indexKey ) ) {
-        $array[] = $value[$columnKey];
-      }
-      else {
-        if ( ! isset( $value[$indexKey] ) ) {
-          trigger_error('Key "$indexKey" does not exist in array');
-          return false;
-        }
-        if ( ! is_scalar($value[$indexKey])) {
-          trigger_error('Key "$indexKey" does not contain scalar value');
-          return false;
-        }
-        $array[$value[$indexKey]] = $value[$columnKey];
-      }
-    }
-    return $array;
   }
 }

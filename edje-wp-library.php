@@ -17,46 +17,144 @@ define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 
-// Only run after other plugins are loaded
-add_action( 'plugins_loaded' , function() {
-  require_once 'module-helper/_run.php';
-  require_once 'module-post-type/_run.php';
-  require_once 'module-customizer/_run.php';
-  require_once 'module-admin-sidenav/_run.php';
-  require_once 'module-change-default/_run.php';
 
-  require_once 'activation-hook.php';
-  new H_ActivationHook();
-} );
+if( !class_exists('Edje_WP_Library') ):
+class Edje_WP_Library {
+  function __construct() {
+    $this->load_modules();
+    $this->register_activation_hook();
+  }
+
+  /*
+    Load all modules
+  */
+  private function load_modules() {
+    add_action( 'plugins_loaded' , function() {
+      $this->module_helper();
+      $this->module_post_type();
+      $this->module_customizer();
+      $this->module_admin_sidenav();
+      $this->module_change_default();
+      $this->module_vendor();
+    } );
+  }
+
+  /*
+    Register activation and deactivation hook
+  */
+  private function register_activation_hook() {
+    if( defined( 'EDJE' ) ) { 
+      require_once 'activation-hook.php';
+
+      register_activation_hook( H_BASE, ['H_Hook', 'activation_hook'] );
+      register_deactivation_hook( H_BASE, ['H_Hook', 'deactivation_hook'] );
+    }
+  }
+
+  //
+
+  private function module_helper() {
+    require_once 'module-helper/h-helper.php';
+
+    // only if not in admin
+    if( !is_admin() ) {
+      require_once 'module-helper/h-shortcode.php';
+      new H_Shortcode();
+    }
+
+    // If Timber is activated
+    if( class_exists('Timber') ) {
+      require_once 'module-helper/h-twig.php';
+      require_once 'module-helper/timber-block.php';
+
+      new H_Twig();
+    }
+  }
+
+
+  private function module_post_type() {
+    require_once 'module-post-type/post-type.php';
+    require_once 'module-post-type/taxonomy.php';
+
+    if( is_admin() ) {
+      require_once 'module-post-type/post-column.php';
+      require_once 'module-post-type/post-filter.php';
+      require_once 'module-post-type/post-action.php';
+    }
+  }
+
+  
+  private function module_customizer() {
+    require_once 'module-customizer/customizer.php';
+    require_once 'module-customizer/customizer-default.php';
+
+    new \h\Customizer_Default();
+  }
+
+
+  private function module_admin_sidenav() {
+    if( is_admin() ) {
+      require_once 'module-admin-sidenav/sidenav.php';
+      require_once 'module-admin-sidenav/sidenav-sub.php';
+    }    
+  }
+
+
+  private function module_change_default() {
+    require_once 'module-change-default/default-public.php';
+    new \h\Default_Public();
+
+    // if in admin
+    if( is_admin() ) {
+      require_once 'module-change-default/default-codemirror.php';
+      require_once 'module-change-default/default-admin.php';
+      new \h\Default_Admin();
+      new \h\Default_Codemirror();
+    }
+    // if not in admin
+    else {
+      require_once 'module-change-default/default-jetpack.php';
+      require_once 'module-change-default/default-seo.php';
+      new \h\Default_Jetpack();
+      new \h\Default_SEO();
+    }
+  }
+
+
+  private function module_vendor() {
+    require_once 'module-vendor/inflector.php';
+    require_once 'module-vendor/parsedown.php';
+  }
+}
+
+new Edje_WP_Library();
+endif;
 
 
 /////
 
+
 /*
   Main portal for calling all static methods
-
-  You can find detailed info and examples here: https://github.com/hrsetyono/edje-wp-library/wiki/
 */
 if( !class_exists('H') ):
-
 class H {
-  function __construct() {
-
-  }
-
-  ///// POST TYPE
-
-  static function register_post_type( $name, $args = array() ) {
+  /*
+    Register custom post type
+  */
+  static function register_post_type( string $name, array $args = [] ) {
     $pt = new \h\Post_Type( $name, $args );
     $pt->register();
   }
 
-  static function register_taxonomy( $name, $args ) {
+  /*
+    Register custom taxonomy
+  */
+  static function register_taxonomy( string $name, array $args ) {
     $tx = new \h\Taxonomy( $name, $args );
     $tx->register();
   }
 
-  ///// POST COLUMNS
 
   /*
     Override all columns in the Post Type table with this one
@@ -76,6 +174,7 @@ class H {
     self::override_columns( $post_type, $args );
   }
 
+  
   /*
     Append a column to the Post Type table
     @since 0.9.0
@@ -127,29 +226,29 @@ class H {
   }
 
   static function add_menu( $title, $args ) {
-    $new_args = array(
+    $new_args = [
       $title => $args
-    );
+    ];
 
     H::add_menus( $new_args );
   }
 
   static function add_submenu( $parent_title, $args ) {
-    H::add_menus( array(
-      $parent_title => array(
+    H::add_menus( [
+      $parent_title => [
         'position' => "on $parent_title",
         'submenu' => $args
-      )
-    ) );
+      ]
+    ] );
   }
 
   static function add_menu_counter( $parent_title, $count_cb ) {
-    H::add_menus( array(
-      $parent_title => array(
+    H::add_menus( [
+      $parent_title => [
         'position' => "on $parent_title",
         'counter' => $count_cb,
-      )
-    ) );
+      ]
+    ] );
   }
 
 

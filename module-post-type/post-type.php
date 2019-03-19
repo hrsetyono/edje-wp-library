@@ -8,8 +8,12 @@ class Post_Type {
   private $wp_args;
   private $labels;
 
-  public function __construct( $name, $args = [] ) {
-    // convert given name to all lower-case and no space
+  /*
+    @param $name - Custom Post Type name
+    @param $args
+  */
+  public function __construct( string $name, array $args = [] ) {
+
     $this->name = \_H::to_slug( $name );
 
     // default args
@@ -24,6 +28,7 @@ class Post_Type {
     $this->wp_args = $this->_create_wp_args();
   }
 
+
   /*
     Register CPT (Custom Post Type)
   */
@@ -31,7 +36,7 @@ class Post_Type {
     register_post_type( $this->name, $this->wp_args );
 
     // add post count in dashboard widget
-    add_action( 'dashboard_glance_items', array( $this, 'add_custom_post_glance' ) );
+    add_action( 'dashboard_glance_items', [ $this, 'add_custom_post_glance' ] );
   }
 
 
@@ -63,12 +68,12 @@ class Post_Type {
     @param string $slug
     @return array
   */
-  private function _create_labels( $slug ) {
+  private function _create_labels( string $slug ) : string {
     $name = \_H::to_title( $slug );
     $plural = \Inflector::pluralize( $name );
     $singular = $name;
 
-    $labels = array(
+    $labels = [
       'name' => $plural,
       'singular_name' => $singular,
       'all_items' => 'All ' . $plural,
@@ -80,7 +85,7 @@ class Post_Type {
       'not_found' => 'No ' . strtolower( $plural ) . ' found',
       'not_found_in_trash' => 'No ' . strtolower( $plural ) . ' found in Trash',
       'parent_item_colon' => 'Parent ' . $singular . ':',
-    );
+    ];
 
     return $labels;
   }
@@ -90,28 +95,28 @@ class Post_Type {
     
     @return array
   */
-  private function _create_wp_args() {
+  private function _create_wp_args() : array {
     $name = $this->name;
     $args = $this->args;
     $slug = $args['slug'];
 
     // Merge supports with the default one
-    $default_supports = array( 'title', 'editor', 'thumbnail', 'excerpt' );
+    $default_supports = [ 'title', 'editor', 'thumbnail', 'excerpt' ];
     $supports = array_merge( $default_supports, $args['supports'] );
 
 
-    $wp_args = array(
+    $wp_args = [
       'public' => true,
       'labels' => $this->labels,
       'capability_type' => 'post',
       'supports' => $supports,
       'has_archive' => true,
-      'rewrite' => array(
+      'rewrite' => [
         'slug' => $slug,
         'with_front' => false
-      ),
+      ],
       'menu_position' => $args['menu_position'],
-    );
+    ];
 
     // add icon
     $icon = str_replace('dashicons-', '', $args['icon'] );

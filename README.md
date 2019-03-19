@@ -2,7 +2,7 @@
 
 ![Edje Wordpress](https://cdn.setyono.net/edge/wp-edge.jpg)
 
-Simplify WordPress complicated functions.
+WordPress is a fantastic web platform, but it's complicated for developer. This plugin helps simplifying many functions.
 
 **REQUIREMENT**
 
@@ -17,7 +17,7 @@ Simplify WordPress complicated functions.
 1. [Post Table Columns](#post-table-columns)
 1. [Other Features](#other-features)
 
-## Custom Post Type
+## 1. Custom Post Type
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type)
 
@@ -30,7 +30,7 @@ H::register_post_type( 'product', [
 ] );
 ```
 
-## Custom Taxonomy
+## 2. Custom Taxonomy
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
 
@@ -43,7 +43,7 @@ H::register_taxonomy( 'brand' , [
 ```
 
 
-## Theme Customizer
+## 3. Theme Customizer
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Customizer)
 
@@ -65,7 +65,7 @@ function my_customize_register( $wp_customize ) {
 }
 ```
 
-## Post Table Columns
+## 4. Post Table Columns
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Table-Columns)
 
@@ -89,7 +89,7 @@ function show_discounted_price( $post, $fields ) {
 }
 ```
 
-## Other Features
+## 5. Other Features
 
 All these features are enabled by default:
 

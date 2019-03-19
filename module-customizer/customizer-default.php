@@ -11,7 +11,9 @@ class Customizer_Default {
     add_action( 'customize_register', array($this, 'head_footer_code') );
     add_action( 'customize_register', array($this, 'site_identity') );
 
-    $this->add_code();
+    // add the custom code to Head or Footer
+    add_action( 'wp_head', array($this, 'add_head_code'), 100 );
+    add_action( 'wp_footer', array($this, 'add_footer_code'), 100 );
   }
 
   /*
@@ -24,16 +26,16 @@ class Customizer_Default {
     $c = \H::customizer( $wp_customize );
 
     $c->add_section( 'h_head_footer', array(
-      'title' => __( 'Head & Footer Code', 'h' ),
-      'description' => __( 'Add custom code for Head and Footer area', 'h' ),
+      'title' => __( 'Head & Footer Code' ),
+      'description' => __( 'Add custom code for Head and Footer area' ),
     ) );
 
     $c->add_option( 'h[head_code]', 'code_editor htmlmixed', array(
-      'label' => __( 'HEAD code', 'h' ),
+      'label' => __( 'HEAD code' ),
     ) );
 
     $c->add_option( 'h[footer_code]', 'code_editor htmlmixed', array(
-      'label' => __( 'FOOTER code', 'h' ),
+      'label' => __( 'FOOTER code' ),
     ) );
   }
 
@@ -53,26 +55,38 @@ class Customizer_Default {
     }
 
     $c->add_theme_mod( 'background_color', 'color', array(
-      'label' => 'Theme Color',
-      'description' => 'Used for taskbar color in Mobile browser'
+      'label' => __('Theme Color'),
+      'description' => __('Used for taskbar color in Mobile browser')
     ) );
   }
 
-  /////
+  ////
 
   /*
-    Add extra code to HEAD and FOOTER
+    Add custom code to wp_head() section.
+    @action wp_head 100
   */
-  private function add_code() {
-    if( isset( $this->option['head_code'] ) ) {
-      add_action( 'wp_head', array($this, 'add_head_code'), 100 );
+  function add_head_code() {
+    // Add Theme color tag
+    $color = get_background_color();
+    if( $color ) {
+      echo "<meta name='theme-color' content='#$color'>";
     }
 
-    if( isset( $this->option['footer_code'] ) ) {
-      add_action( 'wp_footer', array($this, 'add_footer_code'), 100 );
+    // Add custom HEAD code
+    if( isset( $this->option['head_code'] ) ) {
+      echo $this->option['head_code'];
     }
   }
 
-  function add_head_code() { echo $this->option['head_code']; }
-  function add_footer_code() { echo $this->option['footer_code']; }
+  /*
+    Add custom code to wp_footer() section.
+    @action wp_footer 100
+  */
+  function add_footer_code() {
+    if( isset( $this->option['footer_code'] ) ) {
+      echo $this->option['footer_code'];
+    }
+  }
+
 }
