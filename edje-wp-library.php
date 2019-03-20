@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.0.0
+Version: 2.0.1
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly

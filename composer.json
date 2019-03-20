@@ -1,6 +1,5 @@
 {
   "name": "pixelstudio/edje-wp-library",
-  "version": "2.0.0",
   "description": "Plugin to simplify WordPress complicated functions.",
   "keywords": ["wordpress", "plugin", "library"],
   "type": "wordpress-plugin",
@@ -15,6 +14,6 @@
   "license": "MIT",
   "require": {
     "php": ">=7.0.0",
-    "composer/installers": ">=1.6.0"
+    "composer/installers": "~1.0"
   }
 }

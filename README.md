@@ -11,11 +11,12 @@ WordPress is a fantastic web platform, but it's complicated for developer. This 
 
 **TABLE OF CONTENTS**
 
-1. [Custom Post Type](#custom-post-type)
-1. [Custom Taxonomy](#custom-taxonomy)
-1. [Theme Customizer](#theme-customizer)
-1. [Post Table Columns](#post-table-columns)
-1. [Other Features](#other-features)
+1. [Custom Post Type](#1-custom-post-type)
+1. [Custom Taxonomy](#2-custom-taxonomy)
+1. [Theme Customizer](#3-theme-customizer)
+1. [Post Table Columns](#4-post-table-columns)
+1. [Other Features](#5-other-features)
+1. [Changelog](https://github.com/hrsetyono/edje-wp-library/wiki/Changelog)
 
 ## 1. Custom Post Type
 
