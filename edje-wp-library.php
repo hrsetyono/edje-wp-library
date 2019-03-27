@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.0.1
+Version: 2.0.2
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -22,7 +22,12 @@ if( !class_exists('Edje_WP_Library') ):
 class Edje_WP_Library {
   function __construct() {
     $this->load_modules();
-    $this->register_activation_hook();
+
+    // activation hook
+    if( defined( 'EDJE' ) ) {
+      require_once 'activation-hook.php';
+      register_activation_hook( H_BASE, [$this, 'register_activation_hook'] );
+    }
   }
 
   /*
@@ -42,13 +47,9 @@ class Edje_WP_Library {
   /*
     Register activation and deactivation hook
   */
-  private function register_activation_hook() {
-    if( defined( 'EDJE' ) ) { 
-      require_once 'activation-hook.php';
-
-      register_activation_hook( H_BASE, ['H_Hook', 'activation_hook'] );
-      register_deactivation_hook( H_BASE, ['H_Hook', 'deactivation_hook'] );
-    }
+  function register_activation_hook() {
+    $hook = new H_Hook();
+    $hook->on_activation();
   }
 
   //
@@ -58,7 +59,7 @@ class Edje_WP_Library {
 
     // only if not in admin
     if( !is_admin() ) {
-      require_once 'module-helper/h-shortcode.php';
+      require_once 'module-helper/custom-shortcode.php';
       new H_Shortcode();
     }
 

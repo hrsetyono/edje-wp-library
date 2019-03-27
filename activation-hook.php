@@ -10,7 +10,7 @@ class H_Hook {
   /*
     Run when the plugin is activated
   */
-  function activation_hook() {
+  function on_activation() {
     $options = get_option('h_options');
 
     // create empty option if doesn't exist
@@ -104,40 +104,36 @@ class H_Hook {
   private function _create_default_nav() {
     $navs = array(
       // MAIN
-      array(
+      [
         'name' => 'Main Nav',
         'location' => 'main-nav',
-        'items' => array(
-          array(
-            'menu-item-title' => 'Home',
-            'menu-item-url' => home_url(),
-            'menu-item-status' => 'publish'
-          )
-        )
-      ),
+        'items' => [
+          [ 'menu-item-title' => 'Home', 'menu-item-url' => home_url(), 'menu-item-status' => 'publish' ]
+        ]
+      ],
 
       // SOCIAL
-      array(
+      [
         'name' => 'Social Nav',
         'location' => 'social-nav',
-        'items' => array(
-          array(
+        'items' => [
+          [
             'menu-item-title' => 'facebook',
             'menu-item-url' => 'https://www.facebook.com/username',
             'menu-item-status' => 'publish'
-          ),
-          array(
+          ],
+          [
             'menu-item-title' => 'twitter',
             'menu-item-url' => 'https://twitter.com/username',
             'menu-item-status' => 'publish'
-          ),
-          array(
+          ],
+          [
             'menu-item-title' => 'google-plus',
             'menu-item-url' => 'https://plus.google.com/+username',
             'menu-item-status' => 'publish'
-          )
-        )
-      ),
+          ]
+        ]
+      ],
     );
 
     $locations = get_theme_mod('nav_menu_locations');

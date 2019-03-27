@@ -68,7 +68,7 @@ class Post_Type {
     @param string $slug
     @return array
   */
-  private function _create_labels( string $slug ) : string {
+  private function _create_labels( string $slug ) : array {
     $name = \_H::to_title( $slug );
     $plural = \Inflector::pluralize( $name );
     $singular = $name;
