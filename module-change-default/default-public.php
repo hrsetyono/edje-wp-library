@@ -54,8 +54,10 @@ class Default_Public {
   function change_default_scripts() {
     if ( !is_admin() ) {
       wp_deregister_script( 'wp-embed' );
-      // wp_deregister_script( 'jquery-ui-core' );
+      wp_deregister_script( 'jquery-ui-core' );
     }
+
+    wp_enqueue_script( 'h-library', H_URL . 'assets/js/h-library.js', ['jquery'], false, true );
 
     // Enable comment's reply form
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.0.2
+Version: 2.1.0
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -41,6 +41,7 @@ class Edje_WP_Library {
       $this->module_admin_sidenav();
       $this->module_change_default();
       $this->module_vendor();
+      $this->module_gutenberg();
     } );
   }
 
@@ -66,8 +67,6 @@ class Edje_WP_Library {
     // If Timber is activated
     if( class_exists('Timber') ) {
       require_once 'module-helper/h-twig.php';
-      require_once 'module-helper/timber-block.php';
-
       new H_Twig();
     }
   }
@@ -122,6 +121,17 @@ class Edje_WP_Library {
   }
 
 
+  private function module_gutenberg() {
+    if( class_exists('ACF') ) {
+      require_once 'module-gutenberg/acf-blocks.php';
+    }
+
+    if( class_exists('Timber') ) {
+      require_once 'module-gutenberg/timber-block.php';
+    }
+  }
+
+
   private function module_vendor() {
     require_once 'module-vendor/inflector.php';
     require_once 'module-vendor/parsedown.php';
@@ -140,6 +150,8 @@ endif;
 */
 if( !class_exists('H') ):
 class H {
+  /// POST TYPE
+
   /*
     Register custom post type
   */
@@ -156,6 +168,17 @@ class H {
     $tx->register();
   }
 
+
+  /// GUTENBERG BLOCKS
+
+  static function register_block( string $name, array $args ) {
+    if( !function_exists('acf_register_block') ) { return false; }
+
+    $gt = new \h\ACF_Block( $name, $args );
+    $gt->register();
+  }
+
+  //// POST TABLE
 
   /*
     Override all columns in the Post Type table with this one
@@ -192,8 +215,7 @@ class H {
   }
 
 
-  ///// ACTIONS
-  // TODO: still not working
+  /// ACTIONS - TODO: still not working
 
   static function add_actions( $post_type, $actions ) {
     if( !is_admin() ) { return false; }
@@ -254,7 +276,7 @@ class H {
 
 
 
-  ///// CUSTOMIZER
+  /// CUSTOMIZER
 
   /*
     Inititate Edje customizer object

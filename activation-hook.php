@@ -308,8 +308,8 @@ You're live! Nice. We've put together a little post to introduce you to the Word
 <p>Select Gallery block and choose the images. Then click the block and you can configure it from the sidebar</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:gallery {"columns":3,"linkTo":"media"} -->
-<ul class="wp-block-gallery columns-3 is-cropped"><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1037"><img src="https://picsum.photos/600/400?image=1037" alt="" data-id="504"  class="wp-image-504"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1061"><img src="https://picsum.photos/600/400?image=1061" alt="" data-id="506" class="wp-image-506"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1036"><img src="https://picsum.photos/600/400?image=1036" alt="" data-id="507" class="wp-image-507"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1043"><img src="https://picsum.photos/600/400?image=1043" alt="" data-id="505" class="wp-image-505"/></a></figure></li></ul>
+<!-- wp:gallery {"ids":[507,509,508,506]} -->
+<ul class="wp-block-gallery columns-3 is-cropped"><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1037" alt="" data-id="507" data-link="https://picsum.photos/600/400?image=1037" class="wp-image-507"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1061" alt="" data-id="509" data-link="https://picsum.photos/600/400?image=1061" class="wp-image-509"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1036" alt="" data-id="508" data-link="https://picsum.photos/600/400?image=1036" class="wp-image-508"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/800/600?image=1043" alt="" data-id="506" data-link="https://picsum.photos/800/600?image=1043" class="wp-image-506"/></figure></li></ul>
 <!-- /wp:gallery -->
 
 <!-- wp:heading -->
