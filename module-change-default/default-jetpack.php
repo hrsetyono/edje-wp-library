@@ -15,7 +15,6 @@ class Default_Jetpack {
 
     // disable jetpack css
     add_filter( 'jetpack_implode_frontend_css', '__return_false' );
-
     add_filter( 'jetpack_lazy_images_blacklisted_classes', array($this, 'blacklisted_lazyload_classes') );
   }
 
@@ -63,12 +62,23 @@ class Default_Jetpack {
   }
 
   /*
+    Remove redundant CSS and JS
+    @action wp_footer
+  */
+  function wp_footer() {
+    wp_deregister_script( 'sharing-js' );
+
+    // disable spinner when infinite loading is enabled
+    wp_deregister_script( 'jquery.spin' );
+    wp_deregister_script( 'spin' );
+  }
+
+  /*
     Enqueue additional JS and CSS
     @action wp_enqueue_scripts
   */
   function enqueue_scripts() {
     wp_enqueue_style( 'social-logos' );  // add social logos in all pages
-    wp_enqueue_script( 'h-jetpack', H_URL . '/assets/js/h-jetpack.js', array('jquery'), false, true );
   }
 
   /*
@@ -78,20 +88,5 @@ class Default_Jetpack {
   function blacklisted_lazyload_classes( $classes ) {
     $classes[] = 'custom-logo';
     return $classes;
-  }
-
-  /*
-    Remove redundant CSS and JS
-    @action wp_footer
-  */
-  function wp_footer() {
-    wp_dequeue_style( 'jetpack-responsive-videos-style' );
-    wp_dequeue_script( 'jetpack-responsive-videos-script' );
-
-    wp_deregister_script( 'sharing-js' );
-
-    // disable spinner when infinite loading is enabled
-    wp_deregister_script( 'jquery.spin' );
-    wp_deregister_script( 'spin' );
   }
 }

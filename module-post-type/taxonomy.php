@@ -1,7 +1,7 @@
 <?php namespace h;
-/*
-  Create custom taxonomy
-*/
+/**
+ * Create Custom Taxonomy
+ */
 class Taxonomy {
   private $tax_name;
   private $args;

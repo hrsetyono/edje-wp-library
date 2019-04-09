@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.0.1
+Version: 2.1.1
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -22,7 +22,12 @@ if( !class_exists('Edje_WP_Library') ):
 class Edje_WP_Library {
   function __construct() {
     $this->load_modules();
-    $this->register_activation_hook();
+
+    // activation hook
+    if( defined( 'EDJE' ) ) {
+      require_once 'activation-hook.php';
+      register_activation_hook( H_BASE, [$this, 'register_activation_hook'] );
+    }
   }
 
   /*
@@ -36,37 +41,28 @@ class Edje_WP_Library {
       $this->module_admin_sidenav();
       $this->module_change_default();
       $this->module_vendor();
+      $this->module_gutenberg();
     } );
   }
 
   /*
     Register activation and deactivation hook
   */
-  private function register_activation_hook() {
-    if( defined( 'EDJE' ) ) { 
-      require_once 'activation-hook.php';
-
-      register_activation_hook( H_BASE, ['H_Hook', 'activation_hook'] );
-      register_deactivation_hook( H_BASE, ['H_Hook', 'deactivation_hook'] );
-    }
+  function register_activation_hook() {
+    $hook = new H_Hook();
+    $hook->on_activation();
   }
 
   //
 
   private function module_helper() {
     require_once 'module-helper/h-helper.php';
-
-    // only if not in admin
-    if( !is_admin() ) {
-      require_once 'module-helper/h-shortcode.php';
-      new H_Shortcode();
-    }
+    require_once 'module-helper/custom-shortcode.php';
+    new H_Shortcode();
 
     // If Timber is activated
-    if( class_exists('Timber') ) {
+    if( _H::is_plugin_active('timber') ) {
       require_once 'module-helper/h-twig.php';
-      require_once 'module-helper/timber-block.php';
-
       new H_Twig();
     }
   }
@@ -121,6 +117,17 @@ class Edje_WP_Library {
   }
 
 
+  private function module_gutenberg() {
+    if( _H::is_plugin_active('acf') ) {
+      require_once 'module-gutenberg/acf-blocks.php';
+    }
+
+    if( _H::is_plugin_active('timber') ) {
+      require_once 'module-gutenberg/timber-block.php';
+    }
+  }
+
+
   private function module_vendor() {
     require_once 'module-vendor/inflector.php';
     require_once 'module-vendor/parsedown.php';
@@ -139,6 +146,8 @@ endif;
 */
 if( !class_exists('H') ):
 class H {
+  /// POST TYPE
+
   /*
     Register custom post type
   */
@@ -155,6 +164,17 @@ class H {
     $tx->register();
   }
 
+
+  /// GUTENBERG BLOCKS
+
+  static function register_block( string $name, array $args ) {
+    if( !function_exists('acf_register_block') ) { return false; }
+
+    $gt = new \h\ACF_Block( $name, $args );
+    $gt->register();
+  }
+
+  //// POST TABLE
 
   /*
     Override all columns in the Post Type table with this one
@@ -191,8 +211,7 @@ class H {
   }
 
 
-  ///// ACTIONS
-  // TODO: still not working
+  /// ACTIONS - TODO: still not working
 
   static function add_actions( $post_type, $actions ) {
     if( !is_admin() ) { return false; }
@@ -253,7 +272,7 @@ class H {
 
 
 
-  ///// CUSTOMIZER
+  /// CUSTOMIZER
 
   /*
     Inititate Edje customizer object

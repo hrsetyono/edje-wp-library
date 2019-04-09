@@ -89,7 +89,9 @@ class _H {
         break;
 
       case 'acf':
+        $path[] = 'advanced-custom-fields/acf.php';
         $path[] = 'advanced-custom-fields-pro/acf.php';
+        $path[] = 'advanced-custom-fields-beta/acf.php';
         break;
     }
 

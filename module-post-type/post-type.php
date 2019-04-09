@@ -1,19 +1,14 @@
 <?php namespace h;
-/*
-  Crate custom post type
-*/
+/**
+ * Create CPT (Custom Post Type)
+ */
 class Post_Type {
   private $name;
   private $args;
   private $wp_args;
   private $labels;
 
-  /*
-    @param $name - Custom Post Type name
-    @param $args
-  */
   public function __construct( string $name, array $args = [] ) {
-
     $this->name = \_H::to_slug( $name );
 
     // default args
@@ -29,9 +24,9 @@ class Post_Type {
   }
 
 
-  /*
-    Register CPT (Custom Post Type)
-  */
+  /**
+   * Register CPT (Custom Post Type)
+   */
   public function register() {
     register_post_type( $this->name, $this->wp_args );
 
@@ -39,17 +34,16 @@ class Post_Type {
     add_action( 'dashboard_glance_items', [ $this, 'add_custom_post_glance' ] );
   }
 
-
-  /*
-    Add new item on At-a-Glance dashboard widgets
-
-    @action dashboard_glance_items
-  */
+  
+  /**
+   * Add new item on At-a-Glance dashboard widgets
+   * @action dashboard_glance_items
+   */
   function add_custom_post_glance() {
     $pt = $this->name;
     $wp_args = $this->wp_args;
 
-    if(!post_type_exists( $pt ) ) { return false; };
+    if( !post_type_exists( $pt ) ) { return false; };
     
     $icon = $wp_args['menu_icon'];
 
@@ -57,18 +51,16 @@ class Post_Type {
     $num = number_format_i18n( $num_posts->publish );
     $text = _n( $wp_args['labels']['singular_name'], $wp_args['labels']['name'], intval( $num_posts->publish ) );
 
-    echo "<li class='$icon dashicons-before'><a href='edit.php?post_type=$pt>$num $text</a></li>";
+    echo "<li class='$icon dashicons-before'><a href='edit.php?post_type=$pt'>$num $text</a></li>";
   }
-
+  
+  
   //////////
 
-  /*
-    Create all the labels for CPT text
-
-    @param string $slug
-    @return array
-  */
-  private function _create_labels( string $slug ) : string {
+  /**
+   * Create all the labels for CPT text
+   */
+  private function _create_labels( string $slug ) : array {
     $name = \_H::to_title( $slug );
     $plural = \Inflector::pluralize( $name );
     $singular = $name;
@@ -90,11 +82,10 @@ class Post_Type {
     return $labels;
   }
 
-  /*
-    Create the Arguments that is compatible with the WP function
-    
-    @return array
-  */
+
+  /**
+   * Create the arguments for register_post_type()
+   */
   private function _create_wp_args() : array {
     $name = $this->name;
     $args = $this->args;
@@ -104,41 +95,25 @@ class Post_Type {
     $default_supports = [ 'title', 'editor', 'thumbnail', 'excerpt' ];
     $supports = array_merge( $default_supports, $args['supports'] );
 
+    $icon = str_replace('dashicons-', '', $args['icon'] );
 
     $wp_args = [
       'public' => true,
       'labels' => $this->labels,
       'capability_type' => 'post',
       'supports' => $supports,
-      'has_archive' => true,
       'rewrite' => [
         'slug' => $slug,
         'with_front' => false
       ],
       'menu_position' => $args['menu_position'],
+
+      'menu_icon' => 'dashicons-' . str_replace('dashicons-', '', $args['icon'] ),
+      'has_archive' => in_array( 'no-archive', $supports ) ? false : true,
+      'show_in_rest' => in_array( 'rest-api', $supports ) ? true : false,
+      'hierarchical' => in_array( 'page-attributes', $supports ) ? true : false,
+      'publicly_queryable' => in_array('no-single', $supports ) ? false : true,
     ];
-
-    // add icon
-    $icon = str_replace('dashicons-', '', $args['icon'] );
-    $wp_args['menu_icon'] = 'dashicons-' . $icon;
-
-
-    // SUPPORTS
-
-    // Allow CPT to be accessed by REST API
-    if( in_array('rest-api', $args['supports'] ) ) {
-      $wp_args['show_in_rest'] = true;
-    }
-
-    // Set behavior to be like Page
-    if( in_array('page-attributes', $args['supports'] ) ) {
-      $wp_args['hierarchical'] = true;
-    }
-
-    // Remove single page view
-    if( in_array('hidden', $args['supports'] ) ) {
-      $wp_args['publicly_queryable']  = false;
-    }
 
     return $wp_args;
   }

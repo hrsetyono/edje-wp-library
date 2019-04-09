@@ -10,7 +10,7 @@ class H_Hook {
   /*
     Run when the plugin is activated
   */
-  function activation_hook() {
+  function on_activation() {
     $options = get_option('h_options');
 
     // create empty option if doesn't exist
@@ -104,40 +104,36 @@ class H_Hook {
   private function _create_default_nav() {
     $navs = array(
       // MAIN
-      array(
+      [
         'name' => 'Main Nav',
         'location' => 'main-nav',
-        'items' => array(
-          array(
-            'menu-item-title' => 'Home',
-            'menu-item-url' => home_url(),
-            'menu-item-status' => 'publish'
-          )
-        )
-      ),
+        'items' => [
+          [ 'menu-item-title' => 'Home', 'menu-item-url' => home_url(), 'menu-item-status' => 'publish' ]
+        ]
+      ],
 
       // SOCIAL
-      array(
+      [
         'name' => 'Social Nav',
         'location' => 'social-nav',
-        'items' => array(
-          array(
+        'items' => [
+          [
             'menu-item-title' => 'facebook',
             'menu-item-url' => 'https://www.facebook.com/username',
             'menu-item-status' => 'publish'
-          ),
-          array(
+          ],
+          [
             'menu-item-title' => 'twitter',
             'menu-item-url' => 'https://twitter.com/username',
             'menu-item-status' => 'publish'
-          ),
-          array(
-            'menu-item-title' => 'google-plus',
-            'menu-item-url' => 'https://plus.google.com/+username',
+          ],
+          [
+            'menu-item-title' => 'instagram',
+            'menu-item-url' => 'https://www.instagram.com/username/',
             'menu-item-status' => 'publish'
-          )
-        )
-      ),
+          ]
+        ]
+      ],
     );
 
     $locations = get_theme_mod('nav_menu_locations');
@@ -312,8 +308,8 @@ You're live! Nice. We've put together a little post to introduce you to the Word
 <p>Select Gallery block and choose the images. Then click the block and you can configure it from the sidebar</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:gallery {"columns":3,"linkTo":"media"} -->
-<ul class="wp-block-gallery columns-3 is-cropped"><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1037"><img src="https://picsum.photos/600/400?image=1037" alt="" data-id="504"  class="wp-image-504"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1061"><img src="https://picsum.photos/600/400?image=1061" alt="" data-id="506" class="wp-image-506"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1036"><img src="https://picsum.photos/600/400?image=1036" alt="" data-id="507" class="wp-image-507"/></a></figure></li><li class="blocks-gallery-item"><figure><a href="https://picsum.photos/800/600?image=1043"><img src="https://picsum.photos/600/400?image=1043" alt="" data-id="505" class="wp-image-505"/></a></figure></li></ul>
+<!-- wp:gallery {"ids":[507,509,508,506]} -->
+<ul class="wp-block-gallery columns-3 is-cropped"><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1037" alt="" data-id="507" data-link="https://picsum.photos/600/400?image=1037" class="wp-image-507"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1061" alt="" data-id="509" data-link="https://picsum.photos/600/400?image=1061" class="wp-image-509"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1036" alt="" data-id="508" data-link="https://picsum.photos/600/400?image=1036" class="wp-image-508"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/800/600?image=1043" alt="" data-id="506" data-link="https://picsum.photos/800/600?image=1043" class="wp-image-506"/></figure></li></ul>
 <!-- /wp:gallery -->
 
 <!-- wp:heading -->
