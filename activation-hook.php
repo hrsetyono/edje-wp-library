@@ -128,8 +128,8 @@ class H_Hook {
             'menu-item-status' => 'publish'
           ],
           [
-            'menu-item-title' => 'google-plus',
-            'menu-item-url' => 'https://plus.google.com/+username',
+            'menu-item-title' => 'instagram',
+            'menu-item-url' => 'https://www.instagram.com/username/',
             'menu-item-status' => 'publish'
           ]
         ]

@@ -1,6 +1,5 @@
 // Allow custom icon on "At a Glance" dashboard
 #dashboard_right_now li[class*="dashicons"] {
-
   &::before {
     padding-right: 5px;
     color: #82878c;
@@ -14,10 +13,9 @@
 }
 
 
-///// The SEO Framework
+///// SEO FRAMEWORK
 
 // disable advance setting
-
 .tsf-flex-nav-tab-wrapper,
 body.js .tsf-flex-nav-tab-wrapper {
   display: none;

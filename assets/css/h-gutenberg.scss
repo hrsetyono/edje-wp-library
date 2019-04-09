@@ -45,6 +45,30 @@
   }
 }
 
+
+///// ACF WYSIWYG FIELD
+
+// Remove most buttons in TinyMCE Editor when you add "--basic" class
+.acf-field-wysiwyg.--basic {
+  [aria-label*="Underline"],
+  [aria-label*="Blockquote"],
+  [aria-label*="Strikethrough"],
+  [aria-label*="Align"],
+  [aria-label*="Undo"],
+  [aria-label*="Redo"],
+  [aria-label*="Fullscreen"] {
+    display: none;
+  }
+}
+
+.acf-field-wysiwyg.--short .mce-edit-area iframe {
+  height: 200px !important;
+}
+
+[data-type*="group"] .acf-fields.-border {
+  border: 0;
+}
+
 ///// ACF GUTENBERG PREVIEW
 
 h-grid { display: -ms-grid; display: grid; grid-template-columns: repeat(12, 1fr); grid-column-gap: 20px; max-width: 1140px; padding: 0 10px; margin: 0 auto; }

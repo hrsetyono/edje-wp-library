@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.1.0
+Version: 2.1.1
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -57,15 +57,11 @@ class Edje_WP_Library {
 
   private function module_helper() {
     require_once 'module-helper/h-helper.php';
-
-    // only if not in admin
-    if( !is_admin() ) {
-      require_once 'module-helper/custom-shortcode.php';
-      new H_Shortcode();
-    }
+    require_once 'module-helper/custom-shortcode.php';
+    new H_Shortcode();
 
     // If Timber is activated
-    if( class_exists('Timber') ) {
+    if( _H::is_plugin_active('timber') ) {
       require_once 'module-helper/h-twig.php';
       new H_Twig();
     }
@@ -122,11 +118,11 @@ class Edje_WP_Library {
 
 
   private function module_gutenberg() {
-    if( class_exists('ACF') ) {
+    if( _H::is_plugin_active('acf') ) {
       require_once 'module-gutenberg/acf-blocks.php';
     }
 
-    if( class_exists('Timber') ) {
+    if( _H::is_plugin_active('timber') ) {
       require_once 'module-gutenberg/timber-block.php';
     }
   }

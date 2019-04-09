@@ -46,25 +46,21 @@ class H_Shortcode {
     return $opening . "<div class='$classes'>" .  do_shortcode($content) . $closing;
   }
 
-  /*
-    Add button class to the link inside
 
-      [button $class] link [/button]
-
-    @atts $class (string, optional) - Extra class name, will be prefixed with "button--".
-
-    Example:
-      [button line] link [/button]
-
-    Result:
-      <a class="button button--line" href="..."> ... </a>
-  */
+  /**
+   * Add button class to the link inside
+   *   [button $class1 $class2] link [/button]
+   * 
+   * @atts $class1 (string, optional) - Extra class name
+   * @atts $class2 (string, optional)
+   */
   function button( $atts, $content = null ) {
-    $extra_class = isset( $atts[0] ) ? "button--$atts[0]" : '';
+    $class1 = $atts[0] ?? '';
+    $class2 = $atts[1] ?? '';
 
     // if have anchor inside, add button class
     if( preg_match( '/<a (.+?)>/', $content, $match ) ) {
-      $content = substr_replace( $content, " class='button $extra_class' ", 3, 0 );
+      $content = substr_replace( $content, " class='button $class1 $class2' ", 3, 0 );
     }
     // else, make it into do-nothing button
     else {
