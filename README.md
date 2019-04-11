@@ -100,12 +100,11 @@ All these features are enabled by default:
 - Removed ability to embed WordPress post.
 - Removed Jetpack's Device-px script because it's useless.
 - Removed Jetpack's Sharing script. It's only for sharing via email which is rarely used.
-- [COMING SOON] Removed jQuery and jQuery migrate. If you need jQuery, enqueue it in your Theme.
 
 **SEO**
 
 - Disabled automatic URL guessing if a visitor enters 404 page.
-- Disabled Jetpack's Open Graph module when Yoast or The SEO Framework is installed
+- Disabled Jetpack's Open Graph module when Yoast or The SEO Framework is installed.
 
 **CUSTOMIZER**
 

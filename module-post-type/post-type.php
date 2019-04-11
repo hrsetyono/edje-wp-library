@@ -110,7 +110,7 @@ class Post_Type {
 
       'menu_icon' => 'dashicons-' . str_replace('dashicons-', '', $args['icon'] ),
       'has_archive' => in_array( 'no-archive', $supports ) ? false : true,
-      'show_in_rest' => in_array( 'rest-api', $supports ) ? true : false,
+      'show_in_rest' => in_array( 'no-api', $supports ) ? false : true,
       'hierarchical' => in_array( 'page-attributes', $supports ) ? true : false,
       'publicly_queryable' => in_array('no-single', $supports ) ? false : true,
     ];
