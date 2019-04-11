@@ -1,15 +1,21 @@
 <?php namespace h;
-/*
-  Crate custom post type
-*/
+/**
+ * Create ACF Gutenberg blocks
+ */
 class ACF_Block {
   private $name;
   private $args;
 
   function __construct( string $name, array $args = [] ) {
     $this->name = $name;
-    $this->args = $args;
 
+    $this->args = array_merge( [
+      'icon' => 'dashicons-admin-post',
+      'post_types' => ['page'],
+      'description' => '',
+    ], $args );
+
+    // extra context to be made available in the rendered Twig template
     if( isset( $args['context'] ) ) {
       add_filter( "h/block/context_$name", $args['context'] );
     }
@@ -25,19 +31,18 @@ class ACF_Block {
     acf_register_block( [
       'name' => $name,
       'title' => \_H::to_title( $name ) . '-',
-      'description' => $args['description'] ?? '',
+      'description' => $args['description'],
       'render_callback' => [$this, '_render'],
       'category' => 'formatting',
-      'icon' => $args['icon'] ?? null,
+      'icon' => $args['icon'],
       'align' => 'wide',
       'mode' => 'edit',
-      'post_types' =>  $args['post_types'] ?? ['page']
+      'post_types' =>  $args['post_types']
     ] );
   }
 
   /**
    * Find Twig file that matches the block name and render it
-   * @param $block - All block fields
    */
   function _render( array $block ) {
     $slug = str_replace( 'acf/', '', $block['name'] );

@@ -5,13 +5,13 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.1.1
+Version: 2.1.2
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '2.0.0' );
+define( 'H_VERSION', '2.1.2' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
@@ -140,25 +140,24 @@ endif;
 
 /////
 
-
-/*
-  Main portal for calling all static methods
-*/
 if( !class_exists('H') ):
+/**
+ * Portal for all H's shortcut methods
+ */
 class H {
   /// POST TYPE
 
-  /*
-    Register custom post type
-  */
+  /**
+   * Register Custom Post Type (CPT)
+   */
   static function register_post_type( string $name, array $args = [] ) {
     $pt = new \h\Post_Type( $name, $args );
     $pt->register();
   }
 
-  /*
-    Register custom taxonomy
-  */
+  /**
+   * Register Custom Taxonomy
+   */
   static function register_taxonomy( string $name, array $args ) {
     $tx = new \h\Taxonomy( $name, $args );
     $tx->register();
@@ -167,8 +166,11 @@ class H {
 
   /// GUTENBERG BLOCKS
 
+  /**
+   * Register ACF Fields as Gutenberg blocks, only usable in action "acf/init"
+   */
   static function register_block( string $name, array $args ) {
-    if( !function_exists('acf_register_block') ) { return false; }
+    if( !function_exists('acf_register_block') ) { return; }
 
     $gt = new \h\ACF_Block( $name, $args );
     $gt->register();
@@ -176,45 +178,42 @@ class H {
 
   //// POST TABLE
 
-  /*
-    Override all columns in the Post Type table with this one
-
-    @param $post_type (string)
-    @param $args (array) - List of columns
-  */
-  static function override_columns( $post_type, $args ) {
-    if( !is_admin() ) { return false; }
+  /**
+   * Override all columns in the Post Type table with this one.
+   */
+  static function override_columns( string $post_type, array $args ) {
+    if( !is_admin() ) { return; }
 
     $pc = new \h\Post_Column();
     $pc->override( $post_type, $args );
   }
 
-  // Alias for override_columns
-  static function register_columns( $post_type, $args ) {
+  /**
+   * Alias for H::override_columns
+   */
+  static function register_columns( string $post_type, array $args ) {
     self::override_columns( $post_type, $args );
   }
 
   
-  /*
-    Append a column to the Post Type table
-    @since 0.9.0
-
-    @param $post_type (string).
-    @param $title (string) - Column title, or slug of Custom Fields.
-    @param $value (function) - Optional. If $title is already slug of custom fields, this can be null.
-  */
-  static function add_column( $post_type, $title, $value = null ) {
-    if( !is_admin() ) { return false; }
+  /**
+   * Append a column to the Post Type table
+   * 
+   * @param string $post_type
+   * @param $args - Column keywords or arguments with callable
+   */
+  static function add_column( string $post_type, $args ) {
+    if( !is_admin() ) { return; }
 
     $pc = new \h\Post_Column();
-    $pc->add( $post_type, $title, $value );
+    $pc->add( $post_type, $args );
   }
 
 
   /// ACTIONS - TODO: still not working
 
   static function add_actions( $post_type, $actions ) {
-    if( !is_admin() ) { return false; }
+    if( !is_admin() ) { return; }
 
     $pa = new \h\Post_Action( $post_type, $actions );
     $pa->add();
@@ -230,29 +229,45 @@ class H {
 
   ///// ADMIN SIDENAV
 
-  static function remove_menu( $args ) {
-    if( !is_admin() ) { return false; }
+  /**
+   * Remove sidenav link
+   * 
+   * @deprecated Needs rework to be easier to use
+   */
+  static function remove_menu( array $args ) {
+    if( !is_admin() ) { return; }
 
     $menu = new \h\Sidenav( $args );
     $menu->remove();
   }
 
-  static function add_menus( $args ) {
-    if( !is_admin() ) { return false; }
+  /**
+   * Add menu links in sidebar
+   * 
+   * @deprecated Needs rework to be easier to use
+   */
+  static function add_menus( array $args ) {
+    if( !is_admin() ) { return; }
 
     $menu = new \h\Sidenav( $args );
     $menu->add();
   }
 
-  static function add_menu( $title, $args ) {
-    $new_args = [
+  /**
+   * Add a menu link in sidebar. Alias for H::add_menus but only for 1 link.
+   */
+  static function add_menu( string $title, array $args ) {
+    H::add_menus( [
       $title => $args
-    ];
-
-    H::add_menus( $new_args );
+    ] );
   }
 
-  static function add_submenu( $parent_title, $args ) {
+  /**
+   * Add a submenu in sidebar
+   * 
+   * @deprecated Needs rework to be easier to use
+   */
+  static function add_submenu( string $parent_title, array $args ) {
     H::add_menus( [
       $parent_title => [
         'position' => "on $parent_title",
@@ -261,11 +276,16 @@ class H {
     ] );
   }
 
-  static function add_menu_counter( $parent_title, $count_cb ) {
+  /**
+   * Add a number counter beside the sidebar's menu link
+   * 
+   * @param Callable():int $get_number
+   */
+  static function add_menu_counter( string $parent_title, Callable $get_number ) {
     H::add_menus( [
       $parent_title => [
         'position' => "on $parent_title",
-        'counter' => $count_cb,
+        'counter' => $get_number,
       ]
     ] );
   }
@@ -274,17 +294,19 @@ class H {
 
   /// CUSTOMIZER
 
-  /*
-    Inititate Edje customizer object
-    @param $wp_customize (Obj) - WP_Customize object from customize_register action.
-  */
-  static function customizer( $wp_customize ) {
+  /**
+   * Inititate Edje customizer object. Only use this in "customize_register" action.
+   */
+  static function customizer( WP_Customize $wp_customize ) {
     return new \h\Customizer( $wp_customize );
   }
 
 
   ///// WEB PUSH
 
+  /**
+   * @deprecated Too complicated, just use plugin like "Subscribers.com"
+   */
   static function send_push( $payload, $target = null ) {
     if( !class_exists('H_WebPush') ) {
       var_dump( 'ERROR: Edje Web-Push plugin is not installed.' );

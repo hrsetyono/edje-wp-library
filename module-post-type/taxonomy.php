@@ -9,25 +9,23 @@ class Taxonomy {
   private $wp_args;
   private $post_type;
 
-
   public function __construct( $name, $args = [] ) {
     $this->tax_name = \_H::to_slug( $name );
     
     $this->args = array_merge( [
       'post_type' => 'post',
-      'label' => \_H::to_title( $name ),
+      'display_name' => $args['label'] ?? \_H::to_title( $name ),
       'slug' => $this->tax_name,
     ], $args );
 
     $this->post_type = $this->args['post_type'];
-
-    $this->labels = $this->_create_labels( $this->tax_name, $this->args['label'] );
+    $this->labels = $this->_create_labels( $this->tax_name, $this->args['display_name'] );
     $this->wp_args = $this->_create_wp_args();
   }
 
-  /*
-    Create taxonomy and the Post table filter
-  */
+  /**
+   * Create taxonomy and the Post table filter
+   */
   public function register() {
     register_taxonomy( $this->tax_name, $this->post_type, $this->wp_args );
 
@@ -40,16 +38,12 @@ class Taxonomy {
 
   //////////
 
-  /*
-    Create all the labels for Taxonomy text
-
-    @param $name (string)
-    @param $label (string) - Custom display name for the CPT
-    @return array
-  */
-  private function _create_labels( $name, $label ) {
-    $plural = \Inflector::pluralize( $label );
-    $singular = $label;
+  /**
+   * Create text labels for Taxonomy.
+   */
+  private function _create_labels( string $name, string $display_name ) : array {
+    $plural = \Inflector::pluralize( $display_name );
+    $singular = $display_name;
 
     $title = \_H::to_title( $name );
     $title_plural = \Inflector::pluralize( $title );
@@ -74,12 +68,10 @@ class Taxonomy {
     return $labels;
   }
 
-  /*
-    Create the Arguments that is compatible with the WP function
-
-    @return array
-  */
-  private function _create_wp_args() {
+  /**
+   * Create the Arguments that is compatible with the WP function
+   */
+  private function _create_wp_args() : array {
     $name = $this->tax_name;
     $args = $this->args;
 

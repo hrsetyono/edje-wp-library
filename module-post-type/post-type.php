@@ -11,7 +11,6 @@ class Post_Type {
   public function __construct( string $name, array $args = [] ) {
     $this->name = \_H::to_slug( $name );
 
-    // default args
     $this->args = array_merge( [
       'icon' => 'dashicons-admin-post',
       'slug' => $this->name,
@@ -43,7 +42,7 @@ class Post_Type {
     $pt = $this->name;
     $wp_args = $this->wp_args;
 
-    if( !post_type_exists( $pt ) ) { return false; };
+    if( !post_type_exists( $pt ) ) { return; };
     
     $icon = $wp_args['menu_icon'];
 
@@ -87,15 +86,12 @@ class Post_Type {
    * Create the arguments for register_post_type()
    */
   private function _create_wp_args() : array {
-    $name = $this->name;
     $args = $this->args;
     $slug = $args['slug'];
 
     // Merge supports with the default one
     $default_supports = [ 'title', 'editor', 'thumbnail', 'excerpt' ];
     $supports = array_merge( $default_supports, $args['supports'] );
-
-    $icon = str_replace('dashicons-', '', $args['icon'] );
 
     $wp_args = [
       'public' => true,
@@ -110,7 +106,7 @@ class Post_Type {
 
       'menu_icon' => 'dashicons-' . str_replace('dashicons-', '', $args['icon'] ),
       'has_archive' => in_array( 'no-archive', $supports ) ? false : true,
-      'show_in_rest' => in_array( 'rest-api', $supports ) ? true : false,
+      'show_in_rest' => in_array( 'no-api', $supports ) ? false : true,
       'hierarchical' => in_array( 'page-attributes', $supports ) ? true : false,
       'publicly_queryable' => in_array('no-single', $supports ) ? false : true,
     ];
