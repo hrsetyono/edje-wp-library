@@ -11,7 +11,6 @@ class Post_Type {
   public function __construct( string $name, array $args = [] ) {
     $this->name = \_H::to_slug( $name );
 
-    // default args
     $this->args = array_merge( [
       'icon' => 'dashicons-admin-post',
       'slug' => $this->name,
@@ -43,7 +42,7 @@ class Post_Type {
     $pt = $this->name;
     $wp_args = $this->wp_args;
 
-    if( !post_type_exists( $pt ) ) { return false; };
+    if( !post_type_exists( $pt ) ) { return; };
     
     $icon = $wp_args['menu_icon'];
 
@@ -87,15 +86,12 @@ class Post_Type {
    * Create the arguments for register_post_type()
    */
   private function _create_wp_args() : array {
-    $name = $this->name;
     $args = $this->args;
     $slug = $args['slug'];
 
     // Merge supports with the default one
     $default_supports = [ 'title', 'editor', 'thumbnail', 'excerpt' ];
     $supports = array_merge( $default_supports, $args['supports'] );
-
-    $icon = str_replace('dashicons-', '', $args['icon'] );
 
     $wp_args = [
       'public' => true,
