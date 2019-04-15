@@ -17,37 +17,34 @@ define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 
-
 if( !class_exists('Edje_WP_Library') ):
+  
 class Edje_WP_Library {
   function __construct() {
-    $this->load_modules();
+    add_action( 'plugins_loaded' , [$this, 'load_modules'] );
 
-    // activation hook
     if( defined( 'EDJE' ) ) {
       require_once 'activation-hook.php';
       register_activation_hook( H_BASE, [$this, 'register_activation_hook'] );
     }
   }
 
-  /*
-    Load all modules
-  */
-  private function load_modules() {
-    add_action( 'plugins_loaded' , function() {
-      $this->module_helper();
-      $this->module_post_type();
-      $this->module_customizer();
-      $this->module_admin_sidenav();
-      $this->module_change_default();
-      $this->module_vendor();
-      $this->module_gutenberg();
-    } );
+  /**
+   * Load all modules
+   */
+  function load_modules() {
+    $this->module_helper();
+    $this->module_post_type();
+    $this->module_customizer();
+    $this->module_admin_sidenav();
+    $this->module_change_default();
+    $this->module_vendor();
+    $this->module_gutenberg();
   }
 
-  /*
-    Register activation and deactivation hook
-  */
+  /**
+   * Register activation and deactivation hook
+   */
   function register_activation_hook() {
     $hook = new H_Hook();
     $hook->on_activation();
@@ -297,7 +294,7 @@ class H {
   /**
    * Inititate Edje customizer object. Only use this in "customize_register" action.
    */
-  static function customizer( WP_Customize $wp_customize ) {
+  static function customizer( WP_Customize_Manager $wp_customize ) {
     return new \h\Customizer( $wp_customize );
   }
 

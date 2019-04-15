@@ -1,6 +1,6 @@
 {
   "name": "edje-wp-library",
-  "private": true,
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hrsetyono/edje-wp-library.git"
