@@ -108,7 +108,11 @@ class H_Hook {
         'name' => 'Main Nav',
         'location' => 'main-nav',
         'items' => [
-          [ 'menu-item-title' => 'Home', 'menu-item-url' => home_url(), 'menu-item-status' => 'publish' ]
+          [
+            'menu-item-title' => 'Home',
+            'menu-item-url' => home_url(),
+            'menu-item-status' => 'publish',
+          ]
         ]
       ],
 
@@ -134,27 +138,48 @@ class H_Hook {
           ]
         ]
       ],
+
+      // BLOG
+      [
+        'name' => 'Blog Nav',
+        'location' => 'blog-nav',
+        'items' => [
+          [
+            'menu-item-title' => 'All Posts',
+            'menu-item-object' => 'post',
+            'menu-item-status' => 'publish',
+            'menu-item-type' => 'post_type_archive',
+          ],
+          [
+            'menu-item-object-id' => 1,
+            'menu-item-object' => 'category',
+            'menu-item-status' => 'publish',
+            'menu-item-type' => 'taxonomy',
+          ],
+        ]
+      ]
     );
 
-    $locations = get_theme_mod('nav_menu_locations');
+    $locations = get_theme_mod( 'nav_menu_locations' );
 
-    foreach($navs as $nav):
-      // if doesn't exist AND the location isn't occupied
-      if(! wp_get_nav_menu_object($nav['name'] && !has_nav_menu($nav['location'])) ) {
-        // create empty menu
-        $menu_id = wp_create_nav_menu($nav['name']);
-
-        // add menu items
-        foreach($nav['items'] as $item) {
-          wp_update_nav_menu_item($menu_id, 0, $item);
-        }
-
-        // set the menu location
-        $locations[$nav['location']] = $menu_id;
-        set_theme_mod('nav_menu_locations', $locations);
+    foreach( $navs as $nav ):
+      // if the nav location is occupied OR nav name already exists
+      if( has_nav_menu( $nav['location'] ) || wp_get_nav_menu_object( $nav['name'] ) ) {
+        continue;
       }
-    endforeach;
 
+      // create empty menu
+      $menu_id = wp_create_nav_menu( $nav['name'] );
+
+      // add menu items
+      foreach( $nav['items'] as $item ) {
+        wp_update_nav_menu_item( $menu_id, 0, $item );
+      }
+
+      // set the menu location
+      $locations[ $nav['location'] ] = $menu_id;
+      set_theme_mod( 'nav_menu_locations', $locations );
+    endforeach;
   }
 
   /*

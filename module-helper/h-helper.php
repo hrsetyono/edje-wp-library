@@ -86,6 +86,7 @@ class _H {
         $path[] = 'timber-library-160/timber.php';
         $path[] = 'timber-library-170/timber.php';
         $path[] = 'timber-library-180/timber.php';
+        $path[] = 'timber-library-190/timber.php';
         break;
 
       case 'acf':
