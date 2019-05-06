@@ -1,0 +1,188 @@
+@import "settings"
+
+///// COLUMNS
+
+.editor-inner-blocks > .editor-block-list__layout > [data-type="core/column"]
+  .is-style-8-4 &
+    &:nth-child(1)
+      flex-basis: calc(66.7% - 44px)
+    
+  .is-style-4-8 &
+    &:nth-child(2)
+      flex-basis: calc(66.7% - 44px)
+
+
+///// BLOCK QUOTE
+
+.wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
+  +h( pt1 )
+  border-top: 4px solid #000
+
+.wp-block-quote.is-style-large
+  +h( pb1 ta-center )
+  border-top: 4px solid gray
+  border-bottom: 4px solid gray
+
+  p
+    font-style: normal
+
+///// COVER
+
+.wp-block-cover .wp-block-cover__inner-container
+  +h( ta-center )
+
+///// PULLQUOTE
+// Transformed into FAQ
+
+.wp-block-pullquote
+  +h( pv0 b0 ta-left )
+
+  blockquote > .block-editor-rich-text p
+    +h( pl1 lh-body fs-s )
+
+  blockquote
+    +h( d-flex fd-column m0 )
+
+  .editor-rich-text:first-child
+    +h( order2 d-none )
+
+    .is-selected &,
+    .is-typing &
+      +h( d-block )
+  
+  .wp-block-pullquote__citation
+    +h( mb0 pv0_5 ph1 bg-black_05 )
+    +h( tt-none c-body fw700 fs-m  brad )
+
+    &::before
+      content: "+"
+      +h( d-iblock mr1 fw700 )
+
+    .is-selected &,
+    .is-typing
+      +h( mb1_5 )
+
+.wp-block-pullquote.is-style-solid-color blockquote
+  +h( maxw-none )
+
+  .wp-block-pullquote__citation
+    +h( bg-black_25 )
+
+  >.block-editor-rich-text p
+    +h( mb1 fs-s ) 
+
+///// FILE
+
+.wp-block-file
+  +h( bg-gray-light p1 )
+
+
+///// TABLE
+
+.wp-block-table
+  --table: #{ $gray }
+  --tableBg: #{ $gray-light }
+
+  tr:first-child 
+    border-top: 4px solid black
+
+  tr:first-child
+    +h( fw700 )
+    background-color: var(--tableBg)
+
+    // double the color
+    td
+      background-color: var(--tableBg)
+
+  // reset color palette
+  &[class*="-background-color"]
+    +h( bg-transparent )
+
+  // default color palette 
+  &.has-subtle-pale-green-background-color
+    --table: var(--green)
+    --tableBg: rgba(var(--greenRGB), .1)
+
+  &.has-subtle-pale-blue-background-color
+    --table: var(--blue)
+    --tableBg: rgba(var(--blueRGB), .1)
+
+  &.has-subtle-pale-pink-background-color
+    --table: var(--red)
+    --tableBg: rgba(var(--redRGB), .1)
+
+
+.wp-block-table.is-style-stripes
+  border-collapse: collapse
+
+  td
+    border: 1px solid black
+
+  tr:nth-child(odd)
+    background-color: var(--tableBg)
+
+
+///// BUTTON
+
+.wp-block-button__link
+  +h( bg-main )
+
+  .is-style-outline &
+    background-color: transparent !important
+
+///// ACF GUTENBERG
+
+.acf-block-body
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+
+  .acf-label,
+  .acf-input p,
+  .acf-label .description,
+  .acf-table
+    font-size: 13px
+
+.acf-block-fields
+  // Add color to Message Field (temporarily used as Header)
+  > .acf-field-message:first-child
+    background-color: rgba(#0073aa, .2)
+    transition: all .25s ease-in-out
+
+    &:hover
+      background-color: rgba(#0073aa, .4)
+
+    #editor &
+      padding: 8px 20px
+
+    .acf-label
+      margin-bottom: 0
+
+    label 
+      cursor: default
+
+  > .acf-field-message p
+    margin: 0
+
+[data-type*="acf/"] .editor-block-list__breadcrumb
+  // hide the small block name that appears on hover
+  .components-toolbar
+    display: none
+
+
+///// ACF WYSIWYG FIELD
+
+// Remove most buttons in TinyMCE Editor when you add "--basic" class
+.acf-field-wysiwyg.--basic
+  [aria-label*="Underline"],
+  [aria-label*="Blockquote"],
+  [aria-label*="Strikethrough"],
+  [aria-label*="Align"],
+  [aria-label*="Undo"],
+  [aria-label*="Redo"],
+  [aria-label*="Fullscreen"]
+    display: none
+
+.acf-field-wysiwyg.--short .mce-edit-area iframe
+  height: 200px !important
+
+[data-type*="group"] .acf-fields.-border
+  border: 0
