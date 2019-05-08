@@ -60,7 +60,7 @@ let allowNestedStyle = wp.compose.createHigherOrderComponent( function( BlockEdi
     let content = el( BlockEdit, props );
 
     // if nested block, the preview content is empty div
-    let isNestedBlock = ['core/columns', 'core/group'].indexOf( props.name ) >= 0;
+    let isNestedBlock = ['core/columns', 'core/group', 'core/media-text'].indexOf( props.name ) >= 0;
     if( isNestedBlock && typeof props.insertBlocksAfter === 'undefined' ) {
       content = el( 'div', {} );
     }

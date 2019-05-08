@@ -1,3 +1,5 @@
+// This script is loaded on all front-end pages
+
 /**
  * Gutenberg helper script
  */
