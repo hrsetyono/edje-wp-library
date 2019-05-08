@@ -1,30 +1,27 @@
 <?php namespace h;
-/*
-  Modify Jetpack modules
-*/
-class Default_Jetpack {
+/**
+ * Modify Jetpack modules
+ */
+class Modify_Jetpack {
   function __construct() {
-    // if jetpack not installed
-    if( !\_H::is_plugin_active('jetpack') ) { return false; }
+    add_action( 'init', [$this, 'init'] );
 
-    add_action( 'init', array($this, 'init') );
-
-    add_action( 'wp_head', array($this, 'wp_head'), 2 );
-    add_action( 'wp_footer', array($this, 'wp_footer') );
-    add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
+    add_action( 'wp_head', [$this, 'wp_head'], 2 );
+    add_action( 'wp_footer', [$this, 'wp_footer'] );
+    add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
 
     // disable jetpack css
     add_filter( 'jetpack_implode_frontend_css', '__return_false' );
-    add_filter( 'jetpack_lazy_images_blacklisted_classes', array($this, 'blacklisted_lazyload_classes') );
+    add_filter( 'jetpack_lazy_images_blacklisted_classes', [$this, 'blacklisted_lazyload_classes'] );
   }
 
 
   function init() {
-    add_filter( 'wp', array($this, 'remove_related_posts'), 20 );
+    add_filter( 'wp', [$this, 'remove_related_posts'], 20 );
 
     // add woocommerce to sitemap
     if( \_H::is_plugin_active('woocommerce') ) {
-      add_filter( 'jetpack_sitemap_post_types', array($this, 'add_woocommerce_to_sitemap') );
+      add_filter( 'jetpack_sitemap_post_types', [$this, 'add_woocommerce_to_sitemap'] );
     }
   }
 
@@ -35,7 +32,7 @@ class Default_Jetpack {
   function remove_related_posts() {
     if( class_exists('Jetpack_RelatedPosts') ) {
       $jprp = \Jetpack_RelatedPosts::init();
-      $callback = array( $jprp, 'filter_add_target_to_dom' );
+      $callback = [$jprp, 'filter_add_target_to_dom'];
       remove_filter( 'the_content', $callback, 40 );
     }
   }

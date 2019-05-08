@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 2.2.0
+Version: 3.0.0
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -37,9 +37,10 @@ class Edje_WP_Library {
     $this->module_post_type();
     $this->module_customizer();
     $this->module_admin_sidenav();
-    $this->module_change_default();
     $this->module_vendor();
     $this->module_gutenberg();
+
+    $this->module_modify();
   }
 
   /**
@@ -93,27 +94,6 @@ class Edje_WP_Library {
   }
 
 
-  private function module_change_default() {
-    require_once 'module-change-default/default-public.php';
-    new \h\Default_Public();
-
-    // if in admin
-    if( is_admin() ) {
-      require_once 'module-change-default/default-codemirror.php';
-      require_once 'module-change-default/default-admin.php';
-      new \h\Default_Admin();
-      new \h\Default_Codemirror();
-    }
-    // if not in admin
-    else {
-      require_once 'module-change-default/default-jetpack.php';
-      require_once 'module-change-default/default-seo.php';
-      new \h\Default_Jetpack();
-      new \h\Default_SEO();
-    }
-  }
-
-
   private function module_gutenberg() {
     require_once 'module-gutenberg/mod.php';
     new \h\Modify_Gutenberg();
@@ -143,6 +123,39 @@ class Edje_WP_Library {
   private function module_vendor() {
     require_once 'module-vendor/inflector.php';
     require_once 'module-vendor/parsedown.php';
+  }
+
+
+  private function module_modify() {
+    // admin
+    if( is_admin() ) {
+      require_once 'module-modify/admin.php';
+      new \h\Modify_Admin();
+
+      if( defined('DISALLOW_FILE_EDIT') && !DISALLOW_FILE_EDIT ) {
+        require_once 'module-modify/code-editor.php';
+        new \h\Modify_Code_Editor();
+      }
+    }
+    // frontend
+    else {
+      require_once 'module-modify/login.php';
+      require_once 'module-modify/head-footer.php';
+      require_once 'module-modify/seo.php';
+
+      new \h\Modify_Login();
+      new \h\Modify_Head_Footer();
+      new \h\Modify_SEO();
+
+      if( _H::is_plugin_active('jetpack') ) {
+        require_once 'module-modify/jetpack.php';
+        new \h\Modify_Jetpack();
+      }
+    }
+
+    // both
+    require_once 'module-modify/adminbar.php';
+    new \h\Modify_Adminbar();
   }
 }
 
@@ -176,7 +189,7 @@ class H {
   }
 
 
-  /// GUTENBERG BLOCKS
+  /// GUTENBERG
 
   /**
    * Register ACF Fields as Gutenberg blocks, only usable in action "acf/init"
@@ -186,6 +199,36 @@ class H {
 
     $gt = new \h\ACF_Block( $name, $args );
     $gt->register();
+  }
+
+  /**
+   * Output Style tag with gutenberg class for adding color.
+   * Also return the formatted array for theme support.
+   */
+  static function register_colors( array $colors ) : array {
+    // output the style in head
+    add_action( 'wp_head', function() use ( $colors ) {
+      $styles = '<style>';
+      foreach( $colors as $c ) {
+        $styles .= ".has-$c-background-color { --bgColor: var(--$c); }";
+        $styles .= ".has-$c-color { --textColor: var(--$c); }";
+      }
+      $styles .= '</style>';
+      
+      echo $styles;
+    } );
+
+    // format the array
+    $parsed_colors = [];
+    foreach( $colors as $name => $slug ) {
+      $parsed_colors[] = [
+        'name' => $name,
+        'slug' => $slug,
+        'color' => "var(--$slug)"
+      ];
+    }
+
+    return $parsed_colors;
   }
 
   //// POST TABLE
