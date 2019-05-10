@@ -17,7 +17,7 @@ class Modify_Head_Footer {
     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
     // remove default js or css 
-    add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 9999 );
+    add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'] );
 
     
     // NOTE: Clashes with CDN making the CSS and JS hard to update
@@ -39,9 +39,9 @@ class Modify_Head_Footer {
     wp_enqueue_script( 'h-wp', H_URL . 'assets/js/h-wp.js', [], false, true );
 
     // Register H Library, you need to enqueue it in theme
-    wp_register_script( 'h-slider', H_URL . 'assets/js-vendor/h-slider.js', [], false, true );
-    wp_register_script( 'h-scroll', H_URL . 'assets/js-vendor/h-scroll.js', [], false, true );
-    wp_register_script( 'h-lightbox', H_URL . 'assets/js-vendor/h-lightbox.js', [], false, true );
+    wp_register_script( 'h-slider', H_URL . 'assets/js-vendor/h-slider.min.js', [], false, true );
+    wp_register_script( 'h-scroll', H_URL . 'assets/js-vendor/h-scroll.min.js', [], false, true );
+    wp_register_script( 'h-lightbox', H_URL . 'assets/js-vendor/h-lightbox.min.js', [], false, true );
 
     // Enable comment's reply form
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
