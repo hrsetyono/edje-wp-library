@@ -10,10 +10,14 @@ class ACF_Block {
     $this->name = $name;
 
     $this->args = array_merge( [
-      'icon' => 'dashicons-admin-post',
+      'title' => \_H::to_title( $name ),
+      'icon' => 'admin-post',
       'post_types' => ['page'],
       'description' => '',
     ], $args );
+    
+    // remove 'dashicons-' prefix, if any
+    $this->args['icon'] = str_replace('dashicons-', '', $this->args['icon'] );
 
     // extra context to be made available in the rendered Twig template
     if( isset( $args['context'] ) ) {
@@ -30,12 +34,11 @@ class ACF_Block {
 
     acf_register_block( [
       'name' => $name,
-      'title' => \_H::to_title( $name ) . '-',
+      'title' => $args['title'] . '-',
       'description' => $args['description'],
       'render_callback' => [$this, '_render'],
       'category' => 'formatting',
       'icon' => $args['icon'],
-      'align' => 'wide',
       'mode' => 'edit',
       'post_types' =>  $args['post_types']
     ] );
@@ -48,7 +51,7 @@ class ACF_Block {
     $slug = str_replace( 'acf/', '', $block['name'] );
 
     $context['block'] = new \Timber\Block( $block );
-    $context = apply_filters( "h/block/context_$slug" , $context );
+    $context = apply_filters( "h/block_context/$slug" , $context );
 
     \Timber::render( "/blocks/_$slug.twig", $context );
   }

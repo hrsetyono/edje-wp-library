@@ -5,13 +5,13 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.0.2
+Version: 3.1.0
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '2.1.2' );
+define( 'H_VERSION', '3.1.0' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
@@ -23,6 +23,7 @@ class Edje_WP_Library {
   function __construct() {
     add_action( 'plugins_loaded' , [$this, 'load_modules'] );
 
+    // Run activation hook only if EDJE is set to true in wp-config.
     if( defined( 'EDJE' ) ) {  
       require_once 'activation-hook.php';
       register_activation_hook( H_BASE, [$this, 'register_activation_hook'] );
@@ -31,6 +32,7 @@ class Edje_WP_Library {
 
   /**
    * Load all modules
+   * @action plugins_loaded
    */
   function load_modules() {
     $this->module_helper();
@@ -67,9 +69,6 @@ class Edje_WP_Library {
 
 
   private function module_post_type() {
-    require_once 'module-post-type/post-type.php';
-    require_once 'module-post-type/taxonomy.php';
-
     if( is_admin() ) {
       require_once 'module-post-type/post-column.php';
       require_once 'module-post-type/post-filter.php';
@@ -93,7 +92,9 @@ class Edje_WP_Library {
     }    
   }
 
-
+  /**
+   * Gutenberg modules
+   */
   private function module_gutenberg() {
     require_once 'module-gutenberg/mod.php';
     new \h\Modify_Gutenberg();
@@ -108,11 +109,6 @@ class Edje_WP_Library {
         // new \h\Block_Pagebreak();
       }
     } );
-    
-
-    if( _H::is_plugin_active('acf') ) {
-      require_once 'module-gutenberg/acf-blocks.php';
-    }
 
     if( _H::is_plugin_active('timber') ) {
       require_once 'module-gutenberg/timber-block.php';
@@ -176,6 +172,8 @@ class H {
    * Register Custom Post Type (CPT)
    */
   static function register_post_type( string $name, array $args = [] ) {
+    require_once 'module-post-type/post-type.php';
+
     $pt = new \h\Post_Type( $name, $args );
     $pt->register();
   }
@@ -184,6 +182,8 @@ class H {
    * Register Custom Taxonomy
    */
   static function register_taxonomy( string $name, array $args ) {
+    require_once 'module-post-type/taxonomy.php';
+
     $tx = new \h\Taxonomy( $name, $args );
     $tx->register();
   }
@@ -192,18 +192,35 @@ class H {
   /// GUTENBERG
 
   /**
-   * Register ACF Fields as Gutenberg blocks, only usable in action "acf/init"
+   * Register ACF Block, only usable in action "acf/init"
+   * - After that, you need to set a Field Group to be displayed when Block is equal to this.
    */
   static function register_block( string $name, array $args ) {
     if( !function_exists('acf_register_block') ) { return; }
+    require_once 'module-gutenberg/acf-blocks.php';
 
-    $gt = new \h\ACF_Block( $name, $args );
-    $gt->register();
+    $block = new \h\ACF_Block( $name, $args );
+    $block->register();
   }
 
   /**
-   * Output Style tag with gutenberg class for adding color.
-   * Also return the formatted array for theme support.
+   * Register ACF Block for Post Listing
+   * - You need to create a TWIG file in views/blocks named `h-$pt-list.twig`. Replace $pt with post type
+   * - In the template, you can use `posts` object to loop through.
+   */
+  static function register_post_block( string $post_type ) {
+    if( !function_exists('acf_register_block') ) { return; }
+    require_once 'module-gutenberg/block-acf-post-list.php';
+
+    $block = new \h\Block_Post_List( $post_type );
+    $block->register();
+  }
+
+
+  /**
+   * Output CSS classes for Gutenberg palette
+   * 
+   * @return array - Formatted colors array suitable for theme_support.
    */
   static function register_colors( array $colors ) : array {
     // output the style in head

@@ -26,10 +26,37 @@
   p
     font-style: normal
 
+
 ///// COVER
 
 .wp-block-cover .wp-block-cover__inner-container
-  +h( ta-center )
+
+
+
+///// GROUP
+
+.wp-block-group
+  &:not(.has-background)
+    border-top: 1px dashed $gray
+    border-bottom: 1px dashed $gray
+
+
+///// MEDIA TEXT
+
+.wp-block-media-text
+  grid-template-columns: 6fr 6fr !important
+
+  &.is-style-smaller-image,
+  &.is-style-larger-image.has-media-on-the-right
+    grid-template-columns: 4fr 8fr !important
+
+  &.is-style-larger-image,
+  &.is-style-smaller-image.has-media-on-the-right
+    grid-template-columns: 8fr 4fr !important
+ 
+  .block-library-media-text__media-container + span
+    +h( d-none )
+
 
 ///// PULLQUOTE
 // Transformed into FAQ
@@ -52,7 +79,7 @@
   
   .wp-block-pullquote__citation
     +h( mb1_5 pv0_5 ph1 bg-black_05 )
-    +h( tt-none c-body fw700 fs-m  brad )
+    +h( tt-none c-text fw700 fs-m  brad )
 
     &::before
       content: "+"
@@ -137,37 +164,74 @@
   .acf-table
     font-size: 13px
 
-.acf-block-fields
-  // Add color to Message Field (temporarily used as Header)
-  > .acf-field-message:first-child
-    background-color: rgba(#0073aa, .2)
-    transition: all .25s ease-in-out
 
-    &:hover
-      background-color: rgba(#0073aa, .4)
 
-    #editor &
-      padding: 8px 20px
+// ACF Block - styled to be similar to Embed block
+div.acf-block-body .acf-fields
+  +h( d-grid jc-center pv1_5 ph4_5 minh200px )
+  grid-template-columns: repeat(12, 1fr)
+  grid-column-gap: 0.5rem
+  grid-row-gap: 1rem
+  border: none
+  background-color: rgba(139,139,150, .1)
 
-    .acf-label
-      margin-bottom: 0
+  .acf-block-panel &
+    +h( minh-auto pv2 )
 
-    label 
-      cursor: default
+  > *
+    width: 100% !important
+    grid-column: span 12
 
-  > .acf-field-message p
-    margin: 0
+  > [data-width="50"]
+    grid-column: span 6
 
-[data-type*="acf/"] .editor-block-list__breadcrumb
-  // hide the small block name that appears on hover
-  .components-toolbar
-    display: none
+  > [data-width="25"]
+    grid-column: span 3
+
+  &::after
+    +h( d-none )
+
+  select
+    +h( tt-capitalize )
+
+  // single field
+  div.acf-field
+    +h( p0 )
+
+
+// Message field is centered and bold
+div.acf-block-body div.acf-field.acf-field-message
+  +h( as-end mb0_5 )
+
+  .acf-label
+    +h( d-none )
+  
+  p
+    +h( m0 ta-center fw600 )
+
+// Radio field
+div.acf-block-body .acf-field-radio
+  .acf-label
+    +h( mr1 )
+
+  .acf-radio-list
+    +h( mb0 )
+
+  
+// fields at sidebar
+div.acf-block-panel
+  .acf-block-fields div.acf-field
+    padding: 0 1rem
+    width: 100% !important
+
+    &.acf-field-message
+      +h( d-none )
 
 
 ///// ACF WYSIWYG FIELD
 
-// Remove most buttons in TinyMCE Editor when you add "--basic" class
-.acf-field-wysiwyg.--basic
+// Remove most buttons in TinyMCE Editor
+.acf-field-wysiwyg
   [aria-label*="Underline"],
   [aria-label*="Blockquote"],
   [aria-label*="Strikethrough"],
