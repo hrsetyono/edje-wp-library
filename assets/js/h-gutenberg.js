@@ -9,6 +9,11 @@ wp.blocks.registerBlockStyle( 'core/columns', {
   label: '4-8'
 } );
 
+wp.blocks.registerBlockStyle( 'core/columns', {
+  name: '50-50-mobile',
+  label: '50-50 Mobile'
+} );
+
 // MEDIA TEXT Style
 
 wp.blocks.registerBlockStyle( 'core/media-text', {

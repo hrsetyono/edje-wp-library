@@ -103,45 +103,58 @@
 ///// TABLE
 
 .wp-block-table
-  --table: #{ $gray }
-  --tableBg: #{ $gray-light }
+  +h( bg-white )
+  --tableBorder: var(--black)
+  --tableHeader: var(--gray-light)
+  --tableBg: var(--gray-light)
 
-  tr:first-child 
-    border-top: 4px solid black
-
-  tr:first-child
-    +h( fw700 )
+  thead tr,
+  tfoot tr
+    +h( fw700 ta-left )
     background-color: var(--tableBg)
+    
+  thead tr
+    border-bottom: 3px solid var(--tableBorder)
+  tfoot tr
+    border-top: 3px solid var(--tableBorder)
 
-    // double the color
-    td
-      background-color: var(--tableBg)
+  th,
+  td
+    border: 1px solid var(--gray)
 
   // reset color palette
   &[class*="-background-color"]
     +h( bg-transparent )
 
   // default color palette 
+  // default color palette 
   &.has-subtle-pale-green-background-color
-    --table: var(--green)
+    --tableBorder: var(--green)
+    --tableHeader: var(--green-light)
     --tableBg: rgba(var(--greenRGB), .1)
 
   &.has-subtle-pale-blue-background-color
-    --table: var(--blue)
+    --tableBorder: var(--blue)
+    --tableHeader: var(--blue-light)
     --tableBg: rgba(var(--blueRGB), .1)
 
   &.has-subtle-pale-pink-background-color
-    --table: var(--red)
+    --tableBorder: var(--red)
+    --tableHeader: var(--red-light)
     --tableBg: rgba(var(--redRGB), .1)
-
 
 .wp-block-table.is-style-stripes
   border-collapse: collapse
 
+  th,
   td
-    border: 1px solid black
+    border: 1px solid var(--gray)
 
-  tr:nth-child(odd)
+  tbody tr:nth-child(odd),
+  &.has-background tbody tr:nth-child(odd)
+    +h( bg-transparent )
+
+  tbody tr:nth-child(even)
     background-color: var(--tableBg)
 
 
