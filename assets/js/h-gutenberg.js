@@ -63,11 +63,15 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
       } );
 
+    case 'core/freeform':
+      return lodash.assign( {}, settings, {
+        supports: lodash.assign( {}, settings.supports, { className: true, align: ['wide'] } ),
+      } );
+
     // Hide these useless blocks
     case 'core/audio':
     case 'core/video':
     case 'core/nextpage':
-    case 'core/freeform':
     case 'core/verse':
 
     case 'core/calendar':
