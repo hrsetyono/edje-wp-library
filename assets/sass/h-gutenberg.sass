@@ -12,6 +12,16 @@
       flex-basis: calc(66.7% - 44px)
 
 
+///// PARAGRAPH
+
+// empty paragraph
+[data-is-placeholder-visible="true"]
+  + .wp-block-paragraph::before
+    content: ""
+    +h( absolute top-0_5 right-0_5 left-0_5 bottom-0_5 )
+    border: 1px dashed rgba(black, .3)
+
+
 ///// BLOCK QUOTE
 
 .wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
@@ -39,6 +49,9 @@
   &:not(.has-background)
     border-top: 1px dashed $gray
     border-bottom: 1px dashed $gray
+
+  &.has-background
+    padding: 33px 0
 
 
 ///// MEDIA TEXT
@@ -73,13 +86,13 @@
   .editor-rich-text:first-child
     +h( order2 d-none )
 
-    .is-selected &,
-    .is-typing &
+    [data-type="core/pullquote"].is-selected &,
+    [data-type="core/pullquote"].is-typing &
       +h( d-block )
   
   .wp-block-pullquote__citation
     +h( mb1_5 pv0_5 ph1 bg-black_05 )
-    +h( tt-none c-text fw700 fs-m  brad )
+    +h( tt-none c-inherit fw700 fs-m  brad )
 
     &::before
       content: "+"
@@ -89,7 +102,7 @@
   +h( maxw-none )
 
   .wp-block-pullquote__citation
-    +h( bg-black_25 )
+    +h( bg-transparent )
 
   >.block-editor-rich-text p
     +h( mb1 fs-s ) 
@@ -118,15 +131,16 @@
   tfoot tr
     border-top: 3px solid var(--tableBorder)
 
+  tr
+    +h( bg-transparent )
+
   th,
   td
     border: 1px solid var(--gray)
 
-  // reset color palette
   &[class*="-background-color"]
-    +h( bg-transparent )
+    +h( bg-white )
 
-  // default color palette 
   // default color palette 
   &.has-subtle-pale-green-background-color
     --tableBorder: var(--green)
@@ -143,13 +157,16 @@
     --tableHeader: var(--red-light)
     --tableBg: rgba(var(--redRGB), .1)
 
+
 .wp-block-table.is-style-stripes
+  +h( bg-white )
   border-collapse: collapse
 
   th,
   td
     border: 1px solid var(--gray)
 
+  // The default stripe is on Odd row, remove it
   tbody tr:nth-child(odd),
   &.has-background tbody tr:nth-child(odd)
     +h( bg-transparent )

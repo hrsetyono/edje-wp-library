@@ -53,6 +53,6 @@ class ACF_Block {
     $context['block'] = new \Timber\Block( $block );
     $context = apply_filters( "h/block_context/$slug" , $context );
 
-    \Timber::render( "/blocks/_$slug.twig", $context );
+    \Timber::render( [ "/blocks/_$slug.twig", '/blocks/_h-post-list.twig' ], $context );
   }
 }
