@@ -77,8 +77,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/audio':
     case 'core/video':
     case 'core/nextpage':
-    case 'core/verse':
-
+      
     case 'core/calendar':
     case 'core/tag-cloud':
     case 'core/search':

@@ -1,3 +1,11 @@
+$include-normalize: false
+$include-grid: true
+$include-tile: true
+$include-typography: false
+$include-visibility: false
+$include-colors: false
+
+$output-framework: true
 @import "settings"
 
 ///// COLUMNS
@@ -57,6 +65,7 @@
 ///// MEDIA TEXT
 
 .wp-block-media-text
+  +h( ai-start )
   grid-template-columns: 6fr 6fr !important
 
   &.is-style-smaller-image,
@@ -183,6 +192,7 @@
   .is-style-outline &
     background-color: transparent !important
 
+
 ///// ACF GUTENBERG
 
 .acf-block-body
@@ -200,7 +210,7 @@
 div.acf-block-body .acf-fields
   +h( d-grid jc-center pv1_5 ph4_5 minh200px )
   grid-template-columns: repeat(12, 1fr)
-  grid-column-gap: 0.5rem
+  grid-column-gap: 1rem
   grid-row-gap: 1rem
   border: none
   background-color: rgba(139,139,150, .1)
@@ -212,11 +222,30 @@ div.acf-block-body .acf-fields
     width: 100% !important
     grid-column: span 12
 
-  > [data-width="50"]
+  > [data-width="12"]
+    grid-column: span 12
+  > [data-width="11"]
+    grid-column: span 11
+  > [data-width="10"]
+    grid-column: span 10
+  > [data-width="9"]
+    grid-column: span 9
+  > [data-width="8"]
+    grid-column: span 8
+  > [data-width="7"]
+    grid-column: span 7
+  > [data-width="6"]
     grid-column: span 6
-
-  > [data-width="25"]
+  > [data-width="5"]
+    grid-column: span 5
+  > [data-width="4"]
+    grid-column: span 4
+  > [data-width="3"]
     grid-column: span 3
+  > [data-width="2"]
+    grid-column: span 2
+  > [data-width="1"]
+    grid-column: span 1
 
   &::after
     +h( d-none )
@@ -228,8 +257,7 @@ div.acf-block-body .acf-fields
   div.acf-field
     +h( p0 )
 
-
-// Message field is centered and bold
+// MESSAGE Field
 div.acf-block-body div.acf-field.acf-field-message
   +h( as-end mb0_5 )
 
@@ -239,26 +267,32 @@ div.acf-block-body div.acf-field.acf-field-message
   p
     +h( m0 ta-center fw600 )
 
-// Radio field
-div.acf-block-body .acf-field-radio
+// RADIO field
+.acf-block-body .acf-field-radio
   .acf-label
     +h( mr1 )
 
   .acf-radio-list
     +h( mb0 )
 
+// GALLERY field
+div.acf-block-body
+  .acf-gallery-toolbar ul
+    +h( mb0 )
+
+  .acf-gallery-main
+    right: 0 !important
+
+  .acf-gallery-side
+    +h( absolute )
+    z-index: 10
   
-// fields at sidebar
-div.acf-block-panel
-  .acf-block-fields div.acf-field
-    padding: 0 1rem
-    width: 100% !important
-
-    &.acf-field-message
-      +h( d-none )
+  .acf-gallery-side-info
+    +h( w-auto )
+    margin: -10px -10px 1em
 
 
-///// ACF WYSIWYG FIELD
+// WYSIWYG field
 
 // Remove most buttons in TinyMCE Editor
 .acf-field-wysiwyg
@@ -268,11 +302,34 @@ div.acf-block-panel
   [aria-label*="Align"],
   [aria-label*="Undo"],
   [aria-label*="Redo"],
-  [aria-label*="Fullscreen"]
-    display: none
+  [aria-label*="Fullscreen"],
+  [aria-label*="Read More"],
+  [aria-label*="Toolbar Toggle"]
+    +h( d-none )
 
-.acf-field-wysiwyg.--short .mce-edit-area iframe
-  height: 200px !important
+.acf-field-wysiwyg .mce-edit-area iframe
+  height: 200px
 
 [data-type*="group"] .acf-fields.-border
   border: 0
+
+
+// fields at sidebar
+div.acf-block-panel
+  .acf-block-fields
+    +h( pv1 )
+
+  .acf-block-fields div.acf-field
+    +h( mb1 )
+    padding: 0 1rem
+    width: 100% !important
+
+    &.acf-field-message
+      +h( d-none )
+
+
+//
+
+.acf-block-post-list
+  a
+    +h( events-none )

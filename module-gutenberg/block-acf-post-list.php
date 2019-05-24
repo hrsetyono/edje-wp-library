@@ -151,7 +151,7 @@ class Block_Post_list {
         'label' => 'Filter',
         'name' => 'filter',
         'type' => 'radio',
-        'wrapper' => [ 'width' => '50' ],
+        'wrapper' => [ 'width' => '6' ],
         'choices' => [
           'by-term' => 'By category',
           'by-post-id' => 'By specific item',
@@ -174,7 +174,7 @@ class Block_Post_list {
           'operator' => '==empty',
         ],
       ]],
-      'wrapper' => [ 'width' => '50' ],
+      'wrapper' => [ 'width' => '6' ],
       'default_value' => 6,
       'min' => 2,
       'max' => 12,
