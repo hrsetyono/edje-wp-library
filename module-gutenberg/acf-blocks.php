@@ -50,9 +50,31 @@ class ACF_Block {
   function _render( array $block ) {
     $slug = str_replace( 'acf/', '', $block['name'] );
 
-    $context['block'] = new \Timber\Block( $block );
-    $context = apply_filters( "h/block_context/$slug" , $context );
+    $block = $this->_get_fields( $block );
+    $block = apply_filters( "h/block_value/$slug" , $block );
+    
+    // Render the template
+    if( class_exists( 'Timber' ) ) {
+      \Timber::render( [ "/acf-blocks/$slug.twig", '/acf-blocks/h-post-list.twig' ], $block );
+    } else {
+      set_query_var( 'block', $block );
+      get_template_part( "acf-blocks/$slug", '' );
+    }
+  }
 
-    \Timber::render( [ "/blocks/_$slug.twig", '/blocks/_h-post-list.twig' ], $context );
+
+  /**
+   * Reform the data from ACF Block to only include the Fields data
+   */
+  private function _get_fields( array $block ) : array {
+    $data = array_filter( $block['data'], function( $key ) {
+      return substr( $key, 0, 1 ) !== '_';
+    }, ARRAY_FILTER_USE_KEY );
+
+    foreach( $data as $key => &$value ) {
+      $value = get_field( $key );
+    }
+
+    return $data;
   }
 }

@@ -74,7 +74,6 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
       } );
 
     // Hide these useless blocks
-    case 'core/audio':
     case 'core/video':
     case 'core/nextpage':
       

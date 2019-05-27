@@ -24,7 +24,7 @@ class Block_Post_list {
   function register() {
     add_action( 'acf/init', [$this, 'create_fields'] );
     add_action( 'acf/init', [$this, 'create_block'] );
-    add_filter( "h/block_context/h-{$this->post_type}-list", [$this, 'format_context'] );
+    add_filter( "h/block_value/h-{$this->post_type}-list", [$this, 'format_value'] );
   }
 
   /**
@@ -77,19 +77,19 @@ class Block_Post_list {
 
   /**
    * Format the variable that is accessible in the template
-   * @filter h/block_context/post_list
+   * @filter h/block_value/post_list
    */
-  function format_context( array $context ) : array {
-    $posts = [];
+  function format_value( $block ) {
+    $args = [];
     $post_type = $this->post_type;
     $taxonomy = $this->taxonomy;
-    $post_term = $context['block']->post_term;
-    $post_ids = $context['block']->post_ids;
-    $post_amount = $context['block']->amount;
+    $post_term = $block['post_term'] ?? false;
+    $post_ids = $block['post_ids'] ?? false;
+    $post_amount = $block['amount'] ?? false;
 
     // if category
     if( $post_term ) {
-      $posts = \Timber::get_posts([
+      $args = [
         'post_type' => $post_type,
         'posts_per_page' => $post_amount,
         'tax_query' => [[
@@ -97,28 +97,33 @@ class Block_Post_list {
           'field' => 'term_id',
           'terms' => $post_term
         ]]
-      ]);
+      ];
 
       // make 'term' object available
-      $context['term'] = new \Timber\Term( $post_term );
+      $block['term'] = get_term( $post_term );
     }
     // if specific item
     else if( $post_ids ) {
-      $posts = \Timber::get_posts([
+      $args = [
         'post_type' => $post_type,
         'post__in' => $post_ids
-      ]);
+      ];
     }
     // if both empty, get latest posts
     else {
-      $posts = \Timber::get_posts([
+      $args = [
         'post_type' => $post_type,
         'posts_per_page' => $post_amount,
-      ]);
+      ];
     }
 
-    $context['posts'] = $posts;
-    return $context;
+    if( class_exists('Timber') ) {
+      $block['posts'] = \Timber::get_posts( $args );
+    } else {
+      $block['posts'] = get_posts( $args );
+    }
+
+    return $block;
   }
 
 

@@ -8,6 +8,8 @@ $include-colors: false
 $output-framework: true
 @import "settings"
 
+$acf-block-bg: #f3f3f4
+
 ///// COLUMNS
 
 .editor-inner-blocks > .editor-block-list__layout > [data-type="core/column"]
@@ -204,7 +206,8 @@ $output-framework: true
   .acf-table
     font-size: 13px
 
-
+%acf-wide-field
+  +h( mh-3 )
 
 // ACF Block - styled to be similar to Embed block
 div.acf-block-body .acf-fields
@@ -213,7 +216,7 @@ div.acf-block-body .acf-fields
   grid-column-gap: 1rem
   grid-row-gap: 1rem
   border: none
-  background-color: rgba(139,139,150, .1)
+  background-color: $acf-block-bg
 
   .acf-block-panel &
     +h( minh-auto pv2 )
@@ -257,15 +260,22 @@ div.acf-block-body .acf-fields
   div.acf-field
     +h( p0 )
 
+
 // MESSAGE Field
 div.acf-block-body div.acf-field.acf-field-message
-  +h( as-end mb0_5 )
+  +h( as-end pv0_5 ph1 bg-white_50 )
 
   .acf-label
     +h( d-none )
-  
+
   p
-    +h( m0 ta-center fw600 )
+    +h( m0 )
+  
+  &:first-child
+    p
+      +h( ta-center fw700 )
+      font-size: 14px
+
 
 // RADIO field
 .acf-block-body .acf-field-radio
@@ -313,6 +323,67 @@ div.acf-block-body
 [data-type*="group"] .acf-fields.-border
   border: 0
 
+
+// RELATIONSHIP field
+
+.acf-relationship
+  @extend %acf-wide-field
+
+
+// TAB field
+
+div.acf-block-component .acf-fields > .acf-tab-wrap
+  +h( bg-transparent )
+
+  .acf-tab-group
+    +h( mh-4_5 ph4_5 )
+    border-top: none
+    
+    li.active a
+      background-color: $acf-block-bg
+
+
+// REPEATER field
+
+div.acf-field-repeater .acf-repeater
+  @extend %acf-wide-field
+
+  .acf-table
+    border-collapse: collapse
+
+  .acf-row-handle
+    background-color: #f9f9f9
+
+  .acf-row-handle.order
+    border-right: 1px solid #dfdfdf
+
+div.acf-field-repeater .acf-repeater.-block
+  .acf-fields
+    padding: 0.5rem !important
+    border-bottom: 1px solid #dfdfdf
+
+
+div.acf-field-repeater .acf-repeater.-row
+  .acf-fields
+    grid-row-gap: 0
+  
+  .acf-field
+    +h( p0_5 )
+
+  .acf-label
+    +h( p0 )
+
+  .acf-input
+    +h( p0 ph0_25 )
+
+
+// FLEXIBLE CONTENT field
+
+div.acf-field-flexible-content .acf-flexible-content
+  @extend %acf-wide-field
+
+  .acf-fields
+    +h( bg-white_10 )
 
 // fields at sidebar
 div.acf-block-panel
