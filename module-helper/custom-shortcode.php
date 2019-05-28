@@ -64,7 +64,7 @@ class H_Shortcode {
     }
     // else, make it into do-nothing button
     else {
-      $content = "<a class='button $extra_class'>" . $content . '</a>';
+      $content = "<a class='button'>" . $content . '</a>';
     }
 
     return $content;

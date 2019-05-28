@@ -1,17 +1,17 @@
 // COLUMNS Style
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: '8-4',
-  label: '8-4'
+  name: '2-1',
+  label: '2:1'
 } );
 
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: '4-8',
-  label: '4-8'
+  name: '1-2',
+  label: '1:2'
 } );
 
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: '50-50-mobile',
-  label: '50-50 Mobile'
+  name: '1-1-mobile',
+  label: '1:1 Mobile'
 } );
 
 // MEDIA TEXT Style
@@ -43,9 +43,9 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
       } );
 
     case 'core/heading':
-    return lodash.assign( {}, settings, {
-      supports: lodash.assign( {}, settings.supports, { align: ['center', 'wide'] } ),
-    } );
+      return lodash.assign( {}, settings, {
+        supports: lodash.assign( {}, settings.supports, { align: ['center', 'wide'] } ),
+      } );
 
     // Columns can only be wide
     case 'core/columns':

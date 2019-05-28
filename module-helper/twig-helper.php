@@ -4,7 +4,7 @@
  */
 class Twig_Helper {
   function __construct() {
-    add_filter('get_twig', array($this, 'add_to_twig') );
+    add_filter('get_twig', [$this, 'add_to_twig'] );
 
     // enable password-protected post
     add_filter( 'timber/post/content/show_password_form_for_protected', '__return_true' );

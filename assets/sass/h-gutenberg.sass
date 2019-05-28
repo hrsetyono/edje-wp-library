@@ -1,10 +1,5 @@
-$include-normalize: false
 $include-grid: true
 $include-tile: true
-$include-typography: false
-$include-visibility: false
-$include-colors: false
-
 $output-framework: true
 @import "settings"
 
@@ -13,11 +8,11 @@ $acf-block-bg: #f3f3f4
 ///// COLUMNS
 
 .editor-inner-blocks > .editor-block-list__layout > [data-type="core/column"]
-  .is-style-8-4 &
+  .is-style-2-1 &
     &:nth-child(1)
       flex-basis: calc(66.7% - 44px)
     
-  .is-style-4-8 &
+  .is-style-1-2 &
     &:nth-child(2)
       flex-basis: calc(66.7% - 44px)
 
@@ -68,16 +63,16 @@ $acf-block-bg: #f3f3f4
 
 .wp-block-media-text
   +h( ai-start )
-  grid-template-columns: 6fr 6fr !important
+  grid-template-columns: 50% auto !important
 
   &.is-style-smaller-image,
   &.is-style-larger-image.has-media-on-the-right
-    grid-template-columns: 4fr 8fr !important
+    grid-template-columns: 33% auto !important
 
   &.is-style-larger-image,
   &.is-style-smaller-image.has-media-on-the-right
-    grid-template-columns: 8fr 4fr !important
- 
+    grid-template-columns: 67% auto !important
+
   .block-library-media-text__media-container + span
     +h( d-none )
 
@@ -278,7 +273,7 @@ div.acf-block-body div.acf-field.acf-field-message
 
 
 // RADIO field
-.acf-block-body .acf-field-radio
+div.acf-block-body .acf-field-radio
   .acf-label
     +h( mr1 )
 
@@ -305,7 +300,7 @@ div.acf-block-body
 // WYSIWYG field
 
 // Remove most buttons in TinyMCE Editor
-.acf-field-wysiwyg
+div.acf-block-component .acf-field-wysiwyg
   [aria-label*="Underline"],
   [aria-label*="Blockquote"],
   [aria-label*="Strikethrough"],
@@ -317,22 +312,19 @@ div.acf-block-body
   [aria-label*="Toolbar Toggle"]
     +h( d-none )
 
-.acf-field-wysiwyg .mce-edit-area iframe
+div.acf-block-component .acf-field-wysiwyg .mce-edit-area iframe
   height: 200px
-
-[data-type*="group"] .acf-fields.-border
-  border: 0
 
 
 // RELATIONSHIP field
 
-.acf-relationship
+div.acf-block-body .acf-relationship
   @extend %acf-wide-field
 
 
 // TAB field
 
-div.acf-block-component .acf-fields > .acf-tab-wrap
+div.acf-block-body .acf-fields > .acf-tab-wrap
   +h( bg-transparent )
 
   .acf-tab-group
@@ -345,7 +337,7 @@ div.acf-block-component .acf-fields > .acf-tab-wrap
 
 // REPEATER field
 
-div.acf-field-repeater .acf-repeater
+div.acf-block-body .acf-repeater
   @extend %acf-wide-field
 
   .acf-table
@@ -357,13 +349,13 @@ div.acf-field-repeater .acf-repeater
   .acf-row-handle.order
     border-right: 1px solid #dfdfdf
 
-div.acf-field-repeater .acf-repeater.-block
+div.acf-block-body .acf-repeater.-block
   .acf-fields
     padding: 0.5rem !important
     border-bottom: 1px solid #dfdfdf
 
 
-div.acf-field-repeater .acf-repeater.-row
+div.acf-block-body .acf-repeater.-row
   .acf-fields
     grid-row-gap: 0
   
@@ -379,18 +371,17 @@ div.acf-field-repeater .acf-repeater.-row
 
 // FLEXIBLE CONTENT field
 
-div.acf-field-flexible-content .acf-flexible-content
+div.acf-block-body .acf-flexible-content
   @extend %acf-wide-field
 
   .acf-fields
     +h( bg-white_10 )
 
 // fields at sidebar
-div.acf-block-panel
-  .acf-block-fields
-    +h( pv1 )
+div.acf-block-body .acf-block-fields
+  +h( pv1 )
 
-  .acf-block-fields div.acf-field
+  div.acf-field
     +h( mb1 )
     padding: 0 1rem
     width: 100% !important
