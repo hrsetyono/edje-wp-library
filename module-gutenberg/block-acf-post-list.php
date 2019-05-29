@@ -6,14 +6,20 @@
  */
 class Block_Post_list {
   private $post_type;
+  private $args;
   private $taxonomy;
   private $label;
   private $menu_icon;
 
-  function __construct( string $post_type = 'post' ) {
+  function __construct( string $post_type, array $args = [] ) {
     $this->post_type = $post_type;
-    $pt_object = get_post_type_object( $post_type );
+    $this->args = array_merge( [
+      'max_amount' => 12,
+      'orderby_field' => false,
+    ], $args );
 
+
+    $pt_object = get_post_type_object( $post_type );
     $this->label = $pt_object->labels->singular_name;
     $this->menu_icon = $pt_object->menu_icon ?? 'dashicons-admin-post';
 
@@ -66,11 +72,14 @@ class Block_Post_list {
   function create_block() {
     $block_name = "h-{$this->post_type}-list";
 
+    $description = "Show list of {$this->label}. Rendered file: ";
+    $description .= class_exists('Timber') ? "/views/acf-blocks/{$block_name}.twig" : "/acf-blocks/{$block_name}.php";
+
     \H::register_block( $block_name, [
       'title' => "{$this->label} List",
       'icon' => $this->menu_icon,
       'post_types' => [ 'post', 'page', $this->post_type ],
-      'description' => __( "Show list of {$this->label}. You need to create template file named: _{$block_name}.twig in /views/blocks/." ),
+      'description' => $description
     ] );
   }
 
@@ -80,16 +89,18 @@ class Block_Post_list {
    * @filter h/block_value/post_list
    */
   function format_value( $block ) {
-    $args = [];
+    $wp_args = [];
     $post_type = $this->post_type;
     $taxonomy = $this->taxonomy;
     $post_term = $block['post_term'] ?? false;
     $post_ids = $block['post_ids'] ?? false;
     $post_amount = $block['amount'] ?? false;
+    $orderby = $block['orderby'] ?? false;
+    $order = $block['order'] ?? false;
 
     // if category
     if( $post_term ) {
-      $args = [
+      $wp_args = [
         'post_type' => $post_type,
         'posts_per_page' => $post_amount,
         'tax_query' => [[
@@ -104,23 +115,33 @@ class Block_Post_list {
     }
     // if specific item
     else if( $post_ids ) {
-      $args = [
+      $wp_args = [
         'post_type' => $post_type,
         'post__in' => $post_ids
       ];
     }
     // if both empty, get latest posts
     else {
-      $args = [
+      $wp_args = [
         'post_type' => $post_type,
         'posts_per_page' => $post_amount,
       ];
     }
 
+    // If has orderby
+    if( $orderby ) {
+      $wp_args['orderby'] = $orderby;
+    }
+
+    if( $order ) {
+      $wp_args['order'] = $order;
+    }
+
+    // Get Posts
     if( class_exists('Timber') ) {
-      $block['posts'] = \Timber::get_posts( $args );
+      $block['posts'] = \Timber::get_posts( $wp_args );
     } else {
-      $block['posts'] = get_posts( $args );
+      $block['posts'] = get_posts( $wp_args );
     }
 
     return $block;
@@ -134,17 +155,18 @@ class Block_Post_list {
     $fields = [];
 
     $pt = $this->post_type;
+    $args = $this->args;
     $label = $this->label;
     $menu_icon = $this->menu_icon;
     $taxonomy = $this->taxonomy;
 
     // Title
     $fields[] = [
-      'key' => "h_{$pt}_title",
-      'label' => '',
+      'key' => "field_h_{$pt}_title",
+      'label' => "<i class='dashicons-before {$menu_icon}'></i> {$label} List",
       'name' => '',
       'type' => 'message',
-      'message' => "<i class='dashicons-before {$menu_icon}'></i> {$label} List",
+      'message' => '',
       'new_lines' => 'wpautop',
       'esc_html' => 0,
     ];
@@ -152,7 +174,7 @@ class Block_Post_list {
     if( $taxonomy ) {
       // Filter
       $fields[] = [
-        'key' => "h_{$pt}_filter",
+        'key' => "field_h_filter",
         'label' => 'Filter',
         'name' => 'filter',
         'type' => 'radio',
@@ -169,33 +191,33 @@ class Block_Post_list {
 
     // Amount
     $fields[] = array(
-      'key' => "h_{$pt}_amount",
+      'key' => "field_h_{$pt}_amount",
       'label' => 'Amount',
       'name' => 'amount',
       'type' => 'range',
       'conditional_logic' => [[
         [
-          'field' => "h_{$pt}_ids",
+          'field' => "field_h_{$pt}_ids",
           'operator' => '==empty',
         ],
       ]],
       'wrapper' => [ 'width' => '6' ],
       'default_value' => 6,
       'min' => 2,
-      'max' => 12,
+      'max' => $args['max_amount'],
       'step' => '',
     );
 
     if( $taxonomy ) {
       // Post Term
       $fields[] = [
-        'key' => "h_{$pt}_term",
+        'key' => "field_h_{$pt}_term",
         'label' => '',
         'name' => 'post_term',
         'type' => 'taxonomy',
         'conditional_logic' => [[
           [
-            'field' => "h_{$pt}_filter",
+            'field' => 'field_h_filter',
             'operator' => '==',
             'value' => 'by-term',
           ],
@@ -212,12 +234,11 @@ class Block_Post_list {
     }
 
     // Post IDs
-    $post_ids_conditional_logic = is_null( $taxonomy ) ? 0 : [[
-      [ 'field' => "h_{$pt}_filter", 'operator' => '==', 'value' => 'by-post-id' ],
-    ]];
-
+    $post_ids_conditional_logic = is_null( $taxonomy ) ? 0 : [ [
+      [ 'field' => "field_h_filter", 'operator' => '==', 'value' => 'by-post-id' ],
+    ] ];
     $fields[] = [
-      'key' => "h_{$pt}_ids",
+      'key' => "field_h_${pt}_ids",
       'label' => '',
       'name' => 'post_ids',
       'type' => 'post_object',
@@ -231,6 +252,55 @@ class Block_Post_list {
       'return_format' => 'id',
       'ui' => 1,
     ];
+
+    
+    // Order By
+    if( $args['orderby_field'] ) {
+      $fields[] = [
+        'key' => "field_h_orderby",
+        'label' => 'Order by',
+        'name' => 'orderby',
+        'type' => 'button_group',
+        'instructions' => '',
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => [
+          'width' => '6',
+          'class' => '',
+          'id' => '',
+        ],
+        'choices' => [
+          'date' => 'Date',
+          'title' => 'Title',
+          'rand' => 'Random',
+        ],
+        'allow_null' => 0,
+        'default_value' => 'date',
+        'layout' => 'horizontal',
+        'return_format' => 'value',
+      ];
+
+      $fields[] = [
+        'key' => "field_h_order",
+        'label' => '&nbsp;',
+        'name' => 'order',
+        'type' => 'button_group',
+        'conditional_logic' => [ [
+          [ 'field' => "field_h_orderby", 'operator' => '!=', 'value' => 'rand' ],
+        ] ],
+        'wrapper' => array(
+          'width' => '6',
+        ),
+        'choices' => array(
+          'DESC' => 'Descending',
+          'ASC' => 'Ascending',
+        ),
+        'allow_null' => 0,
+        'default_value' => 'DESC',
+        'layout' => 'horizontal',
+        'return_format' => 'value',
+      ];
+    }
 
     return $fields;
   }

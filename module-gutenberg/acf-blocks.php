@@ -55,7 +55,7 @@ class ACF_Block {
     
     // Render the template
     if( class_exists( 'Timber' ) ) {
-      \Timber::render( [ "/acf-blocks/$slug.twig", '/acf-blocks/h-post-list.twig' ], $block );
+      \Timber::render( [ "acf-blocks/$slug.twig", 'acf-blocks/h-post-list.twig' ], $block );
     } else {
       set_query_var( 'block', $block );
       get_template_part( "acf-blocks/$slug", '' );

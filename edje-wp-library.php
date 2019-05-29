@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.1.7
+Version: 3.2.0
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -202,11 +202,11 @@ class H {
    * - You need to create a TWIG file in views/blocks named `h-$pt-list.twig`. Replace $pt with post type
    * - In the template, you can use `posts` object to loop through.
    */
-  static function register_post_block( string $post_type ) {
+  static function register_post_block( string $post_type, array $args = [] ) {
     if( !function_exists('acf_register_block') ) { return; }
     require_once 'module-gutenberg/block-acf-post-list.php';
 
-    $block = new \h\Block_Post_List( $post_type );
+    $block = new \h\Block_Post_List( $post_type, $args );
     $block->register();
   }
 
