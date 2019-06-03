@@ -5,13 +5,13 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.2.1
+Version: 3.2.2
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '3.2.1' );
+define( 'H_VERSION', '3.2.2' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
@@ -86,7 +86,7 @@ class H {
     $func_name = "h_$name";
 
     if( is_callable( $func_name ) ) {
-      call_user_func_array( "h_$name", $args );
+      return call_user_func_array( "h_$name", $args );
     } else {
       trigger_error( "The function H::$name does not exist.", E_USER_ERROR );
     }

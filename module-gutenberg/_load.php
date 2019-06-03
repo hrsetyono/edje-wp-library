@@ -57,9 +57,9 @@ function h_register_colors( array $colors ) : array {
 
   // format the array
   $parsed_colors = [];
-  foreach( $colors as $name => $slug ) {
+  foreach( $colors as $label => $slug ) {
     $parsed_colors[] = [
-      'name' => $name,
+      'name' => $label,
       'slug' => $slug,
       'color' => "var(--$slug)"
     ];

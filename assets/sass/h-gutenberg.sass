@@ -8,11 +8,11 @@ $acf-bg: #f3f3f4
 ///// COLUMNS
 
 .editor-inner-blocks > .editor-block-list__layout > [data-type="core/column"]
-  .is-style-2-1 &
+  .is-style-h-2-1 &
     &:nth-child(1)
       flex-basis: calc(66.7% - 44px)
     
-  .is-style-1-2 &
+  .is-style-h-1-2 &
     &:nth-child(2)
       flex-basis: calc(66.7% - 44px)
 
@@ -42,10 +42,35 @@ $acf-bg: #f3f3f4
     font-style: normal
 
 
+///// GALLERY
+
+.wp-block-gallery.is-style-h-slider
+
+  .blocks-gallery-item
+    flex-grow: inherit
+
+  .blocks-gallery-item:nth-child(1),
+  .blocks-gallery-item:nth-child(2)
+    +h( relative )
+
+    &::before
+      +h( absolute top50p )
+      font-size: 3rem
+      font-family: "dashicons"
+      transform: translateY( -50% )
+
+  .blocks-gallery-item:nth-child(1)::before
+    content: "\f341"
+    +h( right100p )
+
+  .blocks-gallery-item:nth-child(2)::before
+    content: "\f345"
+    +h( left100p )
+
+
 ///// COVER
 
 .wp-block-cover .wp-block-cover__inner-container
-
 
 
 ///// GROUP
@@ -65,12 +90,12 @@ $acf-bg: #f3f3f4
   +h( ai-start )
   grid-template-columns: 50% auto !important
 
-  &.is-style-smaller-image,
-  &.is-style-larger-image.has-media-on-the-right
+  &.is-style-h-smaller-image,
+  &.is-style-h-larger-image.has-media-on-the-right
     grid-template-columns: 33% auto !important
 
-  &.is-style-larger-image,
-  &.is-style-smaller-image.has-media-on-the-right
+  &.is-style-h-larger-image,
+  &.is-style-h-smaller-image.has-media-on-the-right
     grid-template-columns: 67% auto !important
 
   .block-library-media-text__media-container + span
@@ -276,7 +301,7 @@ div.acf-block-body div.acf-field.acf-field-message
     +h( m0 ta-center )
 
 
-// RADIO field
+// ACF RADIO field
 div.acf-block-body .acf-field-radio
   .acf-label
     +h( mr1 )
@@ -284,7 +309,7 @@ div.acf-block-body .acf-field-radio
   .acf-radio-list
     +h( mb0 )
 
-// GALLERY field
+// ACF GALLERY field
 div.acf-block-body
   .acf-gallery-toolbar ul
     +h( mb0 )
@@ -301,7 +326,7 @@ div.acf-block-body
     margin: -10px -10px 1em
 
 
-// WYSIWYG field
+// ACF WYSIWYG field
 
 // Remove most buttons in TinyMCE Editor
 div.acf-block-component .acf-field-wysiwyg
@@ -320,13 +345,13 @@ div.acf-block-component .acf-field-wysiwyg .mce-edit-area iframe
   height: 200px
 
 
-// RELATIONSHIP field
+// ACF RELATIONSHIP field
 
 div.acf-block-body .acf-relationship
   @extend %acf-wide-field
 
 
-// TAB field
+// ACF TAB field
 
 div.acf-block-body .acf-fields > .acf-tab-wrap
   +h( bg-transparent )
@@ -339,7 +364,7 @@ div.acf-block-body .acf-fields > .acf-tab-wrap
       background-color: $acf-bg
 
 
-// REPEATER field
+// ACF REPEATER field
 
 div.acf-block-body .acf-repeater
   @extend %acf-wide-field
@@ -373,7 +398,7 @@ div.acf-block-body .acf-repeater.-row
     +h( p0 ph0_25 )
 
 
-// FLEXIBLE CONTENT field
+// ACF FLEXIBLE CONTENT field
 
 div.acf-block-body .acf-flexible-content
   @extend %acf-wide-field

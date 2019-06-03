@@ -1,28 +1,35 @@
 // COLUMNS Style
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: '2-1',
+  name: 'h-2-1',
   label: '2:1'
 } );
 
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: '1-2',
+  name: 'h-1-2',
   label: '1:2'
 } );
 
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: '1-1-mobile',
+  name: 'h-1-1-mobile',
   label: '1:1 Mobile'
+} );
+
+// GALLERY Style
+
+wp.blocks.registerBlockStyle( 'core/gallery', {
+  name: 'h-slider',
+  label: 'Slider'
 } );
 
 // MEDIA TEXT Style
 
 wp.blocks.registerBlockStyle( 'core/media-text', {
-  name: 'larger-image',
+  name: 'h-larger-image',
   label: 'Larger Image'
 } );
 
 wp.blocks.registerBlockStyle( 'core/media-text', {
-  name: 'smaller-image',
+  name: 'h-smaller-image',
   label: 'Smaller Image'
 } );
 

@@ -43,6 +43,9 @@ class Modify_Head_Footer {
     wp_register_script( 'h-scroll', H_URL . 'assets/js-vendor/h-scroll.min.js', [], false, true );
     wp_register_script( 'h-lightbox', H_URL . 'assets/js-vendor/h-lightbox.min.js', [], false, true );
 
+    wp_register_style( 'h-slider', H_URL . 'assets/css/h-slider.css' );
+    wp_register_style( 'h-lightbox', H_URL . 'assets/css/h-lightbox.css' );
+
     // Enable comment's reply form
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
       wp_enqueue_script( 'comment-reply' );
