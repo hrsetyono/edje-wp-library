@@ -44,7 +44,7 @@ class Block_Post_list {
     $fields = $this->_get_fields_args( $pt, $label );
 
     acf_add_local_field_group( [
-      'key' => "hgroup_{$pt}_list",
+      'key' => "hgroup_{$pt}list",
       'title' => "Block - {$label} List",
       'fields' => $fields,
       'location' => [[
@@ -89,9 +89,10 @@ class Block_Post_list {
    * @filter h/block_value/post_list
    */
   function format_value( $block ) {
-    $wp_args = [];
+    $args = [];
     $post_type = $this->post_type;
     $taxonomy = $this->taxonomy;
+
     $post_term = $block['post_term'] ?? false;
     $post_ids = $block['post_ids'] ?? false;
     $post_amount = $block['amount'] ?? false;
@@ -100,7 +101,7 @@ class Block_Post_list {
 
     // if category
     if( $post_term ) {
-      $wp_args = [
+      $args = [
         'post_type' => $post_type,
         'posts_per_page' => $post_amount,
         'tax_query' => [[
@@ -115,14 +116,14 @@ class Block_Post_list {
     }
     // if specific item
     else if( $post_ids ) {
-      $wp_args = [
+      $args = [
         'post_type' => $post_type,
         'post__in' => $post_ids
       ];
     }
     // if both empty, get latest posts
     else {
-      $wp_args = [
+      $args = [
         'post_type' => $post_type,
         'posts_per_page' => $post_amount,
       ];
@@ -130,18 +131,18 @@ class Block_Post_list {
 
     // If has orderby
     if( $orderby ) {
-      $wp_args['orderby'] = $orderby;
+      $args['orderby'] = $orderby;
     }
 
     if( $order ) {
-      $wp_args['order'] = $order;
+      $args['order'] = $order;
     }
 
     // Get Posts
     if( class_exists('Timber') ) {
-      $block['posts'] = \Timber::get_posts( $wp_args );
+      $block['posts'] = \Timber::get_posts( $args );
     } else {
-      $block['posts'] = get_posts( $wp_args );
+      $block['posts'] = get_posts( $args );
     }
 
     return $block;
@@ -162,7 +163,7 @@ class Block_Post_list {
 
     // Title
     $fields[] = [
-      'key' => "field_h_{$pt}_title",
+      'key' => "hfield_{$pt}_title",
       'label' => "<i class='dashicons-before {$menu_icon}'></i> {$label} List",
       'name' => '',
       'type' => 'message',
@@ -174,7 +175,7 @@ class Block_Post_list {
     if( $taxonomy ) {
       // Filter
       $fields[] = [
-        'key' => "field_h_filter",
+        'key' => "hfield_{$pt}_filter",
         'label' => 'Filter',
         'name' => 'filter',
         'type' => 'radio',
@@ -191,13 +192,13 @@ class Block_Post_list {
 
     // Amount
     $fields[] = array(
-      'key' => "field_h_{$pt}_amount",
+      'key' => "hfield_{$pt}_amount",
       'label' => 'Amount',
       'name' => 'amount',
       'type' => 'range',
       'conditional_logic' => [[
         [
-          'field' => "field_h_{$pt}_ids",
+          'field' => "hfield_{$pt}_ids",
           'operator' => '==empty',
         ],
       ]],
@@ -211,13 +212,13 @@ class Block_Post_list {
     if( $taxonomy ) {
       // Post Term
       $fields[] = [
-        'key' => "field_h_{$pt}_term",
+        'key' => "hfield_{$pt}_term",
         'label' => '',
         'name' => 'post_term',
         'type' => 'taxonomy',
         'conditional_logic' => [[
           [
-            'field' => 'field_h_filter',
+            'field' => "hfield_{$pt}_filter",
             'operator' => '==',
             'value' => 'by-term',
           ],
@@ -235,10 +236,11 @@ class Block_Post_list {
 
     // Post IDs
     $post_ids_conditional_logic = is_null( $taxonomy ) ? 0 : [ [
-      [ 'field' => "field_h_filter", 'operator' => '==', 'value' => 'by-post-id' ],
+      [ 'field' => "hfield_{$pt}_filter", 'operator' => '==', 'value' => 'by-post-id' ],
     ] ];
+
     $fields[] = [
-      'key' => "field_h_${pt}_ids",
+      'key' => "hfield_${pt}_ids",
       'label' => '',
       'name' => 'post_ids',
       'type' => 'post_object',
@@ -257,7 +259,7 @@ class Block_Post_list {
     // Order By
     if( $args['orderby_field'] ) {
       $fields[] = [
-        'key' => "field_h_orderby",
+        'key' => "hfield_{$pt}_orderby",
         'label' => 'Order by',
         'name' => 'orderby',
         'type' => 'button_group',
@@ -281,12 +283,12 @@ class Block_Post_list {
       ];
 
       $fields[] = [
-        'key' => "field_h_order",
+        'key' => "hfield_{$pt}_order",
         'label' => '&nbsp;',
         'name' => 'order',
         'type' => 'button_group',
         'conditional_logic' => [ [
-          [ 'field' => "field_h_orderby", 'operator' => '!=', 'value' => 'rand' ],
+          [ 'field' => "hfield_{$pt}_orderby", 'operator' => '!=', 'value' => 'rand' ],
         ] ],
         'wrapper' => array(
           'width' => '6',

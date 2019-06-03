@@ -28,6 +28,4 @@ class Modify_Gutenberg {
     wp_dequeue_style( 'wp-block-library' );
     wp_dequeue_style( 'wp-block-library-theme' );
   }
-
-
 }

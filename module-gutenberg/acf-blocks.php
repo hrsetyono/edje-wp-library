@@ -21,7 +21,7 @@ class ACF_Block {
 
     // extra context to be made available in the rendered Twig template
     if( isset( $args['context'] ) ) {
-      add_filter( "h/block/context_$name", $args['context'] );
+      add_filter( "h/block_value/$name", $args['context'] );
     }
   }
 
@@ -67,12 +67,27 @@ class ACF_Block {
    * Reform the data from ACF Block to only include the Fields data
    */
   private function _get_fields( array $block ) : array {
-    $data = array_filter( $block['data'], function( $key ) {
-      return substr( $key, 0, 1 ) !== '_';
-    }, ARRAY_FILTER_USE_KEY );
+    $data = [
+      'block' => [
+        'id' => $block['id'],
+        'name' => $block['name'],
+        'align' => $block['align']
+      ]
+    ];
 
-    foreach( $data as $key => &$value ) {
-      $value = get_field( $key );
+    foreach( $block['data'] as $key => $value ) {
+      // If start with underscore, continue
+      if( substr( $key, 0, 1 ) === '_' ) { continue; }
+
+      $name = $key;
+      
+      // If start with "field", get the field name
+      if( substr( $key, 0, 6 ) === 'field_' ) {
+        $field_object = get_field_object( $key );
+        $name = $field_object['name'];
+      }
+
+      $data[ $name ] = get_field( $key );
     }
 
     return $data;
