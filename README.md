@@ -1,6 +1,6 @@
 # Edje WordPress Library
 
-![Edje Wordpress](https://cdn.setyono.net/edge/wp-edge.jpg)
+![Edje Wordpress](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/logo.jpg)
 
 WordPress is a fantastic web platform, but it's complicated for developer. This plugin helps simplifying many functions.
 
@@ -22,7 +22,7 @@ WordPress is a fantastic web platform, but it's complicated for developer. This 
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type)
 
-![Edje WordPress - Product Custom Post Type](https://cdn.setyono.net/edjewp/cpt-product.jpg)
+![Edje WordPress - Product Custom Post Type](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-cpt.jpg)
 
 ```php
 H::register_post_type( 'product', [
@@ -35,7 +35,7 @@ H::register_post_type( 'product', [
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
 
-![Edje WordPress - Product Custom Post Type](https://cdn.setyono.net/edjewp/cpt-product.jpg)
+![Edje WordPress - Product Custom Post Type](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-tax.jpg)
 
 ```php
 H::register_taxonomy( 'brand' , [
@@ -46,11 +46,11 @@ H::register_taxonomy( 'brand' , [
 
 ## 3. Theme Customizer
 
-[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Customizer)
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Theme-Customizer)
 
 You can access this from **Appearance > Customizer**. By default, only Administrator role can see this page.
 
-![Edje Customize Example](https://cdn.setyono.net/edjewp/cust-sample-header.jpg)
+![Edje Customize Example](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/cust-sample-header.jpg)
 
 ```php
 add_action( 'customize_register', 'my_customize_register' );
@@ -66,27 +66,19 @@ function my_customize_register( $wp_customize ) {
 }
 ```
 
-## 4. Post Table Columns
+## 4. ACF Blocks
 
-[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Table-Columns)
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/ACF-Blocks)
 
-![Edje WordPress - Complex Column](https://cdn.setyono.net/edjewp/cpt-column.jpg)
+![Edje Wordpress - ACF Blocks](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/acf-block-sample.jpg)
 
 ```php
-H::override_columns( 'product', [
-  'title',
-  'price',
-  'Discount' => 'show_discounted_price',
-] );
+// functions.php
 
-function show_discounted_price( $post, $fields ) { 
-  $discount = isset( $fields['discount'] ) ? $fields['discount'][0] : null;
-  $price = isset( $fields['price'] ) ? $fields['price'][0] : null;
+add_action( 'acf/init', 'my_create_blocks' );
 
-  $total = $price - ($price * $discount / 100);
-  $saving = $price - $total;
-
-  return $discount . '% Discount - You save ' . $saving;
+function my_create_blocks() {
+  H::register_block( 'sample' );
 }
 ```
 
