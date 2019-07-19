@@ -75,11 +75,6 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
       } );
 
-    case 'core/freeform':
-      return lodash.assign( {}, settings, {
-        supports: lodash.assign( {}, settings.supports, { className: true, align: ['wide'] } ),
-      } );
-
     // Hide these useless blocks
     case 'core/video':
     case 'core/nextpage':
@@ -132,22 +127,3 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
 
   return settings;
 });
-
-// Fix nested block to crash when having Style
-let el = wp.element.createElement;
-let allowNestedStyle = wp.compose.createHigherOrderComponent( function( BlockEdit ) {
-  return function( props ) {
-    let content = el( BlockEdit, props );
-
-    // if nested block, the preview content is empty div
-    let isNestedBlock = ['core/columns', 'core/group', 'core/media-text'].indexOf( props.name ) >= 0;
-    if( isNestedBlock && typeof props.insertBlocksAfter === 'undefined' ) {
-      content = el( 'div', {} );
-    }
-
-    return el(
-      wp.element.Fragment, {}, content
-    );
-  };
-}, 'allowNestedStyle' );
-wp.hooks.addFilter( 'editor.BlockEdit', 'h/fix_nested_style_preview', allowNestedStyle );
