@@ -8,7 +8,6 @@ class Modify_Jetpack {
 
     add_action( 'wp_head', [$this, 'wp_head'], 2 );
     add_action( 'wp_footer', [$this, 'wp_footer'] );
-    add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
 
     // disable jetpack css
     add_filter( 'jetpack_implode_frontend_css', '__return_false' );
@@ -68,14 +67,6 @@ class Modify_Jetpack {
     // disable spinner when infinite loading is enabled
     wp_deregister_script( 'jquery.spin' );
     wp_deregister_script( 'spin' );
-  }
-
-  /*
-    Enqueue additional JS and CSS
-    @action wp_enqueue_scripts
-  */
-  function enqueue_scripts() {
-    wp_enqueue_style( 'social-logos' );  // add social logos in all pages
   }
 
   /*
