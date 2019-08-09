@@ -2,7 +2,7 @@
 /**
  * @action plugins_loaded
  */
-function _h_load_helper() {
+function load_hmodule_helper() {
   require_once __DIR__ . '/h-helper.php';
   require_once __DIR__ . '/custom-shortcode.php';
 

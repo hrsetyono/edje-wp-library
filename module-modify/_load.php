@@ -3,7 +3,7 @@
 /**
  * @actions plugins_loaded
  */
-function _h_load_modify() {
+function load_hmodule_modify() {
   // admin
   if( is_admin() ) {
     require_once __DIR__ . '/admin.php';

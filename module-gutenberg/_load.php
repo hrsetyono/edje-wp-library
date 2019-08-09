@@ -3,7 +3,7 @@
 /**
  * @action plugins_loaded
  */
-function _h_load_gutenberg() {
+function load_hmodule_gutenberg() {
   require_once __DIR__ . '/mod.php';
 
   new \h\Modify_Gutenberg();

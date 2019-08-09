@@ -3,7 +3,7 @@
 /**
  * @action plugins_loaded
  */
-function _h_load_customizer() {
+function load_hmodule_customizer() {
   require_once __DIR__ . '/customizer.php';
   require_once __DIR__ . '/customizer-default.php';
 

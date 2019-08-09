@@ -3,7 +3,7 @@
 /**
  * @action plugins_loaded
  */
-function _h_load_post_type() {
+function load_hmodule_post_type() {
   if( is_admin() ) {
     require_once __DIR__ . '/post-column.php';
     require_once __DIR__ . '/post-filter.php';

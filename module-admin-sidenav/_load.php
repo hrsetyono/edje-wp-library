@@ -2,7 +2,7 @@
 /**
  * @action plugins_loaded
  */
-function _h_load_admin_nav() {
+function load_hmodule_admin_sidenav() {
   if( is_admin() ) {
     require_once __DIR__ . '/sidenav.php';
     require_once __DIR__ . '/sidenav-sub.php';

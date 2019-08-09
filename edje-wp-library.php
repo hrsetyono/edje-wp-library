@@ -5,13 +5,13 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.2.3
+Version: 3.3.0
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '3.2.3' );
+define( 'H_VERSION', '3.3.0' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
@@ -19,19 +19,28 @@ define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 if( !class_exists('Edje_WP_Library') ):
 
-require_once 'module-helper/_load.php';
-require_once 'module-gutenberg/_load.php';
-require_once 'module-post-type/_load.php';
-require_once 'module-customizer/_load.php';
-require_once 'module-admin-sidenav/_load.php';
-require_once 'module-vendor/_load.php';
-require_once 'module-modify/_load.php';
+// Modules list
+$h_modules = [
+  'helper',
+  'api',
+  'gutenberg',
+  'post-type',
+  'customizer',
+  'admin-sidenav',
+  'vendor',
+  'modify',
+];
 
+// require all module loaders
+foreach( $h_modules as $m ) {
+  require_once "module-$m/_load.php";
+}
   
+
 class Edje_WP_Library {
   function __construct() {
     add_action( 'plugins_loaded' , [$this, 'load_modules'] );
-    add_action( 'init', [$this, 'init_modules'] );
+    // add_action( 'init', [$this, 'init_modules'] );
 
     // Run activation hook only if EDJE is set to true in wp-config.
     if( defined( 'EDJE' ) ) {  
@@ -45,19 +54,34 @@ class Edje_WP_Library {
    * @action plugins_loaded
    */
   function load_modules() {
-    _h_load_helper();
+    global $h_modules;
 
-    _h_load_gutenberg();
-    _h_load_post_type();
-    _h_load_admin_nav();
-    _h_load_customizer();
+    foreach( $h_modules as $m ) {
+      $m = str_replace( '_', '-', $m );
+      $func_name = "load_hmodule_$m";
 
-    _h_load_vendor();
-    _h_load_modify();
+      if( function_exists( $func_name ) ) {
+        call_user_func( $func_name );
+      }
+    }
   }
 
+  /**
+   * If the modules need to be run in "init" action.
+   * 
+   * Note: This is DISABLED because currently there's no module that need this
+   */
   function init_modules() {
+    global $h_modules;
 
+    foreach( $h_modules as $m ) {
+      $m = str_replace( '_', '-', $m );
+      $func_name = "init_hmodule_$m";
+
+      if( function_exists( $func_name ) ) {
+        call_user_func( $func_name );
+      }
+    }
   }
 
   /**

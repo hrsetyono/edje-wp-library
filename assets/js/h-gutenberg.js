@@ -34,7 +34,6 @@ wp.blocks.registerBlockStyle( 'core/media-text', {
 } );
 
 
-
 // Modify settings for Core blocks
 wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( settings, name ) => {
 

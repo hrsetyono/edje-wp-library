@@ -55,6 +55,10 @@ class Modify_Jetpack {
   function wp_head() {
     wp_dequeue_script( 'devicepx' );
     wp_dequeue_style( 'sharedaddy' );
+
+    if( sharing_maybe_enqueue_scripts() ) {
+      wp_enqueue_style( 'social-logos' ); 
+    }
   }
 
   /*
@@ -62,7 +66,7 @@ class Modify_Jetpack {
     @action wp_footer
   */
   function wp_footer() {
-    wp_deregister_script( 'sharing-js' );
+    // wp_deregister_script( 'sharing-js' );
 
     // disable spinner when infinite loading is enabled
     wp_deregister_script( 'jquery.spin' );
