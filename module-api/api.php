@@ -18,9 +18,9 @@ class API {
   /**
    * Do a GET request.
    */
-  function get_request( string $url, array $data = [] ) {
+  static function get_request( string $url, array $data = [] ) {
     $curl = curl_init();
-    $url = $this->format_request_url( $url );
+    $url = self::format_request_url( $url );
 
     if( $data ) {
       $url = sprintf( "%s?%s", $url, http_build_query($data) );
@@ -39,8 +39,8 @@ class API {
   /**
    * Do a POST request.
    */
-  function post_request( string $url, array $data = [] ) {
-    $url = $this->format_request_url( $url );
+  static function post_request( string $url, array $data = [] ) {
+    $url = self::format_request_url( $url );
     $payload = json_encode( $data );
 
     // Prepare new cURL resource

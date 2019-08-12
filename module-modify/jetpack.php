@@ -56,7 +56,7 @@ class Modify_Jetpack {
     wp_dequeue_script( 'devicepx' );
     wp_dequeue_style( 'sharedaddy' );
 
-    if( sharing_maybe_enqueue_scripts() ) {
+    if( function_exists('sharing_maybe_enqueue_scripts') && sharing_maybe_enqueue_scripts() ) {
       wp_enqueue_style( 'social-logos' ); 
     }
   }

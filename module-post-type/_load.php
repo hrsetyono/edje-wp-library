@@ -4,12 +4,11 @@
  * @action plugins_loaded
  */
 function load_hmodule_post_type() {
-  if( is_admin() ) {
-    require_once __DIR__ . '/post-column.php';
-    require_once __DIR__ . '/post-filter.php';
-    require_once __DIR__ . '/post-action.php';
-  }
+  // if( is_admin() ) {
+  //   require_once __DIR__ . '/post-action.php';
+  // }
 }
+
 
 /**
  * Register Custom Post Type (CPT)
@@ -26,6 +25,7 @@ function h_register_post_type( string $name, array $args = [] ) {
  */
 function h_register_taxonomy( string $name, array $args ) {
   require_once __DIR__ . '/taxonomy.php';
+  require_once __DIR__ . '/post-filter.php';
 
   $tx = new \h\Taxonomy( $name, $args );
   $tx->register();
@@ -39,6 +39,8 @@ function h_register_taxonomy( string $name, array $args ) {
  */
 function h_override_columns( string $post_type, array $args ) {
   if( !is_admin() ) { return; }
+
+  require_once __DIR__ . '/post-column.php';
 
   $pc = new \h\Post_Column();
   $pc->override( $post_type, $args );
@@ -60,6 +62,8 @@ function h_register_columns( string $post_type, array $args ) {
  */
 function h_add_column( string $post_type, $args ) {
   if( !is_admin() ) { return; }
+
+  require_once __DIR__ . '/post-column.php';
 
   $pc = new \h\Post_Column();
   $pc->add( $post_type, $args );
