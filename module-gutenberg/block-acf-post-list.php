@@ -112,7 +112,11 @@ class Block_Post_list {
       ];
 
       // make 'term' object available
-      $block['term'] = get_term( $post_term );
+      if( class_exists('Timber') ) {
+        $block['term'] = new \TimberTerm( $post_term );
+      } else {
+        $block['term'] = get_term( $post_term );
+      }
     }
     // if specific item
     else if( $post_ids ) {
