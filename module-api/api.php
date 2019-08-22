@@ -18,7 +18,7 @@ class API {
   /**
    * Do a GET request.
    */
-  static function get_request( string $url, array $data = [] ) {
+  static function get_request( string $url, $data = [] ) {
     $curl = curl_init();
     $url = self::format_request_url( $url );
 
@@ -39,7 +39,7 @@ class API {
   /**
    * Do a POST request.
    */
-  static function post_request( string $url, array $data = [] ) {
+  static function post_request( string $url, $data = [] ) {
     $url = self::format_request_url( $url );
     $payload = json_encode( $data );
 

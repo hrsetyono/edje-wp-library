@@ -5,7 +5,7 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.3.2
+Version: 3.3.3
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -57,7 +57,7 @@ class Edje_WP_Library {
     global $h_modules;
 
     foreach( $h_modules as $m ) {
-      $m = str_replace( '_', '-', $m );
+      $m = str_replace( '-', '_', $m );
       $func_name = "load_hmodule_$m";
 
       if( function_exists( $func_name ) ) {

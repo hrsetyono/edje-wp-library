@@ -43,7 +43,7 @@ function h_register_POST_route( string $path, $callback ) {
  * Shorthand: (need to define base url in `API_URL` constant)
  * `H::GET( '/get-endpoint', [ 'param1' => 'value1' ] );`
  */
-function h_GET( string $url, array $data = [] ) {
+function h_GET( string $url, $data = [] ) {
   require_once __DIR__ . '/api.php';
   return \h\API::get_request( $url, $data );
 }
@@ -58,7 +58,7 @@ function h_GET( string $url, array $data = [] ) {
  * Shorthand: (need to define base url in `API_URL` constant)  
  * `H::POST( '/post-endpoint', [ 'param1' => 'value1' ] );`
  */
-function h_POST( string $url, array $data = [] ) {
+function h_POST( string $url, $data = [] ) {
   require_once __DIR__ . '/api.php';
   return \h\API::post_request( $url, $data );
 }
