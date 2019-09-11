@@ -5,13 +5,13 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.4.0
+Version: 3.4.1
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '3.3.2' );
+define( 'H_VERSION', '3.4.1' );
 define( 'H_URL', plugin_dir_url(__FILE__) );
 define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
@@ -27,6 +27,7 @@ $h_modules = [
   'post-type',
   'customizer',
   'admin-sidenav',
+  'seo',
   'vendor',
   'modify',
 ];
