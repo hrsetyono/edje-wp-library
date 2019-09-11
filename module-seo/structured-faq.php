@@ -16,7 +16,7 @@ class StructuredData_FAQ {
     $content = $post->post_content;
 
     // this regex only works for latest Gutenberg version where they wrap Pullquote with <figure>
-    preg_match_all('/wp-block-pullquote.+<blockquote(?:\sclass=".+")?>(.+)<\/blockquote/', $content, $faqs );
+    preg_match_all('/wp-block-pullquote.+<blockquote.+">(<p>.+)<\/blockquote/', $content, $faqs );
 
     // if FAQ found
     if( empty( $faqs[1] ) ) { return; }
