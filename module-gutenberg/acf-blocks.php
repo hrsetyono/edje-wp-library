@@ -3,40 +3,36 @@
  * Create ACF Gutenberg blocks
  */
 class ACF_Block {
-  private $name;
   private $args;
 
-  function __construct( string $name, array $args = [] ) {
-    $this->name = $name;
-
+  function __construct( string $slug, array $args = [] ) {
     $this->args = array_merge( [
-      'title' => \_H::to_title( $name ),
+      'title' => \_H::to_title( $slug ),
+      'name' => $slug,
       'icon' => 'admin-post',
       'post_types' => ['page'],
-      'description' => '',
+      'description' => "Rendered to '/views/acf-blocks/{$slug}.twig'",
+      'context_filter' => function( $block ) { return $block; },
     ], $args );
     
     // remove 'dashicons-' prefix, if any
     $this->args['icon'] = str_replace('dashicons-', '', $this->args['icon'] );
 
-    // extra context to be made available in the rendered Twig template
-    if( isset( $args['context'] ) ) {
-      add_filter( "h/block_value/$name", $args['context'] );
-    }
+    // add filter to context value
+    add_filter( "h/block_context/$slug", $this->args['context_filter'] );
   }
 
   /**
    * Register ACF Block
    */
   function register() {
-    $name = $this->name;
     $args = $this->args;
 
-    acf_register_block( [
-      'name' => $name,
+    acf_register_block_type( [
+      'name' => $args['name'],
       'title' => $args['title'] . '-',
       'description' => $args['description'],
-      'render_callback' => [$this, '_render'],
+      'render_callback' => [$this, '_render_callback'],
       'category' => 'formatting',
       'icon' => $args['icon'],
       'mode' => 'edit',
@@ -47,17 +43,17 @@ class ACF_Block {
   /**
    * Find Twig file that matches the block name and render it
    */
-  function _render( array $block ) {
-    $slug = str_replace( 'acf/', '', $block['name'] );
+  function _render_callback( array $context ) {
+    $slug = str_replace( 'acf/', '', $context['name'] );
 
-    $block = $this->_get_fields( $block );
-    $block = apply_filters( "h/block_value/$slug" , $block );
-    
+    $context = $this->_get_fields( $context );
+    $context = apply_filters( "h/block_context/$slug" , $context );
+
     // Render the template
     if( class_exists( 'Timber' ) ) {
-      \Timber::render( [ "acf-blocks/$slug.twig", 'acf-blocks/h-post-list.twig' ], $block );
+      \Timber::render( [ "acf-blocks/$slug.twig" ], $context );
     } else {
-      set_query_var( 'block', $block );
+      set_query_var( 'block', $context );
       get_template_part( "acf-blocks/$slug", '' );
     }
   }

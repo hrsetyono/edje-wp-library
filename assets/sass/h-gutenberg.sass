@@ -239,7 +239,7 @@ $acf-bg: #f3f3f4
 // ACF Block - styled to be similar to Embed block
 div.acf-block-body .acf-fields
   +h( d-grid jc-center pv1_5 ph4_5 minh200px )
-  grid-template-columns: repeat(12, 1fr)
+  grid-template-columns: repeat(10, 1fr)
   grid-column-gap: 1rem
   grid-row-gap: 1rem
   border: none
@@ -249,32 +249,12 @@ div.acf-block-body .acf-fields
 
   > *
     width: 100% !important
-    grid-column: span 12
-
-  > [data-width="12"]
-    grid-column: span 12
-  > [data-width="11"]
-    grid-column: span 11
-  > [data-width="10"]
     grid-column: span 10
-  > [data-width="9"]
-    grid-column: span 9
-  > [data-width="8"]
-    grid-column: span 8
-  > [data-width="7"]
-    grid-column: span 7
-  > [data-width="6"]
-    grid-column: span 6
-  > [data-width="5"]
-    grid-column: span 5
-  > [data-width="4"]
-    grid-column: span 4
-  > [data-width="3"]
-    grid-column: span 3
-  > [data-width="2"]
-    grid-column: span 2
-  > [data-width="1"]
-    grid-column: span 1
+
+  $widths: ( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 )
+  @each $w in $widths
+    > [data-width^="#{$w}"]
+      grid-column: span #{$w}
 
   &::after
     +h( d-none )

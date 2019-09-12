@@ -27,13 +27,21 @@ function h_register_block( $slug, $args ) {
  * - You need to create a TWIG file in views/blocks named `h-$pt-list.twig`. Replace $pt with post type
  * - In the template, you can use `posts` object to loop through.
  */
-function h_register_post_block( string $post_type, array $args = [] ) {
+function h_register_post_type_block( string $post_type, array $args = [] ) {
   if( !function_exists('acf_register_block') ) { return; }
   
   require_once __DIR__ . '/block-acf-post-list.php';
 
   $block = new \h\Block_Post_List( $post_type, $args );
   $block->register();
+}
+
+/**
+ * Alias for h_register_post_type_block()
+ * @deprecated - This is the old function name
+ */
+function h_register_post_block( string $post_type, array $args = [] ) {
+  h_register_post_type_block( $post_type, $args );
 }
 
 

@@ -30,7 +30,6 @@ class Block_Post_list {
   function register() {
     add_action( 'acf/init', [$this, 'create_fields'] );
     add_action( 'acf/init', [$this, 'create_block'] );
-    add_filter( "h/block_value/h-{$this->post_type}-list", [$this, 'format_value'] );
   }
 
   /**
@@ -79,25 +78,25 @@ class Block_Post_list {
       'title' => "{$this->label} List",
       'icon' => $this->menu_icon,
       'post_types' => [ 'post', 'page', $this->post_type ],
-      'description' => $description
+      'description' => $description,
+      'context_filter' => [$this, '_format_value'],
     ] );
   }
 
 
   /**
    * Format the variable that is accessible in the template
-   * @filter h/block_value/post_list
    */
-  function format_value( $block ) {
+  function _format_value( $context ) {
     $args = [];
     $post_type = $this->post_type;
     $taxonomy = $this->taxonomy;
 
-    $post_term = $block['post_term'] ?? false;
-    $post_ids = $block['post_ids'] ?? false;
-    $post_amount = $block['amount'] ?? false;
-    $orderby = $block['orderby'] ?? false;
-    $order = $block['order'] ?? false;
+    $post_term = $context['post_term'] ?? false;
+    $post_ids = $context['post_ids'] ?? false;
+    $post_amount = $context['amount'] ?? false;
+    $orderby = $context['orderby'] ?? false;
+    $order = $context['order'] ?? false;
 
     // if category
     if( $post_term ) {
@@ -113,9 +112,9 @@ class Block_Post_list {
 
       // make 'term' object available
       if( class_exists('Timber') ) {
-        $block['term'] = new \TimberTerm( $post_term );
+        $context['term'] = new \TimberTerm( $post_term );
       } else {
-        $block['term'] = get_term( $post_term );
+        $context['term'] = get_term( $post_term );
       }
     }
     // if specific item
@@ -144,12 +143,12 @@ class Block_Post_list {
 
     // Get Posts
     if( class_exists('Timber') ) {
-      $block['posts'] = \Timber::get_posts( $args );
+      $context['posts'] = \Timber::get_posts( $args );
     } else {
-      $block['posts'] = get_posts( $args );
+      $context['posts'] = get_posts( $args );
     }
 
-    return $block;
+    return $context;
   }
 
 
