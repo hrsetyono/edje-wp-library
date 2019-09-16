@@ -13,7 +13,7 @@ class StructuredData_FAQ {
    */
   function add_faq_data() {
     global $post;
-    $content = $post->post_content;
+    $content = isset( $post ) ? $post->post_content : null;
 
     // this regex only works for latest Gutenberg version where they wrap Pullquote with <figure>
     preg_match_all('/wp-block-pullquote.+<blockquote[^<]*>(<p>.+)<\/blockquote/', $content, $faqs );

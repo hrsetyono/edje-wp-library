@@ -71,7 +71,7 @@ class API {
    */
   private static function format_request_url( $url ) {
     // if doesn't contain "http", prepend API_URL
-    if( strpos( $url, 'http' ) !== false ) {
+    if( strpos( $url, 'http' ) === false ) {
       return API_URL . $url;
     }
 
