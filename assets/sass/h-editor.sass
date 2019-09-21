@@ -7,14 +7,7 @@ $acf-bg: #f3f3f4
 
 ///// COLUMNS
 
-.editor-inner-blocks > .editor-block-list__layout > [data-type="core/column"]
-  .is-style-h-2-1 &
-    &:nth-child(1)
-      flex-basis: calc(66.7% - 44px)
-    
-  .is-style-h-1-2 &
-    &:nth-child(2)
-      flex-basis: calc(66.7% - 44px)
+
 
 
 ///// PARAGRAPH
@@ -25,6 +18,18 @@ $acf-bg: #f3f3f4
     content: ""
     +h( absolute top-0_5 right-0_5 left-0_5 bottom-0_5 )
     border: 1px dashed rgba(black, .3)
+
+.wp-block-paragraph.has-drop-cap:first-letter
+  font-size: 6rem
+  line-height: 4.5rem
+
+
+///// LIST
+
+[data-type="core/list"]
+  ol ol,
+  ul ol
+    list-style-type: lower-alpha
 
 
 ///// BLOCK QUOTE
@@ -44,6 +49,23 @@ $acf-bg: #f3f3f4
 
 ///// GALLERY
 
+// if not cropped, put caption below image
+.wp-block-gallery:not(.is-cropped)
+  figure
+    +h( fd-column )
+  
+  .blocks-gallery-item .editor-rich-text
+    +h( relative ovy-visible mt-auto )
+  
+  .block-editor-rich-text__inline-toolbar
+    transform: translateY(-100%)
+
+  .block-editor-rich-text figcaption
+    +h( pv0_5 c-text )
+    background-image: none
+    
+
+// Slider style
 .wp-block-gallery.is-style-h-slider
 
   .blocks-gallery-item
@@ -129,6 +151,8 @@ $acf-bg: #f3f3f4
       content: "+"
       +h( d-iblock mr1 fw700 )
 
+
+// Style solid color
 .wp-block-pullquote.is-style-solid-color blockquote
   +h( maxw-none )
 
@@ -220,6 +244,12 @@ $acf-bg: #f3f3f4
 
   .is-style-outline &
     background-color: transparent !important
+
+///// SEPARATOR
+
+[data-type="core/separator"]
+  [data-block]
+    +h( pv0_5 )
 
 
 ///// ACF GUTENBERG

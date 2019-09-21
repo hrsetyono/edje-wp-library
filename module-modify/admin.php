@@ -40,7 +40,7 @@ class Modify_Admin {
    * @action admin_init
    */
   function add_classic_editor_style() {
-    add_editor_style( H_URL . '/assets/css/h-editor.css' );
+    add_editor_style( H_URL . '/assets/css/h-classic-editor.css' );
   }
 
   /**

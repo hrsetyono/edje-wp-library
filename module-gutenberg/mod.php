@@ -17,15 +17,14 @@ class Modify_Gutenberg {
    * @action enqueue_block_editor_assets
    */
   function gutenberg_enqueue_scripts() {
-    wp_enqueue_style( 'h-gutenberg', H_URL . '/assets/css/h-gutenberg.css', ['wp-edit-blocks'] );
-    wp_enqueue_script( 'h-gutenberg', H_URL . '/assets/js/h-gutenberg.js', ['wp-blocks', 'wp-element', 'jquery'], false, true );
+    wp_enqueue_style( 'h-editor', H_URL . '/assets/css/h-editor.css', ['wp-edit-blocks'] );
+    wp_enqueue_script( 'h-editor', H_URL . '/assets/js/h-editor.js', ['wp-blocks', 'wp-element', 'jquery'], false, true );
   }
 
   /**
    * @action wp_enqueue_scripts
    */
   function enqueue_assets() {
-    wp_dequeue_style( 'wp-block-library' );
-    wp_dequeue_style( 'wp-block-library-theme' );
+    
   }
 }

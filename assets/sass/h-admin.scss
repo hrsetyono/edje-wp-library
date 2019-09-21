@@ -13,9 +13,9 @@
 }
 
 
-///// SEO FRAMEWORK
+///// THE SEO FRAMEWORK
 
-// Meta box - disable tabs
+// Metabox - disable tabs
 .tsf-flex-nav-tab-wrapper,
 body.js .tsf-flex-nav-tab-wrapper {
   display: none;
@@ -25,6 +25,14 @@ body.js .tsf-flex-nav-tab-wrapper {
 // hide some tooltip in post listing
 .tsf-seo-bar-inner-wrap {
   .tsf-tooltip-wrap:nth-child(n+3) .tsf-seo-bar-good {
+    display: none;
+  }
+}
+
+// Hide advanced Term metabox
+table.tsf-term-meta {
+  ~ .tsf-term-meta,
+  ~ h2 {
     display: none;
   }
 }

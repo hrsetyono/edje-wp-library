@@ -1,15 +1,5 @@
 // COLUMNS Style
 wp.blocks.registerBlockStyle( 'core/columns', {
-  name: 'h-2-1',
-  label: '2:1'
-} );
-
-wp.blocks.registerBlockStyle( 'core/columns', {
-  name: 'h-1-2',
-  label: '1:2'
-} );
-
-wp.blocks.registerBlockStyle( 'core/columns', {
   name: 'h-1-1-mobile',
   label: '1:1 Mobile'
 } );
