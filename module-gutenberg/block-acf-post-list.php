@@ -182,7 +182,7 @@ class Block_Post_list {
         'label' => 'Filter',
         'name' => 'filter',
         'type' => 'radio',
-        'wrapper' => [ 'width' => '6' ],
+        'wrapper' => [ 'width' => '50' ],
         'choices' => [
           'by-term' => 'By category',
           'by-post-id' => 'By specific item',
@@ -205,7 +205,7 @@ class Block_Post_list {
           'operator' => '==empty',
         ],
       ]],
-      'wrapper' => [ 'width' => '6' ],
+      'wrapper' => [ 'width' => '50' ],
       'default_value' => 6,
       'min' => 2,
       'max' => $args['max_amount'],
@@ -270,7 +270,7 @@ class Block_Post_list {
         'required' => 0,
         'conditional_logic' => 0,
         'wrapper' => [
-          'width' => '6',
+          'width' => '50',
           'class' => '',
           'id' => '',
         ],
@@ -294,7 +294,7 @@ class Block_Post_list {
           [ 'field' => "hfield_{$pt}_orderby", 'operator' => '!=', 'value' => 'rand' ],
         ] ],
         'wrapper' => array(
-          'width' => '6',
+          'width' => '50',
         ),
         'choices' => array(
           'DESC' => 'Descending',

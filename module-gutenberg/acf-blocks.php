@@ -64,11 +64,7 @@ class ACF_Block {
    */
   private function _get_fields( array $block ) : array {
     $data = [
-      'block' => [
-        'id' => $block['id'],
-        'name' => $block['name'],
-        'align' => $block['align']
-      ]
+      'block' => $block
     ];
 
     foreach( $block['data'] as $key => $value ) {
