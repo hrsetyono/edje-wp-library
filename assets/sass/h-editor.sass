@@ -5,6 +5,19 @@ $output-framework: true
 
 $acf-bg: #f3f3f4
 
+.has-text-align-right
+  text-align: right !important
+.has-text-align-center
+  text-align: center !important
+.has-text-align-left
+  text-align: left !important
+
+// Fixed bug where you can't select the Toolbar of Wide-aligned block
+.block-editor-block-list__layout .block-editor-block-list__block
+  &[data-align="wide"],
+  &[data-align="full"]
+    z-index: 25
+  
 ///// COLUMNS
 
 
@@ -45,6 +58,9 @@ $acf-bg: #f3f3f4
 
   p
     font-style: normal
+
+
+///// IMAGE
 
 
 ///// GALLERY
@@ -94,6 +110,11 @@ $acf-bg: #f3f3f4
 
 .wp-block-cover .wp-block-cover__inner-container
 
+.wp-block-cover
+  h1, h2
+    +h( ph0 ta-left )
+    
+  
 
 ///// GROUP
 
@@ -170,16 +191,18 @@ $acf-bg: #f3f3f4
 
 ///// TABLE
 
+  
 .wp-block-table
-  +h( bg-white )
   --tableBorder: var(--black)
   --tableHeader: var(--gray-light)
-  --tableBg: var(--gray-light)
+  --tableBg: white
+  --tableStripe: #{ h-rgba(--gray, .2) }
+
 
   thead tr,
   tfoot tr
     +h( fw700 ta-left )
-    background-color: var(--tableBg)
+    background-color: var(--tableHeader)
     
   thead tr
     border-bottom: 3px solid var(--tableBorder)
@@ -187,34 +210,34 @@ $acf-bg: #f3f3f4
     border-top: 3px solid var(--tableBorder)
 
   tr
-    +h( bg-transparent )
+    background-color: var(--tableBg)
 
   th,
   td
     border: 1px solid var(--gray)
 
   [class*="-background-color"]
-    +h( bg-white )
+    --tableStripe: white
 
   // default color palette 
   .has-subtle-pale-green-background-color
     --tableBorder: var(--green)
     --tableHeader: var(--green-light)
-    --tableBg: rgba(var(--greenRGB), .1)
+    --tableBg: rgba(var(--green-lightRGB), .1)
 
   .has-subtle-pale-blue-background-color
     --tableBorder: var(--blue)
     --tableHeader: var(--blue-light)
-    --tableBg: rgba(var(--blueRGB), .1)
+    --tableBg: rgba(var(--green-blueRGB), .1)
 
   .has-subtle-pale-pink-background-color
     --tableBorder: var(--red)
     --tableHeader: var(--red-light)
-    --tableBg: rgba(var(--redRGB), .1)
+    --tableBg: rgba(var(--green-redRGB), .1)
 
 
+// Table stripes
 .wp-block-table.is-style-stripes
-  +h( bg-white )
   border-collapse: collapse
 
   th,
@@ -224,10 +247,29 @@ $acf-bg: #f3f3f4
   // The default stripe is on Odd row, remove it
   tbody tr:nth-child(odd),
   &.has-background tbody tr:nth-child(odd)
-    +h( bg-transparent )
-
-  tbody tr:nth-child(even)
     background-color: var(--tableBg)
+
+  tbody tr:nth-child(odd)
+    background-color: var(--tableStripe)
+
+
+// Table color setting in Sidebar
+button.components-color-palette__item
+  &[aria-label*="pale blue"]
+    color: var(--blue-light) !important
+  &[aria-label*="pale pink"]
+    color: var(--red-light) !important
+  &[aria-label*="pale green"]
+    color: var(--green-light) !important
+
+span.component-color-indicator
+  &[aria-label*="pale blue"]
+    background: var(--blue-light) !important
+  &[aria-label*="pale green"]
+    background: var(--green-light) !important
+  &[aria-label*="pale pink"]
+    background: var(--red-light) !important
+
 
 
 ///// BUTTON

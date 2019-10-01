@@ -1,9 +1,3 @@
-// COLUMNS Style
-wp.blocks.registerBlockStyle( 'core/columns', {
-  name: 'h-1-1-mobile',
-  label: '1:1 Mobile'
-} );
-
 // GALLERY Style
 
 wp.blocks.registerBlockStyle( 'core/gallery', {
@@ -33,9 +27,17 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/list':
     case 'core/gallery':
     case 'core/code':
+    case 'core/verse':
+    case 'core/preformatted':
     case 'core/table':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
+      } );
+
+    case 'core/file':
+    case 'core/audio':
+      return lodash.assign( {}, settings, {
+        supports: lodash.assign( {}, settings.supports, { align: [] } ),
       } );
 
     case 'core/heading':
