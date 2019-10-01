@@ -32,7 +32,6 @@ class Modify_Head_Footer {
    */
   function enqueue_assets() {
     if ( !is_admin() ) {
-      wp_deregister_script( 'wp-embed' );
       wp_deregister_script( 'jquery-ui-core' );
     }
 

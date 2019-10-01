@@ -89,7 +89,6 @@ All these features are enabled by default:
 **JavaScript**
 
 - Removed emoji converter.
-- Removed ability to embed WordPress post.
 - Removed Jetpack's Device-px script because it's useless.
 - Removed Jetpack's Sharing script. It's only for sharing via email which is rarely used.
 
@@ -107,12 +106,12 @@ All these features are enabled by default:
 
 - Removed Medium-Large size when uploading new image.
 - Changed the Category checklist to always be in same the position.
-- Added a better styling to WYSIWYG classic editor.
-- Added styling to Gutenberg editor for ACF block.
+- Added a better styling to Classic editor.
+- Added better styling for ACF Block (as see in the ACF Block's screenshot above).
+- Changed Pullquote Block into FAQ Block that automatically output the JSON Schema to footer.
 
 **OTHER**
 
 - Removed "Created by Wordpress" message in the bottom-left of WP Admin
 - Changed the login error message to "Sorry, your username or password is wrong" instead of giving hint of which one is wrong.
 - Changed the Wordpress logo in login page to the one you have set in Customizer > Site Identity.
-- Added the ability to edit TWIG file in Appearance > Editor. But it's still recommended to disable Editor by adding this line in WP Config: `define('DISALLOW_FILE_EDIT', true);`
