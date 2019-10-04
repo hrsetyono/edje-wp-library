@@ -66,7 +66,7 @@ class Modify_Jetpack {
     @action wp_footer
   */
   function wp_footer() {
-    // wp_deregister_script( 'sharing-js' );
+    wp_deregister_script( 'sharing-js' );
 
     // disable spinner when infinite loading is enabled
     wp_deregister_script( 'jquery.spin' );

@@ -9,6 +9,7 @@ document.addEventListener( 'DOMContentLoaded', onReady );
 function onReady() {
   gutenbergHelper.init();
   commentFormToggle();
+  jetpackSharing.init();
 }
 
 /////
@@ -27,11 +28,23 @@ let gutenbergHelper = {
     let $faqs = document.querySelectorAll( '.wp-block-pullquote cite' );
     for( let $f of $faqs ) {
       $f.addEventListener( 'click', onClick );
+      $f.addEventListener( 'keydown', onPressEnter ); // can be toggled by pressing Enter
+      $f.setAttribute( 'tabindex', 0 );
     }
 
     //
     function onClick( e ) {
-      let $faqWrapper = e.currentTarget.closest( '.wp-block-pullquote' );
+      _toggle( e.currentTarget );
+    }
+
+    function onPressEnter( e ) {
+      if( e.keyCode === 13 ) {
+        _toggle( e.currentTarget );
+      }
+    }
+
+    function _toggle( $cite ) {
+      let $faqWrapper = $cite.closest( '.wp-block-pullquote' );
       $faqWrapper.classList.toggle( '--expanded' );
     }
   },
@@ -85,27 +98,21 @@ function commentFormToggle() {
   }
 }
 
-})();
-
-
 /**
- * Jetpack Sharedaddy
+ * Jetpack Sharing module
  */
-(function() { 'use strict';
-
-  document.addEventListener( 'DOMContentLoaded', onReady );
-
-  function onReady() {
+let jetpackSharing = {
+  init() {
     if( document.querySelector('.sharedaddy') == null ) { return; }
 
-    initMoreButton();
-    initPrintButton();
-  }
+    this.initMoreButton();
+    this.initPrintButton();
+  },
 
   /**
    * Move the hidden sharing buttons to main list when MORE is clicked
    */
-  function initMoreButton() {
+  initMoreButton() {
     let $moreButtons = document.querySelectorAll( '.share-more' );
     for( let $mb of $moreButtons ) {
       $mb.addEventListener( 'click', (e) => {
@@ -126,12 +133,12 @@ function commentFormToggle() {
         $shareHidden.parentElement.removeChild( $shareHidden );
       } );
     }
-  }
+  },
 
   /**
    * Print the website when Sharedaddy's print button is clicked
    */
-  function initPrintButton() {
+  initPrintButton() {
     let $printButtons = document.querySelectorAll( '.sd-content .share-print' );
     for( let $pb of $printButtons ) {
       $pb.addEventListener( 'click', (e) => {
@@ -140,4 +147,7 @@ function commentFormToggle() {
       } );
     }
   }
+
+};
+
 })();

@@ -62,6 +62,23 @@ $acf-bg: #f3f3f4
 
 ///// IMAGE
 
+[data-type="core/image"][data-align="left"],
+[data-type="core/image"][data-align="right"]
+  .editor-block-list__block-edit,
+  .components-resizable-box__container,
+  img
+    max-width: 305px
+
+  [data-block]
+    +h( mv0 )
+
+
+[data-type="core/heading"]
+  clear: both
+
+[data-type="core/file"]
+  .wp-block-file__content-wrapper
+    +h( ta-center )
 
 ///// GALLERY
 
@@ -79,6 +96,9 @@ $acf-bg: #f3f3f4
   .block-editor-rich-text figcaption
     +h( pv0_5 c-text )
     background-image: none
+
+  figcaption a
+    +h( c-inherit )
     
 
 // Slider style
@@ -141,6 +161,7 @@ $acf-bg: #f3f3f4
   &.is-style-h-smaller-image.has-media-on-the-right
     grid-template-columns: 67% auto !important
 
+  // hide resizer
   .block-library-media-text__media-container + span
     +h( d-none )
 
@@ -183,6 +204,7 @@ $acf-bg: #f3f3f4
   >.block-editor-rich-text p
     +h( mb1 fs-s ) 
 
+
 ///// FILE
 
 .wp-block-file
@@ -191,13 +213,11 @@ $acf-bg: #f3f3f4
 
 ///// TABLE
 
-  
 .wp-block-table
   --tableBorder: var(--black)
   --tableHeader: var(--gray-light)
   --tableBg: white
   --tableStripe: #{ h-rgba(--gray, .2) }
-
 
   thead tr,
   tfoot tr
@@ -219,7 +239,12 @@ $acf-bg: #f3f3f4
   [class*="-background-color"]
     --tableStripe: white
 
-  // default color palette 
+  // default color palette
+  .has-subtle-light-gray-background-color
+    --tableBorder: var(--gray)
+    --tableHeader: var(--gray-light)
+    --tableBg: rgba(var(--white), .5)
+
   .has-subtle-pale-green-background-color
     --tableBorder: var(--green)
     --tableHeader: var(--green-light)
@@ -228,12 +253,12 @@ $acf-bg: #f3f3f4
   .has-subtle-pale-blue-background-color
     --tableBorder: var(--blue)
     --tableHeader: var(--blue-light)
-    --tableBg: rgba(var(--green-blueRGB), .1)
+    --tableBg: rgba(var(--blue-lightRGB), .1)
 
   .has-subtle-pale-pink-background-color
     --tableBorder: var(--red)
     --tableHeader: var(--red-light)
-    --tableBg: rgba(var(--green-redRGB), .1)
+    --tableBg: rgba(var(--red-lightRGB), .1)
 
 
 // Table stripes
@@ -286,12 +311,24 @@ span.component-color-indicator
 
   .is-style-outline &
     background-color: transparent !important
-
+    +h( bc-inherit c-main  )
+  
 ///// SEPARATOR
 
 [data-type="core/separator"]
   [data-block]
     +h( pv0_5 )
+
+
+///// SOCIAL LINKS
+
+.wp-block-social-links
+  .editor-block-list__layout
+    +h( fw-wrap )
+
+  [data-type*="core/social-link"]
+    +h( mb0_5 )
+
 
 
 ///// ACF GUTENBERG

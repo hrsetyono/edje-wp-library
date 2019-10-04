@@ -68,7 +68,7 @@ class ACF_Block {
         'id' => $block['id'],
         'name' => $block['name'],
         'align' => $block['align'],
-        'className' => $block['className'],
+        'className' => $block['className'] ?? '',
       ]
     ];
 

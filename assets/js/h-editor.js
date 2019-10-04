@@ -1,22 +1,25 @@
-// GALLERY Style
 
-wp.blocks.registerBlockStyle( 'core/gallery', {
-  name: 'h-slider',
-  label: 'Slider'
-} );
+wp.domReady( function() {
+  // GALLERY
+  wp.blocks.registerBlockStyle( 'core/gallery', {
+    name: 'h-slider',
+    label: 'Slider'
+  } );
 
-// MEDIA TEXT Style
+  // MEDIA TEXT
+  wp.blocks.registerBlockStyle( 'core/media-text', {
+    name: 'h-larger-image',
+    label: 'Larger Image'
+  } );
 
-wp.blocks.registerBlockStyle( 'core/media-text', {
-  name: 'h-larger-image',
-  label: 'Larger Image'
-} );
+  wp.blocks.registerBlockStyle( 'core/media-text', {
+    name: 'h-smaller-image',
+    label: 'Smaller Image'
+  } );
 
-wp.blocks.registerBlockStyle( 'core/media-text', {
-  name: 'h-smaller-image',
-  label: 'Smaller Image'
-} );
-
+  // IMAGE
+  wp.blocks.unregisterBlockStyle( 'core/image', 'circle-mask' );
+});
 
 // Modify settings for Core blocks
 wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( settings, name ) => {
@@ -33,11 +36,18 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
       } );
-
+    
+    // Remove align left and right
     case 'core/file':
     case 'core/audio':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: [] } ),
+      } );
+
+    // only allow center
+    case 'core/social-links':
+      return lodash.assign( {}, settings, {
+        supports: lodash.assign( {}, settings.supports, { align: ['center'] } ),
       } );
 
     case 'core/heading':
@@ -45,7 +55,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
         supports: lodash.assign( {}, settings.supports, { align: ['center', 'wide'] } ),
       } );
 
-    // Columns can only be wide
+    // Columns default is now wide
     case 'core/columns':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
@@ -111,6 +121,9 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core-embed/tumblr':
     case 'core-embed/videopress':
     case 'core-embed/wordpress-tv':
+
+    case 'jetpack/slideshow':
+    case 'jetpack/gif':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { inserter: false } ),
       } );
