@@ -1,0 +1,36 @@
+@import "../../_edje/_index"
+
+.wp-block-pullquote
+  +h( pv0 b0 ta-left )
+
+  blockquote > .block-editor-rich-text p
+    +h( pl1 mt1 lh-text fs-s )
+
+  blockquote
+    +h( d-flex fd-column m0 )
+
+  .editor-rich-text:first-child
+    +h( order2 d-none )
+
+    [data-type="core/pullquote"].is-selected &,
+    [data-type="core/pullquote"].is-typing &
+      +h( d-block )
+  
+  .wp-block-pullquote__citation
+    +h( pv0_5 ph1 bg-black_05 )
+    +h( tt-none c-inherit fw700 fs-m  brad )
+
+    &::before
+      content: "+"
+      +h( d-iblock mr1 fw700 )
+
+
+// Style solid color
+.wp-block-pullquote.is-style-solid-color blockquote
+  +h( maxw-none )
+
+  .wp-block-pullquote__citation
+    +h( bg-transparent )
+
+  >.block-editor-rich-text p
+    +h( mb1 fs-s ) 

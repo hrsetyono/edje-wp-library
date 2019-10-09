@@ -3,7 +3,7 @@
 /**
  * Add FAQ structured data taken from Pullquote block
  */
-class StructuredData_FAQ {
+class FAQ_Schema {
   function __construct() {
     add_action( 'wp_footer', [$this, 'add_faq_data'], 100 );
   }
@@ -16,7 +16,7 @@ class StructuredData_FAQ {
     $content = isset( $post ) ? $post->post_content : null;
 
     // this regex only works for latest Gutenberg version where they wrap Pullquote with <figure>
-    preg_match_all('/wp-block-pullquote.+<blockquote[^<]*>(<p>.+)<\/blockquote/', $content, $faqs );
+    preg_match_all( '/wp-block-pullquote.+<blockquote[^<]*>(<p>.+)<\/blockquote/', $content, $faqs );
 
     // if FAQ found
     if( empty( $faqs[1] ) ) { return; }

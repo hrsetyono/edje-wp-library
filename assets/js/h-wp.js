@@ -9,44 +9,14 @@ document.addEventListener( 'DOMContentLoaded', onReady );
 function onReady() {
   gutenbergHelper.init();
   commentFormToggle();
-  jetpackSharing.init();
+  jetpackSharing();
 }
 
 /////
 
 let gutenbergHelper = {
   init() {
-    this.faqBlock();
     this.moreBlock();
-  },
-
-  /**
-   * Toggle the Pullquote when clicking the Citation
-   * Note: Pullquote Block is transformed into FAQ Block
-   */
-  faqBlock() {
-    let $faqs = document.querySelectorAll( '.wp-block-pullquote cite' );
-    for( let $f of $faqs ) {
-      $f.addEventListener( 'click', onClick );
-      $f.addEventListener( 'keydown', onPressEnter ); // can be toggled by pressing Enter
-      $f.setAttribute( 'tabindex', 0 );
-    }
-
-    //
-    function onClick( e ) {
-      _toggle( e.currentTarget );
-    }
-
-    function onPressEnter( e ) {
-      if( e.keyCode === 13 ) {
-        _toggle( e.currentTarget );
-      }
-    }
-
-    function _toggle( $cite ) {
-      let $faqWrapper = $cite.closest( '.wp-block-pullquote' );
-      $faqWrapper.classList.toggle( '--expanded' );
-    }
   },
 
   /**
@@ -98,21 +68,21 @@ function commentFormToggle() {
   }
 }
 
+
 /**
  * Jetpack Sharing module
  */
-let jetpackSharing = {
-  init() {
-    if( document.querySelector('.sharedaddy') == null ) { return; }
+function jetpackSharing() {
+  if( document.querySelector('.sharedaddy') == null ) { return; }
 
-    this.initMoreButton();
-    this.initPrintButton();
-  },
+  _initMoreButton();
+  _initPrintButton();
+
 
   /**
    * Move the hidden sharing buttons to main list when MORE is clicked
    */
-  initMoreButton() {
+  function _initMoreButton() {
     let $moreButtons = document.querySelectorAll( '.share-more' );
     for( let $mb of $moreButtons ) {
       $mb.addEventListener( 'click', (e) => {
@@ -133,12 +103,12 @@ let jetpackSharing = {
         $shareHidden.parentElement.removeChild( $shareHidden );
       } );
     }
-  },
+  }
 
   /**
    * Print the website when Sharedaddy's print button is clicked
    */
-  initPrintButton() {
+  function _initPrintButton() {
     let $printButtons = document.querySelectorAll( '.sd-content .share-print' );
     for( let $pb of $printButtons ) {
       $pb.addEventListener( 'click', (e) => {
