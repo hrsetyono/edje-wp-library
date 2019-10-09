@@ -1,0 +1,484 @@
+$include-grid: true
+$include-tile: true
+$output-framework: true
+
+@import "../../_edje/_index"
+
+$acf-bg: #f3f3f4
+
+.has-text-align-right
+  text-align: right !important
+.has-text-align-center
+  text-align: center !important
+.has-text-align-left
+  text-align: left !important
+
+// Fixed bug where you can't select the Toolbar of Wide-aligned block
+.block-editor-block-list__layout .block-editor-block-list__block
+  &[data-align="wide"],
+  &[data-align="full"]
+    z-index: 25
+  
+
+///// COLUMNS
+
+
+
+///// PARAGRAPH
+
+// empty paragraph
+[data-is-placeholder-visible="true"]
+  + .wp-block-paragraph::before
+    content: ""
+    +h( absolute top-0_5 right-0_5 left-0_5 bottom-0_5 )
+    border: 1px dashed rgba(black, .3)
+
+.wp-block-paragraph.has-drop-cap:first-letter
+  font-size: 6rem
+  line-height: 4.5rem
+
+
+///// LIST
+
+[data-type="core/list"]
+  ol ol,
+  ul ol
+    list-style-type: lower-alpha
+
+
+///// BLOCK QUOTE
+
+.wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
+  +h( pt1 )
+  border-top: 4px solid #000
+
+.wp-block-quote.is-style-large
+  +h( pb1 ta-center )
+  border-top: 4px solid gray
+  border-bottom: 4px solid gray
+
+  p
+    font-style: normal
+
+
+///// IMAGE
+
+[data-type="core/image"][data-align="left"],
+[data-type="core/image"][data-align="right"]
+  .editor-block-list__block-edit,
+  .components-resizable-box__container,
+  img
+    max-width: 305px
+
+  [data-block]
+    +h( mv0 )
+
+
+[data-type="core/heading"]
+  clear: both
+
+[data-type="core/file"]
+  .wp-block-file__content-wrapper
+    +h( ta-center )
+
+///// GALLERY
+
+// if not cropped, put caption below image
+.wp-block-gallery:not(.is-cropped)
+  figure
+    +h( fd-column )
+  
+  .blocks-gallery-item .editor-rich-text
+    +h( relative ovy-visible mt-auto )
+  
+  .block-editor-rich-text__inline-toolbar
+    transform: translateY(-100%)
+
+  .block-editor-rich-text figcaption
+    +h( pv0_5 c-text )
+    background-image: none
+
+  figcaption a
+    +h( c-inherit )
+    
+
+// Slider style
+.wp-block-gallery.is-style-h-slider
+
+  .blocks-gallery-item
+    flex-grow: inherit
+
+  .blocks-gallery-item:nth-child(1),
+  .blocks-gallery-item:nth-child(2)
+    +h( relative )
+
+    &::before
+      +h( absolute top50p )
+      font-size: 3rem
+      font-family: "dashicons"
+      transform: translateY( -50% )
+
+  .blocks-gallery-item:nth-child(1)::before
+    content: "\f341"
+    +h( right100p )
+
+  .blocks-gallery-item:nth-child(2)::before
+    content: "\f345"
+    +h( left100p )
+
+
+///// COVER
+
+.wp-block-cover .wp-block-cover__inner-container
+
+.wp-block-cover
+  h1, h2
+    +h( ph0 ta-left )
+    
+  
+
+///// GROUP
+
+.wp-block-group
+  &:not(.has-background)
+    border-top: 1px dashed var(--gray)
+    border-bottom: 1px dashed var(--gray)
+
+  &.has-background
+    padding: 33px 0
+
+
+///// MEDIA TEXT
+
+.wp-block-media-text
+  +h( ai-start )
+  grid-template-columns: 50% auto !important
+
+  &.is-style-h-smaller-image,
+  &.is-style-h-larger-image.has-media-on-the-right
+    grid-template-columns: 33% auto !important
+
+  &.is-style-h-larger-image,
+  &.is-style-h-smaller-image.has-media-on-the-right
+    grid-template-columns: 67% auto !important
+
+  // hide resizer
+  .block-library-media-text__media-container + span
+    +h( d-none )
+
+
+///// FILE
+
+.wp-block-file
+  +h( bg-gray-light p1 )
+
+
+///// TABLE
+
+.wp-block-table
+  --tableBorder: var(--black)
+  --tableHeader: var(--gray-light)
+  --tableBg: white
+  --tableStripe: #{ h-rgba(--gray, .2) }
+
+  thead tr,
+  tfoot tr
+    +h( fw700 ta-left )
+    background-color: var(--tableHeader)
+    
+  thead tr
+    border-bottom: 3px solid var(--tableBorder)
+  tfoot tr
+    border-top: 3px solid var(--tableBorder)
+
+  tr
+    background-color: var(--tableBg)
+
+  th,
+  td
+    border: 1px solid var(--gray)
+
+  [class*="-background-color"]
+    --tableStripe: white
+
+  // default color palette
+  .has-subtle-light-gray-background-color
+    --tableBorder: var(--gray)
+    --tableHeader: var(--gray-light)
+    --tableBg: rgba(var(--white), .5)
+
+  .has-subtle-pale-green-background-color
+    --tableBorder: var(--green)
+    --tableHeader: var(--green-light)
+    --tableBg: rgba(var(--green-lightRGB), .1)
+
+  .has-subtle-pale-blue-background-color
+    --tableBorder: var(--blue)
+    --tableHeader: var(--blue-light)
+    --tableBg: rgba(var(--blue-lightRGB), .1)
+
+  .has-subtle-pale-pink-background-color
+    --tableBorder: var(--red)
+    --tableHeader: var(--red-light)
+    --tableBg: rgba(var(--red-lightRGB), .1)
+
+
+// Table stripes
+.wp-block-table.is-style-stripes
+  border-collapse: collapse
+
+  th,
+  td
+    border: 1px solid var(--gray)
+
+  // The default stripe is on Odd row, remove it
+  tbody tr:nth-child(odd),
+  &.has-background tbody tr:nth-child(odd)
+    background-color: var(--tableBg)
+
+  tbody tr:nth-child(odd)
+    background-color: var(--tableStripe)
+
+
+// Table color setting in Sidebar
+button.components-color-palette__item
+  &[aria-label*="pale blue"]
+    color: var(--blue-light) !important
+  &[aria-label*="pale pink"]
+    color: var(--red-light) !important
+  &[aria-label*="pale green"]
+    color: var(--green-light) !important
+
+span.component-color-indicator
+  &[aria-label*="pale blue"]
+    background: var(--blue-light) !important
+  &[aria-label*="pale green"]
+    background: var(--green-light) !important
+  &[aria-label*="pale pink"]
+    background: var(--red-light) !important
+
+
+
+///// BUTTON
+
+.wp-block-button-wrapper
+  +h( w100p )
+
+
+[data-align="center"] .wp-block-button__inline-link
+  +h( mh-auto )
+  
+.wp-block-button__link
+  +h( bg-main )
+
+  .is-style-outline &
+    background-color: transparent !important
+    +h( bc-inherit c-main  )
+  
+///// SEPARATOR
+
+[data-type="core/separator"]
+  [data-block]
+    +h( pv0_5 )
+
+
+///// SOCIAL LINKS
+
+.wp-block-social-links
+  .editor-block-list__layout
+    +h( fw-wrap )
+
+  [data-type*="core/social-link"]
+    +h( mb0_5 )
+
+
+
+///// ACF GUTENBERG
+
+.acf-block-body
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+
+  .acf-label,
+  .acf-input p,
+  .acf-label .description,
+  .acf-table
+    font-size: 13px
+
+%acf-wide-field
+  +h( mh-3 )
+
+// ACF Block - styled to be similar to Embed block
+div.acf-block-body .acf-fields
+  +h( d-grid jc-center pv1_5 ph4_5 minh200px )
+  grid-template-columns: repeat(10, 1fr)
+  grid-column-gap: 1rem
+  grid-row-gap: 1rem
+  border: none
+
+  .acf-block-panel &
+    +h( minh-auto pv2 )
+
+  > *
+    width: 100% !important
+    grid-column: span 10
+
+  $widths: ( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 )
+  @each $w in $widths
+    > [data-width^="#{$w}"]
+      grid-column: span #{$w}
+
+  &::after
+    +h( d-none )
+
+  select
+    +h( tt-capitalize )
+
+  // single field
+  div.acf-field
+    +h( p0 )
+
+// Background color (also change the Embed block color)
+div.acf-block-body .acf-fields,
+div.components-placeholder
+  background-color: $acf-bg
+
+
+// MESSAGE Field
+div.acf-block-body div.acf-field.acf-field-message
+  +h( as-end pv0_5 ph1 )
+  background-color: rgba(white, .5)
+
+  .acf-label
+    +h( m0 ta-center )
+    font-size: 14px
+
+  label
+    +h( cursor-default )
+
+  p
+    +h( m0 ta-center )
+
+
+// ACF RADIO field
+div.acf-block-body .acf-field-radio
+  .acf-label
+    +h( mr1 )
+
+  .acf-radio-list
+    +h( mb0 )
+
+// ACF GALLERY field
+div.acf-block-body
+  .acf-gallery-toolbar ul
+    +h( mb0 )
+
+  .acf-gallery-main
+    right: 0 !important
+
+  .acf-gallery-side
+    +h( absolute )
+    z-index: 10
+  
+  .acf-gallery-side-info
+    +h( w-auto )
+    margin: -10px -10px 1em
+
+
+// ACF WYSIWYG field
+
+// Remove most buttons in TinyMCE Editor
+div.acf-block-component .acf-field-wysiwyg
+  [aria-label*="Underline"],
+  [aria-label*="Blockquote"],
+  [aria-label*="Strikethrough"],
+  [aria-label*="Align"],
+  [aria-label*="Undo"],
+  [aria-label*="Redo"],
+  [aria-label*="Fullscreen"],
+  [aria-label*="Read More"],
+  [aria-label*="Toolbar Toggle"]
+    +h( d-none )
+
+div.acf-block-component .acf-field-wysiwyg .mce-edit-area iframe
+  height: 200px
+
+
+// ACF RELATIONSHIP field
+
+div.acf-block-body .acf-relationship
+  @extend %acf-wide-field
+
+
+// ACF TAB field
+
+div.acf-block-body .acf-fields > .acf-tab-wrap
+  +h( bg-transparent )
+
+  .acf-tab-group
+    +h( mh-4_5 ph4_5 )
+    border-top: none
+    
+    li.active a
+      background-color: $acf-bg
+
+
+// ACF REPEATER field
+
+div.acf-block-body .acf-repeater
+  @extend %acf-wide-field
+
+  .acf-table
+    border-collapse: collapse
+
+  .acf-row-handle
+    background-color: #f9f9f9
+
+  .acf-row-handle.order
+    border-right: 1px solid #dfdfdf
+
+div.acf-block-body .acf-repeater.-block
+  .acf-fields
+    padding: 0.5rem !important
+    border-bottom: 1px solid #dfdfdf
+
+
+div.acf-block-body .acf-repeater.-row
+  .acf-fields
+    grid-row-gap: 0
+  
+  .acf-field
+    +h( p0_5 )
+
+  .acf-label
+    +h( p0 )
+
+  .acf-input
+    +h( p0 ph0_25 )
+
+
+// ACF FLEXIBLE CONTENT field
+
+div.acf-block-body .acf-flexible-content
+  @extend %acf-wide-field
+
+  .acf-fields
+    +h( bg-white_10 )
+
+// fields at sidebar
+div.edit-post-sidebar .acf-block-fields
+  +h( pv1 )
+
+  div.acf-field
+    +h( mb1 )
+    padding: 0 1rem
+    width: 100% !important
+
+    &.acf-field-message
+      +h( d-none )
+
+
+//
+
+.acf-block-post-list
+  a
+    +h( events-none )

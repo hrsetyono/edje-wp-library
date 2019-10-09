@@ -35,15 +35,9 @@ class Modify_Head_Footer {
       wp_deregister_script( 'jquery-ui-core' );
     }
 
-    wp_enqueue_script( 'h-wp', H_URL . 'assets/js/h-wp.js', [], false, true );
+    $assets = plugin_dir_url(__FILE__) . 'assets';
 
-    // Register H Library, you need to enqueue it in theme
-    wp_register_script( 'h-slider', H_URL . 'assets/js-vendor/h-slider.min.js', [], false, true );
-    wp_register_script( 'h-scroll', H_URL . 'assets/js-vendor/h-scroll.min.js', [], false, true );
-    wp_register_script( 'h-lightbox', H_URL . 'assets/js-vendor/h-lightbox.min.js', [], false, true );
-
-    wp_register_style( 'h-slider', H_URL . 'assets/css/h-slider.css' );
-    wp_register_style( 'h-lightbox', H_URL . 'assets/css/h-lightbox.css' );
+    wp_enqueue_script( 'h-wp', $assets . '/h-wp.js', [], false, true );
 
     // Enable comment's reply form
     if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

@@ -162,7 +162,7 @@ class Customizer {
 
       // custom
       case 'visual_editor':
-        require_once H_PATH . '/module-customizer/customizer-tinymce.php';
+        require_once __DIR__ . '/customizer-tinymce.php';
         $control = new Customize_TinyMCE_Control( $this->wp, $name, $args );
         break;
 

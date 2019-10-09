@@ -63,6 +63,14 @@ $header-weight  : 700 !default;
 $header-spacing : 0 !default;
 $header-transform : none !default;
 
+$h1: (base: 42px, s: 30px) !default;
+$h2: (base: 36px, s: 26px) !default;
+$h3: (base: 30px, s: 22px) !default;
+$h4: (base: 24px, s: 20px) !default;
+$h5: (base: 20px, s: 18px) !default;
+$h6: (base: $font-size, s: $font-size) !default;
+
+
 // LIST
 $ul-parent : disc !default;
 $ul-child  : circle !default;
@@ -75,6 +83,19 @@ $size-xs : 480px !default;
 $size-s  : 767px !default;
 $size-m  : 960px !default;
 $size-l  : 1120px !default;
+
+$below-xs: "max-width:#{ $size-xs }" !default;
+$above-xs: "min-width:#{ $size-xs + 1px }" !default;
+$below-s: "max-width:#{ $size-s }" !default;
+$above-s: "min-width:#{ $size-s + 1px }" !default;
+$below-m: "max-width:#{ $size-m }" !default;
+$above-m: "min-width:#{ $size-m + 1px }" !default;
+$below-l: "max-width:#{ $size-l }" !default;
+$above-l: "min-width:#{ $size-l + 1px }" !default;
+
+$portrait: "orientation: portrait" !default;
+$landscape: "orientation: landscape" !default;
+$retina: "min-resolution: 192dpi" !default;
 
 
 ///// GRID

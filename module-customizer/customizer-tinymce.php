@@ -14,8 +14,9 @@ if( class_exists( 'WP_Customize_Control' ) ):
 			Enqueue JS and CSS
 		*/
 		public function enqueue() {
-		  wp_enqueue_script( 'h_customizer_js', H_URL . '/assets/js/h-customizer.js', ['jquery'], '1.0', true );
-			wp_enqueue_style( 'h_customizer_css',  H_URL . '/assets/css/h-customizer.css', [], '1.0', 'all' );
+			$assets = plugin_dir_url(__FILE__) . 'assets';
+		  wp_enqueue_script( 'h_customizer', $assets . '/h-customizer.js', ['jquery'], '1.0', true );
+			wp_enqueue_style( 'h_customizer',  $assets . '/h-customizer.css', [], '1.0', 'all' );
 			wp_enqueue_editor();
 		}
 

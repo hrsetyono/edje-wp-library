@@ -6,8 +6,6 @@ class Modify_Admin {
   function __construct() {
     add_action( 'admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'] );
 
-    add_action( 'admin_init', [$this, 'add_classic_editor_style'] );
-
     // remove emoji
     remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
     remove_action( 'admin_print_styles', 'print_emoji_styles' );
@@ -31,16 +29,8 @@ class Modify_Admin {
    * @action admin_enqueu_scripts
    */
   function admin_enqueue_scripts() {
-    wp_enqueue_style( 'h-admin', H_URL . '/assets/css/h-admin.css' );
-  }
-
-
-  /**
-   * Add custom CSS to Editor area
-   * @action admin_init
-   */
-  function add_classic_editor_style() {
-    add_editor_style( H_URL . '/assets/css/h-classic-editor.css' );
+    $assets = plugin_dir_url(__FILE__) . 'assets';
+    wp_enqueue_style( 'h-admin', $assets . '/h-admin.css' );
   }
 
   /**
