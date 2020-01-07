@@ -30,12 +30,19 @@ class Customizer_Default {
       'description' => __( 'Add custom code for Head and Footer area' ),
      ] );
 
-    $c->add_option( 'h[head_code]', 'code_editor htmlmixed', [
-      'label' => __( 'HEAD code' ),
-     ] );
-
-    $c->add_option( 'h[footer_code]', 'code_editor htmlmixed', [
-      'label' => __( 'FOOTER code' ),
+    $c->add_settings_to_h_head_footer( [
+      'h[head_code]' => [
+        'type' => 'code_editor',
+        'setting_type' => 'option',
+        'code_language' => 'htmlmixed',
+        'label' => __( 'HEAD code' ),
+      ],
+      'h[footer_code]' => [
+        'type' => 'code_editor',
+        'setting_type' => 'option',
+        'code_language' => 'htmlmixed',
+        'label' => __( 'FOOTER code' ),
+      ],
     ] );
   }
 
@@ -46,18 +53,13 @@ class Customizer_Default {
   function site_identity( $wp_customize ) {
     $c = h_customizer( $wp_customize );
 
-    $c->set_section( 'title_tagline' );
-
-    if( current_theme_supports('h-logo-mobile') ) {
-      $c->add_option( 'logo_mobile', 'image', [
-        'priority' => 9,
-      ] );
-    }
-
-    $c->add_theme_mod( 'background_color', 'color', [
-      'label' => __('Theme Color'),
-      'description' => __('Used for taskbar color in Mobile browser')
-    ] );
+    $c->add_settings_to_title_tagline( [
+      'background_color' => [
+        'type' => 'color',
+        'label' => __('Theme Color'),
+        'description' => __('Used for taskbar color in Mobile browser')
+      ],
+    ]);
   }
 
   ////

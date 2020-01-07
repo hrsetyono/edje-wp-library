@@ -1,7 +1,7 @@
 <?php namespace h;
-/*
-  Allow visual editor on Customizer panel
-*/
+/**
+ * Allow visual editor on Customizer panel
+ */
 if( class_exists( 'WP_Customize_Control' ) ):
 
   /*
@@ -15,8 +15,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 		*/
 		public function enqueue() {
 			$assets = plugin_dir_url(__FILE__) . 'assets';
-		  wp_enqueue_script( 'h_customizer', $assets . '/h-customizer.js', ['jquery'], '1.0', true );
-			wp_enqueue_style( 'h_customizer',  $assets . '/h-customizer.css', [], '1.0', 'all' );
+		  wp_enqueue_script( 'h-tinymce', $assets . '/h-tinymce.js', ['jquery'], '1.0', true );
 			wp_enqueue_editor();
 		}
 

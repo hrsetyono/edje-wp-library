@@ -45,7 +45,6 @@ $acf-bg: #f3f3f4
   ul ol
     list-style-type: lower-alpha
 
-
 ///// BLOCK QUOTE
 
 .wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
@@ -80,6 +79,7 @@ $acf-bg: #f3f3f4
 [data-type="core/file"]
   .wp-block-file__content-wrapper
     +h( ta-center )
+
 
 ///// GALLERY
 
@@ -284,13 +284,17 @@ span.component-color-indicator
 
 ///// SOCIAL LINKS
 
-.wp-block-social-links
+[data-type="core/social-links"]
+
   .editor-block-list__layout
     +h( fw-wrap )
 
-  [data-type*="core/social-link"]
-    +h( mb0_5 )
 
+.wp-social-link
+  +h( mb0_5 brad )
+
+  .is-style-pill-shape &
+    +h( brad-pill )
 
 
 ///// ACF GUTENBERG

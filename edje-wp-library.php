@@ -5,16 +5,19 @@ Description: Simplify WordPress complicated functions. Designed to work with Tim
 Plugin URI: http://github.com/hrsetyono/edje-wp-library
 Author: Pixel Studio
 Author URI: https://pixelstudio.id
-Version: 3.6.1
+Version: 4.0.0-beta
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '3.5.6' );
-define( 'H_URL', plugin_dir_url(__FILE__) );
-// define( 'H_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'H_VERSION', '4.0.0' );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
+
+define( 'H_DIR', __DIR__ ); // for require
+define( 'H_URL', plugin_dir_url( __FILE__ ) ); // for linking assets
+define( 'BLOCKSY_DIR', H_DIR . '/module-blocksy' );
+define( 'BLOCKSY_URL', H_URL . 'module-blocksy' ); 
 
 
 if( !class_exists('Edje_WP_Library') ):
@@ -31,6 +34,7 @@ require_once "module-api/_index.php";
 
 require_once "module-editor/_index.php";
 require_once "module-editor-faq/_index.php";
+require_once "module-blocksy/_index.php";
   
 
 class Edje_WP_Library {

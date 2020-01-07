@@ -1,138 +1,101 @@
 <?php namespace h;
-/*
-  Wrapper for WP Customizer
-
-  https://github.com/hrsetyono/wp-edje/wiki/Customizer
-*/
+/**
+ * Helper class for editing WP Customizer
+ */
 class Customizer {
   private $wp; // $wp_customize object
   private $section;
 
-  function __construct( $wp ) {
-    $this->wp = $wp;
+  function __construct( $wp_customize ) {
+    $this->wp = $wp_customize;
   }
 
-  /*
-    Create section in Customizer.
 
-    @param string $name - Name of the section.
-    @param array $args - (optional) Extra configuration: https://github.com/hrsetyono/wp-edje/wiki/Customizer#extra-configuration---section
-  */
-  public function add_section( $name, $args = array() ) {
+  /**
+   * Create section in Customizer.
+   * 
+   * @param string $name - Name of the section.
+   * @param array $args - (optional) Extra configuration: https://github.com/hrsetyono/wp-edje/wiki/Customizer#extra-configuration---section
+   */
+  public function add_section( $name, $args = [] ) {
     // create args and replace default with passed one, if any.
-    $default_args = array(
+    $default_args = [
       'title' => \_H::to_title( $name ),
-    );
+    ];
     $args = array_merge( $default_args, $args );
 
     $this->wp->add_section( $name, $args );
-
-    // cache the section name
-    $this->section = $name;
-  }
-
-  /*
-    Cache the section name, so all the following add_option is inside this section.
-
-    @param string $name - Name of the section.
-  */
-  public function set_section( $name ) {
-    $this->section = $name;
-  }
-
-  /*
-    Wrapper to add option setting and control
-
-    @param string $name
-    @param string $control_type - Keyword for input type: https://github.com/hrsetyono/wp-edje/wiki/Customizer#control-types
-    @param array $args - Arguments for control
-  */
-  public function add_option( $name, $control_type, $args = array() ) {
-    if( !$this->section ) { return false; } // abort if section not set
-
-    $this->add_setting( 'option', $name, $control_type );
-    $this->add_control( $name, $control_type, $args );
-  }
-
-  /*
-    Wrapper to add theme_mod setting and control
-
-    @param string $name
-    @param string $control_type - Keyword for input type: https://github.com/hrsetyono/wp-edje/wiki/Customizer#control-types
-    @param array $args - Arguments for control
-  */
-  public function add_theme_mod( $name, $control_type, $args = array() ) {
-    if( !$this->section ) { return false; } // abort if section not set
-
-    $this->add_setting( 'theme_mod', $name, $control_type );
-    $this->add_control( $name, $control_type, $args );
   }
 
 
-  /////
+  /**
+   * Check for function "add_settings_to_x"
+   */
+  public function __call( $name, $args ) {
+    preg_match( '/add_settings_to_(.+)/', $name, $is_add_to_settings );
 
-
-  /*
-    Add setting
-
-    @param string $setting_type - Either 'theme_mod' or 'option'
-    @param string $name
-    @param string $control_type - Keyword for input type: https://github.com/hrsetyono/wp-edje/wiki/Customizer#control-types
-  */
-  private function add_setting( $setting_type, $name, $control_type ) {
-
-    $transport = 'refresh'; // auto refresh by default
-    switch( $control_type ) {
-      // if visual editor, disable auto refresh because it's annoying
-      case 'visual_editor':
-        $transport = 'postMessage';
-        break;
+    if( $is_add_to_settings ) {
+      $section = $is_add_to_settings[1];
+      $this->_add_settings( $section, $args[0] );
     }
+  }
 
-    $args = array(
-      'type' => $setting_type,
-      'transport' => $transport,
-    );
+  //////
 
-    $this->wp->add_setting( $name, $args );
+  /**
+   * 
+   */
+  private function _add_settings( $section, $settings ) {
+    foreach( $settings as $name => $s ) {
+      // parse setting args
+      $setting_args = [
+        'type' => $s['setting_type'] ?? 'theme_mod', // override to "option" so the setting is bound to site
+        'transport' => ($s['type'] == 'visual_editor') ? 'postMessage' : 'refresh', // disable auto refresh because it's annoying
 
-    // add pencil button
-    $this->wp->selective_refresh->add_partial( $name, array(
-      'selector' => '#' . \_H::to_param( $name ),
-      'render_callback' => '__return_false',
-    ) );
+        'default' => $s['default'] ?? ''
+      ];
+
+      // parse control args
+      $default_control_args = [
+        'label' => \_H::to_title( $name ),
+        'type' => 'text',
+        'section' => $section,
+        'settings' => $name,
+      ];
+      $control_args = array_merge( $default_control_args, $s );
+      
+
+      // add the setting
+      $this->wp->add_setting( $name, $setting_args );
+      $this->_add_control( $name, $control_args );
+
+
+      // add pencil icon next to the element that has the same ID as the setting
+      $this->wp->selective_refresh->add_partial( $name, array(
+        'selector' => '#' . \_H::to_param( $name ),
+        'render_callback' => '__return_false',
+      ) );
+    }
   }
 
 
-  /*
-    Add control to the customizer
-
-    @param string $name - Name of the setting
-    @param string $control_type - Keyword for type of control
-    @param array $args - (optional) Extra configuration: https://github.com/hrsetyono/wp-edje/wiki/Customizer#extra-configuration---setting
-  */
-  private function add_control( $name, $control_type, $args ) {
-    // create args and replace default with passed one, if any.
-    $default_args = array(
-      'label' => \_H::to_title( $name ),
-      'section' => $this->section,
-      'settings' => $name,
-    );
-    $args = array_merge( $default_args, $args );
-
-    // parse control type
-    $types = explode( ' ', $control_type );
-
-    // get control based on type
+  /**
+   * Add control to the customizer
+   * 
+   * @param string $name - Name of the setting
+   * @param array $args - (optional) Extra configuration: https://github.com/hrsetyono/wp-edje/wiki/Customizer#extra-configuration---setting
+   */
+  private function _add_control( $name, $args ) {
     $control = false;
-    switch( $types[0] ) {
+
+    // Check if the input type is complex
+    switch( $args['type'] ) {
       case 'code_editor':
         $args['editor_settings'] = array(
           'codemirror' => array(
-            'mode' => isset( $types[1] ) ? $types[1] : 'default'
+            'mode' => $args['code_language'] ?? 'default'
           ),
         );
-
         $control = new \WP_Customize_Code_Editor_Control( $this->wp, $name, $args );
         break;
 
@@ -166,13 +129,90 @@ class Customizer {
         $control = new Customize_TinyMCE_Control( $this->wp, $name, $args );
         break;
 
-      //  text, checkbox, radio, select, textarea, dropdown-pages, email, url, number, hidden, date.
       default:
-        $args['type'] = $types[0];
-        $this->wp->add_control( $name, $args );
-        return true; // to skip the other add_control
+        break;
     }
 
-    $this->wp->add_control( $control );
+    // if has complex control
+    if( $control ) {
+      $this->wp->add_control( $control );
+    } else {
+      $this->wp->add_control( $name, $args );
+    }
+    
+  }
+
+
+
+  /**
+   * Cache the section name, so all the following add_option is inside this section.
+   * @deprecated 3.7.0 - Replaced by add_settings_to_x()
+   * 
+   * @param string $name - Name of the section.
+   */
+  public function set_section( $name ) {
+    $this->section = $name;
+  }
+
+  /**
+   * Wrapper to add option setting and control
+   * @deprecated 3.7.0 - Replaced by add_settings_to_x()
+   * 
+   * @param string $name
+   * @param string $control_type - Keyword for input type: https://github.com/hrsetyono/wp-edje/wiki/Customizer#control-types
+   * @param array $args - Arguments for control
+   */
+  public function add_option( $name, $control_type, $args = array() ) {
+    if( !$this->section ) { return false; } // abort if section not set
+
+    $this->_add_setting( 'option', $name, $control_type );
+    $this->_add_control( $name, $control_type, $args );
+  }
+
+  /**
+   * Wrapper to add theme_mod setting and control
+   * @deprecated 3.7.0 - Replaced by add_settings_to_x()
+   * 
+   * @param string $name
+   * @param string $control_type - Keyword for input type: https://github.com/hrsetyono/wp-edje/wiki/Customizer#control-types
+   * @param array $args - Arguments for control
+   */
+  public function add_theme_mod( $name, $control_type, $args = array() ) {
+    if( !$this->section ) { return false; } // abort if section not set
+
+    $this->_add_setting( 'theme_mod', $name, $control_type );
+    $this->_add_control( $name, $control_type, $args );
+  }
+
+
+  /**
+   * Add setting
+   * 
+   * @param string $setting_type - Either 'theme_mod' or 'option'
+   * @param string $name
+   * @param string $control_type - Keyword for input type: https://github.com/hrsetyono/wp-edje/wiki/Customizer#control-types
+   */
+  private function _add_setting( $setting_type, $name, $control_type ) {
+
+    $transport = 'refresh'; // auto refresh by default
+    switch( $control_type ) {
+      // if visual editor, disable auto refresh because it's annoying
+      case 'visual_editor':
+        $transport = 'postMessage';
+        break;
+    }
+
+    $args = array(
+      'type' => $setting_type,
+      'transport' => $transport,
+    );
+
+    $this->wp->add_setting( $name, $args );
+
+    // add pencil button
+    $this->wp->selective_refresh->add_partial( $name, array(
+      'selector' => '#' . \_H::to_param( $name ),
+      'render_callback' => '__return_false',
+    ) );
   }
 }

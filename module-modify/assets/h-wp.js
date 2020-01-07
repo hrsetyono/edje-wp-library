@@ -39,6 +39,7 @@ function commentFormToggle() {
 
   //
   function activateForm( e ) {
+    e.preventDefault();
     var $form = document.querySelector( '.comment-form' );
     $form.classList.add( '--active' );
     $form.removeEventListener( 'click', activateForm );

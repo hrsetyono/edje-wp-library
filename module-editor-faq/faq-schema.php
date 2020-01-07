@@ -6,6 +6,8 @@
 class FAQ_Schema {
   function __construct() {
     add_action( 'wp_footer', [$this, 'add_faq_data'], 100 );
+
+    $this->faq_style();
   }
 
   /**
@@ -47,5 +49,17 @@ class FAQ_Schema {
       
     $json_ld = json_encode( $data );
     echo "<!-- Edje FAQ --><script type='application/ld+json'>$json_ld</script>";
+  }
+
+  /**
+   * Add FAQ style
+   */
+  function faq_style() {
+    if( !function_exists('register_block_style') ) { return; }
+
+    register_block_style( 'core/pullquote', array(
+      'name'  => 'hidden-from-google',
+      'label' => 'Hidden from Google',
+    ));
   }
 }
