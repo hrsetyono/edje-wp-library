@@ -12,6 +12,7 @@ $extensions_options = apply_filters(
 	[]
 );
 
+
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $options = [
 	[
@@ -52,11 +53,11 @@ $options = [
 			'container' => [ 'priority' => 2 ],
 			'options' => blocksy_get_options( 'general/footer' ),
 		],
-		// 'sidebar' => [
-		// 	'title' => __( 'Sidebar', 'blocksy' ),
-		// 	'container' => [ 'priority' => 2 ],
-		// 	'options' => blocksy_get_options( 'general/sidebar' ),
-		// ],
+		'sidebar' => [
+			'title' => __( 'Sidebar', 'blocksy' ),
+			'container' => [ 'priority' => 2 ],
+			'options' => blocksy_get_options( 'general/sidebar' ),
+		],
 		'form' => [
 			'title' => __( 'Form' ),
 			'container' => [ 'priority' => 2 ],

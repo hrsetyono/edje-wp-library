@@ -7,9 +7,8 @@ class H_Customizer_FormatStyles {
   public $tablet_css = [];
   public $mobile_css = [];
 
-  function __construct( $css) {
+  function __construct( $css ) {
     $this->css = $css;
-    $this->format();
   }
 
   /**
@@ -58,51 +57,12 @@ class H_Customizer_FormatStyles {
 
     }
     }
-  }
 
-  /**
-   * Echo the theme mods
-   */
-  function render() {
-    $context = [
-      'desktop_css' => $this->css,
+    return [
+      'css' => $this->css,
       'tablet_css' => $this->tablet_css,
-      'mobile_css' => $this->mobile_css
+      'mobile_css' => $this->mobile_css,
     ];
-    ?>
-    <!-- Customizer -->
-    <style type="text/css">
-      <?php echo $this->_compile_css( $context['desktop_css'] ); ?>
-    </style>
-
-    <style type="text/css" media="(max-width: 767px)">
-      <?php echo $this->_compile_css( $context['tablet_css'] ); ?>
-    </style>
-
-    <style type="text/css" media="(max-width: 480px)">
-      <?php echo $this->_compile_css( $context['mobile_css'] ); ?>
-    </style>
-    <!-- / Customizer -->
-    <?php
-  }
-
-  /**
-   * Compile the CSS array into right format
-   */
-  private function _compile_css( $css_array ) {
-    $css = '';
-
-    foreach( $css_array as $selector => $styles ) {
-      $css .= " $selector { ";
-    
-      foreach( $styles as $prop => $value ) {
-        $css .= " $prop: $value; ";
-      }
-
-      $css .= " } ";
-    }
-
-    return $css;
   }
 
 
@@ -230,6 +190,7 @@ class H_Customizer_FormatStyles {
   private function _format_background( $value, $prefix = '--$' ) {
     $styles = [];
     $background_color = $value['backgroundColor']['default']['color'];
+    
     $styles['backgroundColor'] = $background_color;
 
     switch( $value['background_type'] ) {

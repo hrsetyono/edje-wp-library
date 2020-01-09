@@ -73,7 +73,14 @@ add_action( 'customize_register', function ($wp_customize) {
 		)
 	);
 
-	blocksy_customizer_register_options($wp_customize, blocksy_get_options('customizer'));
+	
+
+	$sections = _h_customizer_get_options();
+	$full_sections = [
+		$sections, []
+	];
+
+	blocksy_customizer_register_options( $wp_customize, $full_sections );
 });
 
 function blocksy_add_customizer_preview_cache( $maybe_content ) {

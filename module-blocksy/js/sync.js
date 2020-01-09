@@ -832,7 +832,7 @@
         }
         return e
       }({}, c({
-        id: "site_background",
+        id: "siteBackground",
         selector: ".site-main"
       }), {}, c({
         id: "headerBackground",

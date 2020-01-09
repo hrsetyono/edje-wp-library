@@ -16,15 +16,10 @@ function _h_enqueue_blocksy() {
   $css_dir = plugin_dir_url(__FILE__) . 'css';
   $js_dir = plugin_dir_url(__FILE__) . 'js';
 
-	$m = new Blocksy_Fonts_Manager();
-	$m->load_fonts();
+	// $m = new Blocksy_Fonts_Manager();
+	// $m->load_fonts();
 
   wp_register_script( 'ct-events', $js_dir . '/events.js', [], H_VERSION,	true );
-
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
 }
 
 

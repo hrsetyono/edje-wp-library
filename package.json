@@ -8,6 +8,9 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "sass": "node-sass -w ./ -o ./ --output-style compressed"
+    "sass": "node-sass -w ./ -o ./ --output-style compressed",
+    "sass-blocksy": "node-sass -w module-blocksy/sass -o module-blocksy/css --output-style compressed",
+    
+    "bsync-blocksy": "browser-sync start --proxy \"demo.test/basic-theme\" --files \"module-blocksy/css/*.css\""
   }
 }
