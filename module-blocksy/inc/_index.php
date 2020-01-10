@@ -12,7 +12,6 @@ require_once __DIR__ . '/inline-svgs.php';
 
 require_once __DIR__ . '/css-helpers.php';
 require_once __DIR__ . '/css/box-shadow-option.php';
-require_once __DIR__ . '/dynamic-css.php';
 require_once __DIR__ . '/pagination.php';
 require_once __DIR__ . '/sidebar.php';
 require_once __DIR__ . '/post-meta.php';

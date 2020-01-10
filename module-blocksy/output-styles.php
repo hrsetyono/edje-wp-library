@@ -105,6 +105,9 @@ class H_Customizer_OutputStyles {
     echo $css;
   }
 
+  /**
+   * Compile all the "css" arguments from each section
+   */
   private function compile_from_sections( $sections ) { 
     foreach( $sections as $section_id => $s ) {
       $selector = $s['css_selector'] ?? ':root';
@@ -118,7 +121,7 @@ class H_Customizer_OutputStyles {
   }
 
   /**
-   * Compile all the "css" arguments from each options
+   * Compile all the "css" arguments from each option
    * 
    * Format:
    * 
@@ -181,8 +184,10 @@ class H_Customizer_OutputStyles {
   }
 
   /**
-   * @param $value (mixed) - Theme mod value stored in database
-   * @param $index (string) - Formula to parse the $mod
+   * Get value from associative array
+   * 
+   * @param $value (mixed) - Array value
+   * @param $index (string) - Index key to get the value
    * 
    * @return mixed
    */
