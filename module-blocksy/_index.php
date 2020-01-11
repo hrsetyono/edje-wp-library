@@ -8,7 +8,8 @@ function _h_load_blocksy() {
 
   require_once __DIR__ . '/enqueue.php';
 
-  require_once __DIR__ . '/default-options.php';
+  require_once __DIR__ . '/core-options.php';
+  require_once __DIR__ . '/core-values.php';
   require_once __DIR__ . '/output-styles.php';
   require_once __DIR__ . '/format-styles.php';
   require_once __DIR__ . '/format-options.php';

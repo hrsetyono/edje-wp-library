@@ -25,8 +25,6 @@ class H_Customizer_OutputStyles {
     $fs = new H_Customizer_FormatStyles( $this->styles );
     $formatted_styles = $fs->format();
 
-    // var_dump( $formatted_styles );
-
     $this->output( $formatted_styles );
   }
 
@@ -151,7 +149,8 @@ class H_Customizer_OutputStyles {
       // initiate empty selector
       $this->styles[ $selector ] = $this->styles[ $selector ] ?? [];
 
-      $value = $this->theme_mods[ $opt_id ];
+
+      $value = $this->get_mod_value( $opt_id );
 
       // if single css
       if( is_string( $args['css'] ) ) {
@@ -181,6 +180,17 @@ class H_Customizer_OutputStyles {
         $this->compile_from_options( $args['inner-options'], $selector );
         break;
     }
+  }
+
+  /**
+   * Get value from theme mods
+   */
+  private function get_mod_value( $opt_id ) {
+    if( !isset( $this->theme_mods[ $opt_id ] ) ) {
+      trigger_error( 'Default value not set: ' . $opt_id, E_USER_ERROR );
+    }
+
+    return $this->theme_mods[ $opt_id ];
   }
 
   /**

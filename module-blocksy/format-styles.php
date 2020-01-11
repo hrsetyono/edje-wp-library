@@ -15,8 +15,8 @@ class H_Customizer_FormatStyles {
    * Format the raw theme mods value
    */
   function format() {
-    foreach( $this->css as $selector => &$styles ) {
-    foreach( $styles as $prop => &$value ) {
+    foreach( $this->css as $selector => &$styles ):
+    foreach( $styles as $prop => &$value ):
 
       // TYPOGRAPHY
       if( isset( $value['family'] ) ) {
@@ -33,15 +33,14 @@ class H_Customizer_FormatStyles {
         $this->array_splice_assoc( $styles, $prop, 1, $typo_styles );
       }
 
+      // SPACING
+      elseif( isset($value['top']) || isset($value['desktop']['top']) ) {
+        $value = $this->_format_spacing( $value );
+      }
+
       // BORDER
       elseif( isset( $value['style'] ) && isset( $value['width'] ) ) {
         $value = $this->_format_border( $value );
-      }
-
-      // SLIDER
-      elseif( isset( $value['desktop'] ) ) {
-        $this->_set_responsive_size( $selector, $prop, $value );
-        $value = $value['desktop'];
       }
 
       // BACKGROUND
@@ -55,8 +54,14 @@ class H_Customizer_FormatStyles {
         $value = blocksy_compute_box_shadow_var_for( $value );
       }
 
-    }
-    }
+      // Responsive (slider, spacing)
+      if( isset( $value['desktop'] ) ) {
+        $this->_set_responsive_size( $selector, $prop, $value );
+        $value = $value['desktop'];
+      }
+
+    endforeach;
+    endforeach;
 
     return [
       'css' => $this->css,
@@ -156,6 +161,23 @@ class H_Customizer_FormatStyles {
       
       return "$width $style $color";
     }
+  }
+
+
+  /**
+   * 
+   */
+  private function _format_spacing( $value ) {
+    // if responsive
+    if( isset( $value['desktop'] ) ) {
+      return [
+        'desktop' => $this->_format_spacing( $value['desktop'] ),
+        'tablet' => $this->_format_spacing( $value['tablet'] ),
+        'mobile' => $this->_format_spacing( $value['mobile'] ),
+      ];
+    }
+
+    return $value['top'] . ' ' . $value['right'] . ' ' . $value['bottom'] . ' ' . $value['left'];
   }
   
   /**

@@ -1,104 +1,220 @@
 <?php
 
 /**
- * Values for default options
- */
-add_filter( 'h_customizer_defaults', function( $defaults ) {
-  return wp_parse_args( [
-
-    'colorPalette' => [
-      'color1' => [ 'color' => '#1976d2' ],
-      'color2' => [ 'color' => '#0d47a1' ],
-      'color3' => [ 'color' => '#bbdefb' ],
-      'color4' => [ 'color' => '#546e7a' ],
-      'color5' => [ 'color' => '#cfd8dc' ],
-    ],
-    'textColor' => [
-      'default' => [ 'color' => '#2c3e50' ],
-      'invert' => [ 'color' => '#ffffff' ],
-    ],
-
-    'mobile_media' => '480px',
-    'tablet_media' => '767px',
-
-  ], $defaults );
-});
-
-/**
  * The default options: Color, Header, and Footer
  */
 add_filter( 'h_customizer_options', function( $sections ) {
 
+$textUnits = [
+  'px' => [ 'min' => 12, 'max' => 32, ],
+  'rem' => [ 'min' => 0, 'max' => 2 ],
+  'em' => [ 'min' => 0, 'max' => 2 ],
+];
+$headingUnits = [
+  'px' => [ 'min' => 14, 'max' => 64, ],
+  'rem' => [ 'min' => 0, 'max' => 4 ],
+  'em' => [ 'min' => 0, 'max' => 4 ],
+];
 $footer = new Blocksy_Customizer_Builder_Footer();
 $header = new Blocksy_Customizer_Builder_Header();
 
 return wp_parse_args( [
 
-  'general' => [
-    'title' => __( 'General' ),
+  'cores' => [
+    'title' => __( 'Core Settings' ),
     'container' => [ 'priority' => 0 ],
     'css_selector' => ':root',
-    'options' => array_merge([
+    'options' => [
 
-      'colorPalette' => [
-        'label' => __( 'COLOR PALETTE' ),
-        'type'  => 'ct-color-palettes-picker',
-        'css' => [
-          '--main' => 'color1.color',
-          '--mainDark' => 'color2.color',
-          '--mainLight' => 'color3.color',
-          '--sub' => 'color4.color',
-          '--subLight' => 'color5.color',
+      // SITE WIDE
+      blocksy_rand_md5() => [
+      'title' => __( 'General' ), 
+      'type' => 'tab',
+      'options' => [
+
+        'colorPalette' => [
+          'label' => __( 'COLOR PALETTE' ),
+          'type'  => 'ct-color-palettes-picker',
+          'css' => [
+            '--main' => 'color1.color',
+            '--mainDark' => 'color2.color',
+            '--mainLight' => 'color3.color',
+            '--sub' => 'color4.color',
+            '--subLight' => 'color5.color',
+          ],
         ],
-      ],
+        
+        'textColor' => [
+          'label' => __( 'Text Color' ),
+          'type'  => 'ct-color-picker',
+          'design' => 'inline no-palette',
+          'css' => [
+            '--text' => 'default.color',
+            '--textInvert' => 'invert.color',
+          ],
+          'pickers' => [
+            'default' => __( 'Text' ),
+            'invert' => __( 'Text Invert' ),
+          ],
+        ],
+
+        blocksy_rand_md5() => [ 'label' => __( 'CSS Output' ), 'type' => 'ct-title' ],
+  
+        'mobile_media' => [
+          'label' => __( 'Mobile Media' ),
+          'desc' => __( 'This only affect the CSS that is printed with customizer' ),
+          'type' => 'ct-slider',
+          'units' => [
+            'px' => [ 'min' => 360, 'max' => 600 ],
+          ],
+        ],
+    
+        'tablet_media' => [
+          'label' => __( 'Tablet Media' ),
+          'type' => 'ct-slider',
+          'units' => [
+            'px' => [ 'min' => 600, 'max' => 960 ],
+          ],
+        ],
+      ] ],
+
+      // TYPOGRAPHY
+      blocksy_rand_md5() => [
+      'title' => __( 'Text' ), 
+      'type' => 'tab',
+      'options' => [
+
+        'rootTypography' => [
+          'label' => __( 'Root Typography' ),
+          'type' => 'ct-typography',
+          'isDefault' => true,
+          'css' => '--$',
+        ],
+
+        blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+
+        'smallFontSize' => [
+          'label' => __( 'Small Font Size' ),
+          'type' => 'ct-slider',
+          'units' => $textUnits,
+          'css' => '--smallFontSize',
+        ],
+        'mediumFontSize' => [
+          'label' => __( 'Medium Font Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $textUnits,
+          'css' => '--mediumFontSize',
+        ],
+        'largeFontSize' => [
+          'label' => __( 'Large Font Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $textUnits,
+          'css' => '--largeFontSize',
+        ],
+
+        blocksy_rand_md5() => [ 'label' => __( 'Heading' ), 'type' => 'ct-title' ],
+
+        'headingTypography' => [
+          'type' => 'ct-typography',
+          'label' => __( 'Heading Typography' ),
+          'desc' => "Applies to H1-H6. Leave size as 0.",
+          'isDefault' => true,
+          'css' => '--h$'
+        ],
+
+        blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+  
+        'h1Size' => [
+          'label' => __( 'H1 Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $headingUnits,
+          'css' => '--h1Size',
+        ],
+    
+        'h2Size' => [
+          'label' => __( 'H2 Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $headingUnits,
+          'css' => '--h2Size',
+        ],
+    
+        'h3Size' => [
+          'label' => __( 'H3 Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $headingUnits,
+          'css' => '--h3Size'
+        ],
+    
+        'h4Size' => [
+          'label' => __( 'H4 Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $headingUnits,
+          'css' => '--h4Size'
+        ],
+    
+        'h5Size' => [
+          'label' => __( 'H5 Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $headingUnits,
+          'css' => '--h5Size',
+        ],
+    
+        'h6Size' => [
+          'label' => __( 'H6 Size' ),
+          'type' => 'ct-slider',
+          'responsive' => true,
+          'units' => $headingUnits,
+          'css' => '--h6Size'
+        ],
+      ] ],
       
-      'textColor' => [
-        'label' => __( 'Text Color' ),
-        'type'  => 'ct-color-picker',
-        'design' => 'inline no-palette',
-        'css' => [
-          '--text' => 'default.color',
-          '--textInvert' => 'invert.color',
-        ],
-        'pickers' => [
-          'default' => __( 'Text' ),
-          'invert' => __( 'Text Invert' ),
-        ],
-      ],
+      // SHADOW
+      blocksy_rand_md5() => [
+      'title' => __( 'Shadow' ),
+      'type' => 'tab',
+      'options' => [
 
-      h_option_title() => __( 'CSS Output' ),
-
-      'mobile_media' => [
-        'label' => __( 'Mobile Media' ),
-        'desc' => __( 'This only affect the CSS that is printed with customizer' ),
-        'type' => 'ct-slider',
-        'units' => [
-          'px' => [ 'min' => 360, 'max' => 600 ],
+        'shadow0' => [
+          'label' => __( 'Shadow 0' ),
+          'type' => 'ct-box-shadow',
+          'css' => '--shadow0',
         ],
-      ],
-  
-      'tablet_media' => [
-        'label' => __( 'Tablet Media' ),
-        'type' => 'ct-slider',
-        'units' => [
-          'px' => [ 'min' => 600, 'max' => 960 ],
+        'shadow1' => [
+          'label' => __( 'Shadow 1' ),
+          'type' => 'ct-box-shadow',
+          'css' => '--shadow1',
         ],
-      ],
-  
-      h_option_divider() => '',
+        'shadow2' => [
+          'label' => __( 'Shadow 2' ),
+          'type' => 'ct-box-shadow',
+          'css' => '--shadow2',
+        ],
+        'shadow3' => [
+          'label' => __( 'Shadow 3' ),
+          'type' => 'ct-box-shadow',
+          'css' => '--shadow3',
+        ],
+        'shadow4' => [
+          'label' => __( 'Shadow 4' ),
+          'type' => 'ct-box-shadow',
+          'css' => '--shadow4',
+        ],
+      
+      ] ],
 
-    ], apply_filters( 'h_customizer_general_options', [] ) ),
-  ],
-
-  blocksy_rand_md5() => [
-    'type' => 'ct-group-title',
-    'title' => __( 'Elements' ),
-    'priority' => 9,
+    ],
   ],
 
   'header' => [
     'title' => __( 'Header' ),
-    'container' => [ 'priority' => 9 ],
+    'container' => [ 'priority' => 0 ],
     'options' => [
 
       'header_placements' => [
@@ -220,7 +336,7 @@ return wp_parse_args( [
 
   'footer' => [
     'title' => __( 'Footer' ),
-    'container' => [ 'priority' => 9 ],
+    'container' => [ 'priority' => 0 ],
     'options' => [
 
       'footer_placements' => [

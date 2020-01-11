@@ -34,16 +34,14 @@ class H_Customizer_FormatOptions {
   function format( $section_id, $options ) {
     $defaults = _h_customizer_get_defaults();
     
-    foreach( $options as $id   => &$args ):
-
-      // static options
-      if( preg_match_all('/(\w+)\//', $id, $matches ) ) {
-        $args = $this->format_static_option( $matches[1], $args );
-      }
-      
+    foreach( $options as $id => &$args ):
       // set default value
       if( isset( $defaults[ $id ] ) ) {
         $args['value'] = $defaults[ $id ];
+      }
+
+      if( !isset( $args['type'] ) ) {
+        trigger_error( 'Type not set: ' . $id , E_USER_ERROR );
       }
 
       switch( $args['type'] ):
@@ -89,10 +87,12 @@ class H_Customizer_FormatOptions {
           $args['choices'] = $this->get_heading_choices();
           break;
 
-        case 'ct-select/font-size':
+        case 'ct-select/text':
+        case 'ct-select/text-size':
           $args['type'] = 'ct-select';
           $args['view'] = 'text';
-          $args['choices'] = $this->get_font_size_choices();
+          $args['choices'] = $this->get_text_size_choices();
+          break;
 
         case 'ct-visibility':
           $args['choices'] = blocksy_ordered_keys([
@@ -151,20 +151,6 @@ class H_Customizer_FormatOptions {
   }
 
   /////
-
-  /**
-   * Format static option like Divider / Title / Condition
-   */
-  private function format_static_option( $type, $args ) {
-    switch( $type[0] ) {
-      case 'title':
-        return [ 'type' => 'ct-title', 'label' => $args ];
-
-      case 'divider':
-        return [ 'type' => 'ct-divider' ];
-    }
-  }
-
 
   /**
    * Convert pickers to be ordered array
@@ -264,7 +250,7 @@ class H_Customizer_FormatOptions {
   /**
    * Return array for Text size selection
    */
-  private function get_font_size_choices() {
+  private function get_text_size_choices() {
     return blocksy_ordered_keys([
       'var(--fontSize)' => __( 'Normal' ),
       'var(--smallFontSize)' => __( 'Small' ),
@@ -284,10 +270,11 @@ class H_Customizer_FormatOptions {
       case 'ct-background':
       case 'ct-select':
       case 'ct-border':
+      case 'ct-number':
         return 'inline';
         break;
 
-      case 'ct-color-palettes-picker':
+      default:
         return 'block';
         break;
     }
