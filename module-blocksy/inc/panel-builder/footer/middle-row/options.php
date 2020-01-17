@@ -28,7 +28,7 @@ $options = [
 				'label' => __( 'Columns per row', 'blocksy' ),
 				'type' => 'ct-radio',
 				'value' => '3',
-				'view' => 'text',
+				// 'view' => 'text',
 				'design' => 'block',
 				'allow_empty' => true,
 				'setting' => [ 'transport' => 'postMessage' ],

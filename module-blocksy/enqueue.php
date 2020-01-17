@@ -1,18 +1,18 @@
 <?php
 
-add_action( 'wp_enqueue_scripts', '_h_enqueue_blocksy' );
-add_action(	'enqueue_block_editor_assets', '_h_enqueue_blocksy_gutenberg' );
+add_action( 'wp_enqueue_scripts', '_custy_enqueue' );
+add_action(	'enqueue_block_editor_assets', '_custy_enqueue_gutenberg' );
 
-add_action( 'customize_preview_init', '_h_enqueue_customizer_preview' );
-add_action( 'customize_controls_enqueue_scripts', '_h_enqueue_customizer_control' );
+add_action( 'customize_preview_init', '_custy_enqueue_customizer_preview' );
+add_action( 'customize_controls_enqueue_scripts', '_custy_enqueue_customizer_control' );
 
-add_action(	'admin_enqueue_scripts', '_h_enqueue_blocksy_admin' );
+add_action(	'admin_enqueue_scripts', '_custy_enqueue_admin' );
 
 
 /**
  * @action wp_enqueue_scripts
  */
-function _h_enqueue_blocksy() {
+function _custy_enqueue() {
   $css_dir = plugin_dir_url(__FILE__) . 'css';
   $js_dir = plugin_dir_url(__FILE__) . 'js';
 
@@ -26,7 +26,7 @@ function _h_enqueue_blocksy() {
 /**
  * @action enqueue_block_editor_assets
  */
-function _h_enqueue_blocksy_gutenberg() {
+function _custy_enqueue_gutenberg() {
   $css_dir = plugin_dir_url(__FILE__) . 'css';
   $js_dir = plugin_dir_url(__FILE__) . 'js';
 
@@ -36,10 +36,9 @@ function _h_enqueue_blocksy_gutenberg() {
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
- * 
  * @action customize_preview_init
  */
-function _h_enqueue_customizer_preview() {
+function _custy_enqueue_customizer_preview() {
   $css_dir = plugin_dir_url(__FILE__) . 'css';
   $js_dir = plugin_dir_url(__FILE__) . 'js';
   $builder = new Blocksy_Customizer_Builder();
@@ -54,8 +53,15 @@ function _h_enqueue_customizer_preview() {
     'header_builder_data' => $builder->get_data_for_customizer(),
   ] );
 
+  
+  $fs = new H_Customizer_FormatSync();
+  $sync_vars = $fs->get();
+
   wp_localize_script( 'ct-customizer', 'ct_localizations', [
     'customizer_sync' => blocksy_customizer_sync_data(),
+    'sync_vars' => $sync_vars['other'],
+    'background_sync_vars' => $sync_vars['background'],
+    'typography_sync_vars' => $sync_vars['typography']
   ] );
 
   wp_enqueue_media();
@@ -64,10 +70,9 @@ function _h_enqueue_customizer_preview() {
 
 /**
  * Customizer control assets
- * 
  * @action customize_controls_enqueue_scripts
  */
-function _h_enqueue_customizer_control() {
+function _custy_enqueue_customizer_control() {
   $css_dir = plugin_dir_url(__FILE__) . 'css';
   $js_dir = plugin_dir_url(__FILE__) . 'js';
 
@@ -113,10 +118,9 @@ function _h_enqueue_customizer_control() {
 
 /**
  * Enqueue assets for Admin area
- * 
  * @action admin_enqueue_scripts
  */
-function _h_enqueue_blocksy_admin() {
+function _custy_enqueue_admin() {
   $css_dir = plugin_dir_url(__FILE__) . 'css';
   $js_dir = plugin_dir_url(__FILE__) . 'js';
 

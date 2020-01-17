@@ -92,15 +92,19 @@ class Blocksy_Customizer_Builder {
 	public function get_option_id_for($panel_type = 'header', $item) {
 		return $panel_type . '_item_' . str_replace('-', '_', $item['id']);
 	}
+	
 
-	public function get_registered_items_by(
-		$panel_type = 'header',
+	public function get_registered_items_by( $panel_type = 'header', $include = 'all', $require_options = false) {
 
-		// all | primary | secondary
-		$include = 'all',
+		// @new - return items from filter. Only continue if doesn't exists
+		$items = apply_filters( 'h_builder_items', [], $panel_type, $include, $require_options );
 
-		$require_options = false
-	) {
+		if( !empty( $items ) ) {
+			return $items;
+		}
+
+		// /new
+
 		$paths_to_look_for_items = [
 			BLOCKSY_DIR . '/inc/panel-builder/' . $panel_type
 		];

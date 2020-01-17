@@ -1,8 +1,8 @@
 <?php
 /**
- * Format the value of theme mods before outputted
+ * Format the value of theme mods before outputted as CSS
  */
-class H_Customizer_FormatStyles {
+class H_Customizer_FormatValues {
   public $css = [];
   public $tablet_css = [];
   public $mobile_css = [];
@@ -62,7 +62,7 @@ class H_Customizer_FormatStyles {
 
     endforeach;
     endforeach;
-
+    
     return [
       'css' => $this->css,
       'tablet_css' => $this->tablet_css,

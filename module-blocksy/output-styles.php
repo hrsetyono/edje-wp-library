@@ -16,13 +16,13 @@ class H_Customizer_OutputStyles {
    * @action wp_head
    */
   function render_mods() {
-    $this->theme_mods = wp_parse_args( get_theme_mods(), _h_customizer_get_defaults() );
+    $this->theme_mods = wp_parse_args( get_theme_mods(), Custy::get_default_values() );
     
     // get all css value from options data
     $sections = _h_customizer_get_options();
     $this->compile_from_sections( $sections );
 
-    $fs = new H_Customizer_FormatStyles( $this->styles );
+    $fs = new H_Customizer_FormatValues( $this->styles );
     $formatted_styles = $fs->format();
 
     $this->output( $formatted_styles );
@@ -40,7 +40,7 @@ class H_Customizer_OutputStyles {
       return;
     }
 
-    $mods = wp_parse_args( get_theme_mods(), _h_customizer_get_defaults() );
+    $mods = wp_parse_args( get_theme_mods(), Custy::get_default_values() );
     $admin_styles = [
       ':root' => [
         '--main'      => $mods['colorPalette']['color1']['color'],
@@ -53,7 +53,7 @@ class H_Customizer_OutputStyles {
       ],
     ];
 
-    $fs = new H_Customizer_FormatStyles( $admin_styles );
+    $fs = new H_Customizer_FormatValues( $admin_styles );
     $formatted_styles = $fs->format();
 
     $this->output( $formatted_styles );
@@ -69,38 +69,45 @@ class H_Customizer_OutputStyles {
     $mobile_media = h_get_mod( 'mobile_media' );
     $tablet_media = h_get_mod( 'tablet_media' );
 
+    $output = '';
     $medias = [
-      'css' => '',
-      'tablet_css' => "(max-width: $tablet_media)",
-      'mobile_css' => "(max-width: $mobile_media)",
+      'css' => [
+        'attr' => '',
+        'id' => 'ct-main-styles-inline-css',
+      ],
+      'tablet_css' => [
+        'attr' => "media='(max-width: $tablet_media)'",
+        'id' => 'ct-main-styles-tablet-inline-css',
+      ],
+      'mobile_css' => [
+        'attr' => "media='(max-width: $mobile_media)'",
+        'id' => 'ct-main-styles-mobile-inline-css',
+      ],
     ];
     
-    $css = '';
-
-    foreach( $medias as $key => $media ):
-      // if key not found or has no styles
-      if( !isset($styles[ $key ]) ) { continue; }
+    foreach( $medias as $key => $args ):
       if( count($styles[ $key ]) <= 0 ) { continue; }
-    
+
       // add <style> tag
-      $css .= "<style type='text/css' media='$media'>";
+      $output .= "<style type='text/css' id='{$args['id']}' {$args['attr']}>";
       
       // add css properties
-      foreach( $styles[ $key ] as $selector => $styles ):
-        $css .= " $selector { ";
+      foreach( $styles[ $key ] as $selector => $css ):
+        $output .= " $selector { ";
 
-        foreach( $styles as $prop => $value ) {
-          $css .= " $prop: $value; ";
+        foreach( $css as $prop => $value ) {
+          $output .= " $prop: $value; ";
         }
 
-        $css .= " } ";
+        $output .= " } ";
       endforeach;
 
-      $css .= "</style>";
+      $output .= "</style>";
     endforeach;
 
     echo '<!-- Customizer -->';
-    echo $css;
+    echo $output;
+    echo '<!-- /Customizer -->';
   }
 
   /**

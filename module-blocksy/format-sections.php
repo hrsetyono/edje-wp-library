@@ -3,15 +3,14 @@
 /**
  * Format the simplified option args into complete one that's accepted by Blocksy
  */
-class H_Customizer_FormatOptions {
+class Custy_FormatSections {
   function __construct() {
-    add_filter( 'h_customizer_options', [$this, 'format_all'], 99999 );
   }
 
   /**
    * Format all sections
    * 
-   * @filter h_customizer_options
+   * @filter custy_sections
    */
   function format_all( $sections ) {
     foreach( $sections as $section_id => &$s ) {
@@ -19,7 +18,7 @@ class H_Customizer_FormatOptions {
       
       // add selector notice
       if( isset( $s['css_selector'] ) ) {
-        $s['options'] = $this->prepend_css_selector_notice( $s['css_selector'], $s['options'] );
+        $s['options'] = $this->add_css_selector_notice( $s['css_selector'], $s['options'] );
       }
 
       $s['options'] = $this->format( $section_id, $s['options'] );
@@ -32,7 +31,7 @@ class H_Customizer_FormatOptions {
    * Format one section
    */
   function format( $section_id, $options ) {
-    $defaults = _h_customizer_get_defaults();
+    $defaults = Custy::get_default_values();
     
     foreach( $options as $id => &$args ):
       // set default value
@@ -41,20 +40,26 @@ class H_Customizer_FormatOptions {
       }
 
       if( !isset( $args['type'] ) ) {
-        trigger_error( 'Type not set: ' . $id , E_USER_ERROR );
+        trigger_error( 'Option type not set: ' . $id , E_USER_ERROR );
       }
 
       switch( $args['type'] ):
         case 'tab':
         case 'ct-condition':
           $args['options'] = $this->format( false, $args['options'] );
-          continue;
-          break;
 
+          if( isset($args['css_selector']) ) {
+            $args['options'] = $this->add_css_selector_notice( $args['css_selector'], $args['options'] );
+          }
+          continue;
+       
         case 'ct-panel':
           $args['inner-options'] = $this->format( false, $args['inner-options'] );
+          
+          if( isset($args['css_selector']) ) {
+            $args['inner-options'] = $this->add_css_selector_notice( $args['css_selector'], $args['inner-options'] );
+          }
           continue;
-          break;
         
         case 'ct-color-palettes-picker':
           $args['predefined'] = true;
@@ -67,7 +72,15 @@ class H_Customizer_FormatOptions {
           break;
 
         case 'ct-slider':
-          $args['units'] = $this->format_units( $args['units'] ); 
+          $args['units'] = $this->format_units( $args['units'] );
+          break;
+
+        // RADIO
+        case 'ct-radio/alignment':
+        case 'ct-radio/align':
+          $args['type'] = 'ct-radio';
+          $args['attr'] = [ 'data-type' => 'alignment' ];
+          $args['choices'] = [ 'left' => '', 'center' => '', 'right' => '' ];
           break;
 
         // SELECT
@@ -107,15 +120,14 @@ class H_Customizer_FormatOptions {
           continue;
       endswitch;
 
-      // set default transport
+
       $args['setting'] = $args['setting'] ?? [ 'transport' => 'postMessage' ];
-      // set design
       $args['design'] = $args['design'] ?? $this->get_default_design( $args['type'] );
 
       // add css variable
       if( isset( $args['css'] ) ) {
         $args['desc'] = $args['desc'] ?? '';
-        $args['desc'] .= $this->format_css_desc( $args['css'] );
+        $args['desc'] .= $this->format_css_desc( $args );
       }
       
     endforeach;
@@ -130,7 +142,7 @@ class H_Customizer_FormatOptions {
         'inner-options' => $options
       ];
 
-      if( $section_id === 'general' ) {
+      if( $section_id === 'cores' ) {
         $section['customizer_color_scheme'] = [
           'label' => __( 'Color scheme' ),
           'type' => 'hidden',
@@ -204,17 +216,72 @@ class H_Customizer_FormatOptions {
   /**
    * Add a toggle button to show CSS Variables
    */
-  private function format_css_desc( $css ) {
+  private function format_css_desc( $args ) {
     $content = '';
-    $css_vars = is_array( $css ) ? array_keys( $css ) : [ $css ];
+    $css = $args['css'];
+    $vars = [];
 
-    if( count( $css_vars ) > 0 ) {
-      $content = '<code>' . implode( '</code><code>', $css_vars ) . '</code>';
+    switch( $args['type'] ) {
+      case 'ct-typography':
+        $base_vars = [
+          'fontSize',
+          'fontFamily',
+          'fontStyle',
+          'fontWeight',
+          'lineHeight',
+          'letterSpacing',
+          'textDecoration',
+          'textTransform',
+        ];
+
+        $vars = $this->format_css_desc_prefix( $base_vars, $args['css'] );
+        break;
+
+      case 'ct-background':
+        $base_vars = [
+          'background',
+          'backgroundColor',
+        ];
+
+        $vars = $this->format_css_desc_prefix( $base_vars, $args['css'] );
+        break;
+
+      default:
+        $vars = is_array( $css ) ? array_keys( $css ) : [ $css ];
+    }
+
+
+    // wrap each vars with <code>...</code>
+    if( count( $vars ) > 0 ) {
+      $content = '<code>' . implode( '</code><code>', $vars ) . '</code>';
+    }
+
+    // if has its own selector
+    $selector_override = $args['css_selector'] ?? false;
+    if( $selector_override ) {
+      $content .= "<br> CSS Selector: <code>$selector_override</code>";
     }
   
     return "<details> <summary>CSS</summary>
       $content
     </details>";
+  }
+
+  /**
+   * Add prefix to all the CSS vars
+   */
+  function format_css_desc_prefix( $vars, $prefix = '--$' ) {
+    $prefix = str_replace( '$', '', $prefix );
+
+    foreach( $vars as &$v ) {
+      if( $prefix !== '--' ) {
+        $v = ucfirst( $v );
+      }
+
+      $v = $prefix . $v;
+    }
+
+    return $vars;
   }
 
 
@@ -256,6 +323,7 @@ class H_Customizer_FormatOptions {
       'var(--smallFontSize)' => __( 'Small' ),
       'var(--mediumFontSize)' => __( 'Medium' ),
       'var(--largeFontSize)' => __( 'Large' ),
+      'var(--hugeFontSize)' => __( 'Huge' ),
       'inherit' => __( 'Inherit' ),
     ]);
   }
@@ -271,29 +339,33 @@ class H_Customizer_FormatOptions {
       case 'ct-select':
       case 'ct-border':
       case 'ct-number':
+      case 'ct-text':
         return 'inline';
-        break;
+
+      case 'ct-color-palettes-picker':
+      case 'ct-radio':
+      case 'ct-visibility':
+      case 'text':
+      case 'ct-checkboxes':
+        return 'block';
 
       default:
-        return 'block';
-        break;
+        return '';
     }
   }
 
   /**
    * Add a notice containing the CSS selector
    */
-  private function prepend_css_selector_notice( $selector, $options ) {
+  private function add_css_selector_notice( $selector, $options ) {
     return array_merge( [
       blocksy_rand_md5() => [
         'type' => 'ct-title',
         'variation' => 'notice',
-        'desc' => "<div class='notice'> <p>CSS are applied to <code>$selector</code></p> </div>",
+        'desc' => "<div class='notice'> <p>CSS selector: <code>$selector</code></p> </div>",
       ],
     ] , $options );
   }
 
 
 }
-
-new H_Customizer_FormatOptions();

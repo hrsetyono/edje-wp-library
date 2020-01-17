@@ -67,12 +67,20 @@ class Blocksy_Customizer_Builder_Render_Placements {
 		return false;
 	}
 
+	// @changed - return content from filter, if any
 	public function render() {
 		$content = '';
 
-		$current_layout = $this->get_current_section()[$this->device];
+		$header = $this->get_current_section()[$this->device];
 
-		foreach ($current_layout as $row) {
+		// check for content from filter, if any
+		$content = apply_filters( 'h_render_header', $content, $header );
+
+		if( !empty( $content ) ) {
+			return $content;
+		}
+
+		foreach ($header as $row) {
 			if ($row['id'] === 'offcanvas') {
 				continue;
 			}
@@ -84,6 +92,7 @@ class Blocksy_Customizer_Builder_Render_Placements {
 			'header',
 			array_merge([
 				'id' => 'header',
+				'class' => 'site-header',
 				'data-device' => $this->device
 			], blocksy_schema_org_definitions('header', ['array' => true])),
 			$content

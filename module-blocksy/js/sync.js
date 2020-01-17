@@ -429,6 +429,14 @@
       }])
     },
     b = function() {
+      // @new - format the vars
+      var hFormattedVars = [ {} ];
+      var hRawVars = ct_localizations.typography_sync_vars;
+      for( var i = 0, len = hRawVars.length; i < len; i++ ) {
+        hFormattedVars.push( f( hRawVars[i] ) );
+      }
+      // /new
+
       return function(e) {
         for (var t = 1; t < arguments.length; t++) {
           var r = null != arguments[t] ? arguments[t] : {};
@@ -439,47 +447,7 @@
           }))
         }
         return e
-      }({}, f({
-        id: "rootTypography",
-        selector: ":root"
-      }), {}, f({
-        id: "h1Typography",
-        selector: "h1"
-      }), {}, f({
-        id: "h2Typography",
-        selector: "h2"
-      }), {}, f({
-        id: "h3Typography",
-        selector: "h3"
-      }), {}, f({
-        id: "h4Typography",
-        selector: "h4"
-      }), {}, f({
-        id: "h5Typography",
-        selector: "h5"
-      }), {}, f({
-        id: "h6Typography",
-        selector: "h6"
-      }), {}, f({
-        id: "buttons",
-        selector: ":root",
-        prefix: "button"
-      }), {}, f({
-        id: "blockquote",
-        selector: ".entry-content blockquote p, .ct-quote-widget blockquote p"
-      }), {}, f({
-        id: "pre",
-        selector: "code, kbd, samp, pre"
-      }), {}, f({
-        id: "sidebarTitleSize",
-        selector: ".ct-sidebar"
-      }), {}, f({
-        id: "singleProductTitleFont",
-        selector: ".product_title"
-      }), {}, f({
-        id: "cardProductTitleFont",
-        selector: ".woocommerce-loop-product__title, .woocommerce-loop-category__title"
-      }))
+      }( ...hFormattedVars.slice(1) ) // @new
     }
 }, function(e, t, r) {
   "use strict";
@@ -743,84 +711,114 @@
   })), r.d(t, "getBackgroundVariablesFor", (function() {
     return i
   }));
+  // @new - add prefix and get background url
+  var hAddPrefix = function( value, prefix = '' ) {
+    if (prefix.trim() === '') {
+      return value;
+    }
+    return `${prefix}${value.charAt(0).toUpperCase()}${value.slice(1)}`;
+  };
+  var getBackgroundUrl = function( e ) {
+    var t = e.background_type,
+        r = e.background_image,
+        o = e.background_pattern,
+        n = e.patternColor,
+        c = e.backgroundColor;
+    if ("color" === t) return "CT_CSS_SKIP_RULE" !== c.default.color ? "none" : "CT_CSS_SKIP_RULE";
+    var i = function(e, t, r) {
+      return (r + "").split(e).join(t)
+    };
+    if ("image" === t) return r.url ? "url(".concat(r.url, ")") : "CT_CSS_SKIP_RULE";
+    var s = 1,
+      l = n.default.color;
+    (
+      l.indexOf("var(--main)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--main")),
+      l.indexOf("var(--mainDark)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--mainDark")),
+      l.indexOf("var(--mainLight)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--mainLight")),
+      l.indexOf("var(--sub)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--sub")),
+      l.indexOf("var(--subLight)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--subLight")),
+      l.indexOf("var(--text)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--text")),
+      l.indexOf("var(--textInvert)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--textInvert"))
+    );
+
+    l = l.trim(); // @new
+    
+    if( l.indexOf("rgb") > -1 ) {
+      var u = i("rgb(", "", i(")", "", i("rgba(", "", i(" ", "", l)))).split(",");
+      l = "#".concat(a(parseInt(u[0], 10))).concat(a(parseInt(u[1], 10))).concat(a(parseInt(u[2], 10))), u.length > 3 && (s = u[3])
+    }
+
+    return l = i("#", "", l), 'url("'.concat(i("OPACITY", s, i("COLOR", l, ct_localizations.customizer_sync.svg_patterns[o] || ct_localizations.customizer_sync.svg_patterns["type-1"])), '")')
+  };
+  // /new
   var a = function(e) {
       var t = e.toString(16);
       return 1 == t.length ? "0" + t : t
     },
+    // @changed - background sync now only return 2 values --background and --backgroundColor
     c = function(e) {
       var t = e.id,
         r = e.selector;
+
+      var prefix = e.prefix || '';
+
       return n({}, t, [{
-        variable: "backgroundColor",
+        variable: hAddPrefix("backgroundColor", prefix),
         selector: r,
         extractValue: function(e) {
           return e.backgroundColor.default.color
         }
       }, {
-        variable: "patternColor",
+        variable: hAddPrefix("background", prefix),
         selector: r,
         extractValue: function(e) {
-          return "pattern" === e.background_type ? e.patternColor.default.color : "CT_CSS_SKIP_RULE"
-        }
-      }, {
-        variable: "backgroundImage",
-        selector: r,
-        extractValue: function(e) {
-          var t = e.background_type,
-            r = e.background_image,
-            o = e.background_pattern,
-            n = e.patternColor,
-            c = e.backgroundColor;
-          if ("color" === t) return "CT_CSS_SKIP_RULE" !== c.default.color ? "none" : "CT_CSS_SKIP_RULE";
-          var i = function(e, t, r) {
-            return (r + "").split(e).join(t)
-          };
-          if ("image" === t) return r.url ? "url(".concat(r.url, ")") : "CT_CSS_SKIP_RULE";
-          var s = 1,
-            l = n.default.color;
-          if (l.indexOf("main") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--main")), l.indexOf("mainDark") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--mainDark")), l.indexOf("mainLight") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--mainLight")), l.indexOf("sub") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--sub")), l.indexOf("subLight") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--subLight")), l.indexOf("rgb") > -1) {
-            var u = i("rgb(", "", i(")", "", i("rgba(", "", i(" ", "", l)))).split(",");
-            l = "#".concat(a(parseInt(u[0], 10))).concat(a(parseInt(u[1], 10))).concat(a(parseInt(u[2], 10))), u.length > 3 && (s = u[3])
+          var bg = [];
+          var bgColor = e.backgroundColor.default.color;
+
+          switch( e.background_type ) {
+            case 'color':
+              bg = bgColor;
+              break;
+
+            case 'pattern':
+              var imageUrl = getBackgroundUrl( e );
+              bg = `${bgColor} ${imageUrl}`; 
+              break;
+
+            case 'image':
+              var imageUrl = getBackgroundUrl( e );
+              var bgi = e.background_image;
+              var x = Math.round( 100 * parseFloat(bgi.x) );
+              var y = Math.round( 100 * parseFloat(bgi.y) );
+              var position = `${x}% ${y}%`;
+              var repeat = e.background_repeat;
+              var attachment = e.background_attachment;
+
+              bg = `${bgColor} ${imageUrl} ${position} ${repeat} ${attachment}`;
+              break;
           }
-          return l = i("#", "", l), 'url("'.concat(i("OPACITY", s, i("COLOR", l, ct_localizations.customizer_sync.svg_patterns[o] || ct_localizations.customizer_sync.svg_patterns["type-1"])), '")')
+
+          return bg;
         }
       }, {
-        variable: "backgroundPosition",
-        selector: r,
-        extractValue: function(e) {
-          var t = e.background_type,
-            r = e.background_image,
-            o = r.x,
-            n = r.y;
-          return "image" !== t ? "CT_CSS_SKIP_RULE" : "".concat(Math.round(100 * parseFloat(o)), "% ").concat(Math.round(100 * parseFloat(n)), "%")
-        }
-      }, {
-        variable: "backgroundSize",
+        variable: hAddPrefix("backgroundSize", prefix),
         selector: r,
         extractValue: function(e) {
           var t = e.background_type,
             r = e.background_size;
           return "image" !== t ? "CT_CSS_SKIP_RULE" : r
         }
-      }, {
-        variable: "backgroundAttachment",
-        selector: r,
-        extractValue: function(e) {
-          var t = e.background_type,
-            r = e.background_attachment;
-          return "image" !== t ? "CT_CSS_SKIP_RULE" : r
-        }
-      }, {
-        selector: r,
-        variable: "backgroundRepeat",
-        extractValue: function(e) {
-          var t = e.background_type,
-            r = e.background_repeat;
-          return "image" !== t ? "CT_CSS_SKIP_RULE" : r
-        }
-      }])
+      }, ])
+      // /changed
     },
     i = function() {
+      // @changed - take the background options from locale
+      var hFormattedVars = [ {} ];
+      var hRawVars = ct_localizations.background_sync_vars;
+      for( var i = 0, len = hRawVars.length; i < len; i++ ) {
+        hFormattedVars.push( c( hRawVars[i] ) );
+      }
+      // /changed
       return function(e) {
         for (var t = 1; t < arguments.length; t++) {
           var r = null != arguments[t] ? arguments[t] : {};
@@ -831,43 +829,7 @@
           }))
         }
         return e
-      }({}, c({
-        id: "siteBackground",
-        selector: ".site-main"
-      }), {}, c({
-        id: "headerBackground",
-        selector: ".header-desktop"
-      }), {}, c({
-        id: "mobileHeaderBackground",
-        selector: ".header-mobile"
-      }), {}, c({
-        id: "post_background",
-        selector: ".single .site-main"
-      }), {}, c({
-        id: "single_content_background",
-        selector: '.post[data-content="boxed"]'
-      }), {}, c({
-        id: "related_posts_background",
-        selector: ".ct-related-posts"
-      }), {}, c({
-        id: "post_comments_background",
-        selector: ".single .ct-comments-container"
-      }), {}, c({
-        id: "page_background",
-        selector: ".page .site-main"
-      }), {}, c({
-        id: "page_content_background",
-        selector: '.page[data-content="boxed"]'
-      }), {}, c({
-        id: "page_comments_background",
-        selector: ".page .ct-comments-container"
-      }), {}, c({
-        id: "widgets_area_background",
-        selector: ".footer-widgets-area"
-      }), {}, c({
-        id: "product_page_background",
-        selector: ".single-product .site-main"
-      }))
+      }( ...hFormattedVars.slice(1) ) // @changed
     }
 }, function(e, t, r) {
   "use strict";
@@ -4408,593 +4370,10 @@
     }, {
       variable: "subLight",
       type: "color:color5"
-    }],
-    background_pattern: [{
-      variable: "backgroundPattern"
     }]
-  }, Object(o.getHeroVariables)(), {}, Object(n.getPostListingVariables)(), {}, Object(s.getPaginationVariables)(), {}, Object(a.getTypographyVariablesFor)(), {}, Object(c.getBackgroundVariablesFor)(), {}, Object(i.getFormsVariablesFor)(), {
-    // TYPOGRAPHY
-    textColor: [{
-      selector: ":root",
-      variable: "text",
-      type: "color:default"
-    }, {
-      selector: ":root",
-      variable: "textInvert",
-      type: "color:invert"
-    }],
-    smallFontSize: {
-      selector: ':root',
-      variable: 'smallFontSize',
-    },
-    mediumFontSize: {
-      selector: ':root',
-      variable: 'mediumFontSize',
-    },
-    largeFontSize: {
-      selector: ':root',
-      variable: 'largeFontSize',
-    },
-    // TYPOGRAPHY > Heading
-    headingColor: {
-      variable: "headingColor",
-      type: "color:default",
-      selector: ":root"
-    },
-    h1Size: {
-      variable: 'h1Size',
-      selector: ":root",
-      responsive: !0,
-    },
-    h2Size: {
-      variable: 'h2Size',
-      selector: ":root",
-      responsive: !0,
-    },
-    h3Size: {
-      variable: 'h3Size',
-      selector: ":root",
-      responsive: !0,
-    },
-    h4Size: {
-      variable: 'h4Size',
-      selector: ":root",
-      responsive: !0,
-    },
-    h5Size: {
-      variable: 'h5Size',
-      selector: ":root",
-      responsive: !0,
-    },
-    h6Size: {
-      variable: 'h6Size',
-      selector: ":root",
-      responsive: !0,
-    },
-    // TYPOGRAPHY > Button
-    buttonTextColor: [{
-      selector: ":root",
-      variable: "buttonTextInitialColor",
-      type: "color:default"
-    }, {
-      selector: ":root",
-      variable: "buttonTextHoverColor",
-      type: "color:hover"
-    }],
-    buttonColor: [{
-      selector: ":root",
-      variable: "buttonInitialColor",
-      type: "color:default"
-    }, {
-      selector: ":root",
-      variable: "buttonHoverColor",
-      type: "color:hover"
-    }],
-    linkColor: [{
-      selector: ":root",
-      variable: "linkColor",
-      type: "color:default"
-    }, {
-      selector: ":root",
-      variable: "linkColorHover",
-      type: "color:hover"
-    }],
-    siteBackground: {
-      variable: "siteBackground",
-      type: "color"
-    },
-    maxSiteWidth: {
-      selector: "body",
-      variable: "maxSiteWidth",
-      unit: ""
-    },
-    contentAreaSpacing: {
-      selector: ".content-area",
-      variable: "contentAreaSpacing",
-      responsive: !0,
-      unit: ""
-    },
-    narrowContainerWidth: [{
-      selector: '[data-page-structure="narrow"]',
-      variable: "narrowContainerWidth",
-      unit: ""
-    }, {
-      selector: '[data-page-structure="narrow"]',
-      variable: "narrowContainerWidthNoUnit",
-      unit: ""
-    }],
-    wideOffset: {
-      selector: '[data-page-structure="narrow"]',
-      variable: "wideOffset",
-      unit: ""
-    },
-    sidebarWidth: [{
-      selector: "[data-sidebar]",
-      variable: "sidebarWidth",
-      unit: ""
-    }, {
-      selector: "[data-sidebar]",
-      variable: "sidebarWidthNoUnit",
-      unit: ""
-    }],
-    sidebarGap: {
-      selector: "[data-sidebar]",
-      variable: "sidebarGap",
-      unit: ""
-    },
-    sidebarOffset: {
-      selector: "[data-sidebar]",
-      variable: "sidebarOffset",
-      unit: ""
-    },
-    sidebarTitleColor: {
-      selector: ".ct-sidebar",
-      variable: "sidebarTitleColor",
-      type: "color"
-    },
-    sidebarTitleSize: {
-      selector: ".ct-sidebar",
-      variable: "sidebarTitleSize",
-    },
-    sidebarFontColor: [{
-      selector: ".ct-sidebar",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".ct-sidebar",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    sidebarFontSize: {
-      selector: ".ct-sidebar",
-      variable: "fontSize",
-    },
-    sidebarBackgroundColor: {
-      selector: "[data-sidebar]",
-      variable: "sidebarBackgroundColor",
-      type: "color"
-    },
-    sidebarBorder: {
-      selector: '[data-sidebar]',
-      variable: "sidebarBorder",
-      type: "border",
-      responsive: !0
-    },
-    sidebarWidgetsSpacing: {
-      selector: ".ct-sidebar",
-      variable: "sidebarWidgetsSpacing",
-      responsive: !0,
-      unit: ""
-    },
-    sidebarInnerSpacing: {
-      selector: "[data-sidebar]",
-      variable: "sidebarInnerSpacing",
-      responsive: !0,
-      unit: ""
-    },
-    sidebarShadow: {
-      selector: '[data-sidebar]',
-      variable: "sidebarShadow",
-      responsive: !0
-    },
-    relatedPostsContainerSpacing: {
-      selector: ".ct-related-posts",
-      variable: "padding",
-      responsive: !0,
-      unit: ""
-    },
-    relatedPostsLabelColor: {
-      selector: ".ct-related-posts-label",
-      variable: "color",
-      type: "color"
-    },
-    relatedPostsLinkColor: [{
-      selector: ".related-entry-title",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".related-entry-title",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    relatedPostsMetaColor: [{
-      selector: ".ct-related-posts .entry-meta",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".ct-related-posts .entry-meta",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    relatedThumbRadius: {
-      selector: ".ct-related-posts .ct-image-container",
-      type: "spacing",
-      variable: "borderRadius",
-      responsive: !0
-    },
-    postCommentsContainerWidth: {
-      selector: ".single .ct-comments",
-      variable: "width",
-      unit: "%",
-      responsive: !0
-    },
-    pageCommentsContainerWidth: {
-      selector: ".page .ct-comments",
-      variable: "width",
-      unit: "%",
-      responsive: !0
-    },
-    postCommentsFontColor: [{
-      selector: ".single .ct-comments",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".single .ct-comments",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    pageCommentsFontColor: [{
-      selector: ".page .ct-comments",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".page .ct-comments",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    postNavSpacing: {
-      selector: ".post-navigation",
-      variable: "margin",
-      responsive: !0,
-      unit: ""
-    },
-    postsNavFontColor: [{
-      selector: ".post-navigation",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".post-navigation",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    topShareBoxSpacing: {
-      selector: '.share-box[data-location="top"]',
-      variable: "margin",
-      responsive: !0,
-      unit: ""
-    },
-    bottomShareBoxSpacing: {
-      selector: '.share-box[data-location="bottom"]',
-      variable: "margin",
-      responsive: !0,
-      unit: ""
-    },
-    shareItemsIconColor: [{
-      selector: '.share-box[data-type="type-1"]',
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: '.share-box[data-type="type-1"]',
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    shareItemsBorder: {
-      selector: '.share-box[data-type="type-1"]',
-      variable: "borderColor",
-      type: "color"
-    },
-    shareItemsIcon: {
-      selector: '.share-box[data-type="type-2"]',
-      variable: "color",
-      type: "color"
-    },
-    shareItemsBackground: [{
-      selector: '.share-box[data-type="type-2"]',
-      variable: "backgroundColor",
-      type: "color:default"
-    }, {
-      selector: '.share-box[data-type="type-2"]',
-      variable: "backgroundColorHover",
-      type: "color:hover"
-    }],
-    postBackground: {
-      selector: ".single .site-main",
-      variable: "siteBackground",
-      type: "color"
-    },
-    singleContentBoxedSpacing: {
-      selector: '.post[data-content="boxed"]',
-      variable: "contentBoxedSpacing",
-      responsive: !0,
-      unit: ""
-    },
-    postContentBoxedShadow: {
-      selector: '.post[data-content="boxed"]',
-      type: "box-shadow",
-      variable: "boxShadow",
-      responsive: !0
-    },
-    singleContentBackground: {
-      variable: "singleContentBackground",
-      type: "color"
-    },
-    pageBackground: {
-      selector: ".page .site-main",
-      variable: "siteBackground",
-      type: "color"
-    },
-    pageContentBoxedShadow: {
-      selector: '.page[data-content="boxed"]',
-      type: "box-shadow",
-      variable: "boxShadow",
-      responsive: !0
-    },
-    pageContentBoxedSpacing: {
-      selector: '.page[data-content="boxed"]',
-      variable: "contentBoxedSpacing",
-      responsive: !0,
-      unit: ""
-    },
-    pageContentBackground: {
-      variable: "pageContentBackground",
-      type: "color"
-    },
-    singleAuthorBoxSpacing: {
-      selector: ".author-box",
-      variable: "spacing",
-      responsive: !0,
-      unit: ""
-    },
-    singleAuthorBoxBackground: {
-      selector: '.author-box[data-type="type-1"]',
-      variable: "backgroundColor",
-      type: "color"
-    },
-    singleAuthorBoxShadow: {
-      selector: '.author-box[data-type="type-1"]',
-      type: "box-shadow",
-      variable: "boxShadow",
-      responsive: !0
-    },
-    singleAuthorBoxBorder: {
-      selector: '.author-box[data-type="type-2"]',
-      variable: "borderColor",
-      type: "color"
-    },
-    footerWidgetsTitleColor: {
-      selector: ".footer-widgets .widget-title",
-      variable: "color",
-      type: "color"
-    },
-    footerWidgetsFontColor: [{
-      selector: ".footer-widgets",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".footer-widgets",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    widgetsAreaDivider: {
-      selector: ".footer-widgets[data-divider]",
-      variable: "widgetsAreaDivider",
-      type: "border"
-    },
-    widgetAreaSpacing: {
-      selector: ".footer-widgets",
-      variable: "widgetAreaSpacing",
-      responsive: !0,
-      unit: ""
-    },
-    footerMenuItemsSpacing: {
-      selector: ".footer-menu",
-      variable: "menuItemsSpacing",
-      responsive: !0,
-      unit: "px"
-    },
-    footerPrimaryColor: [{
-      selector: ".footer-primary-area",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".footer-primary-area",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    footerPrimaryBackground: {
-      selector: ".footer-primary-area",
-      variable: "backgroundColor",
-      type: "color"
-    },
-    footerPrimarySpacing: {
-      selector: ".footer-primary-area",
-      variable: "spacing",
-      responsive: !0,
-      unit: ""
-    },
-    copyrightText: {
-      selector: ".footer-copyright",
-      variable: "color",
-      type: "color"
-    },
-    copyrightBackground: {
-      selector: ".footer-copyright",
-      variable: "backgroundColor",
-      type: "color"
-    },
-    copyrightSpacing: {
-      selector: ".footer-copyright",
-      variable: "spacing",
-      responsive: !0,
-      unit: ""
-    },
-    shopCardsGap: {
-      selector: ".shop-entries",
-      variable: "cardsGap",
-      responsive: !0,
-      unit: "px"
-    },
-    productGalleryWidth: {
-      selector: ".product-entry-wrapper",
-      variable: "productGalleryWidth",
-      unit: "%"
-    },
-    cardProductTitleColor: [{
-      selector: ".woocommerce-loop-product__title",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".woocommerce-loop-product__title",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    cardProductCategoriesColor: [{
-      selector: "article .product-categories",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: "article .product-categories",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    cardProductPriceColor: {
-      selector: ".shop-entry-card .price",
-      variable: "color",
-      type: "color"
-    },
-    cardStarRatingColor: {
-      selector: ".shop-entry-card",
-      variable: "starRatingColor",
-      type: "color"
-    },
-    saleBadgeColor: [{
-      selector: ".shop-entry-card",
-      variable: "saleBadgeTextColor",
-      type: "color:text"
-    }, {
-      selector: ".shop-entry-card",
-      variable: "saleBadgeBackgroundColor",
-      type: "color:background"
-    }],
-    cardProductImageOverlay: {
-      selector: ".shop-entry-card",
-      variable: "imageOverlay",
-      type: "color"
-    },
-    cardProductAction1Color: [{
-      selector: '[data-layout="grid"] .woo-card-actions',
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: '[data-layout="grid"] .woo-card-actions',
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    cardProductAction2Color: [{
-      selector: '[data-layout="shop-simple"] .woo-card-actions',
-      variable: "buttonInitialColor",
-      type: "color:default"
-    }, {
-      selector: '[data-layout="shop-simple"] .woo-card-actions',
-      variable: "buttonHoverColor",
-      type: "color:hover"
-    }],
-    cardProductBackground: {
-      selector: ".shop-entry-card",
-      variable: "backgroundColor",
-      type: "color"
-    },
-    cardProductShadow: {
-      selector: ".shop-entry-card",
-      type: "box-shadow",
-      variable: "boxShadow",
-      responsive: !0
-    },
-    singleProductTitleColor: {
-      selector: ".entry-summary .product_title",
-      variable: "color",
-      type: "color"
-    },
-    singleProductPriceColor: {
-      selector: ".entry-summary .price",
-      variable: "color",
-      type: "color"
-    },
-    singleSaleBadgeColor: [{
-      selector: ".product > span.onsale",
-      variable: "saleBadgeTextColor",
-      type: "color:text"
-    }, {
-      selector: ".product > span.onsale",
-      variable: "saleBadgeBackgroundColor",
-      type: "color:background"
-    }],
-    singleStarRatingColor: {
-      selector: ".entry-summary,.woocommerce-tabs",
-      variable: "starRatingColor",
-      type: "color"
-    },
-    wooNoticeContent: {
-      selector: ".demo_store",
-      variable: "color",
-      type: "color"
-    },
-    wooNoticeBackground: {
-      selector: ".demo_store",
-      variable: "backgroundColor",
-      type: "color"
-    },
-    topButtonOffset: {
-      selector: ".ct-back-to-top",
-      variable: "bottom",
-      responsive: !0,
-      unit: ""
-    },
-    topButtonIconColor: [{
-      selector: ".ct-back-to-top",
-      variable: "color",
-      type: "color:default"
-    }, {
-      selector: ".ct-back-to-top",
-      variable: "colorHover",
-      type: "color:hover"
-    }],
-    topButtonShapeBackground: [{
-      selector: ".ct-back-to-top",
-      variable: "backgroundColor",
-      type: "color:default"
-    }, {
-      selector: ".ct-back-to-top",
-      variable: "backgroundColorHover",
-      type: "color:hover"
-    }],
-    topButtonShadow: {
-      selector: ".ct-back-to-top",
-      type: "box-shadow",
-      variable: "boxShadow",
-      responsive: !0
-    },
-  }))
+  }, Object(o.getHeroVariables)(), {}, Object(n.getPostListingVariables)(), {}, Object(s.getPaginationVariables)(), {}, Object(a.getTypographyVariablesFor)(), {}, Object(c.getBackgroundVariablesFor)(), {}, Object(i.getFormsVariablesFor)(),   
+    ct_localizations.sync_vars // @changed
+  ))
 }, function(e, t, r) {
   "use strict";
   r.r(t);

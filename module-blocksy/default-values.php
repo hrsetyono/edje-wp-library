@@ -3,7 +3,7 @@
 /**
  * Values for default options
  */
-add_filter( 'h_customizer_defaults', function( $defaults ) {
+add_filter( 'custy_default_values', function( $defaults ) {
   return wp_parse_args( [
 
     // CORE SETTINGS
@@ -36,6 +36,7 @@ add_filter( 'h_customizer_defaults', function( $defaults ) {
     'smallFontSize' => '14px',
     'mediumFontSize' => '18px',
     'largeFontSize' => '22px',
+    'hugeFontSize' => '32px',
 
     'headingTypography' => blocksy_typography_default_values([
       'family' => 'System Default',
@@ -126,6 +127,7 @@ add_filter( 'h_customizer_defaults', function( $defaults ) {
       'inset' => false,
       'color' => [ 'color' => 'rgba(0, 0, 0, 0.22)' ],
     ],// 0 15px 12px rgba(0,0,0,0.22)
+
 
   ], $defaults );
 });

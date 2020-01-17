@@ -1,18 +1,26 @@
 <?php
 
-add_action( 'after_setup_theme' , '_h_load_blocksy' );
+// the order must be last
+add_action( 'after_setup_theme' , '_h_load_custy', 9999 );
 
-function _h_load_blocksy() {
-  require_once __DIR__ . '/helpers.php';
-  require_once __DIR__ . '/inc/_index.php';
+function _h_load_custy() {
+  if( !get_theme_support( 'custy-customizer' ) ) { return; }
+  
+    require_once __DIR__ . '/inc/_index.php';
 
-  require_once __DIR__ . '/enqueue.php';
+    require_once __DIR__ . '/enqueue.php';
+    require_once __DIR__ . '/core-sections.php';
+    require_once __DIR__ . '/core-values.php';
+    require_once __DIR__ . '/output-styles.php';
 
-  require_once __DIR__ . '/core-options.php';
-  require_once __DIR__ . '/core-values.php';
-  require_once __DIR__ . '/output-styles.php';
-  require_once __DIR__ . '/format-styles.php';
-  require_once __DIR__ . '/format-options.php';
+    require_once __DIR__ . '/format-values.php';
+    require_once __DIR__ . '/format-sections.php';
+    require_once __DIR__ . '/format-sync.php';
+
+    require_once __DIR__ . '/builder.php';
+    require_once __DIR__ . '/builder-footer-options.php';
+    require_once __DIR__ . '/header-options.php';
+    require_once __DIR__ . '/header-values.php';
 }
 
 /////
@@ -24,33 +32,44 @@ function _h_load_blocksy() {
  * @return mixed - The mod value or "false" if not found
  */
 function h_get_mod( $id ) {
-  $defaults = _h_customizer_get_defaults();
-  return $defaults[ $id ] ?? false;
+  $value = get_theme_mod( $id );
+
+  // if value not found, return default
+  if( !$value ) {
+    $defaults = Custy::get_default_values();
+    $value = $defaults[ $id ] ?? false;
+  }
+
+  return $value;
 }
 
 
-/**
- * Get the default value of theme mods
- */
-function _h_customizer_get_defaults() {
-  global $h_defaults; // cache
+class Custy {
 
-  if( empty( $h_defaults ) ) {
-    $h_defaults = apply_filters( 'h_customizer_defaults', [] );
-  }
-  
-  return $h_defaults;
-}
+  /**
+   * Get the default value of theme mods
+   */
+  function get_default_values() {
+    global $custy_default_values; // cache
 
-/**
- * Get the list of options for theme mods
- */
-function _h_customizer_get_options() {
-  global $h_options; // cache
-
-  if( empty( $h_options ) ) {
-    $h_options = apply_filters( 'h_customizer_options', [] );
+    if( empty( $custy_default_values ) ) {
+      $custy_default_values = apply_filters( 'custy_default_values', [] );
+    }
+    
+    return $custy_default_values;
   }
 
-  return $h_options;
+
+  /**
+   * Get the list of sections for theme mods
+   */
+  static function get_sections() {
+    global $custy_sections; // cache
+
+    if( empty( $custy_sections ) ) {
+      $custy_sections = apply_filters( 'custy_sections', [] );
+    }
+
+    return $custy_sections;
+  }
 }

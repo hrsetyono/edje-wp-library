@@ -40,38 +40,51 @@ function blocksy_get_patterns_svgs_list() {
 	);
 }
 
+/**
+ * @changed - the palette naming and add textColor into palette
+ */
 function blocksy_get_svg_pattern( $name, $color = '#ccc' ) {
 	$opacity = 1;
+	$defaults = Custy::get_default_values();
 
-	$colorPalette = blocksy_get_colors(
+	$palette_main = blocksy_get_colors(
 		get_theme_mod('colorPalette'),
-		[
-			'color1' => [ 'color' => '#3eaf7c' ],
-			'color2' => [ 'color' => '#33a370' ],
-			'color3' => [ 'color' => 'rgba(44, 62, 80, 0.9)' ],
-			'color4' => [ 'color' => 'rgba(44, 62, 80, 1)' ],
-			'color5' => [ 'color' => '#ffffff' ],
-		]
+		$defaults['colorPalette']
 	);
 
-	if (strpos($color, 'paletteColor1') !== false) {
+	$palette_text = blocksy_get_colors(
+		get_theme_mod('textColor'),
+		$defaults['textColor']
+	);
+
+	$colorPalette = array_merge( $palette_main, $palette_text );
+
+	if (strpos($color, 'var(--main)') !== false) {
 		$color = $colorPalette['color1'];
 	}
 
-	if (strpos($color, 'paletteColor2') !== false) {
+	if (strpos($color, 'var(--mainDark)') !== false) {
 		$color = $colorPalette['color2'];
 	}
 
-	if (strpos($color, 'paletteColor3') !== false) {
+	if (strpos($color, 'var(--mainLight)') !== false) {
 		$color = $colorPalette['color3'];
 	}
 
-	if (strpos($color, 'paletteColor4') !== false) {
+	if (strpos($color, 'var(--sub)') !== false) {
 		$color = $colorPalette['color4'];
 	}
 
-	if (strpos($color, 'paletteColor5') !== false) {
+	if (strpos($color, 'var(--subLight)') !== false) {
 		$color = $colorPalette['color5'];
+	}
+
+	if (strpos($color, 'var(--text)') !== false) {
+		$color = $colorPalette['default'];
+	}
+
+	if (strpos($color, 'var(--textInvert)') !== false) {
+		$color = $colorPalette['invert'];
 	}
 
 	if (strpos($color, 'rgb') !== false) {

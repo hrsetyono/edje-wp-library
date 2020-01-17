@@ -34,19 +34,28 @@ class Blocksy_Customizer_Builder_Render_Columns {
 		return $this->section_value['sections'][0];
 	}
 
+	// @changed - return content from filter, if any
 	public function render() {
 		$content = '';
 
 		$footer = $this->get_current_section();
 		$atts = $footer['settings'];
 
+		// check for content from filter, if any
+		$content = apply_filters( 'h_render_footer', $content, $footer );
+
+		if( !empty( $content ) ) {
+			return $content;
+		}
+
+		// if no content from filter, create default one
 		$reveal_output = [];
 
 		if (blocksy_default_akg('has_reveal_effect', $atts, 'no') === 'yes') {
 			$reveal_output['data-footer-reveal'] = 'no';
 		}
 
-		foreach ($this->get_current_section()['rows'] as $row) {
+		foreach( $footer['rows'] as $row ) {
 			$content .= $this->render_row($row);
 		}
 
@@ -67,12 +76,12 @@ class Blocksy_Customizer_Builder_Render_Columns {
 		);
 	}
 
-	public function render_row($row) {
+	public function render_row( $row ) {
 		if ($this->is_row_empty($row)) {
 			return '';
 		}
 
-		$row_config = $this->get_item_config_for($row['id']);
+		$row_config = $this->get_item_config_for( $r['id'] );
 
 		$simplified_id = str_replace(
 			'-row',
@@ -219,7 +228,7 @@ class Blocksy_Customizer_Builder_Render_Columns {
 		$result .= '<div ' . blocksy_attr_to_html($columns_wrapper_attr) . '>';
 
 		foreach ($row['columns'] as $index => $column) {
-			$items = $this-> render_items_collection($column);
+			$items = $this->render_items_collection($column);
 
 			$column_id = '';
 
