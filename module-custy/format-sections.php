@@ -1,18 +1,27 @@
 <?php
 
+new Custy_FormatSections();
+
 /**
  * Format the simplified option args into complete one that's accepted by Blocksy
  */
 class Custy_FormatSections {
   function __construct() {
+    add_filter( 'custy_sections', [$this, 'get_sections_then_format'], 99999 );
   }
 
   /**
-   * Format all sections
-   * 
    * @filter custy_sections
    */
-  function format_all( $sections ) {
+  function get_sections_then_format( $sections ) : array {
+    return $this->format_all( $sections );
+  }
+
+
+  /**
+   * Format all sections
+   */
+  function format_all( $sections ) : array {
     foreach( $sections as $section_id => &$s ) {
       if( !isset( $s['options'] ) ) { continue; }
       

@@ -1,7 +1,8 @@
 <?php
 
-class H_Customizer_OutputStyles {
+new Custy_OutputStyles();
 
+class Custy_OutputStyles {
   public $theme_mods = [];
   public $styles = [];
 
@@ -19,10 +20,10 @@ class H_Customizer_OutputStyles {
     $this->theme_mods = wp_parse_args( get_theme_mods(), Custy::get_default_values() );
     
     // get all css value from options data
-    $sections = _h_customizer_get_options();
+    $sections = Custy::get_sections();
     $this->compile_from_sections( $sections );
 
-    $fs = new H_Customizer_FormatValues( $this->styles );
+    $fs = new Custy_FormatValues( $this->styles );
     $formatted_styles = $fs->format();
 
     $this->output( $formatted_styles );
@@ -53,7 +54,7 @@ class H_Customizer_OutputStyles {
       ],
     ];
 
-    $fs = new H_Customizer_FormatValues( $admin_styles );
+    $fs = new Custy_FormatValues( $admin_styles );
     $formatted_styles = $fs->format();
 
     $this->output( $formatted_styles );
@@ -66,8 +67,8 @@ class H_Customizer_OutputStyles {
    * Output the styles
    */
   private function output( $styles ) {
-    $mobile_media = h_get_mod( 'mobile_media' );
-    $tablet_media = h_get_mod( 'tablet_media' );
+    $mobile_media = Custy::get_mod( 'mobile_media' );
+    $tablet_media = Custy::get_mod( 'tablet_media' );
 
     $output = '';
     $medias = [
@@ -219,6 +220,3 @@ class H_Customizer_OutputStyles {
     return $value;
   }
 }
-
-
-new H_Customizer_OutputStyles();

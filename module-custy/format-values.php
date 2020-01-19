@@ -2,7 +2,7 @@
 /**
  * Format the value of theme mods before outputted as CSS
  */
-class H_Customizer_FormatValues {
+class Custy_FormatValues {
   public $css = [];
   public $tablet_css = [];
   public $mobile_css = [];

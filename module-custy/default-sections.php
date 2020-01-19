@@ -1,16 +1,6 @@
 <?php
 
-add_filter( 'custy_sections', '_custy_set_default_sections', 0 );
-add_filter( 'custy_sections', '_custy_format_sections', 99999 );
-
-/**
- * Change the sections into blocksy-compatible format
- * @filter custy_sections
- */
-function _custy_format_sections() {
-  $fs = new Custy_FormatSections();
-  $fs->format_all();
-}
+add_filter( 'custy_sections', '_custy_set_default_sections', 1 );
 
 /**
  * The default options: Color, Header, and Footer

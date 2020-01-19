@@ -2,20 +2,20 @@
 /**
  * Get the list of options for theme mods
  */
-function _h_get_header_sections() {
-  global $h_header_sections; // cache
+function _custy_get_header_sections() {
+  global $custy_header_sections; // cache
 
-  if( empty( $h_header_sections ) ) {
-    $h_header_sections = apply_filters( 'h_header_sections', [] );
+  if( empty( $custy_header_sections ) ) {
+    $custy_header_sections = apply_filters( 'custy_header_sections', [] );
   }
 
-  return $h_header_sections;
+  return $custy_header_sections;
 }
 
 /**
  * Options list for Header
  */
-add_filter( 'h_header_sections', function( $items ) {
+add_filter( 'custy_header_sections', function( $items ) {
 
   $row_options = [
     'headerRowBackground' => [

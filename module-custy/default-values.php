@@ -4,6 +4,7 @@
  * Values for default options
  */
 add_filter( 'custy_default_values', function( $defaults ) {
+
   return wp_parse_args( [
 
     // CORE SETTINGS

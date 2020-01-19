@@ -81,7 +81,7 @@ class Blocksy_Customizer_Builder_Render_Columns {
 			return '';
 		}
 
-		$row_config = $this->get_item_config_for( $r['id'] );
+		$row_config = $this->get_item_config_for( $row['id'] );
 
 		$simplified_id = str_replace(
 			'-row',

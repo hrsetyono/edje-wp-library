@@ -1,12 +1,12 @@
 <?php
 
-add_filter( 'custy_default_values', '_h_header_defaults' );
-add_filter( 'custy_default_values', '_h_header_placement_defaults' );
+add_filter( 'custy_default_values', '_custy_header_defaults' );
+add_filter( 'custy_default_values', '_custy_header_placement_defaults' );
 
 /**
  * Add default values for Header items
  */
-function _h_header_defaults( $defaults ) {
+function _custy_header_defaults( $defaults ) {
   return wp_parse_args( [
 
     'offcanvas' => [
@@ -46,7 +46,7 @@ function _h_header_defaults( $defaults ) {
 /**
  * Add default values for Header placement
  */
-function _h_header_placement_defaults( $defaults ) {
+function _custy_header_placement_defaults( $defaults ) {
   $row_value = [
     'headerRowBackground' => blocksy_background_default_value([
       'backgroundColor' => [

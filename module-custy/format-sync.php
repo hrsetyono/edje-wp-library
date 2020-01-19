@@ -2,14 +2,14 @@
 /**
  * Format the value of theme mods before outputted
  */
-class H_Customizer_FormatSync {
+class Custy_FormatSync {
   private $sections;
   public $vars = [];
   public $typography_vars = [];
   public $background_vars = [];
 
   function __construct() {
-    $this->sections = _h_customizer_get_options();
+    $this->sections = Custy::get_sections();
   }
 
   function get() {

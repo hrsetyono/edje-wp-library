@@ -38,7 +38,7 @@ class H_BuilderData {
    * 
    */
   private function get_values( $section_id ) {
-    $sections = _h_get_header_sections();
+    $sections = _custy_get_header_sections();
     $section = $sections[ $section_id ];
 
 
