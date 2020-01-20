@@ -7534,7 +7534,7 @@
         label: Object(a.__)("Line Height", "blocksy"),
         type: "ct-slider",
         value: t.value["line-height"],
-        responsive: t.typography_responsive || !0,
+        responsive: false, // @changed - used to be responsive
         units: [{
           unit: "",
           min: 0,
@@ -7575,7 +7575,7 @@
         label: Object(a.__)("Letter Spacing", "blocksy"),
         type: "ct-slider",
         value: t.value["letter-spacing"],
-        responsive: t.typography_responsive || !0,
+        responsive: false, // @changed - used to be responsive
         units: [{
           unit: "em",
           min: 0,

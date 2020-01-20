@@ -3,71 +3,88 @@
  * Format the value of theme mods before outputted as CSS
  */
 class Custy_FormatValues {
-  public $css = [];
+  public $desktop_css = [];
   public $tablet_css = [];
   public $mobile_css = [];
 
-  function __construct( $css ) {
-    $this->css = $css;
+  function __construct() {
   }
 
   /**
-   * Format the raw theme mods value
+   * Format the raw theme mods value for use as CSS
    */
-  function format() {
-    foreach( $this->css as $selector => &$styles ):
-    foreach( $styles as $prop => &$value ):
+  function format_for_css( $styles ) {
+    foreach( $styles as $selector => &$vars ):
+    foreach( $vars as $prop => &$value ):
+
+      $value = $this->format( $value );
 
       // TYPOGRAPHY
-      if( isset( $value['family'] ) ) {
-        $typo_styles = $this->_format_typography( $value, $prop );
+      if( isset( $value['fontFamily'] ) ) {
+        
+        $value = $this->_prefix_styles( $value, $prop );
 
-        // set responsive size
-        foreach( $typo_styles as $p => &$v ) {
+        foreach( $value as $p => &$v ) {
           if( isset( $v['desktop'] ) ) {
-            $this->_set_responsive_size( $selector, $p, $v );
-            $v = $v['desktop'];
+            $v = $this->_set_responsive_size( $selector, $p, $v );
           }
         }
-        // replace the old styles
-        $this->array_splice_assoc( $styles, $prop, 1, $typo_styles );
-      }
 
-      // SPACING
-      elseif( isset($value['top']) || isset($value['desktop']['top']) ) {
-        $value = $this->_format_spacing( $value );
-      }
-
-      // BORDER
-      elseif( isset( $value['style'] ) && isset( $value['width'] ) ) {
-        $value = $this->_format_border( $value );
+        $this->array_splice_assoc( $vars, $prop, 1, $value );
       }
 
       // BACKGROUND
-      elseif( isset( $value['background_type'] ) ) {
-        $bg_styles = $this->_format_background( $value, $prop );
-        $this->array_splice_assoc( $styles, $prop, 1, $bg_styles );
+      elseif( isset( $value['background'] ) ) {
+        $value = $this->_prefix_styles( $value, $prop );
+        $this->array_splice_assoc( $vars, $prop, 1, $value );
       }
 
-      // BOX SHADOW
-      elseif( isset( $value['inset'] ) ) {
-        $value = blocksy_compute_box_shadow_var_for( $value );
-      }
-
-      // Responsive (slider, spacing)
+      // SLIDER or SPACING
       if( isset( $value['desktop'] ) ) {
-        $this->_set_responsive_size( $selector, $prop, $value );
-        $value = $value['desktop'];
+        $value = $this->_set_responsive_size( $selector, $prop, $value );
       }
 
     endforeach;
     endforeach;
     
     return [
-      'css' => $this->css,
+      'desktop_css' => $styles,
       'tablet_css' => $this->tablet_css,
       'mobile_css' => $this->mobile_css,
     ];
+  }
+
+
+  /**
+   * Format a raw theme_mod value
+   */
+  function format( $value ) {
+    // TYPOGRAPHY
+    if( isset( $value['family'] ) ) {
+      $value = $this->_format_typography( $value );
+    }
+
+    // SPACING
+    elseif( isset($value['top']) || isset($value['desktop']['top']) ) {
+      $value = $this->_format_spacing( $value );
+    }
+
+    // BORDER
+    elseif( isset( $value['style'] ) && isset( $value['width'] ) ) {
+      $value = $this->_format_border( $value );
+    }
+
+    // BACKGROUND
+    elseif( isset( $value['background_type'] ) ) {
+      $value = $this->_format_background( $value );
+    }
+
+    // BOX SHADOW
+    elseif( isset( $value['inset'] ) ) {
+      $value = blocksy_compute_box_shadow_var_for( $value );
+    }
+
+    return $value;
   }
 
 
@@ -79,12 +96,26 @@ class Custy_FormatValues {
    * @param $value (array) - The theme_mod value
    * @param $prefix (string) - The CSS Var prefix. $ sign will be replaced
    */
-  private function _format_typography( $value, $prefix = '--$' ) {
+  private function _format_typography( $value ) {
     $m = $value;
 
-    $m['size'] = $this->_format_sizes( $m['size'] );
-    $m['line-height'] = $this->_format_sizes( $m['line-height'], 'var(--lineHeight)' );
-    $m['letter-spacing'] = $this->_format_sizes( $m['letter-spacing'], 'var(--letterSpacing)' );
+    // Font Size
+    if( $m['size'] === 'CT_CSS_SKIP_RULE' ) {  // if default value
+      $m['size'] = 'var(--fontSize)';
+    }
+    elseif( isset( $m['size']['desktop'] ) ) {  // if responsive
+      if( $m['size']['desktop'] === 'CT_CSS_SKIP_RULE' ) {
+        $m['size'] = 'var(--fontSize)';
+      }
+
+      if( $m['size']['tablet'] === 'CT_CSS_SKIP_RULE' ) {
+        unset( $m['size']['tablet'] );
+      }
+
+      if( $m['size']['mobile'] === 'CT_CSS_SKIP_RULE' ) {
+        unset( $m['size']['mobile'] );
+      }
+    }
 
     // Font family
     switch( $m['family'] ) {
@@ -119,18 +150,17 @@ class Custy_FormatValues {
       ];
     }
 
-    // Text decoration
-    if( $m['text-decoration'] === 'CT_CSS_SKIP_RULE' ) {
-      $m['text-decoration'] = 'var(--textDecoration)';
-    }
-
+    // Line Height
+    $m['line-height'] = $m['line-height'] === 'CT_CSS_SKIP_RULE' ? 'var(--lineHeight)' : $m['line-height'];
+    // Letter Spacing
+    $m['letter-spacing'] = $m['letter-spacing'] === 'CT_CSS_SKIP_RULE' ? 'var(--letterSpacing)' : $m['letter-spacing'];
     // Text transform
-    if( $m['text-transform'] === 'CT_CSS_SKIP_RULE' ) {
-      $m['text-transform'] = 'var(--textTransform)';
-    }
+    $m['text-transform'] = $m['text-transform'] === 'CT_CSS_SKIP_RULE' ? 'var(--textTransform)' : $m['text-transform'];
+    //  Text Decoration
+    $m['text-decoration'] = $m['text-decoration'] === 'CT_CSS_SKIP_RULE' ? 'var(--textDecoration)' : $m['text-decoration'];    
 
-    // Format CSS
-    $styles = [
+
+    return [
       'fontSize' => $m['size'],
       'fontFamily' => $m['family'],
       'fontStyle' => $m['variation']['style'],
@@ -140,10 +170,6 @@ class Custy_FormatValues {
       'textDecoration' => $m['text-decoration'],
       'textTransform' => $m['text-transform'],
     ];
-
-    // Add prefix
-    $styles = $this->_prefix_styles( $styles, $prefix );
-    return $styles;
   }
 
 
@@ -179,37 +205,12 @@ class Custy_FormatValues {
 
     return $value['top'] . ' ' . $value['right'] . ' ' . $value['bottom'] . ' ' . $value['left'];
   }
-  
-  /**
-   * Format mod that has desktop / tablet / mobile
-   */
-  private function _format_sizes( $value, $default = 'var(--fontSize)' ) {
-    // set default value if empty
-    if( $value === 'CT_CSS_SKIP_RULE' ) {
-      $value = $default;
-    }
-    // if responsive, return desktop
-    elseif( isset( $value['desktop'] ) ) {
-      if( $value['desktop'] === 'CT_CSS_SKIP_RULE' ) {
-        $value = $default;
-      }
 
-      if( $value['tablet'] === 'CT_CSS_SKIP_RULE' ) {
-        unset( $value['tablet'] );
-      }
-
-      if( $value['mobile'] === 'CT_CSS_SKIP_RULE' ) {
-        unset( $value['mobile'] );
-      }
-    }
-
-    return $value;
-  }
 
   /**
    * Format CT Background type
    */
-  private function _format_background( $value, $prefix = '--$' ) {
+  private function _format_background( $value ) {
     $styles = [];
     $background_color = $value['backgroundColor']['default']['color'];
     
@@ -248,7 +249,6 @@ class Custy_FormatValues {
         break;
     }
 
-    $styles = $this->_prefix_styles( $styles, $prefix );
     return $styles;
   }
 
@@ -281,7 +281,9 @@ class Custy_FormatValues {
 
   
   /**
-   * Populate the CSS for tablet and mobile
+   * Move the tablet & mobile css to the class value, returning only the desktop size
+   * 
+   * @return mixed - The desktop value
    */
   private function _set_responsive_size( $selector, $prop, $value ) {
     // set tablet css
@@ -301,12 +303,28 @@ class Custy_FormatValues {
 
       $this->mobile_css[ $selector ][ $prop ] = $value['mobile'];
     }
+
+    return $value['desktop'];
   }
 
   //// HELPER
 
   /**
-   * Array splice for associative array
+   * Replace the single key into multiple keys of its children. Used for the CSS Var that has prefix
+   * 
+   * Example:
+   * 
+   *     '--button$' => [
+   *       'buttonFontSize' => '16px',
+   *       'buttonTextTransform' => 'uppercase',
+   *       'buttonFontWeight' => '700'
+   *     ]
+   * 
+   * Into:
+   * 
+   *     'buttonFontSize' => '16px',
+   *     'buttonTextTransform' => 'uppercase',
+   *     'buttonFontWeight' => '700'
    */
   private function array_splice_assoc(&$input, $offset, $length, $replacement) {
     $replacement = (array) $replacement;

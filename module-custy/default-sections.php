@@ -1,10 +1,8 @@
 <?php
 
-add_filter( 'custy_sections', '_custy_set_default_sections', 1 );
-
 /**
- * The default options: Color, Header, and Footer
- * @filter custy_sections
+ * Set default options: Core, Header, and Footer
+ * @filter custy_sections 1
  */
 function _custy_set_default_sections( $sections ) {
   $textUnits = [

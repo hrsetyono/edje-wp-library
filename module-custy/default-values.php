@@ -2,9 +2,11 @@
 
 /**
  * Values for default options
+ * 
+ * @filter custy_default_values
  */
-add_filter( 'custy_default_values', function( $defaults ) {
-
+function _custy_set_default_values( $defaults ) {
+  
   return wp_parse_args( [
 
     // CORE SETTINGS
@@ -131,4 +133,4 @@ add_filter( 'custy_default_values', function( $defaults ) {
 
 
   ], $defaults );
-});
+}

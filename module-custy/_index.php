@@ -10,7 +10,10 @@ function _h_load_custy() {
 
   require_once __DIR__ . '/default-sections.php';
   require_once __DIR__ . '/default-values.php';
-  require_once __DIR__ . '/output-styles.php';
+
+  require_once __DIR__ . '/stylesheet.php';
+  require_once __DIR__ . '/stylesheet-compile.php';
+  require_once __DIR__ . '/stylesheet-output.php';
 
   require_once __DIR__ . '/format-values.php';
   require_once __DIR__ . '/format-sections.php';
@@ -18,14 +21,27 @@ function _h_load_custy() {
 
   // require_once __DIR__ . '/builder.php';
   // require_once __DIR__ . '/builder-footer-options.php';
-  // require_once __DIR__ . '/header-options.php';
-  // require_once __DIR__ . '/header-values.php';
+  require_once __DIR__ . '/header-format.php';
+  require_once __DIR__ . '/header-options.php';
+  require_once __DIR__ . '/header-values.php';
+
+  
+  add_filter( 'custy_default_values', '_custy_set_default_values' );
+  
+  add_filter( 'custy_sections', '_custy_set_default_sections', 1 );
+  add_filter( 'custy_sections', '_custy_format_sections', 99999 );
+
+  add_action( 'wp_head', '_custy_render_stylesheet', 0 );
+  add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
 }
 
 /////
 
 
 class Custy {
+
+  //////
+
   /**
    * Get theme mod that is generated with Blocksy
    * 
@@ -70,5 +86,19 @@ class Custy {
     }
 
     return $custy_sections;
+  }
+
+  
+  /**
+   * Get the list of options for theme mods
+   */
+  static function get_header_sections() {
+    global $custy_header_sections; // cache
+
+    if( empty( $custy_header_sections ) ) {
+      $custy_header_sections = apply_filters( 'custy_header_sections', [] );
+    }
+
+    return $custy_header_sections;
   }
 }

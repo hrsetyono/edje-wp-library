@@ -74,7 +74,7 @@ class Blocksy_Customizer_Builder_Render_Placements {
 		$header = $this->get_current_section()[$this->device];
 
 		// check for content from filter, if any
-		$content = apply_filters( 'h_render_header', $content, $header );
+		$content = apply_filters( 'custy_render_header', $content, $header );
 
 		if( !empty( $content ) ) {
 			return $content;

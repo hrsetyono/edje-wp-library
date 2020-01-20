@@ -1,18 +1,5 @@
 <?php
 /**
- * Get the list of options for theme mods
- */
-function _custy_get_header_sections() {
-  global $custy_header_sections; // cache
-
-  if( empty( $custy_header_sections ) ) {
-    $custy_header_sections = apply_filters( 'custy_header_sections', [] );
-  }
-
-  return $custy_header_sections;
-}
-
-/**
  * Options list for Header
  */
 add_filter( 'custy_header_sections', function( $items ) {

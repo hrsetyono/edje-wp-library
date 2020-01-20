@@ -1,12 +1,12 @@
 <?php
 
-add_filter( 'custy_default_values', '_custy_header_defaults' );
-add_filter( 'custy_default_values', '_custy_header_placement_defaults' );
+add_filter( 'custy_default_values', '_custy_header_default_values' );
+add_filter( 'custy_default_values', '_custy_header_placement_default_values' );
 
 /**
  * Add default values for Header items
  */
-function _custy_header_defaults( $defaults ) {
+function _custy_header_default_values( $defaults ) {
   return wp_parse_args( [
 
     'offcanvas' => [
@@ -18,11 +18,15 @@ function _custy_header_defaults( $defaults ) {
       'offcanvasShadow' => 'var(--shadow2)'
     ],
 
-    'header_menu' => [
+    'menu' => [
+      'menu' => blocksy_get_default_menu(),
+    ],
+
+    'mobile-menu' => [
       'menu' => blocksy_get_default_menu(),
     ],
   
-    'header_logo' => [
+    'logo' => [
       'logo_type' => 'text',
       'blogname' => get_option('blogname'),
       'custom_logo' => '',
@@ -32,12 +36,24 @@ function _custy_header_defaults( $defaults ) {
       'blogdescription' => get_option('blogdescription'),
     ],
   
-    'header_button' => [
+    'button' => [
       'size' => 'medium',
       'text' => __( 'Download' ),
       'link' => '',
       'target' => 'no',
     ],
+
+    'search' => [
+      'searchHeaderIconSize' => 15,
+      'searchHeaderIconColor' => [
+        'default' => [ 'color' => 'var(--text)' ],
+        'hover' => [ 'color' => 'var(--main)' ]
+      ],
+    ],
+
+    'trigger' => [
+      'mobile_menu_trigger_type' => 'type-1',
+    ]
   
   ], $defaults );
 }
@@ -46,7 +62,7 @@ function _custy_header_defaults( $defaults ) {
 /**
  * Add default values for Header placement
  */
-function _custy_header_placement_defaults( $defaults ) {
+function _custy_header_placement_default_values( $defaults ) {
   $row_value = [
     'headerRowBackground' => blocksy_background_default_value([
       'backgroundColor' => [
@@ -75,8 +91,8 @@ function _custy_header_placement_defaults( $defaults ) {
         'id' => 'type-1',
         'mode' => 'placements',
         'items' => [
-          [ 'id' => 'menu', 'values' => $defaults['header_menu'] ],
-          [ 'id' => 'logo', 'values' => $defaults['header_logo'] ],
+          [ 'id' => 'menu', 'values' => $defaults['menu'] ],
+          [ 'id' => 'logo', 'values' => $defaults['logo'] ],
           [ 'id' => 'top-row', 'values' => $row_value ],
           [ 'id' => 'middle-row', 'values' => $row_value ],
           [ 'id' => 'bottom-row', 'values' => $row_value ],
