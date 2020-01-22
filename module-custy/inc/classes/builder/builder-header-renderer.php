@@ -72,10 +72,9 @@ class Blocksy_Customizer_Builder_Render_Placements {
 		$content = '';
 
 		$header = $this->get_current_section()[$this->device];
-
-		// check for content from filter, if any
-		$content = apply_filters( 'custy_render_header', $content, $header );
-
+	
+		// Check for custom content
+		$content = Custy::get_header_content();
 		if( !empty( $content ) ) {
 			return $content;
 		}

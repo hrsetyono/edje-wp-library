@@ -54,7 +54,7 @@ function _custy_enqueue_customizer_preview() {
   ] );
 
   
-  $fs = new Custy_FormatSync();
+  $fs = new Custy_SyncPreview();
   $sync_vars = $fs->get();
 
   wp_localize_script( 'ct-customizer', 'ct_localizations', [

@@ -131,13 +131,12 @@ add_filter( 'custy_header_sections', function( $items ) {
           'custom_logo' => [
             'label' => false,
             'type' => 'ct-image-uploader',
-            'inline_value' => true,
-            'divider' => 'bottom',
             'attr' => [ 'data-height' => 'small' ],
           ],
 
         ],
       ],
+      
     ],
   ],
 

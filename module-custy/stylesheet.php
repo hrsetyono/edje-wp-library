@@ -6,7 +6,7 @@
  * @filter wp_head 0
  */
 function _custy_render_stylesheet() {
-  $theme_mods = wp_parse_args( get_theme_mods(), Custy::get_default_values() );
+  $theme_mods = Custy::get_mods();
   $sections = Custy::get_sections();
 
   $compiler = new Custy_CompileStyles( $theme_mods );

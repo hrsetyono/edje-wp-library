@@ -1,8 +1,8 @@
 <?php
 /**
- * Format the value of theme mods before outputted
+ * Get the values to be localized for Preview
  */
-class Custy_FormatSync {
+class Custy_SyncPreview {
   private $sections;
   public $vars = [];
   public $typography_vars = [];

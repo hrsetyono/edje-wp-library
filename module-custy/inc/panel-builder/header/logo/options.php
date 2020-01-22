@@ -48,7 +48,7 @@ $options = [
 						'label' => false,
 						'type' => 'ct-image-uploader',
 						'value' => '',
-						'inline_value' => true,
+						// 'inline_value' => true,
 						'divider' => 'bottom',
 						'attr' => [ 'data-height' => 'small' ],
 						'setting' => [ 'transport' => 'postMessage' ],
@@ -71,6 +71,7 @@ $options = [
 							'mobile_header_logo' => [
 								'label' => false,
 								'type' => 'ct-image-uploader',
+								// 'inline_value' => true,
 								'value' => [ 'attachment_id' => null ],
 								'switchDeviceOnChange' => 'mobile',
 								'attr' => [ 'data-height' => 'small' ],
@@ -295,7 +296,6 @@ $options = [
 				'value' => blocksy_spacing_value([
 					'linked' => true,
 				]),
-				'responsive' => true
 			],
 
 		],
