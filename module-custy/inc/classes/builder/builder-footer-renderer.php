@@ -41,9 +41,8 @@ class Blocksy_Customizer_Builder_Render_Columns {
 		$footer = $this->get_current_section();
 		$atts = $footer['settings'];
 
-		// check for content from filter, if any
-		$content = apply_filters( 'h_render_footer', $content, $footer );
-
+		// @changed - return content from filter, if any
+		$content = Custy::get_builder_content( 'footer' );
 		if( !empty( $content ) ) {
 			return $content;
 		}

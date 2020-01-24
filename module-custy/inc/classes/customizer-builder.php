@@ -97,12 +97,10 @@ class Blocksy_Customizer_Builder {
 	public function get_registered_items_by( $panel_type = 'header', $include = 'all', $require_options = false) {
 
 		// @new - return items from filter. Only continue if doesn't exists
-		$items = apply_filters( 'h_builder_items', [], $panel_type, $include, $require_options );
-
+		$items = apply_filters( "custy_{$panel_type}_items", [], $include, $require_options );
 		if( !empty( $items ) ) {
 			return $items;
 		}
-
 		// /new
 
 		$paths_to_look_for_items = [

@@ -21,9 +21,13 @@ function _h_load_custy() {
 
   // require_once __DIR__ . '/builder.php';
   // require_once __DIR__ . '/builder-footer-options.php';
-  require_once __DIR__ . '/header-format.php';
-  require_once __DIR__ . '/header-options.php';
+
+  
+  require_once __DIR__ . '/builder.php';
+  require_once __DIR__ . '/builder-items-header.php';
+  require_once __DIR__ . '/builder-items-footer.php';
   require_once __DIR__ . '/header-default-values.php';
+  require_once __DIR__ . '/footer-default-values.php';
 
   
   add_filter( 'custy_default_values', '_custy_set_default_values' );
@@ -70,14 +74,23 @@ class Custy {
   /**
    * Get the default value of theme mods
    */
-  static function get_default_values() {
-    global $custy_default_values;
+  static function get_default_values( $type = '' ) {
 
-    if( empty( $custy_default_values ) ) {
-      $custy_default_values = apply_filters( 'custy_default_values', [] );
+    if( $type === 'header' ) {
+      global $custy_header_dv;
+      $custy_header_dv = $custy_header_dv ?? apply_filters( 'custy_header_default_values', [] );
+      return $custy_header_dv;
     }
-    
-    return $custy_default_values;
+    elseif( $type === 'footer' ) {
+      global $custy_footer_dv;
+      $custy_footer_dv = $custy_footer_dv ?? apply_filters( 'custy_footer_default_values', [] );
+      return $custy_footer_dv;
+    }
+    else {
+      global $custy_dv;
+      $custy_dv = $custy_dv ?? apply_filters( 'custy_default_values', [] );
+      return $custy_dv;
+    }
   }
 
 
@@ -95,31 +108,35 @@ class Custy {
   }
 
   /**
-   * Get header HTML content
+   * Get Header or Footer markup
    * 
-   * @return string - Header's HTML markup
+   * @param $type (strng) - 'header' or 'footer'
+   * @return string - HTML Markup
    */
-  static function get_header_content() {
-    global $custy_header_data; // cache
-
-    if( empty( $custy_header_data ) ) {
-      $custy_header_data = apply_filters( 'custy_header_data', $custy_header_data );
-    }
-		
-    return apply_filters( 'custy_render_header', '', $custy_header_data );
+  static function get_builder_content( $type = 'header' ) {
+    $data = apply_filters( "custy_{$type}_data", $data );
+    return apply_filters( "custy_{$type}_header", '', $data );		
   }
 
   
   /**
-   * Get the list of options for theme mods
+   * Get Header or Footer item list
+   * 
+   * @param $type (string) - 'header' or 'footer'
    */
-  static function get_header_sections() {
-    global $custy_header_sections; // cache
-
-    if( empty( $custy_header_sections ) ) {
-      $custy_header_sections = apply_filters( 'custy_header_sections', [] );
+  static function get_builder_items( $type = 'header' ) {
+    if( $type === 'header' ) {
+      global $custy_header_items;
+      $custy_header_items = $custy_header_items ?? apply_filters( 'custy_header_items', [] );
+      return $custy_header_items;
+    }
+    elseif( $type === 'footer' ) {
+      global $custy_footer_items;
+      $custy_footer_items = $custy_footer_items ?? apply_filters( 'custy_footer_items', [] );
+      return $custy_footer_items;
     }
 
-    return $custy_header_sections;
+    return [];
   }
+
 }

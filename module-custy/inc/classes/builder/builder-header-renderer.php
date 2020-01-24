@@ -67,14 +67,13 @@ class Blocksy_Customizer_Builder_Render_Placements {
 		return false;
 	}
 
-	// @changed - return content from filter, if any
 	public function render() {
 		$content = '';
 
 		$header = $this->get_current_section()[$this->device];
 	
-		// Check for custom content
-		$content = Custy::get_header_content();
+		// @changed - return content from filter, if any
+		$content = Custy::get_builder_content( 'header' );
 		if( !empty( $content ) ) {
 			return $content;
 		}

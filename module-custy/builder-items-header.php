@@ -2,19 +2,70 @@
 /**
  * Options list for Header
  */
-add_filter( 'custy_header_sections', function( $items ) {
+add_filter( 'custy_header_items', '_custy_set_header_items', 10 );
+add_filter( 'custy_header_items', '_custy_format_header_items', 9999, 3 );
 
+
+/**
+ * @filter custy_header_items
+ */
+function _custy_format_header_items( $items, $include = 'all', $require_options = false ) {
+  $filtered_items = [];
+  $formatted_items = [];
+
+  /**
+   * Filter the relevant items
+   */
+  foreach( $items as $id => $item ) {
+    $id = str_replace('_', '-', $id );
+
+    $is_primary = $item['is_primary'] ?? false;
+
+    // Skip if include primary, but item is not primary
+    if( $include === 'primary' && !$is_primary ) {
+      continue;
+    }
+    // Skip if looking for secondary, but item is primary
+    elseif( $include === 'secondary' && $is_primary ) {
+      continue;
+    }
+
+    $filtered_items[ $id ] = $item;
+  }
+
+  /**
+   * Rearrange the filtered items
+   */
+  foreach( $filtered_items as $id => $item ) {
+    $options = ( $require_options && isset( $item['options'] ) ) ? $item['options'] : [];
+
+    $formatted_items[] = [
+      'id' => $id,
+      'config' => [],
+      'options' => $options,
+      'is_primary' => $item['is_primary'] ?? false,
+    ];
+  }
+
+  return $formatted_items;
+}
+
+
+/**
+ * @filter custy_header_items
+ */
+function _custy_set_header_items( $items ) {
   $row_options = [
-    'headerRowBackground' => [
+    'rowBackground' => [
       'label' => __( 'Background' ),
       'type'  => 'ct-background',
     ],
     blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
-    'headerRowBorder' => [
+    'rowBorder' => [
       'label' => __( 'Border' ),
       'type' => 'ct-border',
     ],
-    'headerRowPadding' => [
+    'rowPadding' => [
       'label' => __( 'Padding' ),
       'type' => 'ct-spacing',
       'responsive' => true,
@@ -23,7 +74,7 @@ add_filter( 'custy_header_sections', function( $items ) {
 
   return wp_parse_args( [
 
-  // ROW
+  // ROWS
   'top-row' => [
     'title' => __( 'Top Row' ),
     'is_primary' => true,
@@ -39,8 +90,6 @@ add_filter( 'custy_header_sections', function( $items ) {
     'is_primary' => true,
     'options' => $row_options,
   ],
-    
-  // OFFCANVAS
   'offcanvas' => [
     'title' => __( 'Offcanvas' ),
     'is_primary' => true,
@@ -161,4 +210,4 @@ add_filter( 'custy_header_sections', function( $items ) {
       
 
 ], $items );
-}, 10 );
+}

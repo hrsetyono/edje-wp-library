@@ -1,24 +1,24 @@
 <?php
 
-add_filter( 'custy_header_default_values', '_custy_header_default_values' );
-add_filter( 'custy_header_default_values', '_custy_header_placement_default_values' );
+add_filter( 'custy_footer_default_values', '_custy_footer_default_values' );
+add_filter( 'custy_footer_default_values', '_custy_footer_placement_default_values' );
 
 /**
- * Add default values for Header items
+ * Add default values for Footer items
  */
-function _custy_header_default_values( $defaults ) {
+function _custy_footer_default_values( $defaults ) {
   $row_values = [
-    'headerRowBackground' => blocksy_background_default_value([
+    'rowBackground' => blocksy_background_default_value([
       'backgroundColor' => [
         'default' => [ 'color' => '#ffffff' ],
       ],
     ]),
-    'headerRowBorder' => [
+    'rowBorder' => [
       'width' => 1,
       'style' => 'none',
       'color' => [ 'color' => 'rgba(44,62,80,0.2)' ],
     ],
-    'headerRowPadding' => [
+    'rowPadding' => [
       'top' => '0.25rem',
       'right' => 'auto',
       'bottom' => '0.25rem',
@@ -31,78 +31,46 @@ function _custy_header_default_values( $defaults ) {
     'top-row' => $row_values,
     'middle-row' => $row_values,
     'bottom-row' => $row_values,
-    'offcanvas' => [
-      'offcanvasBackground' => blocksy_background_default_value([
-        'backgroundColor' => [
-          'default' => [ 'color' => 'rgba(18, 21, 25, 0.98)' ],
-        ],
-      ]),
-      'offcanvasShadow' => 'var(--shadow2)'
-    ],
 
     'menu' => [
       'menu' => blocksy_get_default_menu(),
     ],
 
-    'mobile-menu' => [
-      'menu' => blocksy_get_default_menu(),
+    'copyright' => [
+      'copyright_text' => __( 'Copyright &copy; {current_year} {site_title} - Powered by {theme_author}' ),
     ],
-  
-    'logo' => [
-      'logo_type' => 'text',
-      'blogname' => get_option('blogname'),
-      'custom_logo' => '',
-      'has_mobile_logo' => 'no',
-      'mobile_header_logo' => '',
-      'has_tagline' => 'no',
-      'blogdescription' => get_option('blogdescription'),
-    ],
-  
-    'button' => [
-      'size' => 'medium',
-      'text' => __( 'Download' ),
-      'link' => '',
-      'target' => 'no',
-    ],
-
-    'search' => [
-      'searchHeaderIconSize' => 15,
-      'searchHeaderIconColor' => [
-        'default' => [ 'color' => 'var(--text)' ],
-        'hover' => [ 'color' => 'var(--main)' ]
-      ],
-    ],
-
-    'trigger' => [
-      'mobile_menu_trigger_type' => 'type-1',
-    ]
   
   ], $defaults );
 }
 
 
 /**
- * Add default values for Header placement
+ * Add default values for Footer placement
  */
-function _custy_header_placement_default_values( $defaults ) {
+function _custy_footer_placement_default_values( $defaults ) {
 
   return wp_parse_args( [
     
-    'header_placements' => [
+    'footer_placements' => [
       'current_section' => 'type-1',
       'sections' => [ [
         'id' => 'type-1',
         'mode' => 'placements',
         'items' => [
           [ 'id' => 'menu', 'values' => $defaults['menu'] ],
-          [ 'id' => 'logo', 'values' => $defaults['logo'] ],
+          [ 'id' => 'copyright', 'values' => $defaults['copyright'] ],
           [ 'id' => 'top-row', 'values' => $defaults['top-row'] ],
           [ 'id' => 'middle-row', 'values' => $defaults['middle-row'] ],
           [ 'id' => 'bottom-row', 'values' => $defaults['bottom-row'] ],
-          [ 'id' => 'offcanvas', 'values' => $defaults['offcanvas'] ],
         ],
         'desktop' => [
-          [ 'id' => 'top-row', 'placements' => [] ],
+          [ 'id' => 'top-row', 'placements' => [
+            [ 'id' => 'start', 'items' => [] ],
+            [ 'id' => 'middle', 'items' => [] ],
+            [ 'id' => 'end', 'items' => [] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
+          ] ],
           [ 'id' => 'middle-row', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'logo' ] ],
             [ 'id' => 'middle', 'items' => [] ],
@@ -110,7 +78,13 @@ function _custy_header_placement_default_values( $defaults ) {
             [ 'id' => 'start-middle', 'items' => [] ],
             [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
-          [ 'id' => 'bottom-row', 'placements' => [] ],
+          [ 'id' => 'bottom-row', 'placements' => [
+            [ 'id' => 'start', 'items' => [] ],
+            [ 'id' => 'middle', 'items' => [] ],
+            [ 'id' => 'end', 'items' => [] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
+          ] ],
         ],
         'mobile' => [
           [ 'id' => 'top-row', 'placements' => [] ],
@@ -122,9 +96,6 @@ function _custy_header_placement_default_values( $defaults ) {
             [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'bottom-row', 'placements' => [] ],
-          [ 'id' => 'offcanvas', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'mobile-menu' ] ],
-          ] ],
         ],
       ] ],
     ],
