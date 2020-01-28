@@ -1,6 +1,29 @@
 <?php
 
 /**
+ * @filter custy_header_items 0
+ */
+function _custy_set_header_items( $items ) {
+  $bi = new Custy_BuilderItems();
+  $items = $bi->populate_items( 'header' );
+
+  return $items;
+}
+
+/**
+ * @filter custy_footer_items 0
+ */
+function _custy_set_footer_items( $items ) {
+  $bi = new Custy_BuilderItems();
+  $items = $bi->populate_items( 'footer' );
+
+  return $items;
+}
+
+
+/**
+ * Format the options
+ * 
  * @filter custy_header_items 9999
  * @filter custy_footer_items 9999
  */
@@ -13,9 +36,41 @@ function _custy_format_builder_items( $items, $include = 'all', $require_options
 }
 
 
-
+/**
+ * 
+ */
 class Custy_BuilderItems {
   function __construct() {}
+
+  /**
+   * Populate items
+   */
+  function populate_items( $type = 'header' ) {
+    $all_items = [];
+    $files = glob( __DIR__ . "/$type/*.php" );
+
+    // Loop all files inside the /header or /footer dir
+    foreach( $files as $f ) {
+      $item = null; $items = null; // reset
+      $file_name = basename( $f, '.php' );
+      
+      // SKIP if first letter is underscore
+      if( preg_match( '/^_/', $file_name, $matches ) ) { continue; }
+
+      // Get variable $item or $items from file
+      require $f;
+
+      if( isset( $item ) ) {
+        $all_items[ $file_name ] = $item;
+      }
+      elseif( isset( $items ) ) {
+        $all_items = array_merge( $all_items, $items );
+      }
+    }
+
+    return $all_items;
+  }
+
 
   /**
    * Return the needed items based on $include arg.
@@ -85,7 +140,8 @@ class Custy_BuilderItems {
 
       $formatted_items[] = $item_args;
     }
-
+    
+    var_dump( $formatted_items );
     return $formatted_items;
   }
 

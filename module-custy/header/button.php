@@ -1,9 +1,8 @@
 <?php
 
-add_filter( 'custy_header_items', function( $items ) {
-return wp_parse_args( [
-
-  'button' => [ 'title' => __( 'Button' ), 'options' => [
+$item = [
+  'title' => __( 'Button' ),
+  'options' => [
 
     'header_button_size' => [
       'label' => __( 'Size' ),
@@ -31,7 +30,6 @@ return wp_parse_args( [
       'divider' => 'bottom',
     ],
     
-  ] ],
+  ],
 
-], $items );
-});
+];

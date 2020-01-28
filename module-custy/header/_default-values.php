@@ -39,6 +39,8 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
 
     'menu' => [
       'menu' => blocksy_get_default_menu(),
+      'header_menu_type' => 'type-1',
+
     ],
 
     'mobile-menu' => [
@@ -64,10 +66,11 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
 
     'search' => [
       'search_placeholder' => __( 'Search...' ),
-      'searchHeaderIconSize' => 15,
-      'searchHeaderIconColor' => [
-        'default' => [ 'color' => 'var(--text)' ],
-        'hover' => [ 'color' => 'var(--main)' ]
+      'searchPadding' => [
+        'top' => '10px',
+        'right' => '5px',
+        'bottom' => '10px',
+        'left' => '5px',
       ],
     ],
 

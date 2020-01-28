@@ -1,9 +1,9 @@
 <?php
 
-add_filter( 'custy_footer_items', function( $items ) {
-return wp_parse_args( [
-
-  'copyright' => [ 'title' => __( 'Copyright' ), 'options' => [
+$item = [
+  'title' => __( 'Copyright' ),
+  'options' => [
+    
     'copyright_text' => [
       'label' => __( 'Copyright text' ),
       'type' => 'wp-editor',
@@ -16,7 +16,6 @@ return wp_parse_args( [
         'toolbar1' => 'bold,italic,link,undo,redo',
       ],
     ],
-  ] ]
+  ]
   
-], $items );
-});
+];

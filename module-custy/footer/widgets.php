@@ -1,35 +1,15 @@
 <?php
 
-add_filter( 'custy_footer_items', function( $items ) {
-return wp_parse_args( [
-  
-  'widget-area-1' => [
-    'title' => __( 'Widget Area 1' ),
-    'options' => [
-      'widget' => [ 'type' => 'ct-widget-area', 'sidebarId' => 'ct-footer-sidebar-1' ]
-    ]
-  ],
+$items = [];
 
-  'widget-area-2' => [
-    'title' => __( 'Widget Area 2' ),
+for( $i = 1; $i <= 4; $i++ ) {
+  $items[ "widget-area-$i" ] = [
+    'title' => __( 'Widget Area ' ) . $i,
     'options' => [
-      'widget' => [ 'type' => 'ct-widget-area', 'sidebarId' => 'ct-footer-sidebar-2' ]
+      'widget' => [
+        'type' => 'ct-widget-area',
+        'sidebarId' => "ct-footer-sidebar-$i"
+      ]
     ]
-  ],
-
-  'widget-area-3' => [
-    'title' => __( 'Widget Area 3' ),
-    'options' => [
-      'widget' => [ 'type' => 'ct-widget-area', 'sidebarId' => 'ct-footer-sidebar-3' ]
-    ]
-  ],
-
-  'widget-area-4' => [
-    'title' => __( 'Widget Area 4' ),
-    'options' => [
-      'widget' => [ 'type' => 'ct-widget-area', 'sidebarId' => 'ct-footer-sidebar-4' ]
-    ]
-  ],
-
-], $items );
-});
+  ];
+}

@@ -1,9 +1,8 @@
 <?php
 
-add_filter( 'custy_header_items', function( $items ) {
-return wp_parse_args( [
-  
-  'logo' => [ 'title' => __( 'Logo' ), 'options' => [
+$item = [
+  'title' => __( 'Logo' ),
+  'options' => [
 
     'logo_type' => [
       'label' => __( 'Logo Type' ),
@@ -42,7 +41,6 @@ return wp_parse_args( [
       ],
     ],
     
-  ] ],
-
-], $items );
-});
+  ]
+  
+];

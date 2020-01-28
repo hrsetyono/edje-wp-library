@@ -1,9 +1,8 @@
 <?php
 
-add_filter( 'custy_header_items', function( $items ) {
-return wp_parse_args( [
-  
-  'menu' => [ 'title' => __( 'Menu 1' ), 'options' => [
+$item = [
+  'title' => __( 'Menu 1' ),
+  'options' => [
 
     'menu' => [
       'label' => __( 'Select Menu' ),
@@ -15,8 +14,31 @@ return wp_parse_args( [
         admin_url('/nav-menus.php')
       ), 
     ],
+    'header_menu_type' => [
+      'label' => __( 'Design' ),
+      'type' => 'ct-image-picker',
+      'attr' => [ 'data-type' => 'background' ],
+      'switchDeviceOnChange' => 'desktop',
+      'choices' => [
+        'type-1' => [
+          'src'   => blocksy_image_picker_url( 'menu-type-1.svg' ),
+          'title' => __( 'Type 1' ),
+        ],
+        'type-2' => [
+          'src'   => blocksy_image_picker_url( 'menu-type-2.svg' ),
+          'title' => __( 'Type 2' ),
+        ],
+        'type-3' => [
+          'src'   => blocksy_image_picker_url( 'menu-type-3.svg' ),
+          'title' => __( 'Type 3' ),
+        ],
+        'type-4' => [
+          'src'   => blocksy_image_picker_url( 'menu-type-4.svg' ),
+          'title' => __( 'Type 4' ),
+        ],
+      ],
+    ],
 
-  ] ],
+  ]
 
-], $items );
-});
+];

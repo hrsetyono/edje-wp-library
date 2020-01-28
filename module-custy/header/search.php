@@ -1,17 +1,19 @@
 <?php
-
-add_filter( 'custy_header_items', function( $items ) {
-return wp_parse_args( [
-  
-  'search' => [ 'title' => __( 'Search' ), 'options' => [
+ 
+$item = [
+  'title' => __( 'Search' ),
+  'css_selector' => '.site-header .search',
+  'options' => [
 
     'search_placeholder' => [
       'label' => __( 'Placeholder Text' ),
       'type' => 'text',
     ],
-    
-  ] ],
 
-], $items );
-});
-
+    'searchPadding' => [
+      'label' => __( 'padding' ),
+      'type' => 'ct-spacing',
+      'css' => '--searchPadding'
+    ],
+  ]
+];

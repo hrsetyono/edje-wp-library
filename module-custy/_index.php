@@ -41,14 +41,15 @@ function _h_setup_custy() {
   require_once __DIR__ . '/builder-items.php';
   require_once __DIR__ . '/builder-values.php';
 
-  // Require the Header & Footer items
-  $header_files = glob( __DIR__ . '/header/*.php' );
-  $footer_files = glob( __DIR__ . '/footer/*.php' );
-  foreach( $header_files as $file ) { require_once $file; }
-  foreach( $footer_files as $file ) { require_once $file; }
+  require_once __DIR__ . '/header/_default-values.php';
+  require_once __DIR__ . '/footer/_default-values.php';
 
+  add_filter( 'custy_header_items', '_custy_set_header_items', 0 );
   add_filter( 'custy_header_items', '_custy_format_builder_items', 9999, 3 );
+  
+  add_filter( 'custy_footer_items', '_custy_set_footer_items', 0 );
   add_filter( 'custy_footer_items', '_custy_format_builder_items', 9999, 3 );
+
   add_filter( 'custy_header_values', '_custy_format_builder_values', 10 );
   add_filter( 'custy_footer_values', '_custy_format_builder_values', 10 );
 }

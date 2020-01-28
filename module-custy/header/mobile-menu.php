@@ -1,9 +1,9 @@
 <?php
 
 $item = [
-  'title' => __( 'Footer Menu' ),
+  'title' => __( 'Mobile Menu' ),
   'options' => [
-    
+
     'menu' => [
       'label' => __( 'Select Menu' ),
       'type' => 'ct-select',
@@ -12,7 +12,7 @@ $item = [
       'desc' => sprintf(
         __( 'Manage your menus in the <a href="%s" target="_blank">Menus screen</a>.' ),
         admin_url('/nav-menus.php')
-      ),
+      ), 
     ],
 
   ]

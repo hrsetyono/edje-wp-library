@@ -95,9 +95,8 @@ class Custy_BuilderValues {
 
     foreach( $rows[ $media ] as $row ) {
       $row_id = $row['id'];
-      $data[ $row_id ] = []; // initiate columns
+      $data[ $row_id ] = []; // initiate row
       $columns = $this->type === 'header' ? $row['placements'] : $row;
-
 
       switch( $this->type ) {
         case 'header':
@@ -106,6 +105,17 @@ class Custy_BuilderValues {
     
             $col_id = $col['id'];
             $data[ $row_id ][ $col_id ] = $this->format_items( $col['items'], $values );
+          }
+
+          // complete the columns if at least one exists
+          if( count( $data[ $row_id ] ) >= 1 ) {
+            $data[ $row_id ] = wp_parse_args( $data[ $row_id ], [
+              'start' => [],
+              'start-middle' => [],
+              'middle' => [],
+              'middle-end' => [],
+              'end' => [],
+            ] );
           }
           break;
         
