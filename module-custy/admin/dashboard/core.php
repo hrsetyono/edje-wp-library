@@ -77,7 +77,7 @@ class Blocksy_Dashboard_Page {
 		];
 
 		wp_enqueue_script( 'ct-dashboard-scripts',
-			BLOCKSY_DIR . '/admin/dashboard/static/bundle/main.js',	$dependencies, H_VERSION, false
+			BLOCKSY_ROOT . '/admin/dashboard/static/bundle/main.js',	$dependencies, H_VERSION, false
 		);
 
 		if ( defined( 'WP_DEBUG' ) ) {
@@ -103,7 +103,7 @@ class Blocksy_Dashboard_Page {
 			'child_download_link' => 'https://creativethemes.com/downloads/blocksy-child.zip'
 		] );
 
-		wp_enqueue_style( 'ct-dashboard-styles', BLOCKSY_DIR . '/admin/dashboard/static/bundle/main.css', [], H_VERSION );
+		wp_enqueue_style( 'ct-dashboard-styles', BLOCKSY_ROOT . '/admin/dashboard/static/bundle/main.css', [], H_VERSION );
 	}
 
 	public function setup_framework_page() {
@@ -113,7 +113,7 @@ class Blocksy_Dashboard_Page {
 			'permision'        => 'activate_plugins',
 			'top-level-handle' => $this->page_slug,
 			'callback'         => [ $this, 'welcome_page_template' ],
-			'icon-url' => BLOCKSY_DIR . '/admin/dashboard/static/img/navigation.svg',
+			'icon-url' => BLOCKSY_ROOT . '/admin/dashboard/static/img/navigation.svg',
 			'position'         => 2,
 		];
 

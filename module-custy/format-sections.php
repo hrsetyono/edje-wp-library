@@ -28,7 +28,26 @@ class Custy_FormatSections {
         $s['options'] = $this->add_css_selector_notice( $s['css_selector'], $s['options'] );
       }
 
-      $s['options'] = $this->format( $section_id, $s['options'] );
+      $formatted_options = $this->format( $s['options'] );
+      
+      $s['options'] = [
+        $section_id . '_options' => [
+          'type' => 'ct-options',
+          'setting' => [ 'transport' => 'postMessage' ],
+          'inner-options' => $formatted_options
+        ]
+      ];
+
+      // If core section, add this options to prevent JS error
+      if( $section_id === 'cores' ) {
+        $s['options']['customizer_color_scheme'] = [
+          'label' => __( 'Color scheme' ),
+          'type' => 'hidden',
+          'label' => '',
+          'value' => 'no',
+          'setting' => [ 'transport' => 'postMessage' ],
+        ];
+      }
     }
 
     return $sections;
@@ -36,10 +55,15 @@ class Custy_FormatSections {
 
   /**
    * Format one section
+   * 
+   * @param $options (array) - List of customizer options
+   * @param $defaults (bool) - List of default values using options ID as it's key
+   * 
+   * @return array - The formatted options
    */
-  private function format( $section_id, $options ) {
-    $defaults = Custy::get_default_values();
-    
+  function format( $options, $defaults = null ) {
+    $defaults = $defaults ?? Custy::get_default_values();
+   
     foreach( $options as $id => &$args ):
       // set default value
       if( isset( $defaults[ $id ] ) ) {
@@ -53,7 +77,7 @@ class Custy_FormatSections {
       switch( $args['type'] ):
         case 'tab':
         case 'ct-condition':
-          $args['options'] = $this->format( false, $args['options'] );
+          $args['options'] = $this->format( $args['options'] );
 
           if( isset($args['css_selector']) ) {
             $args['options'] = $this->add_css_selector_notice( $args['css_selector'], $args['options'] );
@@ -61,7 +85,7 @@ class Custy_FormatSections {
           continue;
        
         case 'ct-panel':
-          $args['inner-options'] = $this->format( false, $args['inner-options'] );
+          $args['inner-options'] = $this->format( $args['inner-options'] );
           
           if( isset($args['css_selector']) ) {
             $args['inner-options'] = $this->add_css_selector_notice( $args['css_selector'], $args['inner-options'] );
@@ -139,34 +163,7 @@ class Custy_FormatSections {
       
     endforeach;
 
-
-    // if section
-    if( $section_id ) {
-      $section = [];
-      $section[ $section_id . '_options' ] = [
-        'type' => 'ct-options',
-        'setting' => [ 'transport' => 'postMessage' ],
-        'inner-options' => $options
-      ];
-
-      if( $section_id === 'cores' ) {
-        $section['customizer_color_scheme'] = [
-          'label' => __( 'Color scheme' ),
-          'type' => 'hidden',
-          'label' => '',
-          'value' => 'no',
-          'setting' => [ 'transport' => 'postMessage' ],
-        ];
-      }
-
-      return $section;
-    }
-    // if inner options
-    else {
-      return $options;
-    }
-
-    
+    return $options;    
   }
 
   /////

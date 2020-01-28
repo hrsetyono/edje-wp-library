@@ -13,13 +13,10 @@ add_action(	'admin_enqueue_scripts', '_custy_enqueue_admin' );
  * @action wp_enqueue_scripts
  */
 function _custy_enqueue() {
-  $css_dir = plugin_dir_url(__FILE__) . 'css';
-  $js_dir = plugin_dir_url(__FILE__) . 'js';
-
 	// $m = new Blocksy_Fonts_Manager();
 	// $m->load_fonts();
 
-  wp_register_script( 'ct-events', $js_dir . '/events.js', [], H_VERSION,	true );
+  wp_register_script( 'ct-events', BLOCKSY_JS_DIR . '/events.js', [], H_VERSION,	true );
 }
 
 
@@ -27,10 +24,7 @@ function _custy_enqueue() {
  * @action enqueue_block_editor_assets
  */
 function _custy_enqueue_gutenberg() {
-  $css_dir = plugin_dir_url(__FILE__) . 'css';
-  $js_dir = plugin_dir_url(__FILE__) . 'js';
-
-  wp_enqueue_style( 'ct-main-editor-styles', $css_dir . '/editor.css', [], '' );
+  wp_enqueue_style( 'ct-main-editor-styles', BLOCKSY_CSS_DIR . '/editor.css', [], '' );
 }
 
 
@@ -39,11 +33,9 @@ function _custy_enqueue_gutenberg() {
  * @action customize_preview_init
  */
 function _custy_enqueue_customizer_preview() {
-  $css_dir = plugin_dir_url(__FILE__) . 'css';
-  $js_dir = plugin_dir_url(__FILE__) . 'js';
   $builder = new Blocksy_Customizer_Builder();
 
-  wp_enqueue_script( 'ct-customizer', $js_dir . '/sync.js',
+  wp_enqueue_script( 'ct-customizer', BLOCKSY_JS_DIR . '/sync.js',
     ['customize-preview', 'wp-date', 'ct-events'], H_VERSION, true
   );
 
@@ -73,17 +65,16 @@ function _custy_enqueue_customizer_preview() {
  * @action customize_controls_enqueue_scripts
  */
 function _custy_enqueue_customizer_control() {
-  $css_dir = plugin_dir_url(__FILE__) . 'css';
-  $js_dir = plugin_dir_url(__FILE__) . 'js';
+  $h_css_dir = plugin_dir_url(__FILE__) . 'css';
 
-  wp_enqueue_style( 'h-blocksy', $css_dir . '/h-blocksy.css', [], H_VERSION );
+  wp_enqueue_style( 'h-blocksy', $h_css_dir . '/h-blocksy.css', [], H_VERSION );
 
   wp_enqueue_style( 'ct-customizer-controls-styles',
-    $css_dir . '/customizer-controls.css', [], H_VERSION
+    BLOCKSY_CSS_DIR . '/customizer-controls.css', [], H_VERSION
   );
 
   wp_register_script( 'ct-events',
-    $js_dir . '/events.js', [], H_VERSION, true
+    BLOCKSY_JS_DIR . '/events.js', [], H_VERSION, true
   );
 
   $deps = apply_filters('blocksy-options-scripts-dependencies', [
@@ -100,7 +91,7 @@ function _custy_enqueue_customizer_control() {
   ]);
 
   wp_enqueue_script( 'ct-customizer-controls',
-    $js_dir . '/customizer-controls.js', $deps, H_VERSION, true
+    BLOCKSY_JS_DIR . '/customizer-controls.js', $deps, H_VERSION, true
   );
 
   $builder = new Blocksy_Customizer_Builder();
@@ -121,12 +112,9 @@ function _custy_enqueue_customizer_control() {
  * @action admin_enqueue_scripts
  */
 function _custy_enqueue_admin() {
-  $css_dir = plugin_dir_url(__FILE__) . 'css';
-  $js_dir = plugin_dir_url(__FILE__) . 'js';
-
   wp_enqueue_media();
 
-  wp_register_script( 'ct-events', $js_dir . '/events.js', [], H_VERSION, true );
+  wp_register_script( 'ct-events', BLOCKSY_JS_DIR . '/events.js', [], H_VERSION, true );
 
   $deps = apply_filters('blocksy-options-scripts-dependencies', [
     'underscore',
@@ -145,7 +133,7 @@ function _custy_enqueue_admin() {
 
   if ( ! isset( $wp_customize ) ) {
     wp_enqueue_script(
-      'ct-options-scripts', $js_dir . '/options.js', $deps, H_VERSION, true
+      'ct-options-scripts', BLOCKSY_JS_DIR . '/options.js', $deps, H_VERSION, true
     );
   }
 
@@ -156,7 +144,7 @@ function _custy_enqueue_admin() {
   );
 
   wp_enqueue_style( 'ct-options-styles',
-    $css_dir . '/options.css', ['wp-color-picker'], H_VERSION
+    BLOCKSY_CSS_DIR . '/options.css', ['wp-color-picker'], H_VERSION
   );
 
   wp_localize_script( 'ct-options-scripts', 'ct_localizations', [
