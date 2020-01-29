@@ -4,7 +4,7 @@ $item = [
   'title' => __( 'Button' ),
   'options' => [
 
-    'header_button_size' => [
+    'size' => [
       'label' => __( 'Size' ),
       'type' => 'ct-radio',
       'view' => 'text',
@@ -15,16 +15,16 @@ $item = [
         'large' => __( 'Large' ),
       ],
     ],
-    'header_button_text' => [
+    'text' => [
       'label' => __( 'Label' ),
       'type' => 'text',
     ],
-    'header_button_link' => [
+    'link' => [
       'label' => __( 'URL' ),
       'type' => 'text',
       'design' => 'block'
     ],
-    'header_button_target' => [
+    'target' => [
       'label' => __( 'Open in a new tab' ),
       'type'  => 'ct-switch',
       'divider' => 'bottom',

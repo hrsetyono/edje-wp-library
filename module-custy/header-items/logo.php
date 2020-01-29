@@ -19,7 +19,7 @@ $item = [
       'condition' => [ 'logo_type' => 'text' ],
       'options' => [
 
-        'blogname' => [
+        'site_title' => [
           'label' => __( 'Site Title' ),
           'type' => 'text',
           'design' => 'block',

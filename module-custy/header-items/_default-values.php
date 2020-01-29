@@ -2,9 +2,15 @@
 
 /**
  * Add default values for Header items
+ * 
+ * @filter custy_default_values
  */
-add_filter( 'custy_header_default_values', function( $defaults ) {
+function _custy_header_default_values( $defaults ) {
   $row_values = [
+    'rowColor' => [
+      'default' => [ 'color' => 'var(--text)' ],
+      'hover' => [ 'color' => 'var(--main)' ]
+    ],
     'rowBackground' => blocksy_background_default_value([
       'backgroundColor' => [
         'default' => [ 'color' => '#ffffff' ],
@@ -36,34 +42,28 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
       ]),
       'offcanvasShadow' => 'var(--shadow2)'
     ],
-
     'menu' => [
       'menu' => blocksy_get_default_menu(),
       'header_menu_type' => 'type-1',
-
     ],
-
     'mobile-menu' => [
       'menu' => blocksy_get_default_menu(),
     ],
-  
     'logo' => [
       'logo_type' => 'text',
-      'blogname' => get_option('blogname'),
+      'site_title' => get_option('blogname'),
+      'site_description' => get_option('blogdescription'),
       'custom_logo' => '',
       'has_mobile_logo' => 'no',
       'mobile_header_logo' => '',
       'has_tagline' => 'no',
-      'blogdescription' => get_option('blogdescription'),
     ],
-  
     'button' => [
       'size' => 'medium',
       'text' => __( 'Download' ),
       'link' => '',
       'target' => 'no',
     ],
-
     'search' => [
       'search_placeholder' => __( 'Search...' ),
       'searchPadding' => [
@@ -80,7 +80,8 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
   
   ], $defaults );
 
-  $placements = [ 'header_placements' => [
+  // PLACEMENTS
+  $defaults = wp_parse_args( [ 'header_placements' => [
     'current_section' => 'type-1',
     'sections' => [ [
       'id' => 'type-1',
@@ -94,7 +95,13 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
         [ 'id' => 'offcanvas', 'values' => $defaults['offcanvas'] ],
       ],
       'desktop' => [
-        [ 'id' => 'top-row', 'placements' => [] ],
+        [ 'id' => 'top-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
         [ 'id' => 'middle-row', 'placements' => [
           [ 'id' => 'start', 'items' => [ 'logo' ] ],
           [ 'id' => 'middle', 'items' => [] ],
@@ -102,10 +109,22 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
           [ 'id' => 'start-middle', 'items' => [] ],
           [ 'id' => 'end-middle', 'items' => [] ],
         ] ],
-        [ 'id' => 'bottom-row', 'placements' => [] ],
+        [ 'id' => 'bottom-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
       ],
       'mobile' => [
-        [ 'id' => 'top-row', 'placements' => [] ],
+        [ 'id' => 'top-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
         [ 'id' => 'middle-row', 'placements' => [
           [ 'id' => 'start', 'items' => [ 'logo' ] ],
           [ 'id' => 'middle', 'items' => [] ],
@@ -113,13 +132,20 @@ add_filter( 'custy_header_default_values', function( $defaults ) {
           [ 'id' => 'start-middle', 'items' => [] ],
           [ 'id' => 'end-middle', 'items' => [] ],
         ] ],
-        [ 'id' => 'bottom-row', 'placements' => [] ],
+        [ 'id' => 'bottom-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
         [ 'id' => 'offcanvas', 'placements' => [
           [ 'id' => 'start', 'items' => [ 'mobile-menu' ] ],
         ] ],
       ],
     ] ],
-  ] ];
+  ] ], $defaults );
 
-  return array_merge( $defaults, $placements );
-} );
+
+  return $defaults;
+}

@@ -10,10 +10,14 @@ function _custy_format_builder_values( $values ) {
 
   switch( $type ) {
     case 'header':
-      return $bv->format_header_values( $values );
+      $values = $bv->format_header_values( $values );
+      break;
     case 'footer':
-      return $bv->format_footer_values( $values );
+      $values = $bv->format_footer_values( $values );
+      break;
   }
+
+  return $values;
 }
 
 
@@ -141,7 +145,7 @@ class Custy_BuilderValues {
    */
   private function format_items( $item_ids, $values ) {
     $items = [];
-    $default_values = Custy::get_default_values( $this->type );
+    $default_values = Custy::get_default_values();
     $formatter = new Custy_FormatValues();
 
     // get item value - if not found, use default

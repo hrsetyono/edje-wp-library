@@ -11,47 +11,44 @@ add_action( 'after_setup_theme' , '_h_setup_custy', 9999 );
 
 function _h_load_custy() {
   require_once BLOCKSY_DIR . '/_index.php';
+  
+  // DEFAULT VALUES
+  require_once __DIR__ . '/core-sections/_default-values.php';
+  require_once __DIR__ . '/header-items/_default-values.php';
+  require_once __DIR__ . '/footer-items/_default-values.php';
+  
+  add_filter( 'custy_default_values', '_custy_core_default_values' );
+  add_filter( 'custy_default_values', '_custy_header_default_values' );
+  add_filter( 'custy_default_values', '_custy_footer_default_values' );
 }
 
 function _h_setup_custy() {
   require_once __DIR__ . '/enqueue.php';
-
-  require_once __DIR__ . '/default-sections.php';
-  require_once __DIR__ . '/default-values.php';
+  
+  require_once __DIR__ . '/helper-values.php';
+  require_once __DIR__ . '/helper-options.php';
+  require_once __DIR__ . '/helper-sync.php'; 
 
   require_once __DIR__ . '/stylesheet.php';
   require_once __DIR__ . '/stylesheet-compile.php';
   require_once __DIR__ . '/stylesheet-output.php';
 
-  require_once __DIR__ . '/format-values.php';
-  require_once __DIR__ . '/format-sections.php';
-  require_once __DIR__ . '/sync-preview.php';
-
-  
-  add_filter( 'custy_default_values', '_custy_set_default_values' );
-  add_filter( 'custy_sections', '_custy_set_default_sections', 1 );
+  add_filter( 'custy_sections', '_custy_set_core_sections', 1 );
   add_filter( 'custy_sections', '_custy_format_sections', 99999 );
 
   add_action( 'wp_head', '_custy_render_stylesheet', 0 );
   add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
 
-
-  ///// BUILDER
   
+  // BUILDER
   require_once __DIR__ . '/builder-items.php';
   require_once __DIR__ . '/builder-values.php';
-
-  require_once __DIR__ . '/header/_default-values.php';
-  require_once __DIR__ . '/footer/_default-values.php';
 
   add_filter( 'custy_header_items', '_custy_set_header_items', 0 );
   add_filter( 'custy_header_items', '_custy_format_builder_items', 9999, 3 );
   
   add_filter( 'custy_footer_items', '_custy_set_footer_items', 0 );
   add_filter( 'custy_footer_items', '_custy_format_builder_items', 9999, 3 );
-
-  add_filter( 'custy_header_values', '_custy_format_builder_values', 10 );
-  add_filter( 'custy_footer_values', '_custy_format_builder_values', 10 );
 }
 
 /////
@@ -68,9 +65,9 @@ class Custy {
     global $custy_mods;
 
     if( empty( $custy_mods ) ) {
-      $custy_mods = wp_parse_args( get_theme_mods(), self::get_default_values() );
+      $defaults = self::get_default_values();
+      $custy_mods = wp_parse_args( get_theme_mods(), $defaults );
     }
-
     return $custy_mods;
   }
 
@@ -89,23 +86,18 @@ class Custy {
   /**
    * Get the default value of theme mods
    */
-  static function get_default_values( $type = '' ) {
+  static function get_default_values() {
+    global $custy_default_values;
+    $custy_default_values = $custy_default_values ?? apply_filters( 'custy_default_values', [] );
+    return $custy_default_values;
+  }
 
-    if( $type === 'header' ) {
-      global $custy_header_dv;
-      $custy_header_dv = $custy_header_dv ?? apply_filters( 'custy_header_default_values', [] );
-      return $custy_header_dv;
-    }
-    elseif( $type === 'footer' ) {
-      global $custy_footer_dv;
-      $custy_footer_dv = $custy_footer_dv ?? apply_filters( 'custy_footer_default_values', [] );
-      return $custy_footer_dv;
-    }
-    else {
-      global $custy_dv;
-      $custy_dv = $custy_dv ?? apply_filters( 'custy_default_values', [] );
-      return $custy_dv;
-    }
+  /**
+   * Get a single default value
+   */
+  static function get_default_value( $option_id ) {
+    $defaults = self::get_default_values();
+    return $defaults[ $option_id ];
   }
 
 
@@ -141,7 +133,7 @@ class Custy {
   static function get_builder_content( $type = 'header' ) {
     $raw_values = self::get_mod( $type . '_placements' );
 
-    $data = apply_filters( "custy_{$type}_values", $raw_values );
-    return apply_filters( "custy_render_{$type}", '', $data );
+    $values = apply_filters( "custy_{$type}_values", $raw_values );
+    return apply_filters( "custy_render_{$type}", '', $values );
   }
 }

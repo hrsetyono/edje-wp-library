@@ -2,6 +2,9 @@
 
 class Blocksy_Customizer_Builder_Footer {
 	public function get_default_value() {
+		// @new - hijack the default value
+		return Custy::get_default_value( 'footer_placements' );
+
 		return [
 			'current_section' => 'type-1',
 			'sections' => [

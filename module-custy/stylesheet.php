@@ -30,7 +30,7 @@ function _custy_render_admin_stylesheet() {
     return;
   }
 
-  $mods = wp_parse_args( get_theme_mods(), Custy::get_default_values() );
+  $mods = Custy::get_mods();
   $styles = [
     ':root' => [
       '--main'      => $mods['colorPalette']['color1']['color'],

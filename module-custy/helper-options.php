@@ -1,25 +1,62 @@
 <?php
 
 /**
+ * @filter custy_sections 0
+ */
+function _custy_set_core_sections( $sections ) {
+  $co = new Custy_Options();
+  return $co->populate_core_sections();
+}
+
+/**
  * @filter custy_sections 99999
  */
 function _custy_format_sections( $sections ) {
-  $fs = new Custy_FormatSections();
-  return $fs->format_all( $sections );
+  $co = new Custy_Options();
+  return $co->format_sections( $sections );
 }
 
 
 /**
- * Format the simplified option args into complete one that's accepted by Blocksy
+ * Helper functions to handle Customizer Options
  */
-class Custy_FormatSections {
+class Custy_Options {
   function __construct() {
+  }
+
+  /**
+   * Compile sections by reading all files in /core-sections 
+   */
+  function populate_core_sections() {
+    $all_sections = [];
+    $files = glob( __DIR__ . "/core-sections/*.php" );
+
+    // Loop all files
+    foreach( $files as $f ) {
+      $item = null; $items = null; // reset
+      $file_name = basename( $f, '.php' );
+      
+      // SKIP if first letter is underscore
+      if( preg_match( '/^_/', $file_name, $matches ) ) { continue; }
+
+      // Get variable $section or $sections from file
+      require $f;
+
+      if( isset( $section ) ) {
+        $all_sections[ $file_name ] = $section;
+      }
+      elseif( isset( $sections ) ) {
+        $all_sections = array_merge( $all_sections, $sections );
+      }
+    }
+
+    return $all_sections;
   }
 
   /**
    * Format all sections
    */
-  function format_all( $sections ) : array {
+  function format_sections( $sections ) : array {
     foreach( $sections as $section_id => &$s ) {
       if( !isset( $s['options'] ) ) { continue; }
       
@@ -39,7 +76,7 @@ class Custy_FormatSections {
       ];
 
       // If core section, add this options to prevent JS error
-      if( $section_id === 'cores' ) {
+      if( $section_id === 'general' ) {
         $s['options']['customizer_color_scheme'] = [
           'label' => __( 'Color scheme' ),
           'type' => 'hidden',
@@ -62,12 +99,13 @@ class Custy_FormatSections {
    * @return array - The formatted options
    */
   function format( $options, $defaults = null ) {
+
     $defaults = $defaults ?? Custy::get_default_values();
-   
+
     foreach( $options as $id => &$args ):
-      // set default value
-      if( isset( $defaults[ $id ] ) ) {
-        $args['value'] = $defaults[ $id ];
+      // set default value if 'value' args is empty
+      if( !isset( $args['value']) ) {
+        $args['value'] = $defaults[ $id ] ?? null;
       }
 
       if( !isset( $args['type'] ) ) {
@@ -77,7 +115,7 @@ class Custy_FormatSections {
       switch( $args['type'] ):
         case 'tab':
         case 'ct-condition':
-          $args['options'] = $this->format( $args['options'] );
+          $args['options'] = $this->format( $args['options'], $defaults );
 
           if( isset($args['css_selector']) ) {
             $args['options'] = $this->add_css_selector_notice( $args['css_selector'], $args['options'] );
@@ -85,7 +123,7 @@ class Custy_FormatSections {
           continue;
        
         case 'ct-panel':
-          $args['inner-options'] = $this->format( $args['inner-options'] );
+          $args['inner-options'] = $this->format( $args['inner-options'], $defaults );
           
           if( isset($args['css_selector']) ) {
             $args['inner-options'] = $this->add_css_selector_notice( $args['css_selector'], $args['inner-options'] );

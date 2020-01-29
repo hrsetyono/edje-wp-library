@@ -5,8 +5,7 @@
  * 
  * @filter custy_default_values
  */
-function _custy_set_default_values( $defaults ) {
-  
+function _custy_core_default_values( $defaults ) {
   return wp_parse_args( [
 
     // CORE SETTINGS

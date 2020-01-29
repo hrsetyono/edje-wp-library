@@ -2,8 +2,10 @@
 
 /**
  * Add default values for Footer items
+ * 
+ * @filter custy_default_values
  */
-add_filter( 'custy_footer_default_values', function( $defaults ) {
+function _custy_footer_default_values( $defaults ) {
   $row_values = [
     'items_per_row' => '3',
     '2_columns_layout' => [
@@ -24,11 +26,11 @@ add_filter( 'custy_footer_default_values', function( $defaults ) {
   ];
 
   $defaults = wp_parse_args( [
-    'top-row' => $row_values,
-    'middle-row' => $row_values,
-    'bottom-row' => $row_values,
+    'footer-top-row' => $row_values,
+    'footer-middle-row' => $row_values,
+    'footer-bottom-row' => $row_values,
 
-    'menu' => [
+    'footer-menu' => [
       'menu' => blocksy_get_default_menu(),
     ],
 
@@ -37,10 +39,16 @@ add_filter( 'custy_footer_default_values', function( $defaults ) {
     ],
 
     'widget-area-1' => [
-      'widget' => 10,
+      'widget' => null,
     ],
     'widget-area-2' => [
-      'widget' => 12,
+      'widget' => null,
+    ],
+    'widget-area-3' => [
+      'widget' => null,
+    ],
+    'widget-area-4' => [
+      'widget' => null,
     ],
 
     'socials' => [
@@ -63,30 +71,30 @@ add_filter( 'custy_footer_default_values', function( $defaults ) {
   ], $defaults );
 
   // FOOTER PLACEMENTS
-  $placements = [ 'footer_placements' => [
+  $defaults = wp_parse_args([ 'footer_placements' => [
     'current_section' => 'type-1',
     'sections' => [ [
       'id' => 'type-1',
       'mode' => 'columns',
+      'settings' => [],
       'items' => [
-        [ 'id' => 'menu', 'values' => $defaults['menu'] ],
+        [ 'id' => 'menu', 'values' => $defaults['footer-menu'] ],
         [ 'id' => 'copyright', 'values' => $defaults['copyright'] ],
-        [ 'id' => 'top-row', 'values' => $defaults['top-row'] ],
-        [ 'id' => 'middle-row', 'values' => $defaults['middle-row'] ],
-        [ 'id' => 'bottom-row', 'values' => $defaults['bottom-row'] ],
+        [ 'id' => 'top-row', 'values' => $defaults['footer-top-row'] ],
+        [ 'id' => 'middle-row', 'values' => $defaults['footer-middle-row'] ],
+        [ 'id' => 'bottom-row', 'values' => $defaults['footer-bottom-row'] ],
       ],
       'rows' => [
         [ 'id' => 'top-row', 'columns' => [] ],
         [ 'id' => 'middle-row', 'columns' => [
-          [ 'logo' ],
-          [ 'menu' ]
+          [ 'footer-menu' ]
         ] ],
         [ 'id' => 'bottom-row', 'columns' => [
           [ 'copyright' ]
         ] ],
       ],
     ] ],
-  ] ];
+  ] ], $defaults );
 
-  return array_merge( $defaults, $placements );
-} );
+  return $defaults;
+}

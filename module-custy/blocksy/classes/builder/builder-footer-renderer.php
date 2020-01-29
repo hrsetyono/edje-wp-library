@@ -14,6 +14,7 @@ class Blocksy_Customizer_Builder_Render_Columns {
 	public function get_section_value() {
 		$footer = new Blocksy_Customizer_Builder_Footer();
 
+		return $footer->get_default_value();
 		return get_theme_mod(
 			$this->placements_key,
 			$footer->get_default_value()
@@ -30,7 +31,7 @@ class Blocksy_Customizer_Builder_Render_Columns {
 				return $single_section;
 			}
 		}
-
+		var_dump( $this->section_value );
 		return $this->section_value['sections'][0];
 	}
 

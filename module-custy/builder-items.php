@@ -32,7 +32,8 @@ function _custy_format_builder_items( $items, $include = 'all', $require_options
   $type = isset( $items['offcanvas'] ) ? 'header' : 'footer';
 
   $items = $bi->filter_items( $items, $include );
-  return $bi->format_items( $items, $type, $require_options );
+  $items = $bi->format_items( $items, $type, $require_options );
+  return $items;
 }
 
 
@@ -43,13 +44,15 @@ class Custy_BuilderItems {
   function __construct() {}
 
   /**
-   * Populate items
+   * Compile items by reading all files in /header or /footer
+   * 
+   * @param $type (string) - Either 'header' or 'footer'
    */
   function populate_items( $type = 'header' ) {
     $all_items = [];
-    $files = glob( __DIR__ . "/$type/*.php" );
+    $files = glob( __DIR__ . "/{$type}-items/*.php" );
 
-    // Loop all files inside the /header or /footer dir
+    // Loop all files
     foreach( $files as $f ) {
       $item = null; $items = null; // reset
       $file_name = basename( $f, '.php' );
@@ -113,6 +116,8 @@ class Custy_BuilderItems {
    */
   function format_items( $items, $type = 'header', $require_options = false ) {
     $formatted_items = [];
+    $defaults = Custy::get_default_values();
+    $co = new Custy_Options();
 
     foreach( $items as $item_id => $item ) {
       $item_args = [
@@ -132,16 +137,17 @@ class Custy_BuilderItems {
       ];
 
       if( $require_options && isset( $item['options'] ) ) {
-        $defaults = Custy::get_default_values( $type );
-        $formatter = new Custy_FormatSections();
-
-        $item_args['options'] = $formatter->format( $item['options'], $defaults[ $item_id ] ?? null );
+        // If footer and want to format Rows, add prefix to the default values
+        if( $type === 'footer' && in_array( $item_id, ['top-row', 'middle-row', 'bottom-row'] ) ) {
+          $item_id = "footer-{$item_id}";
+        }
+        
+        $item_args['options'] = $co->format( $item['options'], $defaults[ $item_id ] );
       }
 
       $formatted_items[] = $item_args;
     }
     
-    var_dump( $formatted_items );
     return $formatted_items;
   }
 
