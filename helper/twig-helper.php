@@ -16,7 +16,11 @@ class Twig_Helper {
    * @filter get_twig
    */
   function add_to_twig( $twig ) {
+    // @deprecated - use h_markdown instead
     $twig->addFilter( new \Twig_SimpleFilter( 'markdown', [$this, '_filter_markdown'] ) );
+
+    $twig->addFilter( new \Twig_SimpleFilter( 'h_markdown', [$this, '_filter_markdown'] ) );
+    $twig->addFilter( new \Twig_SimpleFilter( 'h_get_menu_items', [$this, '_filter_get_menu_items'] ) );
 
     // only if set to Debug mode
     if( defined('WP_DEBUG') && WP_DEBUG === true ) {
@@ -38,6 +42,14 @@ class Twig_Helper {
     $pd = new \Parsedown();
     $text_compiled = $pd->text( $text );
     return do_shortcode( $text_compiled );
+  }
+
+  /**
+   * Get Timber Menu object
+   *   {{ menu_id | h_get_menu_items }}
+   */
+  function _filter_get_menu_items( $menu_id ) {
+    return new \Timber\Menu( $menu_id );
   }
 
   /**

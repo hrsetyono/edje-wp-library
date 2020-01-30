@@ -45,10 +45,12 @@ function _h_setup_custy() {
   require_once __DIR__ . '/builder-values.php';
 
   add_filter( 'custy_header_items', '_custy_set_header_items', 0 );
-  add_filter( 'custy_header_items', '_custy_format_builder_items', 9999, 3 );
-  
   add_filter( 'custy_footer_items', '_custy_set_footer_items', 0 );
+  add_filter( 'custy_header_items', '_custy_format_builder_items', 9999, 3 );
   add_filter( 'custy_footer_items', '_custy_format_builder_items', 9999, 3 );
+
+  add_filter( 'custy_header_values', '_custy_format_builder_values', 10 );
+  add_filter( 'custy_footer_values', '_custy_format_builder_values', 10 );
 }
 
 /////

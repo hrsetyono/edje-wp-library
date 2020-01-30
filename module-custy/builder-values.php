@@ -112,7 +112,7 @@ class Custy_BuilderValues {
           }
 
           // complete the columns if at least one exists
-          if( count( $data[ $row_id ] ) >= 1 ) {
+          if( count( $data[ $row_id ] ) >= 1 && $row_id !== 'offcanvas' ) {
             $data[ $row_id ] = wp_parse_args( $data[ $row_id ], [
               'start' => [],
               'start-middle' => [],

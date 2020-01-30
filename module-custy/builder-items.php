@@ -122,21 +122,22 @@ class Custy_BuilderItems {
     foreach( $items as $item_id => $item ) {
       $item_args = [
         'id' => $item_id,
+        'is_primary' => $item['is_primary'] ?? false,
         'config' => [
           'name' => $item['title'],
-          'description' => '',
+          'description' => $item['description'] ?? '',
           'typography_keys' => [],
-          'devices' => [ 'desktop', 'mobile' ],
-          'selective_refresh' => [],
-          'allowed_in' => [],
-          'excluded_from' => [],
+          'devices' => $item['devices'] ?? [ 'desktop', 'mobile' ],
+          'selective_refresh' => $item['selective_refresh'] ?? [],
+          'allowed_in' => $item['allowed_in'] ?? [],
+          'excluded_from' => $item['excluded_from'] ?? [],
           'shortcut_style' => 'drop',
           'enabled' => true,
         ],
-        'is_primary' => $item['is_primary'] ?? false,
       ];
 
       if( $require_options && isset( $item['options'] ) ) {
+        
         // If footer and want to format Rows, add prefix to the default values
         if( $type === 'footer' && in_array( $item_id, ['top-row', 'middle-row', 'bottom-row'] ) ) {
           $item_id = "footer-{$item_id}";

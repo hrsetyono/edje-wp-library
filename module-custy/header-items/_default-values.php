@@ -46,9 +46,7 @@ function _custy_header_default_values( $defaults ) {
       'menu' => blocksy_get_default_menu(),
       'header_menu_type' => 'type-1',
     ],
-    'mobile-menu' => [
-      'menu' => blocksy_get_default_menu(),
-    ],
+
     'logo' => [
       'logo_type' => 'text',
       'site_title' => get_option('blogname'),
@@ -58,12 +56,14 @@ function _custy_header_default_values( $defaults ) {
       'mobile_header_logo' => '',
       'has_tagline' => 'no',
     ],
+
     'button' => [
       'size' => 'medium',
       'text' => __( 'Download' ),
       'link' => '',
       'target' => 'no',
     ],
+
     'search' => [
       'search_placeholder' => __( 'Search...' ),
       'searchPadding' => [
@@ -74,9 +74,15 @@ function _custy_header_default_values( $defaults ) {
       ],
     ],
 
+    ///// MOBILE
+    
+    'mobile-menu' => [
+      'menu' => blocksy_get_default_menu(),
+    ],
+
     'trigger' => [
-      'mobile_menu_trigger_type' => 'type-1',
-    ]
+      'mobile_menu_trigger_type' => 'type-1'
+    ],
   
   ], $defaults );
 

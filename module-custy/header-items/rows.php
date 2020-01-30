@@ -60,6 +60,7 @@ $items = [
     'is_primary' => true,
     'css_selector' => '.mobile-header [data-row="offcanvas"]',
     'options' => [
+
       'offcanvasBackground' => [
         'label' => __( 'Background' ),
         'type'  => 'ct-background',
@@ -68,6 +69,7 @@ $items = [
         'label' => __( 'Shadow' ),
         'type' => 'ct-select/shadow',
       ],
+      
     ],
   ],
 ];

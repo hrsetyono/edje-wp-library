@@ -2,6 +2,8 @@
 
 $item = [
   'title' => __( 'Mobile Menu' ),
+  'devices' => [ 'mobile' ],
+  'allowed_in' => [ 'offcanvas' ],
   'options' => [
 
     'menu' => [

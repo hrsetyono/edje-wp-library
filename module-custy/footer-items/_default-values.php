@@ -53,18 +53,9 @@ function _custy_footer_default_values( $defaults ) {
 
     'socials' => [
       'footer_socials' => [
-        [
-          'id' => 'facebook',
-          'enabled' => true,
-        ],
-        [
-          'id' => 'twitter',
-          'enabled' => true,
-        ],
-        [
-          'id' => 'instagram',
-          'enabled' => true,
-        ],
+        [ 'id' => 'facebook', 'enabled' => true ],
+        [ 'id' => 'twitter', 'enabled' => true ],
+        [ 'id' => 'instagram', 'enabled' => true ],
       ]
     ],
   
@@ -85,9 +76,13 @@ function _custy_footer_default_values( $defaults ) {
         [ 'id' => 'bottom-row', 'values' => $defaults['footer-bottom-row'] ],
       ],
       'rows' => [
-        [ 'id' => 'top-row', 'columns' => [] ],
-        [ 'id' => 'middle-row', 'columns' => [
+        [ 'id' => 'top-row', 'columns' => [
           [ 'footer-menu' ]
+        ] ],
+        [ 'id' => 'middle-row', 'columns' => [
+          [ 'widget-area-1' ],
+          [ 'widget-area-2' ],
+          [ 'widget-area-3' ]
         ] ],
         [ 'id' => 'bottom-row', 'columns' => [
           [ 'copyright' ]
