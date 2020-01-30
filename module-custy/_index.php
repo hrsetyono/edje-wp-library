@@ -84,11 +84,18 @@ class Custy {
 
   /**
    * Get the default value of theme mods
+   * 
+   * @param $type (string) - Either 'footer', 'header', or 'all'
    */
-  static function get_default_values() {
+  static function get_default_values( $type = 'all' ) {
     global $custy_default_values;
     $custy_default_values = $custy_default_values ?? apply_filters( 'custy_default_values', [] );
-    return $custy_default_values;
+
+    if( $type == 'all' ) {
+      return $custy_default_values;
+    } else {
+      return $custy_default_values[ $type ] ?? null;
+    }
   }
 
   /**

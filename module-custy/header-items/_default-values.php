@@ -30,7 +30,7 @@ function _custy_header_default_values( $defaults ) {
     ]
   ];
 
-  $defaults = wp_parse_args( [
+  $defaults = wp_parse_args( [ 'header' => [
     'top-row' => $row_values,
     'middle-row' => $row_values,
     'bottom-row' => $row_values,
@@ -84,7 +84,7 @@ function _custy_header_default_values( $defaults ) {
       'mobile_menu_trigger_type' => 'type-1'
     ],
   
-  ], $defaults );
+  ] ], $defaults );
 
   // PLACEMENTS
   $defaults = wp_parse_args( [ 'header_placements' => [
@@ -93,12 +93,14 @@ function _custy_header_default_values( $defaults ) {
       'id' => 'type-1',
       'mode' => 'placements',
       'items' => [
-        [ 'id' => 'menu', 'values' => $defaults['menu'] ],
-        [ 'id' => 'logo', 'values' => $defaults['logo'] ],
-        [ 'id' => 'top-row', 'values' => $defaults['top-row'] ],
-        [ 'id' => 'middle-row', 'values' => $defaults['middle-row'] ],
-        [ 'id' => 'bottom-row', 'values' => $defaults['bottom-row'] ],
-        [ 'id' => 'offcanvas', 'values' => $defaults['offcanvas'] ],
+        [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
+        [ 'id' => 'logo', 'values' => $defaults['header']['logo'] ],
+        [ 'id' => 'top-row', 'values' => $defaults['header']['top-row'] ],
+        [ 'id' => 'middle-row', 'values' => $defaults['header']['middle-row'] ],
+        [ 'id' => 'bottom-row', 'values' => $defaults['header']['bottom-row'] ],
+        [ 'id' => 'offcanvas', 'values' => $defaults['header']['offcanvas'] ],
+        [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
+        [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
       ],
       'desktop' => [
         [ 'id' => 'top-row', 'placements' => [

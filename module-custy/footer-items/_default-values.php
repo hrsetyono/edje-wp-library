@@ -25,12 +25,12 @@ function _custy_footer_default_values( $defaults ) {
     ],
   ];
 
-  $defaults = wp_parse_args( [
-    'footer-top-row' => $row_values,
-    'footer-middle-row' => $row_values,
-    'footer-bottom-row' => $row_values,
+  $defaults = wp_parse_args( [ 'footer' => [
+    'top-row' => $row_values,
+    'middle-row' => $row_values,
+    'bottom-row' => $row_values,
 
-    'footer-menu' => [
+    'menu' => [
       'menu' => blocksy_get_default_menu(),
     ],
 
@@ -59,7 +59,7 @@ function _custy_footer_default_values( $defaults ) {
       ]
     ],
   
-  ], $defaults );
+  ] ], $defaults );
 
   // FOOTER PLACEMENTS
   $defaults = wp_parse_args([ 'footer_placements' => [
@@ -69,15 +69,15 @@ function _custy_footer_default_values( $defaults ) {
       'mode' => 'columns',
       'settings' => [],
       'items' => [
-        [ 'id' => 'footer-menu', 'values' => $defaults['footer-menu'] ],
-        [ 'id' => 'copyright', 'values' => $defaults['copyright'] ],
-        [ 'id' => 'top-row', 'values' => $defaults['footer-top-row'] ],
-        [ 'id' => 'middle-row', 'values' => $defaults['footer-middle-row'] ],
-        [ 'id' => 'bottom-row', 'values' => $defaults['footer-bottom-row'] ],
+        [ 'id' => 'menu', 'values' => $defaults['footer']['menu'] ],
+        [ 'id' => 'copyright', 'values' => $defaults['footer']['copyright'] ],
+        [ 'id' => 'top-row', 'values' => $defaults['footer']['top-row'] ],
+        [ 'id' => 'middle-row', 'values' => $defaults['footer']['middle-row'] ],
+        [ 'id' => 'bottom-row', 'values' => $defaults['footer']['bottom-row'] ],
       ],
       'rows' => [
         [ 'id' => 'top-row', 'columns' => [
-          [ 'footer-menu' ]
+          [ 'menu' ]
         ] ],
         [ 'id' => 'middle-row', 'columns' => [
           [ 'widget-area-1' ],

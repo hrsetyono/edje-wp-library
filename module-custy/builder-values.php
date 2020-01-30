@@ -121,10 +121,11 @@ class Custy_BuilderValues {
    * 
    * @param $item_ids (array) - List of item IDs
    * @param $values (array) - All the header item's values
+   * @param $type (string) - 'header' or 'footer'
    */
   private function format_items( $item_ids, $values ) {
     $items = [];
-    $default_values = Custy::get_default_values();
+    $default_values = Custy::get_default_values( $this->type );
     $formatter = new Custy_FormatValues();
 
     // get item value - if not found, use default
