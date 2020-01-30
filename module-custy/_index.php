@@ -9,6 +9,9 @@ define( 'BLOCKSY_JS_DIR', plugin_dir_url(__FILE__) . 'blocksy/js' );
 add_action( 'plugins_loaded', '_h_load_custy' );
 add_action( 'after_setup_theme' , '_h_setup_custy', 9999 );
 
+/**
+ * @action plugins_loaded
+ */
 function _h_load_custy() {
   require_once BLOCKSY_DIR . '/_index.php';
   
@@ -22,6 +25,9 @@ function _h_load_custy() {
   add_filter( 'custy_default_values', '_custy_footer_default_values' );
 }
 
+/**
+ * @action after_setup_theme
+ */
 function _h_setup_custy() {
   require_once __DIR__ . '/enqueue.php';
   
@@ -51,7 +57,6 @@ function _h_setup_custy() {
 }
 
 /////
-
 
 class Custy {
 

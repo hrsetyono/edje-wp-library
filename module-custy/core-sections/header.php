@@ -110,14 +110,5 @@ $section = [
       //   ]
       // ],
     ],
-
-    'footer_placements' => [
-      'type' => 'hidden',
-      'value' => [
-        'current_section' => 'type-1',
-        'sections' => [
-        ]
-      ]
-    ]
   ]
 ];
