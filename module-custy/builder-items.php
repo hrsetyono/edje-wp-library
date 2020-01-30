@@ -20,7 +20,6 @@ function _custy_set_footer_items( $items ) {
   return $items;
 }
 
-
 /**
  * Format the options
  * 

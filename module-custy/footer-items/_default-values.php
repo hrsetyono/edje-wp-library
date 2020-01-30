@@ -69,7 +69,7 @@ function _custy_footer_default_values( $defaults ) {
       'mode' => 'columns',
       'settings' => [],
       'items' => [
-        [ 'id' => 'menu', 'values' => $defaults['footer-menu'] ],
+        [ 'id' => 'footer-menu', 'values' => $defaults['footer-menu'] ],
         [ 'id' => 'copyright', 'values' => $defaults['copyright'] ],
         [ 'id' => 'top-row', 'values' => $defaults['footer-top-row'] ],
         [ 'id' => 'middle-row', 'values' => $defaults['footer-middle-row'] ],

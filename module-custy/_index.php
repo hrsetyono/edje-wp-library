@@ -48,9 +48,6 @@ function _h_setup_custy() {
   add_filter( 'custy_footer_items', '_custy_set_footer_items', 0 );
   add_filter( 'custy_header_items', '_custy_format_builder_items', 9999, 3 );
   add_filter( 'custy_footer_items', '_custy_format_builder_items', 9999, 3 );
-
-  add_filter( 'custy_header_values', '_custy_format_builder_values', 10 );
-  add_filter( 'custy_footer_values', '_custy_format_builder_values', 10 );
 }
 
 /////
@@ -81,7 +78,7 @@ class Custy {
    */
   static function get_mod( $id ) {
     $mods = self::get_mods();
-    return $mods[ $id ] ?? false;
+    return $mods[ $id ] ?? null;
   }
 
 
@@ -99,7 +96,7 @@ class Custy {
    */
   static function get_default_value( $option_id ) {
     $defaults = self::get_default_values();
-    return $defaults[ $option_id ];
+    return $defaults[ $option_id ] ?? null;
   }
 
 
@@ -134,8 +131,18 @@ class Custy {
    */
   static function get_builder_content( $type = 'header' ) {
     $raw_values = self::get_mod( $type . '_placements' );
+    $formatted_values = [];
+    $bv = new Custy_BuilderValues();
 
-    $values = apply_filters( "custy_{$type}_values", $raw_values );
-    return apply_filters( "custy_render_{$type}", '', $values );
+    switch( $type ) {
+      case 'header':
+        $formatted_values = $bv->format_header_values( $raw_values );
+        break;
+      case 'footer':
+        $formatted_values = $bv->format_footer_values( $raw_values );
+        break;
+    }
+
+    return apply_filters( "custy_render_{$type}", '', $formatted_values );
   }
 }

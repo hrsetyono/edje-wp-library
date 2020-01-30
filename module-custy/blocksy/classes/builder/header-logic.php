@@ -3,7 +3,10 @@
 class Blocksy_Customizer_Builder_Header {
 	public function get_default_value() {
 		// @new - hijack the default value
-		return Custy::get_default_value( 'header_placements' );
+		$values = Custy::get_default_value( 'header_placements' );
+		if( !empty( $values ) ) {
+			return $values;
+		}
 
 		return [
 			'current_section' => 'type-1',

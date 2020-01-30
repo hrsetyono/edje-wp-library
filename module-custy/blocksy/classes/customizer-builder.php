@@ -153,11 +153,6 @@ class Blocksy_Customizer_Builder {
 			}
 		}
 
-		// if( $panel_type === 'header' ) {
-		// 	var_dump( '#include ' . $include . ' #require ' . ($require_options ? 'true' : 'false') );
-		//   var_dump( $items );
-		// }
-
 		return $items;
 	}
 

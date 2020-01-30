@@ -14,11 +14,18 @@ class Blocksy_Customizer_Builder_Render_Columns {
 	public function get_section_value() {
 		$footer = new Blocksy_Customizer_Builder_Footer();
 
-		return $footer->get_default_value();
-		return get_theme_mod(
+		// @changed - use default if $mod is empty
+		$mod = get_theme_mod(
 			$this->placements_key,
 			$footer->get_default_value()
 		);
+
+		if( count( $mod['sections'] ) <= 0 ) {
+			$mod = $footer->get_default_value();
+		}
+		// /changed
+		
+		return $mod;
 	}
 
 	public function get_current_section() {
@@ -31,7 +38,7 @@ class Blocksy_Customizer_Builder_Render_Columns {
 				return $single_section;
 			}
 		}
-		var_dump( $this->section_value );
+
 		return $this->section_value['sections'][0];
 	}
 

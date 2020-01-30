@@ -1,27 +1,6 @@
 <?php
 
 /**
- * @filter custy_header_values 10
- * @filter custy_footer_values 10
- */
-function _custy_format_builder_values( $values ) {
-  $type = $values['sections'][0]['mode'] === 'placements' ? 'header' : 'footer';
-  $bv = new Custy_BuilderValues();
-
-  switch( $type ) {
-    case 'header':
-      $values = $bv->format_header_values( $values );
-      break;
-    case 'footer':
-      $values = $bv->format_footer_values( $values );
-      break;
-  }
-
-  return $values;
-}
-
-
-/**
  * Format the values of Header or Footer
  */
 class Custy_BuilderValues {
