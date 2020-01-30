@@ -6,18 +6,18 @@
  * @filter wp_head 0
  */
 function _custy_render_stylesheet() {
-  $theme_mods = Custy::get_mods();
   $sections = Custy::get_sections();
+  $header_items = Custy::get_builder_items( 'header', 'all', true, false );
+  $footer_items = Custy::get_builder_items( 'footer', 'all', true, false );
 
-  $compiler = new Custy_CompileStyles( $theme_mods );
-  $styles = $compiler->compile( $sections );
+  $compiler = new Custy_CompileStyles();
+  $compiler->compile_from_sections( $sections );
+  $compiler->compile_from_items( $header_items, 'header' );
+  $styles = $compiler->compile_from_items( $footer_items, 'footer' );
 
-  $formatter = new Custy_FormatValues();
-  $styles = $formatter->format_for_css( $styles );
-
-  $outputter = new Custy_OutputStyles();
-  $outputter->echo_css( $styles );
+  _custy_format_then_echo_css( $styles );
 }
+
 
 /**
  * Render the CSS variables for Customizer page
@@ -43,6 +43,14 @@ function _custy_render_admin_stylesheet() {
     ],
   ];
 
+  _custy_format_then_echo_css( $styles );
+}
+
+
+/**
+ * Format the CSS then echo it
+ */
+function _custy_format_then_echo_css( $styles ) {
   $formatter = new Custy_FormatValues();
   $styles = $formatter->format_for_css( $styles );
 

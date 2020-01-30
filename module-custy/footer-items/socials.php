@@ -17,24 +17,6 @@ $item = [
         '</a>'
       ),
       'divider' => 'bottom',
-      'setting' => [ 'transport' => 'postMessage' ],
-      'value' => [
-        [
-          'id' => 'facebook',
-          'enabled' => true,
-        ],
-
-        [
-          'id' => 'twitter',
-          'enabled' => true,
-        ],
-
-        [
-          'id' => 'instagram',
-          'enabled' => true,
-        ],
-      ],
-
       'settings' => blocksy_get_social_networks_list()
     ],
   ]

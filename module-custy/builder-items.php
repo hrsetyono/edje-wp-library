@@ -20,21 +20,6 @@ function _custy_set_footer_items( $items ) {
   return $items;
 }
 
-/**
- * Format the options
- * 
- * @filter custy_header_items 9999
- * @filter custy_footer_items 9999
- */
-function _custy_format_builder_items( $items, $include = 'all', $require_options = false ) {
-  $bi = new Custy_BuilderItems();
-  $type = isset( $items['offcanvas'] ) ? 'header' : 'footer';
-
-  $items = $bi->filter_items( $items, $include );
-  $items = $bi->format_items( $items, $type, $require_options );
-  return $items;
-}
-
 
 /**
  * 

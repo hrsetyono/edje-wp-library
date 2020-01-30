@@ -19,9 +19,8 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [
-        'type' => 'ct-condition',
-        'condition' => [ 'items_per_row' => '2' ],
+      blocksy_rand_md5() => [ 'condition' => [ 'items_per_row' => '2' ],
+        'type' => 'ct-condition'  ,
         'options' => [
 
           '2_columns_layout' => [
@@ -43,19 +42,15 @@ $row_options = [
               'repeat(2, 1fr)' => [
                 'src' => blocksy_image_picker_file( '1-1' ),
               ],
-
               '2fr 1fr' => [
                 'src' => blocksy_image_picker_file( '2-1' ),
               ],
-
               '1fr 2fr' => [
                 'src' => blocksy_image_picker_file( '1-2' ),
               ],
-
               '3fr 1fr' => [
                 'src' => blocksy_image_picker_file( '3-1' ),
               ],
-
               '1fr 3fr' => [
                 'src' => blocksy_image_picker_file( '1-3' ),
               ],
@@ -79,9 +74,8 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [
-        'type' => 'ct-condition',
-        'condition' => [ 'items_per_row' => '3' ],
+      blocksy_rand_md5() => [ 'condition' => [ 'items_per_row' => '3' ],
+        'type' => 'ct-condition',  
         'options' => [
 
           '3_columns_layout' => [
@@ -98,20 +92,16 @@ $row_options = [
             ],
             'divider' => 'top',
             'disabledDeviceMessage' => __( 'All columns on mobile are stacked and have 100% width.' ),
-            
             'choices' => [
               'repeat(3, 1fr)' => [
                 'src' => blocksy_image_picker_file( '1-1-1' ),
               ],
-
               '1fr 2fr 1fr' => [
                 'src' => blocksy_image_picker_file( '1-2-1' ),
               ],
-
               '2fr 1fr 1fr' => [
                 'src' => blocksy_image_picker_file( '2-1-1' ),
               ],
-
               '1fr 1fr 2fr' => [
                 'src' => blocksy_image_picker_file( '1-1-2' ),
               ],
@@ -122,7 +112,6 @@ $row_options = [
                 'src' => blocksy_image_picker_file( 'stacked' ),
                 'title' => __( 'Stacked'  ),
               ],
-
               'repeat(2, 1fr)' => [
                 'src' => blocksy_image_picker_file( '1-1' ),
                 'title' => __( 'Two Columns' ),
@@ -135,9 +124,8 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [
+      blocksy_rand_md5() => [ 'condition' => [ 'items_per_row' => '4' ],
         'type' => 'ct-condition',
-        'condition' => [ 'items_per_row' => '4' ],
         'options' => [
 
           '4_columns_layout' => [
@@ -183,9 +171,7 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [
-        'type' => 'ct-divider',
-      ],
+      blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
 
       'footerItemsGap' => [
         'label' => __( 'Items Gap' ),

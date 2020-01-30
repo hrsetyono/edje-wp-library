@@ -23,6 +23,7 @@ function _custy_footer_default_values( $defaults ) {
       'tablet' => 'initial',
       'mobile' => 'initial'
     ],
+    'footerItemsGap' => '1rem'
   ];
 
   $defaults = wp_parse_args( [ 'footer' => [

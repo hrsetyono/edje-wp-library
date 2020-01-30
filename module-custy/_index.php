@@ -6,13 +6,14 @@ define( 'BLOCKSY_CSS_DIR', plugin_dir_url(__FILE__) . 'blocksy/css' );
 define( 'BLOCKSY_JS_DIR', plugin_dir_url(__FILE__) . 'blocksy/js' );
 
 
-add_action( 'plugins_loaded', '_h_load_custy' );
-add_action( 'after_setup_theme' , '_h_setup_custy', 9999 );
+add_action( 'plugins_loaded', '_custy_loaded' );
+add_action( 'after_setup_theme' , '_custy_after_theme', 9999 );
+add_action( 'init', '_custy_after_init', 9999 );
 
 /**
  * @action plugins_loaded
  */
-function _h_load_custy() {
+function _custy_loaded() {
   require_once BLOCKSY_DIR . '/_index.php';
   
   // DEFAULT VALUES
@@ -26,9 +27,9 @@ function _h_load_custy() {
 }
 
 /**
- * @action after_setup_theme
+ * @action after_setup_theme 9999
  */
-function _h_setup_custy() {
+function _custy_after_theme() {
   require_once __DIR__ . '/enqueue.php';
   
   require_once __DIR__ . '/helper-values.php';
@@ -44,7 +45,6 @@ function _h_setup_custy() {
 
   add_action( 'wp_head', '_custy_render_stylesheet', 0 );
   add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
-
   
   // BUILDER
   require_once __DIR__ . '/builder-items.php';
@@ -52,8 +52,14 @@ function _h_setup_custy() {
 
   add_filter( 'custy_header_items', '_custy_set_header_items', 0 );
   add_filter( 'custy_footer_items', '_custy_set_footer_items', 0 );
-  add_filter( 'custy_header_items', '_custy_format_builder_items', 9999, 3 );
-  add_filter( 'custy_footer_items', '_custy_format_builder_items', 9999, 3 );
+}
+
+
+/**
+ * @action init 9999
+ */
+function _custy_after_init() {
+  Custy::set_builder_items(); // initiate builder cache
 }
 
 /////
@@ -126,11 +132,42 @@ class Custy {
   }
 
   /**
-   * Get Header or Footer options
-   * Filters: custy_header_items & custy_footer_items
+   * Set a cache to Header and Footer items
    */
-  static function get_builder_items( $type = 'header', $include = 'all', $require_options = false ) {
-    return apply_filters( "custy_{$type}_items", [], $include, $require_options );
+  static function set_builder_items() {
+    global $custy_header_items;
+    global $custy_footer_items;
+
+    $custy_header_items = apply_filters( 'custy_header_items', [] );
+    $custy_footer_items = apply_filters( 'custy_footer_items', [] );
+  }
+
+  /**
+   * Get Header or Footer items.
+   * 
+   * @param $type (string) - 'header' or 'footer'
+   * @param $include (string) - 'primary', 'secondary', or 'all'. Primary is rows, Secondary is non-rows.
+   * @param $require_options (bool) - include option arg or not.
+   * @param $need_format (bool) - return formatted or non-formatted items
+   * 
+   * @return array
+   */
+  static function get_builder_items( $type, $include = 'all', $require_options = false, $need_format = true ) {
+    global $custy_header_items;
+    global $custy_footer_items;
+
+    // get items
+    $items = $type === 'header' ? $custy_header_items : $custy_footer_items;
+
+    // format items
+    $bi = new Custy_BuilderItems();
+    $items = $bi->filter_items( $items, $include );
+
+    if( $need_format ) {
+      $items = $bi->format_items( $items, $type, $require_options );
+    }
+
+    return $items;
   }
 
 
@@ -138,7 +175,7 @@ class Custy {
    * Get Header or Footer markup
    * Filters: custy_header_values, custy_footer_values, custy_render_header, & custy_render_footer
    * 
-   * @param $type (strng) - 'header' or 'footer'
+   * @param $type (string) - 'header' or 'footer'
    * @return string - HTML Markup
    */
   static function get_builder_content( $type = 'header' ) {
