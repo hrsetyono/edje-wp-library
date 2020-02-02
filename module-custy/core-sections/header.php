@@ -3,13 +3,38 @@
 $header = new Blocksy_Customizer_Builder_Header();
 $section = [
   'title' => __( 'Header' ),
-  'container' => [ 'priority' => 2 ],
+  'container' => [ 'priority' => 3 ],
   'options' => [
 
     'header_placements' => [
       'type' => 'ct-header-builder',
-      'setting' => ['transport' => 'refresh'],
+      'setting' => ['transport' => 'postMessage'],
       'value' => $header->get_default_value(),
+      'selective_refresh' => [
+        [
+          'id' => 'header_placements_1',
+          'fallback_refresh' => false,
+          'container_inclusive' => true,
+          'selector' => '#header',
+          'settings' => [ 'header_placements' ],
+          'render_callback' => function () {
+            $content = Custy::get_builder_content( 'header', get_theme_mod( 'header_placements' ) );
+            echo $content;
+          }
+        ],
+        // [
+        //   'id' => 'header_placements_item:button',
+        //   'fallback_refresh' => false,
+        //   'container_inclusive' => true,
+        //   'selector' => '#header [data-id="button"]',
+        //   'settings' => [ 'header_placements' ],
+        //   'render_callback' => function () {
+        //     echo 'Button';
+        //     // $b = new Blocksy_Customizer_Builder_Render_Placements();
+        //     // echo $b->render_single_item('button');
+        //   }
+        // ]
+      ],
       // 'selective_refresh' => [
       //   [
       //     'id' => 'header_placements_1',

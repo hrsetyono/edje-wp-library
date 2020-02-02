@@ -194,16 +194,19 @@ $items = [
   'top-row' => [
     'title' => __( 'Top Row' ),
     'is_primary' => true,
+    'css_selector' => '.footer-row[data-row="top-row"]',
     'options' => $row_options,
   ],
   'middle-row' => [
     'title' => __( 'Middle Row' ),
     'is_primary' => true,
+    'css_selector' => '.footer-row[data-row="middle-row"]',
     'options' => $row_options,
   ],
   'bottom-row' => [
     'title' => __( 'Bottom Row' ),
     'is_primary' => true,
+    'css_selector' => '.footer-row[data-row="bottom-row"]',
     'options' => $row_options,
   ],
 ];

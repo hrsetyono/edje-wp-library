@@ -40,16 +40,16 @@ function _custy_footer_default_values( $defaults ) {
     ],
 
     'widget-area-1' => [
-      'widget' => null,
+      'widget' => 'ct-footer-sidebar-1',
     ],
     'widget-area-2' => [
-      'widget' => null,
+      'widget' => 'ct-footer-sidebar-2',
     ],
     'widget-area-3' => [
-      'widget' => null,
+      'widget' => 'ct-footer-sidebar-3',
     ],
     'widget-area-4' => [
-      'widget' => null,
+      'widget' => 'ct-footer-sidebar-4',
     ],
 
     'socials' => [

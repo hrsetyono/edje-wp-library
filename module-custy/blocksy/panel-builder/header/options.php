@@ -41,8 +41,8 @@ $options = [
 		'type' => 'ct-divider',
 	],
 
-	'footerBackground' => [
-		'label' => __( 'Footer Background', 'blocksy' ),
+	'headerBackground' => [
+		'label' => __( 'Header Background', 'blocksy' ),
 		'type' => 'ct-background',
 		'design' => 'inline',
 		'setting' => [ 'transport' => 'postMessage' ],

@@ -2,19 +2,9 @@
 
 $item = [
   'title' => __( 'Button' ),
+  'css_selector' => '[data-id="button"]',
   'options' => [
 
-    'size' => [
-      'label' => __( 'Size' ),
-      'type' => 'ct-radio',
-      'view' => 'text',
-      'divider' => 'bottom',
-      'choices' => [
-        'small' => __( 'Small' ),
-        'medium' => __( 'Medium' ),
-        'large' => __( 'Large' ),
-      ],
-    ],
     'text' => [
       'label' => __( 'Label' ),
       'type' => 'text',
@@ -27,7 +17,32 @@ $item = [
     'target' => [
       'label' => __( 'Open in a new tab' ),
       'type'  => 'ct-switch',
-      'divider' => 'bottom',
+    ],
+
+    blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+    
+    'headerButtonBackground' => [
+      'label' => __( 'Background' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+        'hover' => __( 'Hover' ),
+      ],
+      'css' => [
+        '--background' => 'default.color',
+        '--backgroundHover' => 'hover.color',
+      ],
+    ],
+
+    'headerButtonColor' => [
+      'label' => __( 'Color' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+      ],
+      'css' => [
+        '--color' => 'default.color',
+      ],
     ],
     
   ],

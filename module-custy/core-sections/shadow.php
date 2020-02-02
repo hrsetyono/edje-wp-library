@@ -2,7 +2,7 @@
 
 $section = [
   'title' => __( 'Shadow' ),
-  'container' => [ 'priority' => 1 ],
+  'container' => [ 'priority' => 2 ],
   'css_selector' => ':root',
   'options' => [
 

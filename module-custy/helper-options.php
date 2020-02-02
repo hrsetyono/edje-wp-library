@@ -54,20 +54,49 @@ class Custy_Options {
   }
 
   /**
-   * Format all sections
+   * Format the Customizer sections to be accepted by Blocksy
+   * 
+   * Blocksy format:
+   * 
+   * ```
+   * [
+   *   'section_id' => [
+   *     'title' => 'Section Name',
+   *     'container' => [ 'priority' => 0 ],
+   *     'options' => [
+   *       'section_options' => [
+   *         'type' => 'ct-options',
+   *         'setting' => [ 'transport' => 'postMessage' ],
+   *         'inner-options' => [
+   *           'option1' => [ ... ],
+   *           'option2' => [ ... ],
+   *           'option3' => [ ... ], 
+   *         ]
+   *       ]
+   *     ]
+   *   ],
+   *   'section_id2' => [ ... ]
+   * ]
+   * ```
+   * 
+   * @param $sections (array)
+   * 
+   * @return array - formatted sections
    */
   function format_sections( $sections ) : array {
-    foreach( $sections as $section_id => &$s ) {
-      if( !isset( $s['options'] ) ) { continue; }
+    $defaults = Custy::get_default_values();
+
+    foreach( $sections as $section_id => &$args ) {
+      if( !isset( $args['options'] ) ) { continue; }
       
       // add selector notice
-      if( isset( $s['css_selector'] ) ) {
-        $s['options'] = $this->add_css_selector_notice( $s['css_selector'], $s['options'] );
+      if( isset( $args['css_selector'] ) ) {
+        $args['options'] = $this->add_css_selector_notice( $args['css_selector'], $args['options'] );
       }
 
-      $formatted_options = $this->format( $s['options'] );
+      $formatted_options = $this->format( $args['options'], $defaults );
       
-      $s['options'] = [
+      $args['options'] = [
         $section_id . '_options' => [
           'type' => 'ct-options',
           'setting' => [ 'transport' => 'postMessage' ],
@@ -77,7 +106,7 @@ class Custy_Options {
 
       // If core section, add this options to prevent JS error
       if( $section_id === 'general' ) {
-        $s['options']['customizer_color_scheme'] = [
+        $args['options']['customizer_color_scheme'] = [
           'label' => __( 'Color scheme' ),
           'type' => 'hidden',
           'label' => '',
@@ -90,6 +119,81 @@ class Custy_Options {
     return $sections;
   }
 
+
+  /**
+   * Format the Header / Footer items to be accepted by Blocksy Builder
+   * 
+   * Blocksy format:
+   * 
+   * ```
+   * [
+   *   [
+   *     'id' => 'item_id',
+   *     'is_primary' => false,
+   *     'config' => [
+   *       'name' => 'Item Name',
+   *       'devices' => [ 'desktop', 'mobile' ],
+   *       'allowed_in' => [],
+   *       'excluded_from' => [],
+   *       'enabled' => true,
+   *       ...
+   *     ],
+   *     'options' => [
+   *       'option1' => [ ... ],
+   *       'option2' => [ ... ],
+   *       'option3' => [ ... ], 
+   *     ]
+   *   ]
+   *   [
+   *     'id' => 'item_id2',
+   *     ...
+   *   ]
+   * ]
+   * ```
+   * 
+   * @param $items (array)
+   * @param $type (string) - Either 'header' or 'footer'
+   * @param $require_options (bool) - Include the options arg or not
+   * 
+   * @return array - formatted items
+   */
+  function format_items( $items, $type = 'header', $require_options = false ) : array {
+    $formatted_items = [];
+    $defaults = Custy::get_default_values( $type );
+
+    foreach( $items as $item_id => $args ) {
+      $new_args = [
+        'id' => $item_id,
+        'is_primary' => $args['is_primary'] ?? false,
+        'config' => [
+          'name' => $args['title'],
+          'description' => $args['description'] ?? '',
+          'typography_keys' => [],
+          'devices' => $args['devices'] ?? [ 'desktop', 'mobile' ],
+          'selective_refresh' => $args['selective_refresh'] ?? [],
+          'allowed_in' => $args['allowed_in'] ?? [],
+          'excluded_from' => $args['excluded_from'] ?? [],
+          'shortcut_style' => 'drop',
+          'enabled' => true,
+        ],
+      ];
+
+      // format the options
+      if( $require_options && isset( $args['options'] ) ) {
+        // add selector notice
+        if( isset( $args['css_selector'] ) ) {
+          $args['options'] = $this->add_css_selector_notice( $args['css_selector'], $args['options'] );
+        }
+
+        $new_args['options'] = $this->format( $args['options'], $defaults[ $item_id ] );
+      }
+
+      $formatted_items[] = $new_args;
+    }
+    
+    return $formatted_items;
+  }
+
   /**
    * Format one section
    * 
@@ -98,18 +202,21 @@ class Custy_Options {
    * 
    * @return array - The formatted options
    */
-  function format( $options, $defaults = null ) {
-
-    $defaults = $defaults ?? Custy::get_default_values();
-
+  function format( $options, $defaults ) {
     foreach( $options as $id => &$args ):
+      // if type is not set
+      if( !isset( $args['type'] ) ) {
+        trigger_error( 'Option type not set: ' . $id , E_USER_ERROR );
+      }
+
+      // Skip if title or divider
+      if( in_array( $args['type'], [ 'ct-title', 'ct-divider' ] ) ) {
+        continue;
+      }
+
       // set default value if 'value' args is empty
       if( !isset( $args['value']) ) {
         $args['value'] = $defaults[ $id ] ?? null;
-      }
-
-      if( !isset( $args['type'] ) ) {
-        trigger_error( 'Option type not set: ' . $id , E_USER_ERROR );
       }
 
       switch( $args['type'] ):
@@ -126,7 +233,8 @@ class Custy_Options {
           $args['inner-options'] = $this->format( $args['inner-options'], $defaults );
           
           if( isset($args['css_selector']) ) {
-            $args['inner-options'] = $this->add_css_selector_notice( $args['css_selector'], $args['inner-options'] );
+            $args['inner-options'] = $this->create_css_notice( $args['css_selector'] ) + $args['inner-options'];
+            
           }
           continue;
         
@@ -184,11 +292,18 @@ class Custy_Options {
           ]);
           break;
 
-        case 'ct-title':
-        case 'ct-divider':
-          continue;
       endswitch;
 
+      // prevent responsive on some types
+      $is_responsive = isset( $args['responsive'] ) && $args['responsive'];
+      $type_disallow_responsive = [
+        'ct-border',
+        'ct-box-shadow',
+        'ct-background'
+      ];
+      if( $is_responsive && in_array( $args['type'], $type_disallow_responsive ) ) {
+        unset( $args['responsive'] );
+      }
 
       $args['setting'] = $args['setting'] ?? [ 'transport' => 'postMessage' ];
       $args['design'] = $args['design'] ?? $this->get_default_design( $args['type'] );
@@ -400,14 +515,13 @@ class Custy_Options {
    * Add a notice containing the CSS selector
    */
   private function add_css_selector_notice( $selector, $options ) {
-    return array_merge( [
+    return array_merge([
       blocksy_rand_md5() => [
         'type' => 'ct-title',
         'variation' => 'notice',
         'desc' => "<div class='notice'> <p>CSS selector: <code>$selector</code></p> </div>",
       ],
-    ] , $options );
+    ], $options );
   }
-
 
 }

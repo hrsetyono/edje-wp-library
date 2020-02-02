@@ -81,7 +81,7 @@ class Custy_FormatValues {
 
     // BOX SHADOW
     elseif( isset( $value['inset'] ) ) {
-      $value = blocksy_compute_box_shadow_var_for( $value );
+      $value = $this->_format_box_shadow( $value );
     }
 
     return $value;
@@ -203,6 +203,13 @@ class Custy_FormatValues {
       ];
     }
 
+    // replace 'auto' with 0
+    foreach( $value as &$v ) {
+      if( $v === 'auto' ) {
+        $v = 0;
+      }
+    }
+
     return $value['top'] . ' ' . $value['right'] . ' ' . $value['bottom'] . ' ' . $value['left'];
   }
 
@@ -250,6 +257,28 @@ class Custy_FormatValues {
     }
 
     return $styles;
+  }
+
+
+  /**
+   * Format ct-box-shadow type
+   */
+  private function _format_box_shadow( $value ) {
+    if( !$value['enable'] ) { return 'none'; }
+
+    $shadow = [
+      $value['h_offset'] . 'px',
+      $value['v_offset'] . 'px',
+      $value['blur'] . 'px',
+      $value['spread'] . 'px',
+      $value['color']['color'],
+    ];
+
+    if( $value['inset'] ) {
+      array_unshift( $shadow, 'inset' );
+    }
+    
+    return implode( ' ', $shadow );
   }
 
   /////

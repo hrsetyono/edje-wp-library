@@ -13,7 +13,8 @@ function _custy_render_stylesheet() {
   $compiler = new Custy_CompileStyles();
   $compiler->compile_from_sections( $sections );
   $compiler->compile_from_items( $header_items, 'header' );
-  $styles = $compiler->compile_from_items( $footer_items, 'footer' );
+  $compiler->compile_from_items( $footer_items, 'footer' );
+  $styles = $compiler->get_styles();
 
   _custy_format_then_echo_css( $styles );
 }

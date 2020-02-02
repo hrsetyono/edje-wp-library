@@ -71,12 +71,6 @@ class Blocksy_Customizer_Builder_Render_Placements {
 		$content = '';
 
 		$header = $this->get_current_section()[$this->device];
-	
-		// @changed - return content from filter, if any
-		$content = Custy::get_builder_content( 'header' );
-		if( !empty( $content ) ) {
-			return $content;
-		}
 
 		foreach ($header as $row) {
 			if ($row['id'] === 'offcanvas') {

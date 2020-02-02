@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Collect all the CSS Variables from sections
+ * Collect  the CSS Variables from sections
  */
 class Custy_CompileStyles {
   private $mod_values = [];
@@ -12,10 +12,12 @@ class Custy_CompileStyles {
     $this->mod_values = Custy::get_mods();
   }
 
+  function get_styles() : array {
+    return $this->styles;
+  }
+
   /**
    * Compile all the "css" arguments from each section
-   * 
-   * @return array - the compiled CSS variables
    */
   function compile_from_sections( $sections ) { 
     foreach( $sections as $section_id => $args ) {
@@ -28,8 +30,6 @@ class Custy_CompileStyles {
       $this->current_values = $this->mod_values;
       $this->compile_from_options( $options, $selector );
     }
-
-    return $this->styles;
   }
 
   /**
@@ -37,38 +37,103 @@ class Custy_CompileStyles {
    * 
    * @param $item_options (array)
    * @param $type (string) - 'header' or 'footer'
-   * 
-   * @return array - the compiled CSS variables
    */
   function compile_from_items( $item_options, $type = 'header' ) {
     // get the placement mod
     $placements = $this->mod_values[ $type . '_placements' ];
-    
+
     // get the selected section
-    $item_values = [];
+    $current_section = [];
     foreach( $placements['sections'] as $s ) {
       if( $s['id'] === $placements['current_section'] ) {
-        $item_values = $s['items'];
+        $current_section = $s;
         break;
       }
     }
 
-    // loop all selected items
-    foreach( $item_values as $val ) {
+    // get the values of each item
+    $item_values = $this->compile_item_values( $current_section, $type );
 
-      $item = $item_options[ $val['id'] ] ?? null;
+    // search for css args
+    foreach( $item_values as $item_id => $values ) {
+      $item = $item_options[ $item_id ] ?? null;
       if( empty( $item ) ) { continue; }  // if item doesn't exist
 
-      $options = $item['options'] ?? null;
+      $options = $item_options[ $item_id ]['options'] ?? null;
       if( empty( $options ) ) { continue; } // if item doesn't have options
 
+
       $selector = $item['css_selector'] ?? ':root';
-      $this->current_values = $val['values'];
+      $this->current_values = $values;
       $this->compile_from_options( $options, $selector );
     }
-
-    return $this->styles;
   }
+
+
+  /**
+   * Get all the items and its value in current section
+   */
+  private function compile_item_values( $section, $type = 'header' ) {
+    $items = [];
+    $default_values = Custy::get_default_values( $type );
+
+    // compile values
+    $values = array_reduce( $section['items'], function( $result, $i ) {
+      $result[ $i['id'] ] = $i['values'];
+      return $result;
+    }, [] );
+
+    // compile item ids
+    switch( $type ) {
+      case 'header':
+        $item_ids = array_merge(
+          $this->compile_current_item_ids( $section['desktop'] ),
+          $this->compile_current_item_ids( $section['mobile'] )
+        );
+        break;
+      case 'footer':
+        $item_ids = $this->compile_current_item_ids( $section['rows'] );
+        break;
+    }
+    
+    // add row id
+    $item_ids += [ 'top-row', 'middle-row', 'bottom-row' ];
+    if( $type === 'header' ) { $item_ids += [ 'offcanvas' ]; }
+
+    // assign values to ids
+    foreach( $item_ids as $id ) {
+      $value = $values[ $id ] ?? $default_values[ $id ];
+      $items[ $id ] = $value;
+    }
+
+    return $items;
+  }
+
+  /**
+   * Compile all the item slug
+   */
+  private function compile_current_item_ids( $rows ) {
+    $ids = [];
+
+    foreach( $rows as $row ) {
+      // get placements (1st for header, 2nd for footer)
+      $columns = $row['placements'] ?? $row['columns'];
+
+      foreach( $columns as $col ) {
+        // get items (1st for header, 2nd for footer)
+        $items = $col['items'] ?? $col;
+
+        foreach( $items as $id ) {
+          if( in_array( $id, $ids ) ) { continue; }
+          $ids[] = $id;
+        }
+      }
+    }
+
+    return $ids;
+  }
+
+
 
   /**
    * Compile all the "css" arguments from each option
@@ -80,27 +145,25 @@ class Custy_CompileStyles {
    *     '--cssVar2' => 'value2',
    *   ]
    */
-  private function compile_from_options( $options, $parent_selector = ':root', $all_values = [] ) {
+  private function compile_from_options( $options, $parent_selector = ':root' ) {
     // loop all options to find "css" arg
     foreach( $options as $option_id => $args ) {
       $selector = $args['css_selector'] ?? $parent_selector;
 
       // skip if has inner options
       if( isset( $args['options'] ) || isset( $args['inner-options'] ) ) {
-        $this->compile_from_inner_options( $args, $selector, $all_values );
+        $this->compile_from_inner_options( $args, $selector );
         continue;
       }
 
       // skip if has no "css" arg
-      if( !isset( $args['css'] ) ) {
-        continue;
-      }
+      if( !isset( $args['css'] ) ) { continue; }
 
       // initiate empty selector
       $this->styles[ $selector ] = $this->styles[ $selector ] ?? [];
 
       // get value
-      $value = $this->current_values[ $option_id ] ?? trigger_error( 'Default value not set: ' . $option_id, E_USER_ERROR );
+      $value = $this->current_values[ $option_id ] ?? null;
 
       // if single value
       if( is_string( $args['css'] ) ) {
@@ -118,16 +181,16 @@ class Custy_CompileStyles {
   /**
    * Get inner options
    */
-  private function compile_from_inner_options( $args, $parent_selector = ':root', $all_values = [] ) {
+  private function compile_from_inner_options( $args, $parent_selector = ':root' ) {
     $selector = $args['css_selector'] ?? $parent_selector;
 
     switch( $args['type'] ) {
       case 'tab':
       case 'ct-condition':
-        $this->compile_from_options( $args['options'], $selector, $all_values );
+        $this->compile_from_options( $args['options'], $selector );
         break;
       case 'ct-panel':
-        $this->compile_from_options( $args['inner-options'], $selector, $all_values );
+        $this->compile_from_options( $args['inner-options'], $selector );
         break;
     }
   }

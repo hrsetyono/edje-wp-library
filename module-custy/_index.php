@@ -41,7 +41,7 @@ function _custy_after_theme() {
   require_once __DIR__ . '/stylesheet-output.php';
 
   add_filter( 'custy_sections', '_custy_set_core_sections', 1 );
-  add_filter( 'custy_sections', '_custy_format_sections', 99999 );
+  add_filter( 'custy_sections', '_custy_format_sections', 9999 );
 
   add_action( 'wp_head', '_custy_render_stylesheet', 0 );
   add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
@@ -164,7 +164,8 @@ class Custy {
     $items = $bi->filter_items( $items, $include );
 
     if( $need_format ) {
-      $items = $bi->format_items( $items, $type, $require_options );
+      $co = new Custy_Options();
+      $items = $co->format_items( $items, $type, $require_options );
     }
 
     return $items;
@@ -173,13 +174,14 @@ class Custy {
 
   /**
    * Get Header or Footer markup
-   * Filters: custy_header_values, custy_footer_values, custy_render_header, & custy_render_footer
    * 
    * @param $type (string) - 'header' or 'footer'
+   * @param $raw_values (array) - The raw mod value
+   * 
    * @return string - HTML Markup
    */
-  static function get_builder_content( $type = 'header' ) {
-    $raw_values = self::get_mod( $type . '_placements' );
+  static function get_builder_content( $type = 'header', $raw_values = null ) {
+    $raw_values = $raw_values ?? self::get_mod( $type . '_placements' );
     $formatted_values = [];
     $bv = new Custy_BuilderValues();
 

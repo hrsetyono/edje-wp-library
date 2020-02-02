@@ -7,21 +7,22 @@
  */
 function _custy_header_default_values( $defaults ) {
   $row_values = [
-    'rowColor' => [
-      'default' => [ 'color' => 'var(--text)' ],
-      'hover' => [ 'color' => 'var(--main)' ]
-    ],
     'rowBackground' => blocksy_background_default_value([
       'backgroundColor' => [
         'default' => [ 'color' => '#ffffff' ],
       ],
     ]),
-    'rowBorder' => [
+    'borderTop' => [
       'width' => 1,
       'style' => 'none',
       'color' => [ 'color' => 'rgba(44,62,80,0.2)' ],
     ],
-    'rowPadding' => [
+    'borderBottom' => [
+      'width' => 1,
+      'style' => 'none',
+      'color' => [ 'color' => 'rgba(44,62,80,0.2)' ],
+    ],
+    'padding' => [
       'top' => '0.25rem',
       'right' => 'auto',
       'bottom' => '0.25rem',
@@ -58,10 +59,17 @@ function _custy_header_default_values( $defaults ) {
     ],
 
     'button' => [
-      'size' => 'medium',
       'text' => __( 'Download' ),
       'link' => '',
       'target' => 'no',
+
+      'headerButtonBackground' => [
+        'default' => [ 'color' => 'var(--main)' ],
+        'hover' => [ 'color' => 'var(--mainDark)' ]
+      ],
+      'headerButtonColor' => [
+        'default' => [ 'color' => 'var(--textInvert)' ]
+      ],
     ],
 
     'search' => [
@@ -85,6 +93,7 @@ function _custy_header_default_values( $defaults ) {
     ],
   
   ] ], $defaults );
+
 
   // PLACEMENTS
   $defaults = wp_parse_args( [ 'header_placements' => [

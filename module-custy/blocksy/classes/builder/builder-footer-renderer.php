@@ -42,18 +42,11 @@ class Blocksy_Customizer_Builder_Render_Columns {
 		return $this->section_value['sections'][0];
 	}
 
-	// @changed - return content from filter, if any
 	public function render() {
 		$content = '';
 
 		$footer = $this->get_current_section();
 		$atts = $footer['settings'];
-
-		// @changed - return content from filter, if any
-		$content = Custy::get_builder_content( 'footer' );
-		if( !empty( $content ) ) {
-			return $content;
-		}
 
 		// if no content from filter, create default one
 		$reveal_output = [];
