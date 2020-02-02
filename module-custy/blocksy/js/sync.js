@@ -2656,14 +2656,14 @@
         type: "color:hover",
         responsive: !0
       }],
-      headerButtonForeground: [{
-        selector: ".ct-header-cta",
-        variable: "buttonInitialColor",
+      headerButtonBackground: [{
+        selector: "[data-id='button']",
+        variable: "background",
         type: "color:default",
         responsive: !0
       }, {
-        selector: ".ct-header-cta",
-        variable: "buttonHoverColor",
+        selector: "[data-id='button']",
+        variable: "backgroundHover",
         type: "color:hover",
         responsive: !0
       }],

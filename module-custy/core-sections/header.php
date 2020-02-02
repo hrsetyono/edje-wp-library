@@ -18,8 +18,7 @@ $section = [
           'selector' => '#header',
           'settings' => [ 'header_placements' ],
           'render_callback' => function () {
-            $content = Custy::get_builder_content( 'header', get_theme_mod( 'header_placements' ) );
-            echo $content;
+            echo CustyBuilder::render( 'header', get_theme_mod( 'header_placements' ) );
           }
         ],
         // [

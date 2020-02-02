@@ -18,8 +18,7 @@ $section = [
           'selector' => '#footer',
           'settings' => [ 'footer_placements' ],
           'render_callback' => function () {
-            $content = Custy::get_builder_content( 'footer', get_theme_mod( 'footer_placements' ) );
-            echo $content;
+            echo CustyBuilder::render( 'footer', get_theme_mod( 'footer_placements' ) );
           }
         ],
       ]

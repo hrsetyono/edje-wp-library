@@ -7,8 +7,8 @@
  */
 function _custy_render_stylesheet() {
   $sections = Custy::get_sections();
-  $header_items = Custy::get_builder_items( 'header', 'all', true, false );
-  $footer_items = Custy::get_builder_items( 'footer', 'all', true, false );
+  $header_items = CustyBuilder::get_items( 'header', 'all', true, false );
+  $footer_items = CustyBuilder::get_items( 'footer', 'all', true, false );
 
   $compiler = new Custy_CompileStyles();
   $compiler->compile_from_sections( $sections );

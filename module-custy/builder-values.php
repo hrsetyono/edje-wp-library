@@ -11,17 +11,15 @@ class Custy_BuilderValues {
   /**
    * Rearrange the confusing HEADER value into more-compact associative array
    */
-  function format_header_values( $rows ) {
+  function format_header_values( $raw_data ) {
     $this->type = 'header';
-    $selected_rows = $this->get_selected_rows( $rows );
+    $section = $this->get_current_section( $raw_data );
 
     $data = [
-      'desktop' => $this->format_rows( $selected_rows, 'desktop' ),
-      'mobile' => $this->format_rows( $selected_rows, 'mobile' ),
-      'placements' => $this->format_items(
-        [ 'top-row', 'middle-row', 'bottom-row', 'offcanvas' ],
-        $selected_rows['items']
-      ),
+      // TODO: hide row if empty
+      'desktop' => $section['desktop'], // $this->format_rows( $selected_rows['desktop'], 'desktop' ),
+      'mobile' => $section['mobile'], // $this->format_rows( $selected_rows, 'mobile' ),
+      'items' => CustyBuilder::compile_item_values( $section, 'header' ),
     ];
 
     return $data;
@@ -30,16 +28,13 @@ class Custy_BuilderValues {
   /**
    * Rearrange the confusing FOOTER value into more-compact associative array
    */
-  function format_footer_values( $rows ) {
+  function format_footer_values( $raw_data ) {
     $this->type = 'footer';
-    $selected_rows = $this->get_selected_rows( $rows );
+    $section = $this->get_current_section( $raw_data );
 
     $data = [
-      'rows' => $this->format_rows( $selected_rows, 'rows' ),
-      'placements' => $this->format_items(
-        [ 'top-row', 'middle-row', 'bottom-row' ],
-        $selected_rows['items']
-      ),
+      'rows' => $section['rows'],
+      'items' =>  CustyBuilder::compile_item_values( $section, 'footer' ),
     ];
 
     return $data;
@@ -50,19 +45,15 @@ class Custy_BuilderValues {
   /**
    * get the selected header / footer
    */
-  private function get_selected_rows( $rows ) {
-    foreach( $rows['sections'] as $type ) {
-      if ( $type['id'] === $rows['current_section'] ) {
-
-        $items = [];
-        foreach( $type['items'] as $i ) {
-          $items[ $i['id'] ] = $i['values'];
-        }
-        $type['items'] = $items;
-
+  private function get_current_section( $raw_data ) {
+    foreach( $raw_data['sections'] as $type ) {
+      if ( $type['id'] === $raw_data['current_section'] ) {
         return $type;
       }
     }
+
+    // else, return first one
+    return $raw_data['sections'][0];
   }
 
 
@@ -74,7 +65,6 @@ class Custy_BuilderValues {
    */
   private function format_rows( $rows, $media = 'desktop' ) {
     $data = [];
-    $values = $rows['items'];
 
     foreach( $rows[ $media ] as $row ) {
       $row_id = $row['id'];
@@ -83,13 +73,6 @@ class Custy_BuilderValues {
 
       switch( $this->type ) {
         case 'header':
-          foreach( $row['placements'] as $col ) {
-            if( count( $col['items'] ) <= 0 ) { continue; } // skip if no items
-    
-            $col_id = $col['id'];
-            $data[ $row_id ][ $col_id ] = $this->format_items( $col['items'], $values );
-          }
-
           // complete the columns if at least one exists
           if( count( $data[ $row_id ] ) >= 1 && $row_id !== 'offcanvas' ) {
             $data[ $row_id ] = wp_parse_args( $data[ $row_id ], [
@@ -101,44 +84,9 @@ class Custy_BuilderValues {
             ] );
           }
           break;
-        
-        case 'footer':
-          $item_ids = [];
-          foreach( $row['columns'] as $col ) {
-            if( count( $col ) <= 0 ) { continue; } // skip if no items
-            $item_ids[] = $col[0];
-          }
-          $data[ $row_id ] = $this->format_items( $item_ids, $values );
-          break;
       }
     }
 
     return $data;
-  }
-
-  /**
-   * Format all items in the column
-   * 
-   * @param $item_ids (array) - List of item IDs
-   * @param $values (array) - All the header item's values
-   * @param $type (string) - 'header' or 'footer'
-   */
-  private function format_items( $item_ids, $values ) {
-    $items = [];
-    $default_values = Custy::get_default_values( $this->type );
-    $formatter = new Custy_FormatValues();
-
-    // get item value - if not found, use default
-    foreach( $item_ids as $id ) {
-      $item = $values[ $id ] ?? $default_values[ $id ];
-
-      foreach( $item as $option => &$value ) {
-        $value = $formatter->format( $value );
-      }
-
-      $items[ $id ] = $item;
-    }
-
-    return $items;
   }
 }

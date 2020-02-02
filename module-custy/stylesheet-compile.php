@@ -52,7 +52,7 @@ class Custy_CompileStyles {
     }
 
     // get the values of each item
-    $item_values = $this->compile_item_values( $current_section, $type );
+    $item_values = CustyBuilder::compile_item_values( $current_section, $type, false );
 
     // search for css args
     foreach( $item_values as $item_id => $values ) {
@@ -68,71 +68,6 @@ class Custy_CompileStyles {
       $this->compile_from_options( $options, $selector );
     }
   }
-
-
-  /**
-   * Get all the items and its value in current section
-   */
-  private function compile_item_values( $section, $type = 'header' ) {
-    $items = [];
-    $default_values = Custy::get_default_values( $type );
-
-    // compile values
-    $values = array_reduce( $section['items'], function( $result, $i ) {
-      $result[ $i['id'] ] = $i['values'];
-      return $result;
-    }, [] );
-
-    // compile item ids
-    switch( $type ) {
-      case 'header':
-        $item_ids = array_merge(
-          $this->compile_current_item_ids( $section['desktop'] ),
-          $this->compile_current_item_ids( $section['mobile'] )
-        );
-        break;
-      case 'footer':
-        $item_ids = $this->compile_current_item_ids( $section['rows'] );
-        break;
-    }
-    
-    // add row id
-    $item_ids += [ 'top-row', 'middle-row', 'bottom-row' ];
-    if( $type === 'header' ) { $item_ids += [ 'offcanvas' ]; }
-
-    // assign values to ids
-    foreach( $item_ids as $id ) {
-      $value = $values[ $id ] ?? $default_values[ $id ];
-      $items[ $id ] = $value;
-    }
-
-    return $items;
-  }
-
-  /**
-   * Compile all the item slug
-   */
-  private function compile_current_item_ids( $rows ) {
-    $ids = [];
-
-    foreach( $rows as $row ) {
-      // get placements (1st for header, 2nd for footer)
-      $columns = $row['placements'] ?? $row['columns'];
-
-      foreach( $columns as $col ) {
-        // get items (1st for header, 2nd for footer)
-        $items = $col['items'] ?? $col;
-
-        foreach( $items as $id ) {
-          if( in_array( $id, $ids ) ) { continue; }
-          $ids[] = $id;
-        }
-      }
-    }
-
-    return $ids;
-  }
-
 
 
   /**

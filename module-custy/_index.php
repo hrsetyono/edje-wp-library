@@ -34,7 +34,9 @@ function _custy_after_theme() {
   
   require_once __DIR__ . '/helper-values.php';
   require_once __DIR__ . '/helper-options.php';
-  require_once __DIR__ . '/helper-sync.php'; 
+  require_once __DIR__ . '/helper-builder.php';
+
+  require_once __DIR__ . '/sync-preview.php';
 
   require_once __DIR__ . '/stylesheet.php';
   require_once __DIR__ . '/stylesheet-compile.php';
@@ -59,7 +61,7 @@ function _custy_after_theme() {
  * @action init 9999
  */
 function _custy_after_init() {
-  Custy::set_builder_items(); // initiate builder cache
+  CustyBuilder::set_items(); // initiate builder cache
 }
 
 /////
@@ -129,71 +131,5 @@ class Custy {
     }
 
     return $custy_sections;
-  }
-
-  /**
-   * Set a cache to Header and Footer items
-   */
-  static function set_builder_items() {
-    global $custy_header_items;
-    global $custy_footer_items;
-
-    $custy_header_items = apply_filters( 'custy_header_items', [] );
-    $custy_footer_items = apply_filters( 'custy_footer_items', [] );
-  }
-
-  /**
-   * Get Header or Footer items.
-   * 
-   * @param $type (string) - 'header' or 'footer'
-   * @param $include (string) - 'primary', 'secondary', or 'all'. Primary is rows, Secondary is non-rows.
-   * @param $require_options (bool) - include option arg or not.
-   * @param $need_format (bool) - return formatted or non-formatted items
-   * 
-   * @return array
-   */
-  static function get_builder_items( $type, $include = 'all', $require_options = false, $need_format = true ) {
-    global $custy_header_items;
-    global $custy_footer_items;
-
-    // get items
-    $items = $type === 'header' ? $custy_header_items : $custy_footer_items;
-
-    // format items
-    $bi = new Custy_BuilderItems();
-    $items = $bi->filter_items( $items, $include );
-
-    if( $need_format ) {
-      $co = new Custy_Options();
-      $items = $co->format_items( $items, $type, $require_options );
-    }
-
-    return $items;
-  }
-
-
-  /**
-   * Get Header or Footer markup
-   * 
-   * @param $type (string) - 'header' or 'footer'
-   * @param $raw_values (array) - The raw mod value
-   * 
-   * @return string - HTML Markup
-   */
-  static function get_builder_content( $type = 'header', $raw_values = null ) {
-    $raw_values = $raw_values ?? self::get_mod( $type . '_placements' );
-    $formatted_values = [];
-    $bv = new Custy_BuilderValues();
-
-    switch( $type ) {
-      case 'header':
-        $formatted_values = $bv->format_header_values( $raw_values );
-        break;
-      case 'footer':
-        $formatted_values = $bv->format_footer_values( $raw_values );
-        break;
-    }
-
-    return apply_filters( "custy_render_{$type}", '', $formatted_values );
   }
 }
