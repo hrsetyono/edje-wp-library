@@ -11,14 +11,13 @@ class Custy_BuilderValues {
   /**
    * Rearrange the confusing HEADER value into more-compact associative array
    */
-  function format_header_values( $raw_data ) {
+  function format_header_values( $raw_data = null ) {
     $this->type = 'header';
     $section = $this->get_current_section( $raw_data );
 
     $data = [
-      // TODO: hide row if empty
-      'desktop' => $section['desktop'], // $this->format_rows( $selected_rows['desktop'], 'desktop' ),
-      'mobile' => $section['mobile'], // $this->format_rows( $selected_rows, 'mobile' ),
+      'desktop' => $this->remove_empty_row( $section['desktop'] ),
+      'mobile' => $this->remove_empty_row( $section['mobile'] ),
       'items' => CustyBuilder::compile_item_values( $section, 'header' ),
     ];
 
@@ -28,7 +27,7 @@ class Custy_BuilderValues {
   /**
    * Rearrange the confusing FOOTER value into more-compact associative array
    */
-  function format_footer_values( $raw_data ) {
+  function format_footer_values( $raw_data = null ) {
     $this->type = 'footer';
     $section = $this->get_current_section( $raw_data );
 
@@ -56,37 +55,25 @@ class Custy_BuilderValues {
     return $raw_data['sections'][0];
   }
 
-
   /**
-   * Assign values into each key. If not found, use default
    * 
-   * @param $rows (array) - The Desktop / Mobile header rows
-   * @param $media (array) - Either desktop or mobile
    */
-  private function format_rows( $rows, $media = 'desktop' ) {
-    $data = [];
+  private function remove_empty_row( $rows ) {
+    foreach( $rows as &$row ) {
+      $is_empty = true;
 
-    foreach( $rows[ $media ] as $row ) {
-      $row_id = $row['id'];
-      $data[ $row_id ] = []; // initiate row
-      $columns = $this->type === 'header' ? $row['placements'] : $row;
+      // check if all item is empty
+      foreach( $row['placements'] as $column ) {
+        if( count( $column['items'] ) > 0 ) {
+          $is_empty = false;
+        }
+      }
 
-      switch( $this->type ) {
-        case 'header':
-          // complete the columns if at least one exists
-          if( count( $data[ $row_id ] ) >= 1 && $row_id !== 'offcanvas' ) {
-            $data[ $row_id ] = wp_parse_args( $data[ $row_id ], [
-              'start' => [],
-              'start-middle' => [],
-              'middle' => [],
-              'middle-end' => [],
-              'end' => [],
-            ] );
-          }
-          break;
+      if( $is_empty ) {
+        $row['placements'] = [];
       }
     }
 
-    return $data;
+    return $rows;
   }
 }

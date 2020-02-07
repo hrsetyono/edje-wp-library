@@ -21,18 +21,7 @@ $section = [
             echo CustyBuilder::render( 'header', get_theme_mod( 'header_placements' ) );
           }
         ],
-        // [
-        //   'id' => 'header_placements_item:button',
-        //   'fallback_refresh' => false,
-        //   'container_inclusive' => true,
-        //   'selector' => '#header [data-id="button"]',
-        //   'settings' => [ 'header_placements' ],
-        //   'render_callback' => function () {
-        //     echo 'Button';
-        //     // $b = new Blocksy_Customizer_Builder_Render_Placements();
-        //     // echo $b->render_single_item('button');
-        //   }
-        // ]
+
       ],
       // 'selective_refresh' => [
       //   [

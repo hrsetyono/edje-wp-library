@@ -48,8 +48,18 @@ function _custy_enqueue_customizer_preview() {
   ] );
 
   
-  $fs = new Custy_SyncPreview();
-  $sync_vars = $fs->get();
+  
+  $sections = Custy::get_sections();
+  // $header_items = CustyBuilder::get_items( 'header', 'all', true, false );
+  // $footer_items = CustyBuilder::get_items( 'footer', 'all', true, false );
+
+  // compile vars for synchronizing the Preview page
+  $syncer = new Custy_SyncPreview();
+  $syncer->compile_from_sections( $sections );
+  // $syncer->compile_from_items( $header_items, 'header' );
+  // $syncer->compile_from_items( $footer_items, 'footer' );
+  $sync_vars = $syncer->get_sync_vars();
+
 
   wp_localize_script( 'ct-customizer', 'ct_localizations', [
     'customizer_sync' => blocksy_customizer_sync_data(),
@@ -98,7 +108,7 @@ function _custy_enqueue_customizer_control() {
 
   wp_localize_script( 'ct-customizer-controls', 'ct_customizer_localizations', [
     'customizer_reset_none' => wp_create_nonce( 'ct-customizer-reset' ),
-    'static_public_url' => BLOCKSY_URL . '/',
+    'static_public_url' => BLOCKSY_URL . '/blocksy/',
     'header_builder_data' => $builder->get_data_for_customizer(),
     'all_mods' => get_theme_mods()
   ] );

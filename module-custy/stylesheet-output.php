@@ -40,7 +40,7 @@ class Custy_OutputStyles {
           $output .= " $prop: $value; ";
         }
 
-        $output .= " } ";
+        $output .= " } \n\n";
       endforeach;
 
       $output .= "</style>";

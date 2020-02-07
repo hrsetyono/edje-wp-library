@@ -53,17 +53,17 @@ class CustyBuilder {
    * 
    * @return string - HTML Markup
    */
-  static function get_values( $type = 'header', $raw_data = null ) {
-    $raw_data = $raw_data ?? Custy::get_mod( $type . '_placements' );
+  static function get_values( $type = 'header', $raw_values = null ) {
+    $raw_values = $raw_values ?? Custy::get_mod( $type . '_placements' );
     $formatted_data = [];
     $bv = new Custy_BuilderValues();
 
     switch( $type ) {
       case 'header':
-        $formatted_data = $bv->format_header_values( $raw_data );
+        $formatted_data = $bv->format_header_values( $raw_values );
         break;
       case 'footer':
-        $formatted_data = $bv->format_footer_values( $raw_data );
+        $formatted_data = $bv->format_footer_values( $raw_values );
         break;
     }
 
