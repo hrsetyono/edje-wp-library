@@ -34,7 +34,6 @@ function _custy_after_theme() {
   
   require_once __DIR__ . '/helper-values.php';
   require_once __DIR__ . '/helper-options.php';
-  require_once __DIR__ . '/helper-builder.php';
 
   require_once __DIR__ . '/sync-preview.php';
 
@@ -49,6 +48,7 @@ function _custy_after_theme() {
   add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
   
   // BUILDER
+  require_once __DIR__ . '/builder.php';
   require_once __DIR__ . '/builder-items.php';
   require_once __DIR__ . '/builder-values.php';
 

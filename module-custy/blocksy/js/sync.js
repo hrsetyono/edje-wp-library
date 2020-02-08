@@ -2680,7 +2680,20 @@
         variable: "borderRadius",
         responsive: !0
       }
-    }
+    };
+
+    e.search = {
+      searchBackground: [{
+        selector: "[data-id='search']",
+        variable: "background",
+        type: "color:default"
+      }, {
+        selector: "[data-id='search']",
+        variable: "backgroundFocus",
+        type: "color:focus"
+      }],
+    };
+
   })), n.a.on("ct:header:sync:item:button", (function(e) {
     var t = e.optionId,
       r = e.optionValue,
@@ -3121,6 +3134,7 @@
     }) : e[t] = r, e
   }
   a.a.on("ct:header:sync:collect-variable-descriptors", (function(e) {
+    return; // @changed - all builder sync are now at 1 place, above
     e.search = l({
       searchHeaderIconSize: {
         selector: ".ct-header-search",

@@ -2,7 +2,7 @@
  
 $item = [
   'title' => __( 'Search' ),
-  'css_selector' => '#header [data-id="search"]',
+  'css_selector' => '[data-id="search"]',
   'options' => [
 
     'search_placeholder' => [
@@ -14,6 +14,19 @@ $item = [
       'label' => __( 'padding' ),
       'type' => 'ct-spacing',
       'css' => '--searchPadding'
+    ],
+
+    'searchBackground' => [
+      'label' => __( 'Background' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+        'focus' => __( 'Focus' ),
+      ],
+      'css' => [
+        '--background' => 'default.color',
+        '--backgroundFocus' => 'focus.color',
+      ],
     ],
   ]
 ];

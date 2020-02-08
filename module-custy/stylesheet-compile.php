@@ -40,28 +40,20 @@ class Custy_CompileStyles {
    */
   function compile_from_items( $item_options, $type = 'header' ) {
     // get the placement mod
-    $placements = $this->mod_values[ $type . '_placements' ];
-
-    // get the selected section
-    $current_section = [];
-    foreach( $placements['sections'] as $s ) {
-      if( $s['id'] === $placements['current_section'] ) {
-        $current_section = $s;
-        break;
-      }
-    }
+    $raw_values = $this->mod_values[ $type . '_placements' ];
 
     // get the values of each item
-    $item_values = CustyBuilder::compile_item_values( $current_section, $type, false );
+    $bv = new Custy_BuilderValues();
+    $placements = $bv->format_placements( $type, $raw_values, false );
 
     // search for css args
-    foreach( $item_values as $item_id => $values ) {
+    foreach( $placements['items'] as $item_id => $values ) {
+      
       $item = $item_options[ $item_id ] ?? null;
       if( empty( $item ) ) { continue; }  // if item doesn't exist
 
       $options = $item_options[ $item_id ]['options'] ?? null;
       if( empty( $options ) ) { continue; } // if item doesn't have options
-
 
       $selector = $item['css_selector'] ?? ':root';
       $this->current_values = $values;
@@ -107,7 +99,7 @@ class Custy_CompileStyles {
       // if multi values
       elseif( is_array( $args['css'] ) ) {
         foreach( $args['css'] as $prop => $index ) {
-          $this->styles[ $selector ][ $prop ] = $this->parse_multi_value( $value, $index );
+          $this->styles[ $selector ][ $prop ] = $this->parse_multi_value( $value, $index, $option_id );
         }
       }
     }
@@ -147,15 +139,16 @@ class Custy_CompileStyles {
    * 
    * @param $value (mixed) - Array value
    * @param $index (string) - Index key to get the value
+   * @param $option_id (sting) - For error message
    * 
    * @return mixed
    */
-  private function parse_multi_value( $value, $index ) {
+  private function parse_multi_value( $value, $index, $option_id ) {
     $indexes = explode( '.', $index );
 
     // dig down until last index
     foreach( $indexes as $i ) {
-      $value = $value[ $i ];
+      $value = $value[ $i ] ?? trigger_error( "Wrong 'css' argument at option: $option_id" , E_USER_ERROR );
     }
 
     return $value;

@@ -80,6 +80,10 @@ function _custy_header_default_values( $defaults ) {
         'bottom' => '10px',
         'left' => '5px',
       ],
+      'searchBackground' => [
+        'default' => [ 'color' => 'var(--textInvert)' ],
+        'focus' => [ 'color' => 'var(--mainLight)' ],
+      ]
     ],
 
     ///// MOBILE

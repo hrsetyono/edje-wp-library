@@ -6,6 +6,8 @@ class Custy_SyncPreview {
   public $vars = [];
   public $typography_vars = [];
   public $background_vars = [];
+  public $header_vars = [];
+  public $footer_vars = [];
 
   function __construct() {}
 
@@ -31,9 +33,7 @@ class Custy_SyncPreview {
       $selector = $s['css_selector'] ?? ':root';
       $options = $s['options'][ $section_id . '_options' ]['inner-options'];
 
-      foreach( $options as $option_id => $args ) {
-        $this->format_args( $option_id, $args, $selector );
-      }
+      $this->get_var_from_options( $options, $selector );
     }
   }
 
@@ -60,7 +60,7 @@ class Custy_SyncPreview {
   /**
    * 
    */
-  private function format_args( $option_id, $args, $selector = ':root' ) {
+  private function format_args_old( $option_id, $args, $selector = ':root' ) {
     $var = [];
     $selector = $args['css_selector'] ?? $selector; // override
     $inner_options = $args['options'] ?? $args['inner-options'] ?? false;
@@ -137,18 +137,38 @@ class Custy_SyncPreview {
   /**
    * 
    */
-  private function format_args_new( $args, $selector = ':root' ) {
-    $var = [];
-    $selector = $args['css_selector'] ?? $selector; // override
-    $inner_options = $args['options'] ?? $args['inner-options'] ?? false;
+  private function get_var_from_options( $options, $selector = ':root' ) {
 
+    foreach( $options as $option_id => $args ) {
+      $selector = $args['css_selector'] ?? $selector; // override, if any
+        
+      // if has inner options, loop it
+      $inner_options = $args['options'] ?? $args['inner-options'] ?? false;
+  
+      if( $inner_options ) {
+        $this->get_var_from_options( $inner_options, $selector );
+      } else {
+        $var = $this->format_var( $option_id, $args, $selector );
+        $this->assign_var_to_class( $var, $args );
+      }
+    }
+  }
+
+  /**
+   * Format option args to be accepted by Sync.js
+   */
+  private function format_var( $option_id, $args, $selector = ':root' ) {
+    $var = [];
+    
     // abandon if has no "css" arg
-    if( !isset( $args['css'] ) ) { return; }
+    if( !isset( $args['css'] ) ) { return null; }
 
     // add var depending on the type
     switch( $args['type'] ) {
+
+      // Skip color picker
       case 'ct-color-palettes-picker':
-        return; // do nothing and return
+        return null; // do nothing and return
 
       
       // special type that can have prefix
@@ -160,13 +180,7 @@ class Custy_SyncPreview {
         if( preg_match( '/--(\w+)/', $args['css'], $match ) ) {
           $var['prefix'] = $match[1];
         }
-
-        if( $args['type'] == 'ct-typography' ) {
-          $this->typography_vars[] = $var;
-        } else {
-          $this->background_vars[] = $var;
-        }
-        return;
+        break;
 
 
       case 'ct-color-picker':
@@ -198,6 +212,31 @@ class Custy_SyncPreview {
         break;
     }
 
-    $this->vars[ $option_id ] = $var;
+    return $var;
   }
-}
+
+  /**
+   * Assign to class variable depending on the type
+   * 
+   * @param $var (array)
+   * @param $args (array)
+   * @param $type (string) - normal | header | footer
+   */
+  private function assign_var_to_class( $var, $args, $type = 'normal' ) {
+
+    switch( $args['type'] ) {
+      case 'ct-typography':
+        $this->typography_vars[] = $var;
+        break;
+      
+      case 'ct-background':
+        $this->background_vars[] = $var;
+        break;
+      
+      default:
+        $this->vars[] = $var;
+        break;
+    }
+  }
+
+} // class
