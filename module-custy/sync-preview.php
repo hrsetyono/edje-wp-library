@@ -3,6 +3,8 @@
  * Get the values to be localized for Preview
  */
 class Custy_SyncPreview {
+  private $type = 'normal'; // normal | header | footer
+
   public $vars = [];
   public $typography_vars = [];
   public $background_vars = [];
@@ -19,6 +21,8 @@ class Custy_SyncPreview {
       'background' => $this->background_vars,
       'typography' => $this->typography_vars,
       'other' => $this->vars,
+      'header' => $this->header_vars,
+      'footer' => $this->footer_vars,
     ];
   }
 
@@ -43,101 +47,27 @@ class Custy_SyncPreview {
    * @param $items (array) - Header or Footer list of items
    */
   function compile_from_items( $items, $type = 'header' ) {
-    foreach( $items as $item_id => $i ) {
+    $this->type = $type;
 
+    foreach( $items as $item_id => $i ) {
       if( !isset( $i['options'] ) ) { continue; }
 
       $selector = $i['css_selector'] ?? ':root';
       $options = $i['options'];
-      
-      foreach( $options as $option_id => $args ) {
-        $this->format_args( $option_id, $args, $selector );
-      }
+
+      $this->get_var_from_options( $options, $selector, $item_id );
     }
   }
 
 
   /**
+   * Format the options into array that's accepted by sync.js
    * 
+   * @param $options (array)
+   * @param $selector (string)
+   * @param $item_id (string) - Only for header & footer
    */
-  private function format_args_old( $option_id, $args, $selector = ':root' ) {
-    $var = [];
-    $selector = $args['css_selector'] ?? $selector; // override
-    $inner_options = $args['options'] ?? $args['inner-options'] ?? false;
-
-    // if has inner options, loop it
-    if( $inner_options ) {
-      foreach( $inner_options as $inner_id => $inner_args  ) {
-        $this->format_args( $inner_id, $inner_args, $selector );
-      }
-      return;
-    }
-    // abandon if has no "css" arg
-    elseif( !isset( $args['css'] ) ) {
-      return;
-    }
-
-    // add var depending on the type
-    switch( $args['type'] ) {
-      case 'ct-color-palettes-picker':
-        return; // do nothing and return
-
-      
-      // special type that can have prefix
-      case 'ct-typography':
-      case 'ct-background':
-        $var['id'] = $option_id;
-        $var['selector'] = $selector;
-
-        if( preg_match( '/--(\w+)/', $args['css'], $match ) ) {
-          $var['prefix'] = $match[1];
-        }
-
-        if( $args['type'] == 'ct-typography' ) {
-          $this->typography_vars[] = $var;
-        } else {
-          $this->background_vars[] = $var;
-        }
-        return;
-
-
-      case 'ct-color-picker':
-        foreach( $args['css'] as $prop => $value ) {
-          preg_match('/(\w+)./', $value, $type ); // get the first key
-
-          $var[] = [
-            'selector' => $selector,
-            'variable' => preg_replace( '/^--/', '', $prop ),
-            'type' => 'color:' . $type[1],
-          ];
-        }
-        break;
-
-
-      case 'ct-border':
-      case 'ct-box-shadow':
-      case 'ct-spacing':
-        $var['type'] = str_replace( 'ct-', '', $args['type'] );
-        // intentionally without break
-
-
-      default:
-        $var['selector'] = $selector;
-        $var['variable'] = preg_replace( '/^--/', '', $args['css'] );
-        
-        if( isset( $args['responsive'] ) ) {
-          $var['responsive'] = $args['responsive'];
-        }
-        break;
-    }
-
-    $this->vars[ $option_id ] = $var;
-  }
-
-  /**
-   * 
-   */
-  private function get_var_from_options( $options, $selector = ':root' ) {
+  private function get_var_from_options( $options, $selector = ':root', $item_id = '' ) {
 
     foreach( $options as $option_id => $args ) {
       $selector = $args['css_selector'] ?? $selector; // override, if any
@@ -149,7 +79,7 @@ class Custy_SyncPreview {
         $this->get_var_from_options( $inner_options, $selector );
       } else {
         $var = $this->format_var( $option_id, $args, $selector );
-        $this->assign_var_to_class( $var, $args );
+        $this->assign_var_to_class( $option_id, $var, $item_id );
       }
     }
   }
@@ -175,6 +105,7 @@ class Custy_SyncPreview {
       case 'ct-typography':
       case 'ct-background':
         $var['id'] = $option_id;
+        $var['type'] = str_replace( 'ct-', '', $args['type'] );
         $var['selector'] = $selector;
 
         if( preg_match( '/--(\w+)/', $args['css'], $match ) ) {
@@ -218,24 +149,39 @@ class Custy_SyncPreview {
   /**
    * Assign to class variable depending on the type
    * 
+   * @param $option_id (string)
    * @param $var (array)
-   * @param $args (array)
-   * @param $type (string) - normal | header | footer
+   * @param $item_id (string) - only for header & footer
    */
-  private function assign_var_to_class( $var, $args, $type = 'normal' ) {
+  private function assign_var_to_class( $option_id, $var, $item_id = '' ) {
+    if( empty( $var ) ) { return; }
 
-    switch( $args['type'] ) {
-      case 'ct-typography':
-        $this->typography_vars[] = $var;
-        break;
-      
-      case 'ct-background':
-        $this->background_vars[] = $var;
-        break;
-      
-      default:
-        $this->vars[] = $var;
-        break;
+    if( $this->type === 'normal' ) {
+      switch( $var['type'] ?? '' ) {
+        case 'typography':
+          $this->typography_vars[] = $var;
+          break;
+        
+        case 'background':
+          $this->background_vars[] = $var;
+          break;
+        
+        default:
+          $this->vars[ $option_id ] = $var;
+          break;
+      }
+    }
+    elseif( $this->type === 'header' ) {
+      // initialize if empty
+      $this->header_vars[ $item_id ] = $this->header_vars[ $item_id ] ?? [];
+
+      $this->header_vars[ $item_id ][ $option_id ] = $var;
+    }
+    elseif( $this->type === 'footer' ) {
+      // initialize if empty
+      $this->footer_vars[ $item_id ] = $this->footer_vars[ $item_id ] ?? [];
+
+      $this->footer_vars[ $item_id ][ $option_id ] = $var;
     }
   }
 

@@ -752,9 +752,10 @@
   };
   // /new
   var a = function(e) {
-      var t = e.toString(16);
-      return 1 == t.length ? "0" + t : t
-    },
+    var t = e.toString(16);
+    return 1 == t.length ? "0" + t : t
+  },
+  
     // @changed - background sync now only return 2 values --background and --backgroundColor
     c = function(e) {
       var t = e.id,
@@ -2644,55 +2645,49 @@
     n = r.n(o),
     a = r(2);
   n.a.on("ct:header:sync:collect-variable-descriptors", (function(e) {
-    e.button = {
-      headerButtonFontColor: [{
-        selector: ".ct-header-cta",
-        variable: "buttonTextInitialColor",
-        type: "color:default",
-        responsive: !0
-      }, {
-        selector: ".ct-header-cta",
-        variable: "buttonTextHoverColor",
-        type: "color:hover",
-        responsive: !0
-      }],
-      headerButtonBackground: [{
-        selector: "[data-id='button']",
-        variable: "background",
-        type: "color:default",
-        responsive: !0
-      }, {
-        selector: "[data-id='button']",
-        variable: "backgroundHover",
-        type: "color:hover",
-        responsive: !0
-      }],
-      headerCtaMargin: {
-        selector: ".ct-header-cta",
-        type: "spacing",
-        variable: "margin",
-        responsive: !0,
-        important: !0
-      },
-      headerCtaRadius: {
-        selector: ".ct-header-cta",
-        type: "spacing",
-        variable: "borderRadius",
-        responsive: !0
-      }
-    };
 
-    e.search = {
-      searchBackground: [{
-        selector: "[data-id='search']",
-        variable: "background",
-        type: "color:default"
-      }, {
-        selector: "[data-id='search']",
-        variable: "backgroundFocus",
-        type: "color:focus"
-      }],
-    };
+    // @new - take Header variable from localization
+    for( var itemID in ct_localizations.header_sync_vars ) {
+      if (!ct_localizations.header_sync_vars.hasOwnProperty( itemID ) ) continue;
+
+      var item = ct_localizations.header_sync_vars[ itemID ];
+      
+      // format the items
+      var formattedItem = {};
+      for( var optionID in item ) {
+        if (!item.hasOwnProperty( optionID ) ) continue;
+
+        var option = item[ optionID ];
+        // TODO: background and typography still doesn't work
+        switch( option.type ) {
+          case 'background':
+            console.log( Object( o.handleBackgroundOptionFor )({
+              id: "offcanvasBackground",
+              selector: "#offcanvas"
+            }) );
+
+            Object.assign( formattedItem, ...o.handleBackgroundOptionFor({
+              id: optionID,
+              selector: option.selector
+            }) );
+            break;
+
+          case 'typography':
+            Object.assign( formattedItem, ...o.typographyOption({
+              id: optionID,
+              selector: option.selector
+            }) );
+            break;
+
+          default:
+            Object.assign( formattedItem, option );
+            break;
+        }
+      }
+
+      e[ itemID ] = formattedItem;
+    }
+    // /new
 
   })), n.a.on("ct:header:sync:item:button", (function(e) {
     var t = e.optionId,

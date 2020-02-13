@@ -50,22 +50,23 @@ function _custy_enqueue_customizer_preview() {
   
   
   $sections = Custy::get_sections();
-  // $header_items = CustyBuilder::get_items( 'header', 'all', true, false );
-  // $footer_items = CustyBuilder::get_items( 'footer', 'all', true, false );
+  $header_items = CustyBuilder::get_items( 'header', 'all', true, false );
+  $footer_items = CustyBuilder::get_items( 'footer', 'all', true, false );
 
   // compile vars for synchronizing the Preview page
   $syncer = new Custy_SyncPreview();
   $syncer->compile_from_sections( $sections );
-  // $syncer->compile_from_items( $header_items, 'header' );
-  // $syncer->compile_from_items( $footer_items, 'footer' );
+  $syncer->compile_from_items( $header_items, 'header' );
+  $syncer->compile_from_items( $footer_items, 'footer' );
   $sync_vars = $syncer->get_sync_vars();
-
 
   wp_localize_script( 'ct-customizer', 'ct_localizations', [
     'customizer_sync' => blocksy_customizer_sync_data(),
     'sync_vars' => $sync_vars['other'],
     'background_sync_vars' => $sync_vars['background'],
-    'typography_sync_vars' => $sync_vars['typography']
+    'typography_sync_vars' => $sync_vars['typography'],
+    'header_sync_vars' => $sync_vars['header'],
+    'footer_sync_vars' => $sync_vars['footer'],
   ] );
 
   wp_enqueue_media();
