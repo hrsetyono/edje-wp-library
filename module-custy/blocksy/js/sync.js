@@ -1173,7 +1173,7 @@
           responsive: !0
         }
       }, Object(o.handleBackgroundOptionFor)({
-        id: "headerRowBackground",
+        id: "rowBackground",
         selector: t
       }), {
         headerRowTopBorder: {
@@ -2660,27 +2660,22 @@
         var option = item[ optionID ];
         // TODO: background and typography still doesn't work
         switch( option.type ) {
-          case 'background':
-            console.log( Object( o.handleBackgroundOptionFor )({
-              id: "offcanvasBackground",
-              selector: "#offcanvas"
-            }) );
+          // case 'background':
+          //   Object.assign( formattedItem, ...o.handleBackgroundOptionFor({
+          //     id: optionID,
+          //     selector: option.selector
+          //   }) );
+          //   break;
 
-            Object.assign( formattedItem, ...o.handleBackgroundOptionFor({
-              id: optionID,
-              selector: option.selector
-            }) );
-            break;
-
-          case 'typography':
-            Object.assign( formattedItem, ...o.typographyOption({
-              id: optionID,
-              selector: option.selector
-            }) );
-            break;
+          // case 'typography':
+          //   Object.assign( formattedItem, ...o.typographyOption({
+          //     id: optionID,
+          //     selector: option.selector
+          //   }) );
+          //   break;
 
           default:
-            Object.assign( formattedItem, option );
+            formattedItem[ optionID ] = option;
             break;
         }
       }

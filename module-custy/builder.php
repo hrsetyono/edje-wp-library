@@ -33,8 +33,7 @@ class CustyBuilder {
     $items = $type === 'header' ? $custy_header_items : $custy_footer_items;
 
     // format items
-    $bi = new Custy_BuilderItems();
-    $items = $bi->filter_items( $items, $include );
+    $items = self::_filter_items( $items, $include );
 
     if( $need_format ) {
       $co = new Custy_Options();
@@ -55,18 +54,55 @@ class CustyBuilder {
    */
   static function get_values( $type = 'header', $raw_values = null ) {
     $bv = new Custy_BuilderValues();
-    $placements = $bv->format_placements( $type, $raw_values );
-    return $placements;
+    $data = $bv->format_placements( $type, $raw_values );
+    return $data;
   }
 
 
   /**
    * Render the content - Require Timber Library and view named '_header.twig' and '_footer.twig'
    */
-  static function render( $type = 'header', $raw_values = null ) {
+  static function render( $type = 'header', $raw_values = null, $template = null ) {
     if( !class_exists( 'Timber' ) ) { return; }
 
     $values = self::get_values( $type, $raw_values );
-    return Timber::compile( "_{ $type }.twig", [ $type => $values ] );
+    $template = $template ?? "_{$type}.twig";
+    
+    return Timber::compile( $template, [ $type => $values ] );
+  }
+
+
+
+  //
+
+  /**
+   * Return the needed items based on $include arg.
+   * 
+   * @param $items (array)
+   * @param $include (string) - Either 'primary' (rows), 'secondary' (non-rows), or 'all'
+   * 
+   * @return array - Filtered items
+   */
+  private static function _filter_items( $items, $include = 'all' ) {
+    $filtered_items = [];
+
+    foreach( $items as $id => $item ) {
+      $id = str_replace('_', '-', $id );
+
+      $is_primary = $item['is_primary'] ?? false;
+
+      // Skip if include primary, but item is not primary
+      if( $include === 'primary' && !$is_primary ) {
+        continue;
+      }
+      // Skip if looking for secondary, but item is primary
+      elseif( $include === 'secondary' && $is_primary ) {
+        continue;
+      }
+
+      $filtered_items[ $id ] = $item;
+    }
+
+    return $filtered_items;
   }
 }

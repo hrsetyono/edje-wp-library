@@ -12,16 +12,25 @@ $section = [
       'value' => $header->get_default_value(),
       'selective_refresh' => [
         [
-          'id' => 'header_placements_1',
+          'id' => 'header_placements_desktop',
           'fallback_refresh' => false,
           'container_inclusive' => true,
-          'selector' => '#header',
+          'selector' => '.site-header[data-visible="desktop"]',
           'settings' => [ 'header_placements' ],
-          'render_callback' => function () {
+          'render_callback' => function() {
             echo CustyBuilder::render( 'header', get_theme_mod( 'header_placements' ) );
           }
         ],
-
+        [
+          'id' => 'header_placements_mobile',
+          'fallback_refresh' => false,
+          'container_inclusive' => true,
+          'selector' => '.site-header[data-visible="mobile"]',
+          'settings' => [ 'header_placements' ],
+          'render_callback' => function() {
+            echo CustyBuilder::render( 'header', get_theme_mod( 'header_placements' ), '_header-mobile.twig' );
+          }
+        ],
       ],
       // 'selective_refresh' => [
       //   [

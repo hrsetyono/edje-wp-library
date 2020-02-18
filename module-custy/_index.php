@@ -8,9 +8,15 @@ define( 'BLOCKSY_JS_DIR', plugin_dir_url(__FILE__) . 'blocksy/js' );
 
 add_action( 'plugins_loaded', '_custy_loaded' );
 add_action( 'after_setup_theme' , '_custy_after_theme', 9999 );
-add_action( 'init', '_custy_after_init', 9999 );
+
+add_action( 'init', function() {
+  CustyBuilder::set_items(); // initiate builder cache
+}, 9999 );
+
 
 /**
+ * Load Blocksy and default values
+ * 
  * @action plugins_loaded
  */
 function _custy_loaded() {
@@ -26,45 +32,41 @@ function _custy_loaded() {
   add_filter( 'custy_default_values', '_custy_footer_default_values' );
 }
 
+
 /**
+ * Load all custom functions
+ * 
  * @action after_setup_theme 9999
  */
 function _custy_after_theme() {
   require_once __DIR__ . '/enqueue.php';
-  
-  require_once __DIR__ . '/helper-values.php';
-  require_once __DIR__ . '/helper-options.php';
+  require_once __DIR__ . '/helper.php';
+
+  require_once __DIR__ . '/format-options.php';
+  require_once __DIR__ . '/format-values.php';
 
   require_once __DIR__ . '/sync-preview.php';
 
+  // Populate options
+  require_once __DIR__ . '/core-sections/_index.php';
+  require_once __DIR__ . '/header-items/_index.php';
+  require_once __DIR__ . '/footer-items/_index.php';
+
+  // Output <style> tags
   require_once __DIR__ . '/stylesheet.php';
   require_once __DIR__ . '/stylesheet-compile.php';
   require_once __DIR__ . '/stylesheet-output.php';
-
-  add_filter( 'custy_sections', '_custy_set_core_sections', 1 );
-  add_filter( 'custy_sections', '_custy_format_sections', 9999 );
-
   add_action( 'wp_head', '_custy_render_stylesheet', 0 );
   add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
   
   // BUILDER
   require_once __DIR__ . '/builder.php';
-  require_once __DIR__ . '/builder-items.php';
   require_once __DIR__ . '/builder-values.php';
-
-  add_filter( 'custy_header_items', '_custy_set_header_items', 0 );
-  add_filter( 'custy_footer_items', '_custy_set_footer_items', 0 );
 }
 
-
-/**
- * @action init 9999
- */
-function _custy_after_init() {
-  CustyBuilder::set_items(); // initiate builder cache
-}
 
 /////
+
 
 class Custy {
 

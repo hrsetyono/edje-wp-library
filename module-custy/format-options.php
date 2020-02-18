@@ -1,56 +1,9 @@
 <?php
-
-/**
- * @filter custy_sections 0
- */
-function _custy_set_core_sections( $sections ) {
-  $co = new Custy_Options();
-  return $co->populate_core_sections();
-}
-
-/**
- * @filter custy_sections 99999
- */
-function _custy_format_sections( $sections ) {
-  $co = new Custy_Options();
-  return $co->format_sections( $sections );
-}
-
-
 /**
  * Helper functions to handle Customizer Options
  */
 class Custy_Options {
   function __construct() {
-  }
-
-  /**
-   * Compile sections by reading all files in /core-sections 
-   */
-  function populate_core_sections() {
-    $all_sections = [];
-    $files = glob( __DIR__ . "/core-sections/*.php" );
-
-    // Loop all files
-    foreach( $files as $f ) {
-      $item = null; $items = null; // reset
-      $file_name = basename( $f, '.php' );
-      
-      // SKIP if first letter is underscore
-      if( preg_match( '/^_/', $file_name, $matches ) ) { continue; }
-
-      // Get variable $section or $sections from file
-      require $f;
-
-      if( isset( $section ) ) {
-        $all_sections[ $file_name ] = $section;
-      }
-      elseif( isset( $sections ) ) {
-        $all_sections = array_merge( $all_sections, $sections );
-      }
-    }
-
-    return $all_sections;
   }
 
   /**
@@ -195,7 +148,7 @@ class Custy_Options {
   }
 
   /**
-   * Format one section
+   * Format one section or item
    * 
    * @param $options (array) - List of customizer options
    * @param $defaults (bool) - List of default values using options ID as it's key

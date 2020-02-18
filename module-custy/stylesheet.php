@@ -52,8 +52,8 @@ function _custy_render_admin_stylesheet() {
  * Format the CSS then echo it
  */
 function _custy_format_then_echo_css( $styles ) {
-  $formatter = new Custy_FormatValues();
-  $styles = $formatter->format_for_css( $styles );
+  $cv = new Custy_Values();
+  $styles = $cv->format_for_css( $styles );
 
   $outputter = new Custy_OutputStyles();
   $outputter->echo_css( $styles );

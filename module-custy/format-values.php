@@ -2,7 +2,8 @@
 /**
  * Format the value of theme mods before outputted as CSS
  */
-class Custy_FormatValues {
+class Custy_Values {
+  // for css
   public $desktop_css = [];
   public $tablet_css = [];
   public $mobile_css = [];
@@ -52,6 +53,14 @@ class Custy_FormatValues {
       'tablet_css' => $this->tablet_css,
       'mobile_css' => $this->mobile_css,
     ];
+  }
+
+  
+  /**
+   * 
+   */
+  function format_for_builder() {
+
   }
 
 

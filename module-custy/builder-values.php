@@ -93,12 +93,12 @@ class Custy_BuilderValues {
     }
 
 
-    $formatter = new Custy_FormatValues();
+    $cv = new Custy_Values();
 
     // assign values to ids
     foreach( $item_ids as $id ) {
       $value = $values[ $id ] ?? $default_values[ $id ];
-      $items[ $id ] = $need_format ? $formatter->format( $value ) : $value;
+      $items[ $id ] = $need_format ? $cv->format( $value ) : $value;
     }
 
     return $items;
