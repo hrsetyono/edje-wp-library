@@ -110,10 +110,11 @@ function _custy_header_default_values( $defaults ) {
 
   // PLACEMENTS
   $defaults = wp_parse_args( [ 'header_placements' => [
-    'current_section' => 'type-1',
+    'current_section' => 'main',
     'sections' => [
       [
-        'id' => 'type-1',
+        'id' => 'main',
+        'label' => 'Main Header',
         'mode' => 'placements',
         'items' => [
           [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
@@ -174,92 +175,10 @@ function _custy_header_default_values( $defaults ) {
             [ 'id' => 'start', 'items' => [ 'mobile-menu' ] ],
           ] ],
         ],
-      ], // type 1
-      [
-        'id' => 'type-2',
-        'mode' => 'placements',
-        'items' => [
-          [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
-          [ 'id' => 'logo', 'values' => $defaults['header']['logo'] ],
-          [ 'id' => 'top-row', 'values' => $defaults['header']['top-row'] ],
-          [ 'id' => 'middle-row', 'values' => $defaults['header']['middle-row'] ],
-          [ 'id' => 'bottom-row', 'values' => $defaults['header']['bottom-row'] ],
-          [ 'id' => 'offcanvas', 'values' => $defaults['header']['offcanvas'] ],
-          [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
-          [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
-        ],
-        'desktop' => custy_parse_header_placements( [
-          [ 'id' => 'middle-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'logo' ] ],
-            [ 'id' => 'end', 'items' => [ 'menu' ] ],
-          ] ],
-        ] ),
-        'mobile' => custy_parse_header_placements( [
-          [ 'id' => 'middle-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'logo' ] ],
-            [ 'id' => 'end', 'items' => [ 'trigger' ] ],
-          ] ],
-        ] ),
-        [
-          [ 'id' => 'top-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'middle-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'logo' ] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'menu' ] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'bottom-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-        ],
-        'mobile' => [
-          [ 'id' => 'top-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'middle-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'logo' ] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'trigger' ] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'bottom-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'offcanvas', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'mobile-menu' ] ],
-          ] ],
-        ],
-      ], // type 2
+      ],
     ], // sections
   ] ], $defaults );
 
 
   return $defaults;
-}
-
-/**
- * Add the missing args for Header placement
- */
-function custy_parse_header_placements( $args ) {
-  
 }

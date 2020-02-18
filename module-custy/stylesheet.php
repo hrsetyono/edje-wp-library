@@ -1,5 +1,9 @@
 <?php
 
+add_action( 'wp_head', '_custy_render_stylesheet', 0 );
+add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
+
+
 /**
  * Render the CSS variables for Frontend
  * 
@@ -21,27 +25,38 @@ function _custy_render_stylesheet() {
 
 
 /**
- * Render the CSS variables for Customizer page
+ * Render the CSS variables for Admin page
  * 
  * @action admin_print_styles 0
  */
 function _custy_render_admin_stylesheet() {
   $current_screen = get_current_screen()->id;
-  if( !in_array( $current_screen, ['customize'] ) ) {
-    return;
+  $only_show_in = ['customize', 'post', 'page'];
+
+  if( !in_array( $current_screen, $only_show_in ) ) { return; }
+  
+  $color_palette = Custy::get_mod( 'colorPalette' );
+  $text_color = Custy::get_mod( 'textColor' );
+  $extra_color = Custy::get_mod( 'extraColor' );
+
+  $palette_css = [
+    '--main'      => $color_palette['color1']['color'],
+    '--mainDark'  => $color_palette['color2']['color'],
+    '--mainLight' => $color_palette['color3']['color'],
+    '--sub'       => $color_palette['color4']['color'],
+    '--subLight'  => $color_palette['color5']['color'],
+    '--text'       => $text_color['default']['color'],
+    '--textInvert' => $text_color['invert']['color'],
+  ];
+
+  foreach( $extra_color as $id => $value ) {
+    if( $value['color'] !== 'CT_CSS_SKIP_RULE' ) {
+      $palette_css[ "--{$id}" ] = $value['color'];
+    }
   }
 
-  $mods = Custy::get_mods();
   $styles = [
-    ':root' => [
-      '--main'      => $mods['colorPalette']['color1']['color'],
-      '--mainDark'  => $mods['colorPalette']['color2']['color'],
-      '--mainLight' => $mods['colorPalette']['color3']['color'],
-      '--sub'       => $mods['colorPalette']['color4']['color'],
-      '--subLight'  => $mods['colorPalette']['color5']['color'],
-      '--text'      => $mods['textColor']['default']['color'],
-      '--textInvert' => $mods['textColor']['invert']['color'],
-    ],
+    ':root' => $palette_css
   ];
 
   _custy_format_then_echo_css( $styles );

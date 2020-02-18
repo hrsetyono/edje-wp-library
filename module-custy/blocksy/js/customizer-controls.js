@@ -16878,6 +16878,12 @@
       var t = e.allBuilderSections,
         n = e.builderValue,
         i = e.builderValueDispatch;
+      // @new <select> uses label arg
+      var _values = t.sections.reduce( (result, section) => {
+        result[ section.id ] = section.label;
+        return result;
+      }, {} );
+      // /new
       ct_customizer_localizations.header_builder_data.secondary_items.header, ct_customizer_localizations.header_builder_data.header;
       return Object(r.createElement)(x.default, {
         onChange: function(e) {
@@ -16894,11 +16900,7 @@
             var t = e.id;
             return {
               key: t,
-              value: {
-                "type-1": Object(o.__)("Default", "blocksy"),
-                "type-2": Object(o.__)("Secondary", "blocksy"),
-                "type-3": Object(o.__)("Centered", "blocksy")
-              } [t]
+              value: _values [t] // @changed - now use the id=>label pairing
             }
           }))
         },
@@ -17112,13 +17114,15 @@
         className: "ct-available-items"
       }, Object(r.createElement)("h3", {
         className: "ct-title"
-      }, Object(o.__)("Global Header", "blocksy")), Object(r.createElement)(P, {
+      }, Object(o.__)("", "blocksy")), Object(r.createElement)(P, { // @changed - remove title
         allBuilderSections: t,
         builderValue: n,
         builderValueDispatch: i
       }), Object(r.createElement)("div", {
         className: "ct-option-description"
-      }, Object(o.__)("Set one of these headers as a global one. You can edit them idependently.", "blocksy")), Object(r.createElement)("h3", {
+      },
+      // @changed - new description
+      Object(o.__)("Choose which header you want to edit.", "blocksy")), Object(r.createElement)("h3", {
         className: "ct-title"
       }, Object(o.__)("Header Elements", "blocksy")), Object(r.createElement)(D, {
         builderValue: n,
@@ -18046,13 +18050,17 @@
       className: "ct-available-items ct-footer-builder-options"
     }, Object(r.createElement)("h3", {
       className: "ct-title"
-    }, Object(o.__)("Global Footer", "blocksy")), Object(r.createElement)(S, {
+    },
+    // @changed - remove title
+    Object(o.__)("", "blocksy")), Object(r.createElement)(S, {
       allBuilderSections: t,
       builderValue: n,
       builderValueDispatch: i
     }), Object(r.createElement)("div", {
       className: "ct-option-description"
-    }, Object(o.__)("Set one of these footers as a global one. You can edit them idependently.", "blocksy")), Object(r.createElement)("div", {
+    },
+    // @changed - change description
+    Object(o.__)("Choose which footer you want to edit", "blocksy")), Object(r.createElement)("div", {
       className: "ct-tabs"
     }, Object(r.createElement)("ul", null, ["items", "options"].map((function(e) {
       return Object(r.createElement)("li", {

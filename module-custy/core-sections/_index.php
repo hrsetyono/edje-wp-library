@@ -11,7 +11,7 @@ function _custy_set_core_sections( $sections ) {
   $all_sections = custy_combine_vars_from_dir( __DIR__, 'section', 'sections' );
 
   // Add divider
-  $all_sections[ blocksy_rand_md5() ] = [
+  $all_sections[ custy_rand_id() ] = [
     'type' => 'ct-group-title',
     'title' => __( 'Custom' ),
     'priority' => 5,

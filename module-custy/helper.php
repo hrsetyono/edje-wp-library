@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Get random ID for options like Title / Divider / Condition / Tab
+ * 
+ * @return string
+ */
+function custy_rand_id() {
+  return md5( time() . '-' . uniqid( wp_rand(), true ) . '-' . wp_rand() );
+}
+
+
+/**
  * Combine all variables from a directory
  */
 function custy_combine_vars_from_dir( $dir, $single_var = 'section', $multi_var = 'sections' ) {

@@ -14,7 +14,7 @@ $item = [
         'image' => __( 'Image' ),
       ],
     ],
-    blocksy_rand_md5() => [
+    custy_rand_id() => [
       'type' => 'ct-condition',
       'condition' => [ 'logo_type' => 'text' ],
       'options' => [
@@ -27,7 +27,7 @@ $item = [
 
       ],
     ],
-    blocksy_rand_md5() => [
+    custy_rand_id() => [
       'type' => 'ct-condition',
       'condition' => [ 'logo_type' => 'image' ],
       'options' => [

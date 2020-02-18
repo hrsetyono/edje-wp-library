@@ -43,24 +43,55 @@ class CustyBuilder {
     return $items;
   }
 
-
+  
   /**
-   * Get Header or Footer values
-   * 
-   * @param $type (string) - 'header' or 'footer'
-   * @param $raw_values (array) - The raw mod value
-   * 
-   * @return string - HTML Markup
+   * Get Header values
    */
-  static function get_values( $type = 'header', $raw_values = null ) {
+  static function get_header( $id = null ) {
+    global $custy_header_id;
+    $custy_header_id = $custy_header_id ?? $id ?? 'main';
+
+    // if global ID is already set and given different ID, trigger error
+    if( isset( $id ) && $custy_header_id !== $id ) {
+      trigger_error( 'You can only call Custy::get_header() once per page', E_USER_ERROR );
+    }
+
     $bv = new Custy_BuilderValues();
-    $data = $bv->format_placements( $type, $raw_values );
+
+    $placements = Custy::get_mod( 'header_placements' );
+    $section = $bv->get_section( $placements, $custy_header_id );
+    
+    $data = $bv->format_header( $section );
     return $data;
   }
 
 
   /**
-   * Render the content - Require Timber Library and view named '_header.twig' and '_footer.twig'
+   * Get Footer values
+   */
+  static function get_footer( $id = null ) {
+    global $custy_footer_id;
+    $custy_footer_id = $custy_footer_id ?? $id ?? 'main';
+
+    // if global ID is already set and given different ID, trigger error
+    if( isset( $id ) && $custy_footer_id !== $id ) {
+      trigger_error( 'You can only call Custy::get_footer() once per page', E_USER_ERROR );
+    }
+
+    $bv = new Custy_BuilderValues();
+    $placements = Custy::get_mod( 'footer_placements' );
+    $section = $bv->get_section( $placements, $custy_footer_id );
+
+    $data = $bv->format_footer( $section );
+    return $data;
+  }
+
+
+  /**
+   * Render the content for updating Customizer Preview
+   * - Require Timber Library and view named '_header.twig' and '_footer.twig'
+   * 
+   * @todo - builder preview is disabled due to only partially working
    */
   static function render( $type = 'header', $raw_values = null, $template = null ) {
     if( !class_exists( 'Timber' ) ) { return; }
@@ -70,7 +101,6 @@ class CustyBuilder {
     
     return Timber::compile( $template, [ $type => $values ] );
   }
-
 
 
   //

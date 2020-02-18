@@ -39,15 +39,19 @@ class Custy_CompileStyles {
    * @param $type (string) - 'header' or 'footer'
    */
   function compile_from_items( $item_options, $type = 'header' ) {
-    // get the placement mod
-    $raw_values = $this->mod_values[ $type . '_placements' ];
+    $data = [];
 
-    // get the values of each item
-    $bv = new Custy_BuilderValues();
-    $placements = $bv->format_placements( $type, $raw_values, false );
+    switch( $type ) {
+      case 'header':
+        $data = CustyBuilder::get_header();
+        break;
+      case 'footer':
+        $data = CustyBuilder::get_footer();
+        break;
+    }
 
     // search for css args
-    foreach( $placements['items'] as $item_id => $values ) {
+    foreach( $data['items'] as $item_id => $values ) {
       
       $item = $item_options[ $item_id ] ?? null;
       if( empty( $item ) ) { continue; }  // if item doesn't exist

@@ -20,6 +20,13 @@ function _custy_core_default_values( $defaults ) {
       'default' => [ 'color' => '#2c3e50' ],
       'invert' => [ 'color' => '#ffffff' ],
     ],
+    'extraColor' => [
+      'extra1' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
+      'extra2' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
+      'extra3' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
+      'extra4' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
+      'extra5' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
+    ],
 
     'mobile_media' => '480px',
     'tablet_media' => '767px',

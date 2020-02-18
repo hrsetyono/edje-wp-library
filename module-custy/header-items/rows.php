@@ -7,7 +7,7 @@ $row_options = [
     'css' => '--row$',
   ],
 
-  blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+  custy_rand_id() => [ 'type' => 'ct-divider' ],
 
   'borderTop' => [
     'label' => __( 'Border Top' ),
@@ -21,7 +21,7 @@ $row_options = [
     'css' => '--borderBottom',
   ],
 
-  blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+  custy_rand_id() => [ 'type' => 'ct-divider' ],
 
   'padding' => [
     'label' => __( 'Padding' ),

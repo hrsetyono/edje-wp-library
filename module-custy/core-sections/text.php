@@ -17,7 +17,7 @@ $section = [
   'css_selector' => ':root',
   'options' => [
 
-    blocksy_rand_md5() => [ 'title' => __( 'Base' ), 'type' => 'tab', 'options' => [
+    custy_rand_id() => [ 'tab' => __( 'Base' ), 'options' => [
 
       'rootTypography' => [
         'label' => __( 'Root Typography' ),
@@ -26,7 +26,7 @@ $section = [
         'css' => '--$',
       ],
   
-      blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+      custy_rand_id() => [ 'divider' => '' ],
   
       'smallFontSize' => [
         'label' => __( 'Small Font Size' ),
@@ -58,7 +58,7 @@ $section = [
 
     ] ],
 
-    blocksy_rand_md5() => [ 'title' => __( 'Heading' ), 'type' => 'tab', 'options' => [
+    custy_rand_id() => [ 'tab' => __( 'Heading' ), 'options' => [
         
       'headingTypography' => [
         'type' => 'ct-typography',
@@ -68,7 +68,7 @@ $section = [
         'css' => '--h$'
       ],
   
-      blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+      custy_rand_id() => [ 'type' => 'ct-divider' ],
   
       'h1Size' => [
         'label' => __( 'H1 Size' ),

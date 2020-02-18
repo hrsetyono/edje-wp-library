@@ -56,8 +56,6 @@ function _custy_after_theme() {
   require_once __DIR__ . '/stylesheet.php';
   require_once __DIR__ . '/stylesheet-compile.php';
   require_once __DIR__ . '/stylesheet-output.php';
-  add_action( 'wp_head', '_custy_render_stylesheet', 0 );
-  add_action( 'admin_print_styles', '_custy_render_admin_stylesheet', 0 );
   
   // BUILDER
   require_once __DIR__ . '/builder.php';
@@ -69,6 +67,35 @@ function _custy_after_theme() {
 
 
 class Custy {
+  /**
+   * Get color palette for Gutenberg
+   */
+  static function get_editor_color_palette() {
+    $palette = [
+      'Main'         => 'var(--main)',
+      'Main Dark'    => 'var(--mainDark)',
+      'Main Light'   => 'var(--mainLight)',
+      'Sub'          => 'var(--sub)',
+      'Sub Light'    => 'var(--subLight)',
+      'Text'         => 'var(--text)',
+      'Text Invert'  => 'var(--textInvert)',
+    ];
+
+    // check for extra colors
+    $extra_colors = self::get_mod( 'extraColor' );
+
+    $index = 1;
+    foreach( $extra_colors as $c ) {
+      if( $c['color'] !== 'CT_CSS_SKIP_RULE' ) {
+        $palette[ "Extra {$index}" ] = "var(--extra{$index})";
+      }
+      
+      $index++;
+    }
+
+    return H::color_palette( $palette );
+  }
+
 
   /**
    * Get all theme mods and assign default values if doesn't exists

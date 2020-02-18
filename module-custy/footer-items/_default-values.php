@@ -64,9 +64,10 @@ function _custy_footer_default_values( $defaults ) {
 
   // FOOTER PLACEMENTS
   $defaults = wp_parse_args([ 'footer_placements' => [
-    'current_section' => 'type-1',
+    'current_section' => 'main',
     'sections' => [ [
-      'id' => 'type-1',
+      'id' => 'main',
+      'label' => __( 'Main Footer' ),
       'mode' => 'columns',
       'settings' => [],
       'items' => [

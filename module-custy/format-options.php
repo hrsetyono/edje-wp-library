@@ -157,10 +157,8 @@ class Custy_Options {
    */
   function format( $options, $defaults ) {
     foreach( $options as $id => &$args ):
-      // if type is not set
-      if( !isset( $args['type'] ) ) {
-        trigger_error( 'Option type not set: ' . $id , E_USER_ERROR );
-      }
+
+      $args = $this->format_type_arg( $id, $args );
 
       // Skip if title or divider
       if( in_array( $args['type'], [ 'ct-title', 'ct-divider' ] ) ) {
@@ -273,6 +271,38 @@ class Custy_Options {
   }
 
   /////
+
+
+  /**
+   * Check if type exists. If not, check if the type can be determined.
+   */
+  private function format_type_arg( $id, $args ) {
+
+    if( isset( $args['type'] ) ) {
+      return $args;
+    }
+    
+    // If tab
+    if( isset( $args['tab'] ) ) {
+      $args['type'] = 'tab';
+      $args['title'] = $args['tab'];
+    }
+    // If condition
+    elseif( isset( $args['condition'] ) ) {
+      $args['type'] = 'ct-condition';
+    }
+    // If divider or title
+    elseif( isset( $args['divider'] ) ) {
+      $args['type'] = empty( $args['divider'] ) ? 'ct-divider' : 'ct-title';
+      $args['label'] = $args['divider'];
+    }
+    else {
+      trigger_error( 'Option type not set: ' . $id , E_USER_ERROR );
+    }
+
+    return $args;
+  }
+
 
   /**
    * Convert pickers to be ordered array

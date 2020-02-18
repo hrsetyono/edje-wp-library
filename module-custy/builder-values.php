@@ -9,6 +9,58 @@ class Custy_BuilderValues {
   function __construct() {}
 
   /**
+   * Format the header_placements data
+   */
+  function format_header( $section, $need_format = true ) {
+    $this->type = 'header';
+
+    $data = [
+      'desktop' => $this->remove_empty_row( $section['desktop'] ),
+      'mobile' => $this->remove_empty_row( $section['mobile'] ),
+      'items' => $this->format_items_arg( $section, $need_format ),
+    ];
+
+    return $data;
+  }
+
+
+  /**
+   * Format the footer_placements data
+   */
+  function format_footer( $section, $need_format = true ) {
+    $this->type = 'footer';
+
+    $data = [
+      'rows' => $this->remove_empty_row( $section['rows'] ),
+      'items' =>  $this->format_items_arg( $section, $need_format ),
+    ];
+
+    return $data;
+  }
+
+  
+  /**
+   * Get the section with the specified ID
+   */
+  function get_section( $placements, $id = null ) {
+    // if ID is not given, use current ID
+    if( empty( $id ) ) {
+      $id = $placements['current_section'];
+    }
+
+    // search for the section with that ID
+    foreach( $placements['sections'] as $section ) {
+      if ( $section['id'] === $id ) {
+        return $section;
+      }
+    }
+
+    // if not found, just return the first one
+    return $placements['sections'][0];
+  }
+
+
+  /**
    * Format the header_placements or footer_placements value from theme mod
    */
   function format_placements( $type = 'header', $raw_values = null, $need_format = true ) {

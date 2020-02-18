@@ -19,7 +19,7 @@ $item = [
       'type'  => 'ct-switch',
     ],
 
-    blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+    custy_rand_id() => [ 'type' => 'ct-divider' ],
     
     'headerButtonBackground' => [
       'label' => __( 'Background' ),

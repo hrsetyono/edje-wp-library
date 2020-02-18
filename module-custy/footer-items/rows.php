@@ -1,7 +1,7 @@
 <?php
 
 $row_options = [
-  blocksy_rand_md5() => [
+  custy_rand_id() => [
     'title' => __( 'Columns' ),
     'type' => 'tab',
     'options' => [
@@ -19,7 +19,7 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [ 'condition' => [ 'items_per_row' => '2' ],
+      custy_rand_id() => [ 'condition' => [ 'items_per_row' => '2' ],
         'type' => 'ct-condition'  ,
         'options' => [
 
@@ -74,7 +74,7 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [ 'condition' => [ 'items_per_row' => '3' ],
+      custy_rand_id() => [ 'condition' => [ 'items_per_row' => '3' ],
         'type' => 'ct-condition',  
         'options' => [
 
@@ -124,7 +124,7 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [ 'condition' => [ 'items_per_row' => '4' ],
+      custy_rand_id() => [ 'condition' => [ 'items_per_row' => '4' ],
         'type' => 'ct-condition',
         'options' => [
 
@@ -171,7 +171,7 @@ $row_options = [
         ],
       ],
 
-      blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+      custy_rand_id() => [ 'type' => 'ct-divider' ],
 
       'footerItemsGap' => [
         'label' => __( 'Items Gap' ),

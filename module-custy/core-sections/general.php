@@ -6,11 +6,12 @@ $section = [
   'css_selector' => ':root',
   'options' => [
     
-    blocksy_rand_md5() => [ 'title' => __( 'General' ), 'type' => 'tab', 'options' => [
+    custy_rand_id() => [ 'tab' => __( 'General' ), 'options' => [
 
       'colorPalette' => [
-        'label' => __( 'COLOR PALETTE' ),
+        'label' => false,
         'type'  => 'ct-color-palettes-picker',
+        'design' => 'block',
         'css' => [
           '--main' => 'color1.color',
           '--mainDark' => 'color2.color',
@@ -21,7 +22,7 @@ $section = [
       ],
       
       'textColor' => [
-        'label' => __( 'Text Color' ),
+        'label' => __( 'TEXT' ),
         'type'  => 'ct-color-picker',
         'design' => 'inline no-palette',
         'pickers' => [
@@ -34,7 +35,27 @@ $section = [
         ],
       ],
 
-      blocksy_rand_md5() => [ 'type' => 'ct-divider' ],
+      'extraColor' => [
+        'label' => __( 'Extra Color' ),
+        'desc' => __( 'Additional colors for Editor on top of Palettes.' ),
+        'type'  => 'ct-color-picker',
+        'pickers' => [
+          'extra1' => __( 'Extra 1' ),
+          'extra2' => __( 'Extra 2' ),
+          'extra3' => __( 'Extra 3' ),
+          'extra4' => __( 'Extra 4' ),
+          'extra5' => __( 'Extra 5' ),
+        ],
+        'css' => [
+          '--extra1' => 'extra1.color',
+          '--extra2' => 'extra2.color',
+          '--extra3' => 'extra3.color',
+          '--extra4' => 'extra4.color',
+          '--extra5' => 'extra5.color',
+        ],
+      ],
+
+      custy_rand_id() => [ 'divider' => '' ],
 
       'siteBackground' => [
         'label' => __( 'Site Background' ),
@@ -42,10 +63,8 @@ $section = [
         'css' => '--site$',
       ],
 
-      blocksy_rand_md5() => [
-        'label' => __( 'CSS Output' ),
+      custy_rand_id() => [ 'divider' => __( 'CSS Output' ),
         'desc' => __( 'Adjust the media query for responsive settings' ),
-        'type' => 'ct-title'
       ],
 
       'mobile_media' => [
@@ -54,6 +73,10 @@ $section = [
         'units' => [
           'px' => [ 'min' => 320, 'max' => 600 ],
         ],
+      ],
+
+      custy_rand_id() => [ 'divider' => __( 'Title' ),
+        'desc' => 'Optional description - lorem ipsum dolor sit amet'
       ],
 
       'tablet_media' => [
@@ -65,7 +88,7 @@ $section = [
       ],
     ] ],
 
-    blocksy_rand_md5() => [ 'title' => __( 'Shadow' ), 'type' => 'tab', 'options' => [
+    custy_rand_id() => [ 'tab' => __( 'Shadow' ), 'options' => [
 
       'shadow0' => [
         'label' => __( 'Shadow 0' ),
