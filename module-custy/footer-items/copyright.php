@@ -6,8 +6,8 @@ $item = [
     
     'copyright_text' => [
       'label' => __( 'Copyright text' ),
+      'desc' => __( 'Available tags: [current-year] and [site-title]' ),
       'type' => 'wp-editor',
-      'desc' => __( 'You can insert some arbitrary HTML code tags: {current_year}, {site_title} and {theme_author}' ),
       
       'disableRevertButton' => true,
       'quicktags' => false,

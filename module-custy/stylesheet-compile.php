@@ -115,14 +115,11 @@ class Custy_CompileStyles {
   private function compile_from_inner_options( $args, $parent_selector = ':root' ) {
     $selector = $args['css_selector'] ?? $parent_selector;
 
-    switch( $args['type'] ) {
-      case 'tab':
-      case 'ct-condition':
-        $this->compile_from_options( $args['options'], $selector );
-        break;
-      case 'ct-panel':
-        $this->compile_from_options( $args['inner-options'], $selector );
-        break;
+    if( isset( $args['options'] ) ) {
+      $this->compile_from_options( $args['options'], $selector );
+    }
+    elseif( isset( $args['inner-options'] ) ) {
+      $this->compile_from_options( $args['inner-options'], $selector );
     }
   }
 

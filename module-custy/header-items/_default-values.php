@@ -12,24 +12,27 @@ function _custy_header_default_values( $defaults ) {
         'default' => [ 'color' => '#ffffff' ],
       ],
     ]),
-    'borderTop' => [
-      'width' => 1,
-      'style' => 'none',
-      'color' => [ 'color' => 'rgba(44,62,80,0.2)' ],
-    ],
-    'borderBottom' => [
-      'width' => 1,
-      'style' => 'none',
-      'color' => [ 'color' => 'rgba(44,62,80,0.2)' ],
-    ],
-    'padding' => [
-      'top' => '0.25rem',
-      'right' => 'auto',
-      'bottom' => '0.25rem',
-      'left' => 'auto',
-      'linked' => true
-    ]
   ];
+
+  $menu_values = [
+    'menu' => blocksy_get_default_menu(),
+    'header_menu_type' => 'type-1',
+  ];
+
+  $button_values = [
+    'text' => __( 'Download' ),
+    'link' => '',
+    'target' => 'no',
+
+    'headerButtonBackground' => [
+      'default' => [ 'color' => 'var(--main)' ],
+      'hover' => [ 'color' => 'var(--mainDark)' ]
+    ],
+    'headerButtonColor' => [
+      'default' => [ 'color' => 'var(--textInvert)' ]
+    ],
+  ];
+
 
   $defaults = wp_parse_args( [ 'header' => [
     // ROWS
@@ -47,11 +50,9 @@ function _custy_header_default_values( $defaults ) {
       'offcanvasShadow' => 'var(--shadow2)'
     ],
 
-    // MENU 1
-    'menu' => [
-      'menu' => blocksy_get_default_menu(),
-      'header_menu_type' => 'type-1',
-    ],
+    // MENU
+    'menu' => $menu_values,
+    'menu2' => $menu_values,
 
     // LOGO
     'logo' => [
@@ -65,19 +66,8 @@ function _custy_header_default_values( $defaults ) {
     ],
 
     // BUTTON
-    'button' => [
-      'text' => __( 'Download' ),
-      'link' => '',
-      'target' => 'no',
-
-      'headerButtonBackground' => [
-        'default' => [ 'color' => 'var(--main)' ],
-        'hover' => [ 'color' => 'var(--mainDark)' ]
-      ],
-      'headerButtonColor' => [
-        'default' => [ 'color' => 'var(--textInvert)' ]
-      ],
-    ],
+    'button' => $button_values,
+    'button2' => $button_values,
 
     // SEARCH
     'search' => [
@@ -94,7 +84,12 @@ function _custy_header_default_values( $defaults ) {
       ]
     ],
 
-    
+    'socials' => [
+      [ 'id' => 'facebook', 'enabled' => true ],
+      [ 'id' => 'twitter', 'enabled' => true ],
+      [ 'id' => 'instagram', 'enabled' => true ],
+    ],
+
     ///// MOBILE
     
     'mobile-menu' => [

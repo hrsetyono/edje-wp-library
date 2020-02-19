@@ -6,6 +6,9 @@ define( 'BLOCKSY_CSS_DIR', plugin_dir_url(__FILE__) . 'blocksy/css' );
 define( 'BLOCKSY_JS_DIR', plugin_dir_url(__FILE__) . 'blocksy/js' );
 
 
+require_once __DIR__ . '/helper.php';
+
+
 add_action( 'plugins_loaded', '_custy_loaded' );
 add_action( 'after_setup_theme' , '_custy_after_theme', 9999 );
 
@@ -40,7 +43,7 @@ function _custy_loaded() {
  */
 function _custy_after_theme() {
   require_once __DIR__ . '/enqueue.php';
-  require_once __DIR__ . '/helper.php';
+  require_once __DIR__ . '/shortcode.php';
 
   require_once __DIR__ . '/format-options.php';
   require_once __DIR__ . '/format-values.php';

@@ -11,16 +11,16 @@ $section = [
       'setting' => ['transport' => 'postMessage'], // postMessage
       'value' => $footer->get_default_value(),
       'selective_refresh' => [
-        [
-          'id' => 'footer_placements_1',
-          'fallback_refresh' => false,
-          'container_inclusive' => true,
-          'selector' => '#footer',
-          'settings' => [ 'footer_placements' ],
-          'render_callback' => function () {
-            echo CustyBuilder::render( 'footer', get_theme_mod( 'footer_placements' ) );
-          }
-        ],
+        // [
+        //   'id' => 'footer_placements_1',
+        //   'fallback_refresh' => false,
+        //   'container_inclusive' => true,
+        //   'selector' => '#footer',
+        //   'settings' => [ 'footer_placements' ],
+        //   'render_callback' => function () {
+        //     echo CustyBuilder::render( 'footer', get_theme_mod( 'footer_placements' ) );
+        //   }
+        // ],
       ]
       // 'selective_refresh' => [
       //   [

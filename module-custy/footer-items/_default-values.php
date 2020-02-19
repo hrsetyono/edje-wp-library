@@ -36,7 +36,7 @@ function _custy_footer_default_values( $defaults ) {
     ],
 
     'copyright' => [
-      'copyright_text' => __( 'Copyright &copy; {current_year} {site_title} - Powered by {theme_author}' ),
+      'copyright_text' => __( 'Copyright &copy; [current-year] - [site-title]' ),
     ],
 
     'widget-area-1' => [
