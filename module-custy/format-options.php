@@ -294,7 +294,10 @@ class Custy_Options {
     // If divider or title
     elseif( isset( $args['divider'] ) ) {
       $args['type'] = empty( $args['divider'] ) ? 'ct-divider' : 'ct-title';
-      $args['label'] = $args['divider'];
+
+      if( $args['type'] == 'ct-title' ) {
+        $args['label'] = $args['divider'];
+      }
     }
     else {
       trigger_error( 'Option type not set: ' . $id , E_USER_ERROR );

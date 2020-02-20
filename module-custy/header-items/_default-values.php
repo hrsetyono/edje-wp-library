@@ -12,6 +12,7 @@ function _custy_header_default_values( $defaults ) {
         'default' => [ 'color' => '#ffffff' ],
       ],
     ]),
+    'rowHeight' => '48px',
   ];
 
   $menu_values = [
@@ -25,8 +26,14 @@ function _custy_header_default_values( $defaults ) {
     'target' => 'no',
 
     'headerButtonBackground' => [
-      'default' => [ 'color' => 'var(--main)' ],
-      'hover' => [ 'color' => 'var(--mainDark)' ]
+      'desktop' => [
+        'default' => [ 'color' => 'var(--main)' ],
+        'hover' => [ 'color' => 'var(--mainDark)' ]
+      ],
+      'mobile' => [
+        'default' => [ 'color' => 'var(--main)' ],
+        'hover' => [ 'color' => 'var(--mainDark)' ]
+      ],
     ],
     'headerButtonColor' => [
       'default' => [ 'color' => 'var(--textInvert)' ]
@@ -84,10 +91,19 @@ function _custy_header_default_values( $defaults ) {
       ]
     ],
 
+    // SOCIAL ACCOUNTS
     'socials' => [
-      [ 'id' => 'facebook', 'enabled' => true ],
-      [ 'id' => 'twitter', 'enabled' => true ],
-      [ 'id' => 'instagram', 'enabled' => true ],
+      'social_links' => [
+        [ 'id' => 'facebook', 'enabled' => true ],
+        [ 'id' => 'twitter', 'enabled' => true ],
+        [ 'id' => 'instagram', 'enabled' => true ],
+      ],
+      'icon_color' => 'custom',
+      'customColor' => [
+        'default' => [ 'color' => 'var(--text)' ]
+      ],
+      'icon_style' => 'none',
+      'show_text' => 'no'
     ],
 
     ///// MOBILE

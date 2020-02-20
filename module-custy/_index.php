@@ -6,7 +6,7 @@ define( 'BLOCKSY_CSS_DIR', plugin_dir_url(__FILE__) . 'blocksy/css' );
 define( 'BLOCKSY_JS_DIR', plugin_dir_url(__FILE__) . 'blocksy/js' );
 
 
-require_once __DIR__ . '/helper.php';
+require_once __DIR__ . '/custy-helper.php';
 
 
 add_action( 'plugins_loaded', '_custy_loaded' );

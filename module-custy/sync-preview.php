@@ -49,11 +49,11 @@ class Custy_SyncPreview {
   function compile_from_items( $items, $type = 'header' ) {
     $this->type = $type;
 
-    foreach( $items as $item_id => $i ) {
-      if( !isset( $i['options'] ) ) { continue; }
+    foreach( $items as $item_id => $args ) {
+      if( !isset( $args['options'] ) ) { continue; }
 
-      $selector = $i['css_selector'] ?? ':root';
-      $options = $i['options'];
+      $selector = $args['css_selector'] ?? ':root';
+      $options = $args['options'];
 
       $this->get_var_from_options( $options, $selector, $item_id );
     }
@@ -74,10 +74,10 @@ class Custy_SyncPreview {
         
       // if has inner options, loop it
       $inner_options = $args['options'] ?? $args['inner-options'] ?? false;
-  
       if( $inner_options ) {
         $this->get_var_from_options( $inner_options, $selector );
-      } else {
+      }
+      else {
         $var = $this->format_var( $option_id, $args, $selector );
         $this->assign_var_to_class( $option_id, $var, $item_id );
       }

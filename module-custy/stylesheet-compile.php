@@ -60,6 +60,7 @@ class Custy_CompileStyles {
       if( empty( $options ) ) { continue; } // if item doesn't have options
 
       $selector = $item['css_selector'] ?? ':root';
+
       $this->current_values = $values;
       $this->compile_from_options( $options, $selector );
     }
@@ -87,7 +88,6 @@ class Custy_CompileStyles {
         continue;
       }
 
-      // skip if has no "css" arg
       if( !isset( $args['css'] ) ) { continue; }
 
       // initiate empty selector
@@ -100,7 +100,7 @@ class Custy_CompileStyles {
       if( is_string( $args['css'] ) ) {
         $this->styles[ $selector ][ $args['css'] ] = $value;
       }
-      // if multi values
+      // if Color picker which is multi value
       elseif( is_array( $args['css'] ) ) {
         foreach( $args['css'] as $prop => $index ) {
           $this->styles[ $selector ][ $prop ] = $this->parse_multi_value( $value, $index, $option_id );
@@ -115,11 +115,9 @@ class Custy_CompileStyles {
   private function compile_from_inner_options( $args, $parent_selector = ':root' ) {
     $selector = $args['css_selector'] ?? $parent_selector;
 
-    if( isset( $args['options'] ) ) {
-      $this->compile_from_options( $args['options'], $selector );
-    }
-    elseif( isset( $args['inner-options'] ) ) {
-      $this->compile_from_options( $args['inner-options'], $selector );
+    $inner_options = $args['options'] ?? $args['inner-options'] ?? [];
+    if( !empty( $inner_options ) ) {
+      $this->compile_from_options( $inner_options, $selector );
     }
   }
 
@@ -147,9 +145,29 @@ class Custy_CompileStyles {
   private function parse_multi_value( $value, $index, $option_id ) {
     $indexes = explode( '.', $index );
 
+    if( $option_id == 'headerButtonBackground' ) {
+      var_dump( $index );
+    }
+
+    if( isset( $value['desktop'] ) ) {
+      $value['desktop'] = $this->parse_multi_value( $value['desktop'], $index, $option_id );
+    }
+
+    if( isset( $value['tablet'] ) ) {
+      $value['tablet'] = $this->parse_multi_value( $value['tablet'], $index, $option_id );
+    }
+
+    if( isset( $value['mobile'] ) ) {
+      $value['mobile'] = $this->parse_multi_value( $value['mobile'], $index, $option_id );
+    }
+
     // dig down until last index
     foreach( $indexes as $i ) {
-      $value = $value[ $i ] ?? trigger_error( "Wrong 'css' argument at option: $option_id" , E_USER_ERROR );
+      $value = $value[ $i ] ?? trigger_error( "Value not found for Option: {$option_id}. Common cause: (1) Typo in 'css' argument (2) an option in Header/Footer just recently renamed, remove and readd it -" , E_USER_ERROR );
+    }
+
+    if( $option_id == 'headerButtonBackground' ) {
+      var_dump( $value );
     }
 
     return $value;

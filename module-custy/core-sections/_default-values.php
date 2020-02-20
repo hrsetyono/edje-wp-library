@@ -140,9 +140,9 @@ function _custy_core_default_values( $defaults ) {
   ], $defaults );
 
   // SOCIAL ACCOUNTS
-  $social_list = custy_get_social_list();
+  $social_medias = custy_get_social_list();
   $social_defaults = [];
-  foreach( $social_list as $key => $value ) {
+  foreach( $social_medias as $key => $value ) {
     $social_defaults[ $key ] = $value['default_value'] ?? '';
   }
 

@@ -25,9 +25,12 @@ $button_options = [
       'hover' => __( 'Hover' ),
     ],
     'css' => [
-      '--background' => 'default.color',
-      '--backgroundHover' => 'hover.color',
+      '--background' => 'default',
+      '--backgroundHover' => 'hover',
     ],
+    
+    'responsive' => [ 'tablet' => false ],
+    'design' => 'block',
   ],
 
   'headerButtonColor' => [

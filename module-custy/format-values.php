@@ -27,7 +27,7 @@ class Custy_Values {
 
         foreach( $value as $p => &$v ) {
           if( isset( $v['desktop'] ) ) {
-            $v = $this->_set_responsive_size( $selector, $p, $v );
+            $v = $this->_set_responsive_style( $selector, $p, $v );
           }
         }
 
@@ -42,7 +42,7 @@ class Custy_Values {
 
       // SLIDER or SPACING
       if( isset( $value['desktop'] ) ) {
-        $value = $this->_set_responsive_size( $selector, $prop, $value );
+        $value = $this->_set_responsive_style( $selector, $prop, $value );
       }
 
     endforeach;
@@ -323,7 +323,7 @@ class Custy_Values {
    * 
    * @return mixed - The desktop value
    */
-  private function _set_responsive_size( $selector, $prop, $value ) {
+  private function _set_responsive_style( $selector, $prop, $value ) {
     // set tablet css
     if( isset( $value['tablet'] ) ) {
       if( !isset( $this->tablet_css[ $selector ] ) ) {

@@ -5,6 +5,18 @@ $row_options = [
     'label' => __( 'Background' ),
     'type'  => 'ct-background',
     'css' => '--row$',
+    'responsive' => true,
+  ],
+
+  'rowHeight' => [
+    'label' => __( 'Min Height' ),
+    'type' => 'ct-slider',
+    'responsive' => true,
+    'units' => [
+      'px' => [ 'min' => 20, 'max' => 90 ],
+      'rem' => [ 'min' => 1, 'max' => 6 ],
+    ],
+    'css' => '--rowHeight'
   ],
 ];
 
