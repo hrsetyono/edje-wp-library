@@ -40,7 +40,7 @@ $button_options = [
       'default' => __( 'Default' ),
     ],
     'css' => [
-      '--color' => 'default.color',
+      '--color' => 'default',
     ],
   ],
 

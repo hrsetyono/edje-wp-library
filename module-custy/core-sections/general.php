@@ -13,11 +13,11 @@ $section = [
         'type'  => 'ct-color-palettes-picker',
         'design' => 'block',
         'css' => [
-          '--main' => 'color1.color',
-          '--mainDark' => 'color2.color',
-          '--mainLight' => 'color3.color',
-          '--sub' => 'color4.color',
-          '--subLight' => 'color5.color',
+          '--main' => 'color1',
+          '--mainDark' => 'color2',
+          '--mainLight' => 'color3',
+          '--sub' => 'color4',
+          '--subLight' => 'color5',
         ],
       ],
       
@@ -30,8 +30,8 @@ $section = [
           'invert' => __( 'Text Invert' ),
         ],
         'css' => [
-          '--text' => 'default.color',
-          '--textInvert' => 'invert.color',
+          '--text' => 'default',
+          '--textInvert' => 'invert',
         ],
       ],
 
@@ -47,11 +47,11 @@ $section = [
           'extra5' => __( 'Extra 5' ),
         ],
         'css' => [
-          '--extra1' => 'extra1.color',
-          '--extra2' => 'extra2.color',
-          '--extra3' => 'extra3.color',
-          '--extra4' => 'extra4.color',
-          '--extra5' => 'extra5.color',
+          '--extra1' => 'extra1',
+          '--extra2' => 'extra2',
+          '--extra3' => 'extra3',
+          '--extra4' => 'extra4',
+          '--extra5' => 'extra5',
         ],
       ],
 

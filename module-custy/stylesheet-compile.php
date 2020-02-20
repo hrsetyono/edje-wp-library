@@ -102,8 +102,9 @@ class Custy_CompileStyles {
       }
       // if Color picker which is multi value
       elseif( is_array( $args['css'] ) ) {
+
         foreach( $args['css'] as $prop => $index ) {
-          $this->styles[ $selector ][ $prop ] = $this->parse_multi_value( $value, $index, $option_id );
+          $this->styles[ $selector ][ $prop ] = $this->compile_from_color_picker( $index, $value, $option_id );
         }
       }
     }
@@ -134,40 +135,29 @@ class Custy_CompileStyles {
 
   /**
    * Get a value from associative array using dot notation.
-   * Example: if the index is "hover.color", it will return $value['hover']['color']
+   * Example: if the key is "hover", it will return $value['hover']['color']
    * 
-   * @param $value (mixed) - Array value
    * @param $index (string) - Index key to get the value
+   * @param $value (mixed) - Array value
    * @param $option_id (sting) - For error message
    * 
    * @return mixed
    */
-  private function parse_multi_value( $value, $index, $option_id ) {
-    $indexes = explode( '.', $index );
+  private function compile_from_color_picker( $index, $value, $option_id ) {
 
-    if( $option_id == 'headerButtonBackground' ) {
-      var_dump( $index );
-    }
+    foreach( $value as $color_id => &$color_value ) {
+      switch( $color_id ) {
+        case 'desktop':
+        case 'tablet':
+        case 'mobile':
+          $color_value = $color_value[ $index ]['color'];
+          break;
 
-    if( isset( $value['desktop'] ) ) {
-      $value['desktop'] = $this->parse_multi_value( $value['desktop'], $index, $option_id );
-    }
-
-    if( isset( $value['tablet'] ) ) {
-      $value['tablet'] = $this->parse_multi_value( $value['tablet'], $index, $option_id );
-    }
-
-    if( isset( $value['mobile'] ) ) {
-      $value['mobile'] = $this->parse_multi_value( $value['mobile'], $index, $option_id );
-    }
-
-    // dig down until last index
-    foreach( $indexes as $i ) {
-      $value = $value[ $i ] ?? trigger_error( "Value not found for Option: {$option_id}. Common cause: (1) Typo in 'css' argument (2) an option in Header/Footer just recently renamed, remove and readd it -" , E_USER_ERROR );
-    }
-
-    if( $option_id == 'headerButtonBackground' ) {
-      var_dump( $value );
+        default:
+          if( $color_id == $index ) {
+            return $color_value['color'];
+          }
+      }
     }
 
     return $value;

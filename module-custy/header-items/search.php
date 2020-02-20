@@ -33,8 +33,8 @@ $item = [
         'focus' => __( 'Focus' ),
       ],
       'css' => [
-        '--background' => 'default.color',
-        '--backgroundFocus' => 'focus.color',
+        '--background' => 'default',
+        '--backgroundFocus' => 'focus',
       ],
     ],
   ]

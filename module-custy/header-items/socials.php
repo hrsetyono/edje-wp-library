@@ -32,7 +32,7 @@ $item = [
           'default' => __( 'Default' ),
         ],
         'css' => [
-          '--iconColor' => 'default.color'
+          '--iconColor' => 'default'
         ],
       ],
     ] ],

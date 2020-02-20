@@ -5,7 +5,6 @@ $row_options = [
     'label' => __( 'Background' ),
     'type'  => 'ct-background',
     'css' => '--row$',
-    'responsive' => true,
   ],
 
   'rowHeight' => [
