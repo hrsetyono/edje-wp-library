@@ -96,7 +96,7 @@ class Blocksy_Customizer_Builder {
 
 	public function get_registered_items_by( $panel_type = 'header', $include = 'all', $require_options = false) {
 
-		// @new - Get items from filter. Only continue if doesn't exist
+		// @new - Get items using new function. Only continue if doesn't exist
 		$items = CustyBuilder::get_items( $panel_type, $include, $require_options );
 		if( !empty( $items ) ) {
 			return $items;

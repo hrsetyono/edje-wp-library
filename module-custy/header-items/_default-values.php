@@ -24,19 +24,24 @@ function _custy_header_default_values( $defaults ) {
     'text' => __( 'Download' ),
     'link' => '',
     'target' => 'no',
+    'has_icon' => 'no',
+    'png_icon' => [],
+    'svg_icon' => '',
 
-    'headerButtonBackground' => [
-      'desktop' => [
-        'default' => [ 'color' => 'var(--main)' ],
-        'hover' => [ 'color' => 'var(--mainDark)' ]
-      ],
-      'mobile' => [
-        'default' => [ 'color' => 'var(--main)' ],
-        'hover' => [ 'color' => 'var(--mainDark)' ]
-      ],
+    'button_size' => 'normal',
+    'button_style' => 'solid',
+    'buttonBackground' => [
+      'default' => [ 'color' => 'var(--main)' ],
+      'hover' => [ 'color' => 'var(--mainDark)' ]
     ],
-    'headerButtonColor' => [
-      'default' => [ 'color' => 'var(--textInvert)' ]
+    'buttonBorder' => [
+      'width' => 2,
+      'style' => 'solid',
+      'color' => [ 'color' => 'var(--main)' ],
+    ],
+    'buttonTextColor' => [
+      'default' => [ 'color' => 'var(--textInvert)' ],
+      'hover' => [ 'color' => 'var(--textInvert)' ],
     ],
   ];
 

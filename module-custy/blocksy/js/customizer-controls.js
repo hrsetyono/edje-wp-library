@@ -13414,7 +13414,7 @@
             close: !1
           },
           states: [new wp.media.controller.Library({
-            title: "Select logo",
+            title: "Select image",
             library: wp.media.query({
               type: "image"
             }),
@@ -13536,7 +13536,7 @@
             return t.openFrame()
           },
           id: "customize-media-control-button-35"
-        }, this.props.option.filledLabel || "Change logo"))) : Object(r.createElement)(r.Fragment, null, Object(r.createElement)("div", {
+        }, this.props.option.filledLabel || "Change image"))) : Object(r.createElement)(r.Fragment, null, Object(r.createElement)("div", {
           className: "placeholder"
         }, "No logo selected"), Object(r.createElement)("div", {
           className: "actions"

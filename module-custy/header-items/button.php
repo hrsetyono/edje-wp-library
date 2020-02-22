@@ -1,48 +1,121 @@
 <?php
 
 $button_options = [
-  'text' => [
-    'label' => __( 'Label' ),
-    'type' => 'text',
-  ],
-  'link' => [
-    'label' => __( 'URL' ),
-    'type' => 'text',
-    'design' => 'block'
-  ],
-  'target' => [
-    'label' => __( 'Open in a new tab' ),
-    'type'  => 'ct-switch',
-  ],
-
-  custy_rand_id() => [ 'type' => 'ct-divider' ],
-  
-  'headerButtonBackground' => [
-    'label' => __( 'Background' ),
-    'type'  => 'ct-color-picker',
-    'pickers' => [
-      'default' => __( 'Default' ),
-      'hover' => __( 'Hover' ),
+  custy_rand_id() => [ 'tab' => __( 'Content' ), 'options' => [ 
+    'text' => [
+      'label' => __( 'Text' ),
+      'type' => 'text',
+      'disableRevertButton' => true,
     ],
-    'css' => [
-      '--background' => 'default',
-      '--backgroundHover' => 'hover',
+    'link' => [
+      'label' => __( 'Link' ),
+      'type' => 'text',
+      'disableRevertButton' => true,
+      'design' => 'block'
+    ],
+    'target' => [
+      'label' => __( 'Open in a new tab?' ),
+      'type'  => 'ct-switch',
+    ],
+
+    custy_rand_id() => [ 'type' => 'ct-divider' ],
+
+    'has_icon' => [
+      'label' => __( 'Has Icon?' ),
+      'type' => 'ct-radio',
+      'choices' => [
+        'no' => __( 'No' ),
+        'png' => __( 'PNG' ),
+        'svg' => __( 'SVG' ),
+      ],
+    ],
+
+
+    custy_rand_id() => [ 'condition' => [ 'has_icon' => 'png' ], 'options' => [
+      'png_icon' => [
+        'label' => __( 'Icon' ),
+        'desc' => __( 'PNG file recommended.' ),
+        'type' => 'ct-image-uploader',
+        'disableRevertButton' => true,
+        'attr' => [ 'data-height' => 'small' ],
+      ],
+    ] ],
+
+    custy_rand_id() => [ 'condition' => [ 'has_icon' => 'svg' ], 'options' => [
+      'svg_icon' => [
+        'label' => __( 'SVG' ),
+        'desc' => __( 'Paste in raw SVG code here' ),
+        'type' => 'textarea',
+        'disableRevertButton' => true,
+        'attr' => [ 'placeholder' => '<svg> ... </svg>' ]
+      ],
+    ] ],
+
+  ] ],
+
+
+  custy_rand_id() => [ 'tab' => __( 'Design' ), 'options' => [ 
+
+    'button_size' => [
+      'label' => __( 'Button Size' ),
+      'type' => 'ct-radio',
+      'choices' => [
+        'small' => __( 'Small' ),
+        'normal' => __( 'Normal' ),
+        'large' => __( 'Large' ),
+      ],
+    ],
+
+    custy_rand_id() => [ 'divider' => '' ],
+
+    'button_style' => [
+      'label' => __( 'Button Style' ),
+      'type' => 'ct-radio',
+      'attr' => [ 'data-type' => 'background' ],
+      'choices' => [
+        'solid' => __( 'Solid' ),
+        'outline' => __( 'Outline' ),
+        'transparent' => __( 'Transparent' ),
+      ],
     ],
     
-    'responsive' => [ 'tablet' => false ],
-    'design' => 'block',
-  ],
+    'buttonBackground' => [
+      'label' => __( 'Background' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => [
+          'title' => __( 'Default' ),
+          'condition' => [ 'button_style' => 'solid' ]
+        ],
+        'hover' => __( 'Hover' ),
+      ],
+      'css' => [
+        '--buttonBg' => 'default',
+        '--buttonBgHover' => 'hover',
+      ],
+    ],
 
-  'headerButtonColor' => [
-    'label' => __( 'Color' ),
-    'type'  => 'ct-color-picker',
-    'pickers' => [
-      'default' => __( 'Default' ),
+    custy_rand_id() => [ 'condition' => [ 'button_style' => 'outline' ], 'options' => [
+      'buttonBorder' => [
+        'label' => __( 'Border' ),
+        'type' => 'ct-border',
+        'css' => '--buttonBorder'
+      ],
+    ] ],
+
+    'buttonTextColor' => [
+      'label' => __( 'Text Color' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+        'hover' => __( 'Hover' ),
+      ],
+      'css' => [
+        '--buttonColor' => 'default',
+        '--buttonColorHover' => 'hover',
+      ],
     ],
-    'css' => [
-      '--color' => 'default',
-    ],
-  ],
+  ] ]
 
 ];
 

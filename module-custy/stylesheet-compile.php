@@ -145,6 +145,11 @@ class Custy_CompileStyles {
    */
   private function compile_from_color_picker( $index, $value, $option_id ) {
 
+    if( !isset( $value ) ) {
+      trigger_error( 'Value for option: ' . $option_id . ' is null. Cause: (1) Default value is not set (2) Header/Footer item got renamed - ', E_USER_ERROR );
+      return;
+    }
+
     foreach( $value as $color_id => &$color_value ) {
       switch( $color_id ) {
         case 'desktop':

@@ -196,7 +196,7 @@ class Custy_Options {
 
         case 'ct-color-picker':
           $args['skipEditPalette'] = true;
-          $args['pickers'] = $this->format_pickers( $args['pickers'] );
+          $args['pickers'] = $this->format_color_pickers( $args['pickers'] );
           break;
 
         case 'ct-slider':
@@ -310,13 +310,22 @@ class Custy_Options {
   /**
    * Convert pickers to be ordered array
    */
-  private function format_pickers( $pickers_arg ) {
+  private function format_color_pickers( $pickers_raw ) {
     $pickers = [];
-    foreach( $pickers_arg as $id => $title ) {
-      $pickers[] = [
-        'id' => $id,
-        'title' => $title,
-      ];
+    foreach( $pickers_raw as $id => $arg ) {
+
+      if( is_array( $arg ) ) {
+        $pickers[] = [
+          'id' => $id,
+          'title' => $arg['title'] ?? 'Default',
+          'condition' => $arg['condition'] ?? [],
+        ];
+      } else {
+        $pickers[] = [
+          'id' => $id,
+          'title' => $arg,
+        ];
+      }
     }
     
     return $pickers;
