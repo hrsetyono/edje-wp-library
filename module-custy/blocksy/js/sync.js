@@ -738,6 +738,7 @@
       l.indexOf("var(--sub)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--sub")),
       l.indexOf("var(--subLight)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--subLight")),
       l.indexOf("var(--text)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--text")),
+      l.indexOf("var(--textDim)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--textDim")),
       l.indexOf("var(--textInvert)") > -1 && (l = getComputedStyle(document.body).getPropertyValue("--textInvert"))
     );
 

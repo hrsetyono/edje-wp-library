@@ -46,6 +46,7 @@ function _custy_render_admin_stylesheet() {
     '--sub'       => $color_palette['color4']['color'],
     '--subLight'  => $color_palette['color5']['color'],
     '--text'       => $text_color['default']['color'],
+    '--textDim'    => $text_color['dim']['color'],
     '--textInvert' => $text_color['invert']['color'],
   ];
 

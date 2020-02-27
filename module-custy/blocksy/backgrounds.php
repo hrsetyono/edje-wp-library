@@ -83,6 +83,10 @@ function blocksy_get_svg_pattern( $name, $color = '#ccc' ) {
 		$color = $colorPalette['default'];
 	}
 
+	if (strpos($color, 'var(--textDim)') !== false) {
+		$color = $colorPalette['dim'];
+	}
+
 	if (strpos($color, 'var(--textInvert)') !== false) {
 		$color = $colorPalette['invert'];
 	}

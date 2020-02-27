@@ -4220,7 +4220,7 @@
             className: "ct-color-picker-top"
           }, Object(r.createElement)("ul", {
             className: "ct-color-picker-skins"
-          },  ['main', 'mainDark', 'mainLight', 'sub', 'subLight', 'text', 'textInvert'].map((function(t) {
+          },  ['main', 'mainDark', 'mainLight', 'sub', 'subLight', 'text', 'textDim', 'textInvert'].map((function(t) {
             return Object(r.createElement)("li", {
               key: t,
               style: {
@@ -4243,6 +4243,7 @@
               sub: 'Sub',
               subLight: 'Sub Light',
               text: 'Text',
+              textDim: 'Text Dim',
               textInvert: 'Text Invert',
             } [t]))
           })), !this.props.option.skipNoColorPill && Object(r.createElement)("li", {
@@ -16409,6 +16410,10 @@
       selector: ":root",
       variable: "text",
       type: "color:default"
+    }, {
+      selector: ":root",
+      variable: "textDim",
+      type: "color:dim"
     }, {
       selector: ":root",
       variable: "textInvert",

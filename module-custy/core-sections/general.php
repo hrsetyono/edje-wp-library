@@ -27,10 +27,12 @@ $section = [
         'design' => 'inline no-palette',
         'pickers' => [
           'default' => __( 'Text' ),
+          'dim' => __( 'Text Dim' ),
           'invert' => __( 'Text Invert' ),
         ],
         'css' => [
           '--text' => 'default',
+          '--textDim' => 'dim',
           '--textInvert' => 'invert',
         ],
       ],
@@ -44,14 +46,12 @@ $section = [
           'extra2' => __( 'Extra 2' ),
           'extra3' => __( 'Extra 3' ),
           'extra4' => __( 'Extra 4' ),
-          'extra5' => __( 'Extra 5' ),
         ],
         'css' => [
           '--extra1' => 'extra1',
           '--extra2' => 'extra2',
           '--extra3' => 'extra3',
           '--extra4' => 'extra4',
-          '--extra5' => 'extra5',
         ],
       ],
 

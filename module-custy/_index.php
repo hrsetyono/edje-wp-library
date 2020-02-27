@@ -81,6 +81,7 @@ class Custy {
       'Sub'          => 'var(--sub)',
       'Sub Light'    => 'var(--subLight)',
       'Text'         => 'var(--text)',
+      'Text Dim'     => 'var(--textDim)',
       'Text Invert'  => 'var(--textInvert)',
     ];
 

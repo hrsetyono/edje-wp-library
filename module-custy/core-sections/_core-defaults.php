@@ -13,20 +13,26 @@ function _custy_core_default_values( $defaults ) {
       'color1' => [ 'color' => '#1976d2' ],
       'color2' => [ 'color' => '#0d47a1' ],
       'color3' => [ 'color' => '#bbdefb' ],
-      'color4' => [ 'color' => '#546e7a' ],
-      'color5' => [ 'color' => '#cfd8dc' ],
+      'color4' => [ 'color' => '#4caf50' ],
+      'color5' => [ 'color' => '#c8e6c9' ],
     ],
     'textColor' => [
       'default' => [ 'color' => '#2c3e50' ],
-      'invert' => [ 'color' => '#ffffff' ],
+      'dim'     => [ 'color' => '#90a4ae' ],
+      'invert'  => [ 'color' => '#ffffff' ],
     ],
     'extraColor' => [
       'extra1' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
       'extra2' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
       'extra3' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
       'extra4' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
-      'extra5' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
     ],
+    
+    'siteBackground' => blocksy_background_default_value( [
+      'backgroundColor' => [
+        'default' => [ 'color' => '#f8f9fb' ],
+      ],
+    ] ),
 
     // GENERAL > SHADOW
 
