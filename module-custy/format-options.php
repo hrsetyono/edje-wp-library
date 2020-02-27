@@ -317,7 +317,7 @@ class Custy_Options {
       if( is_array( $arg ) ) {
         $pickers[] = [
           'id' => $id,
-          'title' => $arg['title'] ?? 'Default',
+          'title' => $arg['title'] ?? $args['label'] ?? 'Default',
           'condition' => $arg['condition'] ?? [],
         ];
       } else {

@@ -8,7 +8,7 @@
 function _custy_core_default_values( $defaults ) {
   $defaults = wp_parse_args( [
 
-    // CORE SETTINGS
+    // GENERAL > COLOR
     'colorPalette' => [
       'color1' => [ 'color' => '#1976d2' ],
       'color2' => [ 'color' => '#0d47a1' ],
@@ -28,10 +28,72 @@ function _custy_core_default_values( $defaults ) {
       'extra5' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
     ],
 
-    'mobile_media' => '480px',
-    'tablet_media' => '767px',
+    // GENERAL > SHADOW
 
-    //
+    'shadow0' => [
+      'enable' => true,
+      'h_offset' => 0,
+      'v_offset' => 1,
+      'blur' => 2,
+      'spread' => 0,
+      'inset' => false,
+      'color' => [ 'color' => 'rgba(0, 0, 0, 0.24)' ],
+    ], // 0 1px 2px rgba(0,0,0,0.24);
+  
+    'shadow1' => [
+      'enable' => true,
+      'h_offset' => 0,
+      'v_offset' => 3,
+      'blur' => 6,
+      'spread' => 0,
+      'inset' => false,
+      'color' => [ 'color' => 'rgba(0, 0, 0, 0.23)' ],
+    ], // 0 3px 6px rgba(0, 0, 0, 0.23)
+  
+    'shadow2' => [
+      'enable' => true,
+      'h_offset' => 0,
+      'v_offset' => 6,
+      'blur' => 6,
+      'spread' => 0,
+      'inset' => false,
+      'color' => [ 'color' => 'rgba(0, 0, 0, 0.23)' ],
+    ], // 0 6px 6px rgba(0,0,0,0.23)
+  
+    'shadow3' => [
+      'enable' => true,
+      'h_offset' => 0,
+      'v_offset' => 10,
+      'blur' => 10,
+      'spread' => 0,
+      'inset' => false,
+      'color' => [ 'color' => 'rgba(0, 0, 0, 0.22)' ],
+    ], // 0 10px 10px rgba(0,0,0,0.22)
+  
+    'shadow4' => [
+      'enable' => true,
+      'h_offset' => 0,
+      'v_offset' => 15,
+      'blur' => 12,
+      'spread' => 0,
+      'inset' => false,
+      'color' => [ 'color' => 'rgba(0, 0, 0, 0.22)' ],
+    ],// 0 15px 12px rgba(0,0,0,0.22)
+
+
+    // GENERAL > OTHER
+
+    'globalBorderRadius' => '4px',
+    'globalTransition' => 'all .25s ease-in-out',
+
+    'siteWidth' => '1120px',
+    'blogWidth' => '650px',
+    'mobile_breakpoint' => '480px',
+    'tablet_breakpoint' => '767px',
+
+
+    ///// TEXT
+
     'rootTypography' => blocksy_typography_default_values([
       'family' => 'System Default',
       'variation' => 'n4',
@@ -85,57 +147,6 @@ function _custy_core_default_values( $defaults ) {
       'tablet' => '18px',
       'desktop' => '18px',
     ],
-
-    // SHADOW
-    'shadow0' => [
-      'enable' => true,
-      'h_offset' => 0,
-      'v_offset' => 1,
-      'blur' => 2,
-      'spread' => 0,
-      'inset' => false,
-      'color' => [ 'color' => 'rgba(0, 0, 0, 0.24)' ],
-    ], // 0 1px 2px rgba(0,0,0,0.24);
-  
-    'shadow1' => [
-      'enable' => true,
-      'h_offset' => 0,
-      'v_offset' => 3,
-      'blur' => 6,
-      'spread' => 0,
-      'inset' => false,
-      'color' => [ 'color' => 'rgba(0, 0, 0, 0.23)' ],
-    ], // 0 3px 6px rgba(0, 0, 0, 0.23)
-  
-    'shadow2' => [
-      'enable' => true,
-      'h_offset' => 0,
-      'v_offset' => 6,
-      'blur' => 6,
-      'spread' => 0,
-      'inset' => false,
-      'color' => [ 'color' => 'rgba(0, 0, 0, 0.23)' ],
-    ], // 0 6px 6px rgba(0,0,0,0.23)
-  
-    'shadow3' => [
-      'enable' => true,
-      'h_offset' => 0,
-      'v_offset' => 10,
-      'blur' => 10,
-      'spread' => 0,
-      'inset' => false,
-      'color' => [ 'color' => 'rgba(0, 0, 0, 0.22)' ],
-    ], // 0 10px 10px rgba(0,0,0,0.22)
-  
-    'shadow4' => [
-      'enable' => true,
-      'h_offset' => 0,
-      'v_offset' => 15,
-      'blur' => 12,
-      'spread' => 0,
-      'inset' => false,
-      'color' => [ 'color' => 'rgba(0, 0, 0, 0.22)' ],
-    ],// 0 15px 12px rgba(0,0,0,0.22)
 
   ], $defaults );
 

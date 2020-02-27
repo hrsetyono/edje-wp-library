@@ -6,7 +6,7 @@ $section = [
   'css_selector' => ':root',
   'options' => [
     
-    custy_rand_id() => [ 'tab' => __( 'General' ), 'options' => [
+    custy_rand_id() => [ 'tab' => __( 'Color' ), 'options' => [
 
       'colorPalette' => [
         'label' => false,
@@ -62,30 +62,6 @@ $section = [
         'type' => 'ct-background',
         'css' => '--site$',
       ],
-
-      custy_rand_id() => [ 'divider' => __( 'CSS Output' ),
-        'desc' => __( 'Adjust the media query for responsive settings' ),
-      ],
-
-      'mobile_media' => [
-        'label' => __( 'Mobile Media' ),
-        'type' => 'ct-slider',
-        'units' => [
-          'px' => [ 'min' => 320, 'max' => 600 ],
-        ],
-      ],
-
-      custy_rand_id() => [ 'divider' => __( 'Title' ),
-        'desc' => 'Optional description - lorem ipsum dolor sit amet'
-      ],
-
-      'tablet_media' => [
-        'label' => __( 'Tablet Media' ),
-        'type' => 'ct-slider',
-        'units' => [
-          'px' => [ 'min' => 700, 'max' => 960 ],
-        ],
-      ],
     ] ],
 
     custy_rand_id() => [ 'tab' => __( 'Shadow' ), 'options' => [
@@ -116,6 +92,66 @@ $section = [
         'css' => '--shadow4',
       ],
 
+    ] ],
+
+    custy_rand_id() => [ 'tab' => __( 'Other' ), 'options' => [
+
+      custy_rand_id() => [ 'divider' => __( 'Sizing' ) ],
+
+      'siteWidth' => [
+        'label' => __( 'Site Width' ),
+        'desc' => __( 'Size of Grid and wide Block' ),
+        'type' => 'ct-slider',
+        'units' => [
+          'px' => [ 'min' => 960, 'max' => 1120 ],
+        ],
+      ],
+
+      'blogWidth' => [
+        'label' => __( 'Blog Width' ),
+        'desc' => __( 'Size of Blog Post and non-wide Block' ),
+        'type' => 'ct-slider',
+        'units' => [
+          'px' => [ 'min' => 480, 'max' => 720 ],
+        ],
+      ],
+
+      custy_rand_id() => [ 'divider' => __( 'Global Variables' ) ],
+
+      'globalBorderRadius' => [
+        'label' => __( 'Border Radius' ),
+        'type' => 'ct-slider',
+        'units' => [
+          'px' => [ 'min' => 0, 'max' => 8 ],
+        ],
+        'css' => '--gRadius'
+      ],
+
+      'globalTransition' => [
+        'label' => __( 'Transition' ),
+        'type' => 'text',
+        'css' => '--gTransition'
+      ],
+
+      custy_rand_id() => [ 'divider' => __( 'CSS Output' ),
+        'desc' => __( 'Adjust the media query for responsive settings' ),
+      ],
+
+      'mobile_breakpoint' => [
+        'label' => __( 'Mobile Breakpoint' ),
+        'type' => 'ct-slider',
+        'units' => [
+          'px' => [ 'min' => 320, 'max' => 540 ],
+        ],
+      ],
+
+      'tablet_breakpoint' => [
+        'label' => __( 'Tablet Breakpoint' ),
+        'type' => 'ct-slider',
+        'units' => [
+          'px' => [ 'min' => 700, 'max' => 960 ],
+        ],
+      ],
     ] ],
   ]
 ];

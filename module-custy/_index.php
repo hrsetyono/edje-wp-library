@@ -26,9 +26,9 @@ function _custy_loaded() {
   require_once BLOCKSY_DIR . '/_index.php';
   
   // DEFAULT VALUES
-  require_once __DIR__ . '/core-sections/_default-values.php';
-  require_once __DIR__ . '/header-items/_default-values.php';
-  require_once __DIR__ . '/footer-items/_default-values.php';
+  require_once __DIR__ . '/core-sections/_core-defaults.php';
+  require_once __DIR__ . '/header-items/_header-defaults.php';
+  require_once __DIR__ . '/footer-items/_footer-defaults.php';
   
   add_filter( 'custy_default_values', '_custy_core_default_values' );
   add_filter( 'custy_default_values', '_custy_header_default_values' );

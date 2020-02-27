@@ -7,8 +7,8 @@ class Custy_OutputStyles {
    * Output the styles
    */
   function echo_css( $styles ) {
-    $mobile_media = Custy::get_mod( 'mobile_media' );
-    $tablet_media = Custy::get_mod( 'tablet_media' );
+    $mobile_bp = Custy::get_mod( 'mobile_breakpoint' );
+    $tablet_bp = Custy::get_mod( 'tablet_breakpoint' );
 
     $output = '';
     $medias = [
@@ -17,11 +17,11 @@ class Custy_OutputStyles {
         'id' => 'ct-main-styles-inline-css',
       ],
       'tablet_css' => [
-        'attr' => "media='(max-width: $tablet_media)'",
+        'attr' => "media='(max-width: $tablet_bp)'",
         'id' => 'ct-main-styles-tablet-inline-css',
       ],
       'mobile_css' => [
-        'attr' => "media='(max-width: $mobile_media)'",
+        'attr' => "media='(max-width: $mobile_bp)'",
         'id' => 'ct-main-styles-mobile-inline-css',
       ],
     ];
@@ -37,6 +37,7 @@ class Custy_OutputStyles {
         $output .= " $selector { ";
 
         foreach( $css as $prop => $value ) {
+
           $output .= " $prop: $value; ";
         }
 

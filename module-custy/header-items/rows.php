@@ -7,15 +7,14 @@ $row_options = [
     'css' => '--row$',
   ],
 
-  'rowHeight' => [
-    'label' => __( 'Min Height' ),
-    'type' => 'ct-slider',
-    'responsive' => true,
-    'units' => [
-      'px' => [ 'min' => 20, 'max' => 90 ],
-      'rem' => [ 'min' => 1, 'max' => 6 ],
+  'row_padding' => [
+    'label' => __( 'Padding' ),
+    'type' => 'ct-radio',
+    'choices' => [
+      'small' => __( 'Small' ),
+      'medium' => __( 'Medium' ),
+      'large' => __( 'Large' ),
     ],
-    'css' => '--rowHeight'
   ],
 ];
 

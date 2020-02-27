@@ -53,22 +53,7 @@ $item = [
           'official' => __( 'Official' ),
         ],
       ],
-  
-      custy_rand_id() => [ 'condition' => [ 'icon_color' => 'custom' ], 'options' => [
-        'customColor' => [
-          'label' => __( 'Custom Color' ),
-          'type'  => 'ct-color-picker',
-          'pickers' => [
-            'default' => __( 'Default' ),
-          ],
-          'css' => [
-            '--iconColor' => 'default'
-          ],
-        ],
-      ] ],
-  
-      custy_rand_id() => [ 'divider' => '' ],
-  
+
       'icon_style' => [
         'label' => __( 'Icon Style' ),
         'type' => 'ct-radio',
@@ -79,6 +64,37 @@ $item = [
         ],
       ],
 
+      custy_rand_id() => [ 'condition' => [ 'icon_color' => 'custom' ], 'options' => [
+        'customColor' => [
+          'label' => __( 'Custom Color' ),
+          'type'  => 'ct-color-picker',
+          'pickers' => [
+            'icon' => __( 'Icon' ),
+            'background' => [
+              'title' => __( 'Background' ),
+              'condition' => [ 'icon_style' => '!none' ]
+            ],
+          ],
+          'css' => [
+            '--iconColor' => 'icon',
+            '--iconBackground' => 'background'
+          ],
+        ],
+      ] ],
+  
+      // custy_rand_id() => [ 'condition' => [ 'icon_color' => 'custom' ], 'options' => [
+      //   'customColor' => [
+      //     'label' => __( 'Custom Color' ),
+      //     'type'  => 'ct-color-picker',
+      //     'pickers' => [
+      //       'default' => __( 'Default' ),
+      //     ],
+      //     'css' => [
+      //       '--iconColor' => 'default'
+      //     ],
+      //   ],
+      // ] ],
+  
       custy_rand_id() => [ 'divider' => '' ],
   
       'show_text' => [

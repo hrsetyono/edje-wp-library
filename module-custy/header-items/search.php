@@ -5,24 +5,21 @@ $item = [
   'css_selector' => '[data-id="search"]',
   'options' => [
 
-    'search_type' => [
-      'label' => __( 'Search Type' ),
+    'search_style' => [
+      'label' => __( 'Search Style' ),
+      'desc' => __( 'On mobile it is always set to Expanding' ),
       'type' => 'ct-radio',
       'choices' => [
-        'inline' => __( 'Inline' ),
-        'popup' => __( 'Popup' ),
+        'full' => __( 'Full' ),
+        'expanding' => __( 'Expanding' ),
       ],
     ],
+
+    custy_rand_id() => [ 'divider' => '' ],
 
     'search_placeholder' => [
       'label' => __( 'Placeholder Text' ),
       'type' => 'text',
-    ],
-
-    'searchPadding' => [
-      'label' => __( 'padding' ),
-      'type' => 'ct-spacing',
-      'css' => '--searchPadding'
     ],
 
     'searchBackground' => [
@@ -33,9 +30,44 @@ $item = [
         'focus' => __( 'Focus' ),
       ],
       'css' => [
-        '--background' => 'default',
-        '--backgroundFocus' => 'focus',
+        '--searchBg' => 'default',
+        '--searchBgFocus' => 'focus',
       ],
     ],
+
+    custy_rand_id() => [ 'divider' => 'Submit Button' ],
+
+    'submit_button_text' => [
+      'label' => __( 'Button Text' ),
+      'desc' => __( 'Can be a simple text or SVG Icon' ),
+      'type' => 'textarea',
+    ],
+
+    'submitButtonColor' => [
+      'label' => __( 'Button Text Color' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+        'hover' => __( 'Hover' ),
+      ],
+      'css' => [
+        '--submitColor' => 'default',
+        '--submitColorHover' => 'hover',
+      ],
+    ],
+
+    'submitButtonBackground' => [
+      'label' => __( 'Button Background' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+        'hover' => __( 'Hover' ),
+      ],
+      'css' => [
+        '--submitBg' => 'default',
+        '--submitBgHover' => 'hover'
+      ],
+    ],
+
   ]
 ];
