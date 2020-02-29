@@ -34,32 +34,13 @@ function _custy_render_admin_stylesheet() {
   $only_show_in = ['customize', 'post', 'page'];
 
   if( !in_array( $current_screen, $only_show_in ) ) { return; }
+
+  $sections = Custy::get_sections( 'palette' );
+  $compiler = new Custy_CompileStyles();
+  $compiler->compile_from_sections( $sections );
+  $styles = $compiler->get_styles();
+
   
-  $color_palette = Custy::get_mod( 'colorPalette' );
-  $text_color = Custy::get_mod( 'textColor' );
-  $extra_color = Custy::get_mod( 'extraColor' );
-
-  $palette_css = [
-    '--main'      => $color_palette['color1']['color'],
-    '--mainDark'  => $color_palette['color2']['color'],
-    '--mainLight' => $color_palette['color3']['color'],
-    '--sub'       => $color_palette['color4']['color'],
-    '--subLight'  => $color_palette['color5']['color'],
-    '--text'       => $text_color['default']['color'],
-    '--textDim'    => $text_color['dim']['color'],
-    '--textInvert' => $text_color['invert']['color'],
-  ];
-
-  foreach( $extra_color as $id => $value ) {
-    if( $value['color'] !== 'CT_CSS_SKIP_RULE' ) {
-      $palette_css[ "--{$id}" ] = $value['color'];
-    }
-  }
-
-  $styles = [
-    ':root' => $palette_css
-  ];
-
   _custy_format_then_echo_css( $styles );
 }
 

@@ -45,6 +45,16 @@ function _custy_header_default_values( $defaults ) {
     ],
   ];
 
+  $free_text_values = [
+    'content' => 'Sample Text',
+    'textColor' => [
+      'default' => [ 'color' => 'var(--text)' ],
+      'link' => [ 'color' => 'var(--main)' ],
+    ],
+    'textSize' => 'var(--smallFontSize)',
+    'textMaxWidth' => '100%',
+  ];
+
 
   $defaults = wp_parse_args( [ 'header' => [
     // ROWS
@@ -70,16 +80,30 @@ function _custy_header_default_values( $defaults ) {
     'logo' => [
       'logo_type' => 'text',
       'site_title' => get_option('blogname'),
-      'site_description' => get_option('blogdescription'),
+      'titleColor' => [
+        'default' => [ 'color' => 'var(--text)' ],
+        'hover' => [ 'color' => 'var(--main)' ],
+      ],
+      'titleSize' => 'var(--mediumFontSize)',
       'custom_logo' => '',
       'has_mobile_logo' => 'no',
       'mobile_header_logo' => '',
+
       'has_tagline' => 'no',
+      'site_tagline' => get_option('blogdescription'),
+      'taglineColor' => [
+        'default' => [ 'color' => 'var(--textDim)' ]
+      ],
+      'taglineSize' => 'var(--smallFontSize)',
     ],
 
     // BUTTON
     'button' => $button_values,
     'button2' => $button_values,
+
+    // FREE TEXT
+    'free-text' => $free_text_values,
+    'free-text2' => $free_text_values,
 
     // SEARCH
     'search' => [

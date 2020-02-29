@@ -78,7 +78,7 @@ function _custy_enqueue_customizer_preview() {
  * @action customize_controls_enqueue_scripts
  */
 function _custy_enqueue_customizer_control() {
-  wp_enqueue_style( 'h-blocksy', plugin_dir_url(__FILE__) . 'css/h-blocksy.css', [], H_VERSION );
+  wp_enqueue_style( 'h-custy', plugin_dir_url(__FILE__) . 'css/h-custy.css', [], H_VERSION );
 
   wp_enqueue_style( 'ct-customizer-controls-styles',
     BLOCKSY_CSS_DIR . '/customizer-controls.css', [], H_VERSION

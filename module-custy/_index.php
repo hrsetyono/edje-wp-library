@@ -156,11 +156,18 @@ class Custy {
   /**
    * Get the list of sections for theme mods
    */
-  static function get_sections() {
+  static function get_sections( $filter = null ) {
     global $custy_sections;
 
     if( empty( $custy_sections ) ) {
       $custy_sections = apply_filters( 'custy_sections', [] );
+    }
+
+    if( $filter == 'palette' ) {
+      $palette_sections = [
+        'general' => $custy_sections['general']
+      ];
+      return $palette_sections;
     }
 
     return $custy_sections;

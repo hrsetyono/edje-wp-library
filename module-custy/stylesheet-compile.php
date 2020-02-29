@@ -87,13 +87,13 @@ class Custy_CompileStyles {
         $this->compile_from_inner_options( $args, $selector );
         continue;
       }
+      // skip if doesn't have css args
+      elseif( !isset( $args['css'] ) ) {
+        continue;
+      }
 
-      if( !isset( $args['css'] ) ) { continue; }
-
-      // initiate empty selector
-      $this->styles[ $selector ] = $this->styles[ $selector ] ?? [];
-
-      // get value
+      $this->styles[ $selector ] = $this->styles[ $selector ] ?? []; // initiate empty selector
+      
       $value = $this->current_values[ $option_id ] ?? null;
 
       // if single value
@@ -102,11 +102,9 @@ class Custy_CompileStyles {
       }
       // if Color picker which is multi value
       elseif( is_array( $args['css'] ) ) {
-
-        foreach( $args['css'] as $prop => $index ) {
-          $this->styles[ $selector ][ $prop ] = $this->compile_from_color_picker( $index, $value, $option_id );
-        }
+        $this->compile_from_color_picker( $selector, $args['css'], $value, $option_id );
       }
+
     }
   }
 
@@ -137,34 +135,23 @@ class Custy_CompileStyles {
    * Get a value from associative array using dot notation.
    * Example: if the key is "hover", it will return $value['hover']['color']
    * 
-   * @param $index (string) - Index key to get the value
-   * @param $value (mixed) - Array value
+   * @param $selector (string)
+   * @param $css_arg (array)
+   * @param $values (mixed) - Array values
    * @param $option_id (sting) - For error message
    * 
    * @return mixed
    */
-  private function compile_from_color_picker( $index, $value, $option_id ) {
-
-    if( !isset( $value ) ) {
+  private function compile_from_color_picker( $selector, $css_arg, $values, $option_id ) {
+    if( !isset( $values ) ) {
       trigger_error( 'Value for option: ' . $option_id . ' is null. Cause: (1) Default value is not set (2) Header/Footer item got renamed - ', E_USER_ERROR );
       return;
     }
 
-    foreach( $value as $color_id => &$color_value ) {
-      switch( $color_id ) {
-        case 'desktop':
-        case 'tablet':
-        case 'mobile':
-          $color_value = $color_value[ $index ]['color'];
-          break;
-
-        default:
-          if( $color_id == $index ) {
-            return $color_value['color'];
-          }
+    foreach( $css_arg as $prop => $index ) {
+      if( isset( $values[$index] ) && $values[$index]['color'] != 'CT_CSS_SKIP_RULE' ) {
+        $this->styles[ $selector ][ $prop ] = $values[ $index ]['color'];
       }
     }
-
-    return $value;
   }
 }

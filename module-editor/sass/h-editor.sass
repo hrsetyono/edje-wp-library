@@ -1,8 +1,8 @@
-$include-grid: true
-$include-tile: true
-$output-framework: true
+// $include-grid: true
+// $include-tile: true
+// $output-framework: true
 
-@import "../../_edje/_index"
+// @import "../../_edje/_index"
 
 $acf-bg: #f3f3f4
 
@@ -30,7 +30,11 @@ $acf-bg: #f3f3f4
 [data-is-placeholder-visible="true"]
   + .wp-block-paragraph::before
     content: ""
-    +h( absolute top-0_5 right-0_5 left-0_5 bottom-0_5 )
+    position: absolute
+    top: -0.5rem
+    right: -0.5rem
+    left: -0.5rem
+    bottom: -0.5rem
     border: 1px dashed rgba(black, .3)
 
 .wp-block-paragraph.has-drop-cap:first-letter
@@ -48,13 +52,14 @@ $acf-bg: #f3f3f4
 ///// BLOCK QUOTE
 
 .wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
-  +h( pt1 )
+  padding-top: 1rem
   border-top: 4px solid #000
 
 .wp-block-quote.is-style-large
-  +h( pb1 ta-center )
+  padding-bottom: 1rem
   border-top: 4px solid gray
   border-bottom: 4px solid gray
+  text-align: center
 
   p
     font-style: normal
@@ -70,7 +75,8 @@ $acf-bg: #f3f3f4
     max-width: 305px
 
   [data-block]
-    +h( mv0 )
+    margin-top: 0
+    margin-bottom: 0
 
 
 [data-type="core/heading"]
@@ -78,7 +84,7 @@ $acf-bg: #f3f3f4
 
 [data-type="core/file"]
   .wp-block-file__content-wrapper
-    +h( ta-center )
+    text-align: center
 
 
 ///// GALLERY
@@ -86,21 +92,24 @@ $acf-bg: #f3f3f4
 // if not cropped, put caption below image
 .wp-block-gallery:not(.is-cropped)
   figure
-    +h( fd-column )
+    flex-direction: column
   
   .blocks-gallery-item .editor-rich-text
-    +h( relative ovy-visible mt-auto )
+    position: relative
+    overflow-y: visible
+    margin-top: auto
   
   .block-editor-rich-text__inline-toolbar
     transform: translateY(-100%)
 
   .block-editor-rich-text figcaption
-    +h( pv0_5 c-text )
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
     background-image: none
+    color: var(--text)
 
   figcaption a
-    +h( c-inherit )
-    
+    color: inherit
 
 // Slider style
 .wp-block-gallery.is-style-h-slider
@@ -110,21 +119,22 @@ $acf-bg: #f3f3f4
 
   .blocks-gallery-item:nth-child(1),
   .blocks-gallery-item:nth-child(2)
-    +h( relative )
+    position: relative
 
     &::before
-      +h( absolute top50p )
+      position: absolute
+      top: 50%
       font-size: 3rem
       font-family: "dashicons"
       transform: translateY( -50% )
 
   .blocks-gallery-item:nth-child(1)::before
     content: "\f341"
-    +h( right100p )
+    right: 100%
 
   .blocks-gallery-item:nth-child(2)::before
     content: "\f345"
-    +h( left100p )
+    left: 100%
 
 
 ///// COVER
@@ -133,16 +143,17 @@ $acf-bg: #f3f3f4
 
 .wp-block-cover
   h1, h2
-    +h( ph0 ta-left )
-    
+    padding-right: 0
+    padding-left: 0
+    text-align: left
   
 
 ///// GROUP
 
 .wp-block-group
   &:not(.has-background)
-    border-top: 1px dashed var(--gray)
-    border-bottom: 1px dashed var(--gray)
+    border-top: 1px dashed var(--textDim)
+    border-bottom: 1px dashed var(--textDim)
 
   &.has-background
     padding: 33px 0
@@ -151,7 +162,7 @@ $acf-bg: #f3f3f4
 ///// MEDIA TEXT
 
 .wp-block-media-text
-  +h( ai-start )
+  align-items: flex-start
   grid-template-columns: 50% auto !important
 
   &.is-style-h-smaller-image,
@@ -164,63 +175,56 @@ $acf-bg: #f3f3f4
 
   // hide resizer
   .block-library-media-text__media-container + span
-    +h( d-none )
+    display: none
 
 
 ///// FILE
 
 .wp-block-file
-  +h( bg-gray-light p1 )
-
+  background-color: rgba(black, .05)
+  padding: 1rem
 
 ///// TABLE
 
 .wp-block-table
-  --tableBorder: var(--black)
-  --tableHeader: var(--gray-light)
+  --tableBorder: black
+  --tableHeader: #{ rgba(black, .1) }
   --tableBg: white
-  --tableStripe: #{ h-rgba(--gray, .2) }
+  --tableStripe: #{ rgba(black, .05) }
 
   thead tr,
   tfoot tr
-    +h( fw700 ta-left )
     background-color: var(--tableHeader)
+    font-weight: 700
+    text-align: left
     
   thead tr
     border-bottom: 3px solid var(--tableBorder)
   tfoot tr
     border-top: 3px solid var(--tableBorder)
-
   tr
     background-color: var(--tableBg)
-
   th,
   td
-    border: 1px solid var(--gray)
+    border: 1px solid var(--tableBorder)
 
   [class*="-background-color"]
     --tableStripe: white
 
-  // default color palette
-  .has-subtle-light-gray-background-color
-    --tableBorder: var(--gray)
-    --tableHeader: var(--gray-light)
-    --tableBg: rgba(var(--white), .5)
-
   .has-subtle-pale-green-background-color
     --tableBorder: var(--green)
-    --tableHeader: var(--green-light)
-    --tableBg: rgba(var(--green-lightRGB), .1)
+    --tableHeader: rgba(var(--greenRGB), .2)
+    --tableBg: rgba(var(--greenRGB), .1)
 
   .has-subtle-pale-blue-background-color
     --tableBorder: var(--blue)
-    --tableHeader: var(--blue-light)
-    --tableBg: rgba(var(--blue-lightRGB), .1)
+    --tableHeader: rgba(var(--blueRGB), .2)
+    --tableBg: rgba(var(--blueRGB), .1)
 
   .has-subtle-pale-pink-background-color
     --tableBorder: var(--red)
-    --tableHeader: var(--red-light)
-    --tableBg: rgba(var(--red-lightRGB), .1)
+    --tableHeader: rgba(var(--redRGB), .2)
+    --tableBg: rgba(var(--redRGB), .1)
 
 
 // Table stripes
@@ -229,7 +233,7 @@ $acf-bg: #f3f3f4
 
   th,
   td
-    border: 1px solid var(--gray)
+    border: 1px solid var(--tableBorder)
 
   // The default stripe is on Odd row, remove it
   tbody tr:nth-child(odd),
@@ -243,43 +247,56 @@ $acf-bg: #f3f3f4
 // Table color setting in Sidebar
 button.components-color-palette__item
   &[aria-label*="pale blue"]
-    color: var(--blue-light) !important
+    color: var(--blue) !important
   &[aria-label*="pale pink"]
-    color: var(--red-light) !important
+    color: var(--red) !important
   &[aria-label*="pale green"]
-    color: var(--green-light) !important
+    color: var(--green) !important
 
 span.component-color-indicator
   &[aria-label*="pale blue"]
-    background: var(--blue-light) !important
+    background: var(--blue) !important
   &[aria-label*="pale green"]
-    background: var(--green-light) !important
+    background: var(--green) !important
   &[aria-label*="pale pink"]
-    background: var(--red-light) !important
+    background: var(--red) !important
 
 
 
 ///// BUTTON
 
 .wp-block-button-wrapper
-  +h( w100p )
+  width: 100%
 
 
 [data-align="center"] .wp-block-button__inline-link
-  +h( mh-auto )
+  margin-right: auto
+  margin-left: auto
   
 .wp-block-button__link
-  +h( bg-main )
+  background-color: var(--main)
 
   .is-style-outline &
     background-color: transparent !important
-    +h( bc-inherit c-main  )
-  
+    border-color: auto
+    color: var(--main)
+
+  .is-style-transparent &
+    background-color: transparent !important
+    border: none
+    color: var(--main)
+    text-transform: uppercase
+    letter-spacing: 0.05em
+
+    &:focus
+      box-shadow: none
+ 
 ///// SEPARATOR
 
 [data-type="core/separator"]
   [data-block]
-    +h( pv0_5 )
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
 
 
 ///// SOCIAL LINKS
@@ -287,14 +304,15 @@ span.component-color-indicator
 [data-type="core/social-links"]
 
   .editor-block-list__layout
-    +h( fw-wrap )
+    flex-wrap: wrap
 
 
 .wp-social-link
-  +h( mb0_5 brad )
+  margin-bottom: 0.5rem
+  border-radius: var(--gRadius)
 
   .is-style-pill-shape &
-    +h( brad-pill )
+    border-radius: 20px
 
 
 ///// ACF GUTENBERG
@@ -309,18 +327,24 @@ span.component-color-indicator
     font-size: 13px
 
 %acf-wide-field
-  +h( mh-3 )
+  margin-right: -3rem
+  margin-left: -3rem
 
 // ACF Block - styled to be similar to Embed block
 div.acf-block-body .acf-fields
-  +h( d-grid jc-center pv1_5 ph4_5 minh200px )
+  display: grid
+  justify-content: center
+  padding: 1.5rem 4.5rem
+  min-height: 200px
   grid-template-columns: repeat(10, 1fr)
   grid-column-gap: 1rem
   grid-row-gap: 1rem
   border: none
 
   .acf-block-panel &
-    +h( minh-auto pv2 )
+    min-height: auto
+    padding-top: 2rem
+    padding-bottom: 2rem
 
   > *
     width: 100% !important
@@ -332,14 +356,14 @@ div.acf-block-body .acf-fields
       grid-column: span #{$w}
 
   &::after
-    +h( d-none )
+    display: none
 
   select
-    +h( tt-capitalize )
+    text-transform: capitalize
 
   // single field
   div.acf-field
-    +h( p0 )
+    padding: 0
 
 // Background color (also change the Embed block color)
 div.acf-block-body .acf-fields,
@@ -349,42 +373,45 @@ div.components-placeholder
 
 // MESSAGE Field
 div.acf-block-body div.acf-field.acf-field-message
-  +h( as-end pv0_5 ph1 )
+  align-self: flex-end
+  padding: 0.5rem 1rem
   background-color: rgba(white, .5)
 
   .acf-label
-    +h( m0 ta-center )
+    margin: 0
+    text-align: center
     font-size: 14px
 
   label
-    +h( cursor-default )
+    cursor: default
 
   p
-    +h( m0 ta-center )
+    margin: 0
+    text-align: center
 
 
 // ACF RADIO field
 div.acf-block-body .acf-field-radio
   .acf-label
-    +h( mr1 )
+    margin-right: 1rem
 
   .acf-radio-list
-    +h( mb0 )
+    margin-bottom: 0
 
 // ACF GALLERY field
 div.acf-block-body
   .acf-gallery-toolbar ul
-    +h( mb0 )
+    margin-bottom: 0
 
   .acf-gallery-main
     right: 0 !important
 
   .acf-gallery-side
-    +h( absolute )
+    position: absolute
     z-index: 10
   
   .acf-gallery-side-info
-    +h( w-auto )
+    width: auto
     margin: -10px -10px 1em
 
 
@@ -401,7 +428,7 @@ div.acf-block-component .acf-field-wysiwyg
   [aria-label*="Fullscreen"],
   [aria-label*="Read More"],
   [aria-label*="Toolbar Toggle"]
-    +h( d-none )
+    display: none
 
 div.acf-block-component .acf-field-wysiwyg .mce-edit-area iframe
   height: 200px
@@ -416,10 +443,13 @@ div.acf-block-body .acf-relationship
 // ACF TAB field
 
 div.acf-block-body .acf-fields > .acf-tab-wrap
-  +h( bg-transparent )
+  background-color: transparent
 
   .acf-tab-group
-    +h( mh-4_5 ph4_5 )
+    margin-right: -4.5rem
+    margin-left: -4.5rem
+    padding-right: 4.5rem
+    padding-left: 4.5rem
     border-top: none
     
     li.active a
@@ -449,15 +479,12 @@ div.acf-block-body .acf-repeater.-block
 div.acf-block-body .acf-repeater.-row
   .acf-fields
     grid-row-gap: 0
-  
   .acf-field
-    +h( p0_5 )
-
+    padding: 0.5rem
   .acf-label
-    +h( p0 )
-
+    padding: 0
   .acf-input
-    +h( p0 ph0_25 )
+    padding: 0 0.25rem
 
 
 // ACF FLEXIBLE CONTENT field
@@ -466,23 +493,23 @@ div.acf-block-body .acf-flexible-content
   @extend %acf-wide-field
 
   .acf-fields
-    +h( bg-white_10 )
+    background-color: rgba(white, .1)
 
 // fields at sidebar
 div.edit-post-sidebar .acf-block-fields
-  +h( pv1 )
+  padding-top: 1rem
+  padding-bottom: 1rem
 
   div.acf-field
-    +h( mb1 )
+    margin-bottom: 1rem
     padding: 0 1rem
     width: 100% !important
 
     &.acf-field-message
-      +h( d-none )
+      display: none
 
 
 //
-
 .acf-block-post-list
   a
-    +h( events-none )
+    pointer-events: none

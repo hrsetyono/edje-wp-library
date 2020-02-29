@@ -1,17 +1,13 @@
 <?php
 
-add_action( 'plugins_loaded' , '_h_load_gutenberg' );
+add_action( 'plugins_loaded' , function() {
+  require_once __DIR__ . '/block-styles.php';
 
-if( is_admin() ) { 
-  add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 20 );
-  add_action( 'admin_init', '_h_enqueue_classic_editor' );
-}
-
-/**
- * @action plugins_loaded
- */
-function _h_load_gutenberg() {
-}
+  if( is_admin() ) { 
+    add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 20 );
+    add_action( 'admin_init', '_h_enqueue_classic_editor' );
+  }
+} );
 
 /**
  * @action wp_enqueue_scripts
@@ -72,74 +68,60 @@ function h_register_post_block( string $post_type, array $args = [] ) {
 }
 
 
+
 /**
  * Format array for Gutenberg's palette theme_suport. Also output CSS classes at HEAD.
  * 
- * @deprecated 3.4.0 - Use H::color_palette that returns new format instead
  * @return array - Formatted colors array suitable for theme_support.
  */
-function h_register_colors( array $colors ) : array {
-  // output the style in head
-  add_action( 'wp_head', function() use ( $colors ) {
-    $styles = '<style>';
-    foreach( $colors as $c ) {
-      $styles .= ".has-$c-background-color { --bgColor: var(--$c); }";
-      $styles .= ".has-$c-color { --textColor: var(--$c); }";
-    }
-    $styles .= '</style>';
+function h_color_palette( array $raw_colors ) {
+  // parse raw colors
+  $colors = [];
+  foreach( $raw_colors as $name => $value ) {
+    $slug = _H::to_slug( $name, '-' );
     
-    echo $styles;
-  } );
-
-  // format the array
-  $parsed_colors = [];
-  foreach( $colors as $label => $slug ) {
-    $parsed_colors[] = [
-      'name' => $label,
-      'slug' => $slug,
-      'color' => "var(--$slug)"
+    // if color name is 'text' (which will clash with gutenberg class)
+    if( $slug == 'text' ) {
+      $slug = 'text-base';
+    }
+    
+    $colors[ $name ] = [
+      'color' => $value,
+      'slug' => $slug
     ];
   }
 
-  return $parsed_colors;
-}
+  // format styles
+  $styles = '';
+  foreach( $colors as $name => $value ) {
+    $slug = $value['slug'];
+    $color = $value['color'];
 
-
-/**
- * Format array for Gutenberg's palette theme_suport. Also output CSS classes at HEAD.
- * 
- * @return array - Formatted colors array suitable for theme_support.
- */
-function h_color_palette( array $colors ) {
-  // output the style in head
-  add_action( 'wp_head', function() use ( $colors ) {
-    $styles = '<style>';
-    foreach( $colors as $name => $value ) {
-      $slug = _H::to_slug( $name, '-' );
-      
-      // if value is a CSS var
-      if( strpos( $value, 'var' ) > -1 ) {
-        $styles .= ".has-$slug-background-color { --bgColor: $value; }";
-        $styles .= ".has-$slug-color { --textColor: $value; }";
-      }
-      else { // else, it's a normal CSS
-        $styles .= ".has-$slug-background-color { background-color: $value; }";
-        $styles .= ".has-$slug-color { color: $value; }";
-      }
+    // if value is a CSS var
+    if( strpos( $color, 'var' ) > -1 ) {
+      $styles .= ".has-{$slug}-background-color { --bgColor: {$color}; --bgColorRGB: {$color}RGB }";
+      $styles .= ".has-{$slug}-color { --textColor: {$color}; --textColorRGB: {$color}RGB }";
     }
-    $styles .= '</style>';
-    
-    echo $styles;
+    // else, it's a normal CSS
+    else {
+      $styles .= ".has-{$slug}-background-color { background-color: {$color}; }";
+      $styles .= ".has-{$slug}-color { color: {$color}; }";
+    }
+  }
+
+  // output the style in head
+  add_action( 'wp_head', function() use ( $styles ) {
+    echo "<style> $styles </style>";
   } );
 
   // format the array
   $parsed_colors = [];
   foreach( $colors as $name => $value ) {
-    $slug = _H::to_slug( $name, '-' );
+
     $parsed_colors[] = [
       'name' => $name,
-      'slug' => $slug,
-      'color' => $value
+      'slug' => $value['slug'],
+      'color' => $value['color']
     ];
   }
 

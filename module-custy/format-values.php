@@ -33,11 +33,36 @@ class Custy_Values {
 
         $this->array_splice_assoc( $vars, $prop, 1, $value );
       }
-
       // BACKGROUND
       elseif( isset( $value['background'] ) ) {
         $value = $this->_prefix_styles( $value, $prop );
         $this->array_splice_assoc( $vars, $prop, 1, $value );
+      }
+      // IF PALETTE
+      elseif( in_array( $prop, [
+        '--main', '--mainDark', '--mainLight', '--sub', '--subLight',
+        '--text', '--textDim', '--textInvert',
+        '--extra1', '--extra2', '--extra3', '--extra4'
+      ] ) ) {
+
+        $value_rgb = '';
+
+        // if value is Hex color, convert to RGB
+        if( $value[0] == '#' ) {
+          list($r, $g, $b) = array_map( function( $c ) {
+            return hexdec( str_pad( $c, 2, $c ) );
+          }, str_split( ltrim( $value, '#' ), strlen( $value ) > 4 ? 2 : 1) );
+
+          $value_rgb = "$r, $g, $b";
+        }
+
+        // if value is RGB color, get only the number
+        if( substr( $value, 0, 3) == 'rgb' ) {
+          preg_match( '/\d+,\s?\d+,\s?\d+/', $value, $matches );
+          $value_rgb = $matches[0];
+        }
+
+        $vars[ $prop . 'RGB' ] = $value_rgb;
       }
 
       // SLIDER or SPACING

@@ -1,13 +1,12 @@
-<?php namespace h;
+<?php
+
+
 /**
  * Add extra functionality to Twig module
  */
-class Twig_Helper {
+class H_TimberFilters {
   function __construct() {
     add_filter('get_twig', [$this, 'add_to_twig'] );
-
-    // enable password-protected post
-    add_filter( 'timber/post/content/show_password_form_for_protected', '__return_true' );
   }
 
 
@@ -20,7 +19,6 @@ class Twig_Helper {
     $twig->addFilter( new \Twig_SimpleFilter( 'markdown', [$this, '_filter_markdown'] ) );
 
     $twig->addFilter( new \Twig_SimpleFilter( 'h_markdown', [$this, '_filter_markdown'] ) );
-    $twig->addFilter( new \Twig_SimpleFilter( 'h_get_menu_items', [$this, '_filter_get_menu_items'] ) );
 
     // only if set to Debug mode
     if( defined('WP_DEBUG') && WP_DEBUG === true ) {
@@ -44,13 +42,6 @@ class Twig_Helper {
     return do_shortcode( $text_compiled );
   }
 
-  /**
-   * Get Timber Menu object
-   *   {{ menu_id | h_get_menu_items }}
-   */
-  function _filter_get_menu_items( $menu_id ) {
-    return new \Timber\Menu( $menu_id );
-  }
 
   /**
    * Echo the data

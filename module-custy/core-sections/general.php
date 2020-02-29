@@ -6,7 +6,8 @@ $section = [
   'css_selector' => ':root',
   'options' => [
     
-    custy_rand_id() => [ 'tab' => __( 'Color' ), 'options' => [
+    // Do not change this tab ID, it will be used to filter Palette options
+    'general_color_tab' => [ 'tab' => __( 'Color' ), 'options' => [
 
       'colorPalette' => [
         'label' => false,
@@ -96,14 +97,12 @@ $section = [
 
     custy_rand_id() => [ 'tab' => __( 'Other' ), 'options' => [
 
-      custy_rand_id() => [ 'divider' => __( 'Sizing' ) ],
-
       'siteWidth' => [
         'label' => __( 'Site Width' ),
         'desc' => __( 'Size of Grid and wide Block' ),
         'type' => 'ct-slider',
         'units' => [
-          'px' => [ 'min' => 960, 'max' => 1120 ],
+          'px' => [ 'min' => 960, 'max' => 1200 ],
         ],
       ],
 
@@ -122,7 +121,7 @@ $section = [
         'label' => __( 'Border Radius' ),
         'type' => 'ct-slider',
         'units' => [
-          'px' => [ 'min' => 0, 'max' => 8 ],
+          'px' => [ 'min' => 0, 'max' => 16 ],
         ],
         'css' => '--gRadius'
       ],
@@ -130,7 +129,8 @@ $section = [
       'globalTransition' => [
         'label' => __( 'Transition' ),
         'type' => 'text',
-        'css' => '--gTransition'
+        'css' => '--gTransition',
+        'design' => 'inline',
       ],
 
       custy_rand_id() => [ 'divider' => __( 'CSS Output' ),

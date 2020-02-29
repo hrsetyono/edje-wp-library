@@ -1,11 +1,14 @@
 <?php
-/*
-Plugin Name: Edje WP Library
-Description: Simplify WordPress complicated functions. Designed to work with Timber.
-Plugin URI: http://github.com/hrsetyono/edje-wp-library
-Author: Pixel Studio
-Author URI: https://pixelstudio.id
-Version: 4.0.0-beta
+/**
+ * Plugin Name   : Edje WP Library
+ * Description   : Simplify WordPress complicated functions. Designed to work with Timber.
+ * Plugin URI    : http://github.com/hrsetyono/edje-wp-library
+ * Requires at least : 5.3
+ * Requires PHP      : 7.0
+ * License    : MIT
+ * Author     : Pixel Studio
+ * Author URI : https://pixelstudio.id
+ * Version    : 4.0.0-beta 
 */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
@@ -29,6 +32,7 @@ require_once "module-post-type/_index.php";
 require_once "module-admin-sidenav/_index.php";
 require_once "module-customizer/_index.php";
 require_once "module-api/_index.php";
+require_once "module-timber/_index.php";
 
 require_once "module-editor/_index.php";
 require_once "module-editor-faq/_index.php";
