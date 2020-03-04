@@ -11,6 +11,7 @@ $button_options = [
       'label' => __( 'Link' ),
       'type' => 'text',
       'disableRevertButton' => true,
+      'attr' => [ 'placeholder' => 'https://yoursite.com' ],
       'design' => 'block'
     ],
     'target' => [
@@ -94,14 +95,6 @@ $button_options = [
         '--buttonBgHover' => 'hover',
       ],
     ],
-
-    custy_rand_id() => [ 'condition' => [ 'button_style' => 'outline' ], 'options' => [
-      'buttonBorder' => [
-        'label' => __( 'Border' ),
-        'type' => 'ct-border',
-        'css' => '--buttonBorder'
-      ],
-    ] ],
 
     'buttonTextColor' => [
       'label' => __( 'Text Color' ),

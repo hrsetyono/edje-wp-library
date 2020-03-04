@@ -15,8 +15,8 @@ class Custy_BuilderValues {
     $this->type = 'header';
 
     $data = [
-      'desktop' => $this->remove_empty_row( $section['desktop'] ),
-      'mobile' => $this->remove_empty_row( $section['mobile'] ),
+      'desktop' => $this->remove_empty_rows( $section['desktop'] ),
+      'mobile' => $this->remove_empty_rows( $section['mobile'] ),
       'items' => $this->format_items_arg( $section, $need_format ),
     ];
 
@@ -31,7 +31,7 @@ class Custy_BuilderValues {
     $this->type = 'footer';
 
     $data = [
-      'rows' => $this->remove_empty_row( $section['rows'] ),
+      'rows' => $this->remove_empty_rows( $section['rows'] ),
       'items' =>  $this->format_items_arg( $section, $need_format ),
     ];
 
@@ -74,15 +74,15 @@ class Custy_BuilderValues {
     switch( $type ) {
       case 'header':
         $data = [
-          'desktop' => $this->remove_empty_row( $section['desktop'] ),
-          'mobile' => $this->remove_empty_row( $section['mobile'] ),
+          'desktop' => $this->remove_empty_rows( $section['desktop'] ),
+          'mobile' => $this->remove_empty_rows( $section['mobile'] ),
           'items' => $this->format_items_arg( $section, $need_format ),
         ];
         break;
 
       case 'footer':
         $data = [
-          'rows' => $this->remove_empty_row( $section['rows'] ),
+          'rows' => $this->remove_empty_rows( $section['rows'] ),
           'items' =>  $this->format_items_arg( $section, $need_format ),
         ];
         break;
@@ -191,40 +191,40 @@ class Custy_BuilderValues {
   /**
    * Remove the row that has no item
    */
-  private function remove_empty_row( $rows ) {
+  private function remove_empty_rows( $rows ) {
     foreach( $rows as &$row ) {
       $is_empty = true;
-      
-      // TODO: footer arg is shorter
       $columns = $this->type === 'header' ? $row['placements'] : $row['columns'];
+      $columns = $this->remove_empty_columns( $columns, $this->type );
 
-      // check whether the whole row is empty
-      if( $this->type === 'header' ) {
-        foreach( $row['placements'] as $column ) {
-          if( count( $column['items'] ) > 0 ) {
-            $is_empty = false;
-            break;
-          }
-        }
-
-        if( $is_empty ) {
-          $row['placements'] = [];
-        }
-      }
-      elseif( $this->type === 'footer' ) {
-        foreach( $row['columns'] as $column ) {
-          if( count( $column ) > 0 ) {
-            $is_empty = false;
-            break;
-          }
-        }
-
-        if( $is_empty ) {
-          $row['columns'] = [];
-        }
+      switch( $this->type ) {
+        case 'header':
+          $row['placements'] = $columns;
+          break;
+        case 'footer':
+          $row['columns'] = $columns;
+          break;
       }
     }
 
     return $rows;
   }
+
+  /**
+   * Remove columns that are empty
+   */
+  private function remove_empty_columns( $columns, $type = 'header' ) {
+    for( $i = 0, $len = count( $columns ); $i < $len; $i++ ) {
+
+      $items = $type == 'header' ? $columns[ $i ]['items'] : $columns[ $i ];
+
+      // if item is not found, remove the column
+      if( empty( $items ) ) {
+        unset( $columns[ $i ] );
+      }
+    }
+
+    return $columns;
+  }
+
 }

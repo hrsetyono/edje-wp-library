@@ -11,6 +11,7 @@ $row_options = [
     'label' => __( 'Padding' ),
     'type' => 'ct-radio',
     'choices' => [
+      'none' => __( 'None' ),
       'small' => __( 'Small' ),
       'medium' => __( 'Medium' ),
       'large' => __( 'Large' ),

@@ -116,29 +116,6 @@ class H_Hook {
         ]
       ],
 
-      // SOCIAL
-      [
-        'name' => 'Social Nav',
-        'location' => 'social-nav',
-        'items' => [
-          [
-            'menu-item-title' => 'facebook',
-            'menu-item-url' => 'https://www.facebook.com/username',
-            'menu-item-status' => 'publish'
-          ],
-          [
-            'menu-item-title' => 'twitter',
-            'menu-item-url' => 'https://twitter.com/username',
-            'menu-item-status' => 'publish'
-          ],
-          [
-            'menu-item-title' => 'instagram',
-            'menu-item-url' => 'https://www.instagram.com/username/',
-            'menu-item-status' => 'publish'
-          ]
-        ]
-      ],
-
       // BLOG
       [
         'name' => 'Blog Nav',

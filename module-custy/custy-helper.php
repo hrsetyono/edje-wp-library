@@ -73,62 +73,87 @@ function custy_get_social_list( $id = null ) {
     'facebook' => [
       'label' => __( 'Facebook' ),
       'color' => '#1977f2',
-      'default_value' => 'https://www.facebook.com/your-page',
+      'placeholder' => 'https://www.facebook.com/your-page',
       'svg' => custy_get_svg( 'facebook' ),
 		],
 		'twitter' => [
       'label' => __( 'Twitter' ),
       'color' => '#21a1f3',
-      'default_value' => 'https://twitter.com/your-username',
+      'placeholder' => 'https://twitter.com/your-username',
       'svg' => custy_get_svg( 'twitter' ),
 		],
 		'instagram' => [
       'label' => __( 'Instagram' ),
       'color' => '#f00075',
-      'default_value' => 'https://instagram.com/your-username',
+      'placeholder' => 'https://instagram.com/your-username',
       'svg' => custy_get_svg( 'instagram' ),
     ],
     'whatsapp' => [
       'label' => __( 'WhatsApp' ),
       'color' => '#25d366',
-      'default_value' => 'https://wa.me/6281234567890',
+      'placeholder' => 'https://wa.me/6281234567890',
       'svg' => custy_get_svg( 'whatsapp' ),
     ],
+
+    custy_rand_id() => [ 'divider' => '' ],
+
+    'phone' => [
+      'label' => __( 'Phone' ),
+      'color' => 'var(--main)',
+      'placeholder' => 'tel:+6224-1234-567',
+      'svg' => custy_get_svg( 'phone' ),
+    ],
+
+    'email' => [
+      'label' => __( 'Email' ),
+      'color' => 'var(--main)',
+      'placeholder' => 'mailto:yourname@gmail.com',
+      'svg' => custy_get_svg( 'email' ),
+    ],
+
+    'location' => [
+      'label' => __( 'Location' ),
+      'color' => 'var(--main)',
+      'placeholder' => 'https://goo.gl/maps/abcdefghij',
+      'svg' => custy_get_svg( 'location' ),
+    ],
+
+    custy_rand_id() => [ 'divider' => '' ],
 
 		'linkedin' => [
       'label' => __( 'LinkedIn' ),
       'color' => '#0577b5',
-      'default_value' => 'https://www.linkedin.com/in/your-username',
+      'placeholder' => 'https://www.linkedin.com/in/your-username',
       'svg' => custy_get_svg( 'linkedin' ),
     ],
     'pinterest' => [
       'label' => __( 'Pinterest' ),
       'color' => '#e60122',
-      'default_value' => 'https://pinterest.com/your-username',
+      'placeholder' => 'https://pinterest.com/your-username',
       'svg' => custy_get_svg( 'pinterest' ),
 		],
     'skype' => [
       'label' => __( 'Skype' ),
       'color' => '#0478d7',
-      'default_value' => 'skype:your-username?chat',
+      'placeholder' => 'skype:your-username?chat',
       'svg' => custy_get_svg( 'skype' ),
     ],
 		// 'telegram' => [
     //   'label' => __( 'Telegram' ),
     //   'color' => '#08c',
-    //   'default_value' => 'https://t.me/your-username',
+    //   'placeholder' => 'https://t.me/your-username',
     //   'svg' => custy_get_svg( 'telegram' ),
 		// ],
 		// 'wechat' => [
     //   'label' => __( 'WeChat' ),
     //   'color' => '#7bb32e',
-    //   'default_value' => 'weixin://dl/chat?your-username',
+    //   'placeholder' => 'weixin://dl/chat?your-username',
     //   'svg' => custy_get_svg( 'wechat' ),
     // ],
     'youtube' => [
       'label' => __( 'YouTube' ),
       'color' => '#ff0100',
-      'default_value' => 'https://www.youtube.com/channel/your-channel',
+      'placeholder' => 'https://www.youtube.com/channel/your-channel',
       'svg' => custy_get_svg( 'youtube' ),
 		],
   ] );
@@ -272,6 +297,13 @@ function custy_get_svg( $id ) {
     'wechat' => '<svg width="20" height="20" viewBox="0 0 20 20">
         <path d="M13.5,6.8c0.2,0,0.5,0,0.7,0c-0.6-2.9-3.7-5-7.1-5C3.2,1.9,0,4.5,0,7.9c0,1.9,1.1,3.5,2.8,4.8l-0.7,2.1l2.5-1.2c0.9,0.2,1.6,0.4,2.5,0.4c0.2,0,0.4,0,0.7,0c-0.1-0.5-0.2-1-0.2-1.5C7.5,9.3,10.2,6.8,13.5,6.8L13.5,6.8zM9.7,4.9c0.5,0,0.9,0.4,0.9,0.9c0,0.5-0.4,0.9-0.9,0.9c-0.5,0-1.1-0.4-1.1-0.9C8.7,5.2,9.2,4.9,9.7,4.9zM4.8,6.6c-0.5,0-1.1-0.4-1.1-0.9c0-0.5,0.5-0.9,1.1-0.9c0.5,0,0.9,0.4,0.9,0.9C5.7,6.3,5.3,6.6,4.8,6.6z M20,12.3c0-2.8-2.8-5.1-6-5.1c-3.4,0-6,2.3-6,5.1s2.6,5.1,6,5.1c0.7,0,1.4-0.2,2.1-0.4l1.9,1.1l-0.5-1.8C18.9,15.3,20,13.9,20,12.3zM12,11.4c-0.4,0-0.7-0.4-0.7-0.7c0-0.4,0.4-0.7,0.7-0.7c0.5,0,0.9,0.4,0.9,0.7C12.9,11.1,12.6,11.4,12,11.4zM15.9,11.4c-0.4,0-0.7-0.4-0.7-0.7c0-0.4,0.4-0.7,0.7-0.7c0.5,0,0.9,0.4,0.9,0.7C16.8,11.1,16.5,11.4,15.9,11.4z"/>
       </svg>',
+
+    // NON-SOCIAL LINKS
+    'email' => '<svg width="20" height="20" viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>',
+
+    'location' => '<svg width="20" height="20" viewBox="0 0 384 512"><path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/></svg>',
+
+    'phone' => '<svg width="20" height="20" viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>',
 	] );
 
 	if ( !isset( $list[ $id ] ) ) {
