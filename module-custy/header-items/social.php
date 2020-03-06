@@ -125,13 +125,8 @@ $social_options = [
 
 $items = [
   'social' => [
-    'title' => __( 'Social 1' ),
+    'title' => __( 'Social' ),
     'css_selector' => '[data-id="social"]',
     'options' => $social_options,
   ],
-  'social2' => [
-    'title' => __( 'Social 2' ),
-    'css_selector' => '[data-id="social2"]',
-    'options' => $social_options,
-  ]
 ];

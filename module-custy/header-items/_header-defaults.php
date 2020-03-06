@@ -28,7 +28,6 @@ function _custy_header_default_values( $defaults ) {
     ],
     'parentFontSize' => 'var(--fontSize)',
 
-    'dropdown_style' => 'single',
     'dropdownBackground' => [
       'default' => [ 'color' => 'var(--text)' ],
       'hover' => [ 'color' => 'var(--main)' ],
@@ -38,6 +37,21 @@ function _custy_header_default_values( $defaults ) {
       'hover' => [ 'color' => 'var(--textInvert)' ],
     ],
     'dropdownFontSize' => 'var(--smallFontSize)',
+  ];
+
+  $mobile_menu_values = [
+    'menu' => blocksy_get_default_menu(),
+    'mobile_menu_style' => 'default',
+    'mobileMenuBackground' => [
+      'default' => [ 'color' => 'CT_CSS_SKIP_RULE' ]
+    ],
+    'mobileMenuTextColor' => [
+      'default' => [ 'color' => 'var(--textInvert)' ],
+      'hover' => [ 'color' => 'var(--sub)' ],
+    ],
+    
+    'parentFontSize' => 'var(--mediumFontSize)',
+    'dropdownFontSize' => 'var(--fontSize)',
   ];
 
   $button_values = [
@@ -98,12 +112,18 @@ function _custy_header_default_values( $defaults ) {
     
     // OFF CANVAS
     'offcanvas' => [
+      'reveal_from' => 'right',
       'offcanvasBackground' => blocksy_background_default_value([
         'backgroundColor' => [
-          'default' => [ 'color' => 'rgba(18, 21, 25, 0.98)' ],
+          'default' => [ 'color' => 'var(--text)' ],
         ],
       ]),
-      'offcanvasShadow' => 'var(--shadow2)'
+      'items_alignment' => 'left',
+      'close_button_style' => 'close-circle',
+      'closeButtonColor' => [
+        'default' => [ 'color' => 'rgba(255,255,255, .5)' ],
+        'hover' => [ 'color' => 'white' ],
+      ],
     ],
 
     // MENU
@@ -177,16 +197,17 @@ function _custy_header_default_values( $defaults ) {
 
     // SOCIAL ACCOUNTS
     'social' => $social_values,
-    'social2' => $social_values,
-
-    ///// MOBILE
     
-    'mobile-menu' => [
-      'menu' => blocksy_get_default_menu(),
-    ],
+    // MOBILE MENU
+    'mobile-menu' => $mobile_menu_values,
+    'mobile-menu2' => $mobile_menu_values,
 
     'trigger' => [
-      'mobile_menu_trigger_type' => 'type-1'
+      'trigger_style' => 'trigger-1',
+      'triggerColor' => [
+        'default' => [ 'color' => 'var(--text)' ],
+        'hover' => [ 'color' => 'var(--main)' ],
+      ],
     ],
   
   ] ], $defaults );
@@ -264,7 +285,7 @@ function _custy_header_default_values( $defaults ) {
             // [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'offcanvas', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'mobile-menu' ] ],
+            [ 'id' => 'start', 'items' => [ 'mobile-menu', 'button' ] ],
           ] ],
         ],
       ],

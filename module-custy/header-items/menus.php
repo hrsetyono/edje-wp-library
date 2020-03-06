@@ -1,7 +1,6 @@
 <?php
 
 $menu_options = [
-
   'menu' => [
     'label' => __( 'Select Menu' ),
     'type' => 'ct-select',
@@ -45,24 +44,13 @@ $menu_options = [
     'parentFontSize' => [
       'label' => __( 'Font Size' ),
       'type' => 'ct-select/text',
+      'css' => '--parentFontSize'
     ],
-
-
 
   ] ],
 
   // DROPDOWN
   custy_rand_id() => [ 'tab' => 'Dropdown', 'options' => [
-
-    'dropdown_style' => [
-      'label' => __( 'Dropdown Style' ),
-      'type' => 'ct-radio',
-      'desc' => __( '<strong>Single:</strong> One column straight to bottom. <br> <strong>Mega:</strong> Multiple columns, 2nd-level items become title, 3rd-level items become link (If don\'t have 3rd level, revert to Single Column).' ),
-      'choices' => [
-        'single' => __( 'Single Column' ),
-        'mega' => __( 'Mega Nav' ),
-      ],
-    ],
 
     'dropdownBackground' => [
       'label' => __( 'Background' ),

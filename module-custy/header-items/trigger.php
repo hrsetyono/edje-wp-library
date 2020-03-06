@@ -4,31 +4,47 @@ $item = [
   'title' => __( 'Trigger' ),
   'devices' => [ 'mobile' ],
   'excluded_from' => [ 'offcanvas' ],
+  'css_selector' => '[data-id="trigger"]',
   'options' => [
 
-    'mobile_menu_trigger_type' => [
-      'label' => false,
+    'trigger_style' => [
+      'label' => __( 'Trigger Style' ),
       'type' => 'ct-image-picker',
       'attr' => [
         'data-type' => 'background',
         'data-columns' => '3',
+        'data-padding' => 'medium',
       ],
       'choices' => [
-
-        'type-1' => [
-          'src'   => blocksy_image_picker_file( 'trigger-1' ),
+        'trigger-1' => [
+          'src'   => custy_get_svg( 'trigger-1' ),
           'title' => __( 'Type 1' ),
         ],
-        'type-2' => [
-          'src'   => blocksy_image_picker_file( 'trigger-2' ),
+        'trigger-2' => [
+          'src'   => custy_get_svg( 'trigger-2' ),
           'title' => __( 'Type 2' ),
         ],
-        'type-3' => [
-          'src'   => blocksy_image_picker_file( 'trigger-3' ),
+        'trigger-3' => [
+          'src'   => custy_get_svg( 'trigger-3' ),
           'title' => __( 'Type 3' ),
         ],
       ],
     ],
 
+    custy_rand_id() => [ 'divider' => '' ],
+
+    'triggerColor' => [
+      'label' => __( 'Trigger Color' ),
+      'type'  => 'ct-color-picker',
+      'pickers' => [
+        'default' => __( 'Default' ),
+        'hover' => __( 'Hover' ),
+      ],
+      'css' => [
+        '--triggerColor' => 'default',
+        '--triggerColorHover' => 'hover'
+      ]
+    ],
+
   ]
-  ];
+];
