@@ -30,12 +30,34 @@ class Custy_BuilderValues {
   function format_footer( $section, $need_format = true ) {
     $this->type = 'footer';
 
-    $data = [
-      'rows' => $this->remove_empty_rows( $section['rows'] ),
-      'items' =>  $this->format_items_arg( $section, $need_format ),
-    ];
+    $rows = $this->remove_empty_rows( $section['rows'] );
+    $items =  $this->format_items_arg( $section, $need_format );
 
-    return $data;
+
+    // Remove the unnecessary values from Footer Row layout
+    foreach( $items as $key => &$values ) {
+      if( !in_array( $key, [ 'top-row', 'middle-row', 'bottom-row' ] ) ) {
+        continue;
+      }
+
+      $row_key = array_search( $key, array_column( $rows, 'id') );
+      $values[ 'items_per_row' ] = count( $rows[ $row_key ]['columns'] );
+
+      if( $values[ 'items_per_row' ] > 1 ) {
+        $values[ 'columns_layout' ] = $values[ $values[ 'items_per_row' ] . '_columns_layout' ];
+      } else {
+        $values[ 'columns_layout' ] = [ 'desktop' => '', 'tablet' => '' ]; 
+      }
+
+      unset( $values['2_columns_layout'] );
+      unset( $values['3_columns_layout'] );
+      unset( $values['4_columns_layout'] );
+    }
+
+    return [
+      'rows' => $rows,
+      'items' => $items,
+    ];
   }
 
   
@@ -149,7 +171,7 @@ class Custy_BuilderValues {
 
     // assign values to ids
     foreach( $item_ids as $id ) {
-      $value = $values[ $id ] ?? $default_values[ $id ];
+      $value = wp_parse_args( $values[ $id ] ?? [], $default_values[ $id ] );
       $items[ $id ] = $need_format ? $cv->format( $value ) : $value;
     }
 

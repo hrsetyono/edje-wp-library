@@ -6,30 +6,61 @@
  * @filter custy_default_values
  */
 function _custy_footer_default_values( $defaults ) {
+
   $row_values = [
-    'items_per_row' => '3',
+    'items_per_row' => '2',
     '2_columns_layout' => [
       'desktop' => 'repeat(2, 1fr)',
-      'tablet' => 'initial',
-      'mobile' => 'initial'
+      'tablet' => 'stacked',
     ],
     '3_columns_layout' => [
       'desktop' => 'repeat(3, 1fr)',
-      'tablet' => 'initial',
-      'mobile' => 'initial',
+      'tablet' => 'stacked',
     ],
     '4_columns_layout' => [
       'desktop' => 'repeat(4, 1fr)',
-      'tablet' => 'initial',
-      'mobile' => 'initial'
+      'tablet' => 'stacked',
     ],
-    'footerItemsGap' => '1rem'
+    'row_visibility' => [
+      'desktop' => true,
+      'tablet' => true,
+      'mobile' => true
+    ],
+
+    //
+    'rowBackground' => blocksy_background_default_value([
+      'background_type' => 'color',
+      'backgroundColor' => [
+        'default' => [ 'color' => 'var(--text)' ],
+      ],
+    ]),
+    'rowTextColor' => [
+      'default' => [ 'color' => 'var(--textInvert)' ],
+      'hover' => [ 'color' => 'var(--mainLight)' ]
+    ],
+    'rowTextSize' => 'var(--fontSize)',
+    'row_padding' => 'small',
+    'row_alignment' => 'left'
+
   ];
 
+  
   $defaults = wp_parse_args( [ 'footer' => [
-    'top-row' => $row_values,
-    'middle-row' => $row_values,
-    'bottom-row' => $row_values,
+    'top-row' => wp_parse_args( [
+      'items_per_row' => 1,
+      'row_alignment' => 'center'
+    ], $row_values ),
+    
+    'middle-row' => wp_parse_args( [
+      'items_per_row' => 3,
+      'row_padding' => 'large',
+    ], $row_values ),
+    
+    'bottom-row' => wp_parse_args( [
+      'items_per_row' => 1,
+      'rowTextSize' => 'var(--smallFontSize)',
+      'row_alignment' => 'center'
+    ], $row_values ),
 
     'menu' => [
       'menu' => blocksy_get_default_menu(),
@@ -52,12 +83,24 @@ function _custy_footer_default_values( $defaults ) {
       'widget' => 'ct-footer-sidebar-4',
     ],
 
-    'socials' => [
-      'footer_socials' => [
+    'social' => [
+      'social_links' => [
         [ 'id' => 'facebook', 'enabled' => true ],
         [ 'id' => 'twitter', 'enabled' => true ],
         [ 'id' => 'instagram', 'enabled' => true ],
-      ]
+      ],
+      'icon_color' => 'official',
+      'customColor' => [
+        'icon' => [ 'color' => 'var(--textInvert)' ],
+        'background' => [ 'color' => 'var(--main)' ]
+      ],
+      'icon_style' => 'circle',
+      'has_text' => 'no',
+      'text_visibility' => [
+        'desktop' => true,
+        'tablet' => false,
+        'mobile' => false
+      ],
     ],
   
   ] ], $defaults );
@@ -73,6 +116,7 @@ function _custy_footer_default_values( $defaults ) {
       'items' => [
         [ 'id' => 'menu', 'values' => $defaults['footer']['menu'] ],
         [ 'id' => 'copyright', 'values' => $defaults['footer']['copyright'] ],
+        
         [ 'id' => 'top-row', 'values' => $defaults['footer']['top-row'] ],
         [ 'id' => 'middle-row', 'values' => $defaults['footer']['middle-row'] ],
         [ 'id' => 'bottom-row', 'values' => $defaults['footer']['bottom-row'] ],

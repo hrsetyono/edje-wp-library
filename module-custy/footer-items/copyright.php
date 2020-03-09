@@ -14,6 +14,7 @@ $item = [
       'mediaButtons' => false,
       'tinymce' => [
         'toolbar1' => 'bold,italic,link,undo,redo',
+        'toolbar2' => ''
       ],
     ],
   ]

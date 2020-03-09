@@ -1,5 +1,4 @@
 <?php
-
 $options = [
 
 	'has_reveal_effect' => [
@@ -10,32 +9,32 @@ $options = [
 		'setting' => [ 'transport' => 'postMessage' ],
 	],
 
-	// blocksy_rand_md5() => [
-	// 	'type' => 'ct-condition',
-	// 	'condition' => [ 'has_reveal_effect' => 'yes' ],
-	// 	'options' => [
+	blocksy_rand_md5() => [
+		'type' => 'ct-condition',
+		'condition' => [ 'has_reveal_effect' => 'yes' ],
+		'options' => [
 
-	// 		'footerShadow' => [
-	// 			'label' => __( 'Shadow', 'blocksy' ),
-	// 			'type' => 'ct-box-shadow',
-	// 			'responsive' => true,
-	// 			'divider' => 'top',
-	// 			'hide_shadow_placement' => true,
-	// 			'value' => blocksy_box_shadow_value([
-	// 				'enable' => true,
-	// 				'h_offset' => 0,
-	// 				'v_offset' => 30,
-	// 				'blur' => 50,
-	// 				'spread' => 0,
-	// 				'inset' => false,
-	// 				'color' => [
-	// 					'color' => 'rgba(0, 0, 0, 0.1)',
-	// 				],
-	// 			])
-	// 		],
+			'footerShadow' => [
+				'label' => __( 'Shadow', 'blocksy' ),
+				'type' => 'ct-box-shadow',
+				'responsive' => true,
+				'divider' => 'top',
+				'hide_shadow_placement' => true,
+				'value' => blocksy_box_shadow_value([
+					'enable' => true,
+					'h_offset' => 0,
+					'v_offset' => 30,
+					'blur' => 50,
+					'spread' => 0,
+					'inset' => false,
+					'color' => [
+						'color' => 'rgba(0, 0, 0, 0.1)',
+					],
+				])
+			],
 
-	// 	],
-	// ],
+		],
+	],
 
 	blocksy_rand_md5() => [
 		'type' => 'ct-divider',

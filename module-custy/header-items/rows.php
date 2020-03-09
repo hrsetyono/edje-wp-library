@@ -25,21 +25,21 @@ $items = [
     'title' => __( 'Top Row' ),
     'is_primary' => true,
     'options' => $row_options,
-    'css_selector' => '[data-id="top-row"]',
+    'css_selector' => '[data-id="header-top-row"]',
   ],
 
   'middle-row' => [
     'title' => __( 'Middle Row' ),
     'is_primary' => true,
     'options' => $row_options,
-    'css_selector' => '[data-id="middle-row"]',
+    'css_selector' => '[data-id="header-middle-row"]',
   ],
 
   'bottom-row' => [
     'title' => __( 'Bottom Row' ),
     'is_primary' => true,
     'options' => $row_options,
-    'css_selector' => '[data-id="bottom-row"]',
+    'css_selector' => '[data-id="header-bottom-row"]',
   ],
 
   'offcanvas' => [

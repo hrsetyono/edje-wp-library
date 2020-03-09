@@ -8,7 +8,7 @@ require_once __DIR__ . '/classes/customizer-builder.php';
 // require_once __DIR__ . '/classes/class-ct-css-injector.php'; // @suspect if error
 // require_once __DIR__ . '/classes/class-ct-attributes-parser.php';
 // require_once __DIR__ . '/excerpt.php';
-require_once __DIR__ . '/inline-svgs.php';
+// require_once __DIR__ . '/inline-svgs.php';
 
 // require_once __DIR__ . '/css-helpers.php'; // @suspect if error
 // require_once __DIR__ . '/box-shadow-option.php';

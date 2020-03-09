@@ -16901,13 +16901,15 @@
         },
         option: {
           placeholder: Object(o.__)("Picker header", "blocksy"),
+          // @changed - now use the id=>label pairing
           choices: t.sections.map((function(e) {
             var t = e.id;
             return {
               key: t,
-              value: _values [t] // @changed - now use the id=>label pairing
+              value: _values [t] 
             }
           }))
+          // /changed
         },
         value: n.id
       })
@@ -17757,6 +17759,13 @@
         n = e.builderValue,
         i = e.builderValueDispatch;
       ct_customizer_localizations.header_builder_data.secondary_items.footer, ct_customizer_localizations.header_builder_data.footer;
+
+      // @new Get values for Footer dropdown
+      var _values = t.sections.reduce( (result, section) => {
+        result[ section.id ] = section.label;
+        return result;
+      }, {} );
+      // /new
       return Object(r.createElement)(E.default, {
         onChange: function(e) {
           return i({
@@ -17768,17 +17777,15 @@
         },
         option: {
           placeholder: Object(o.__)("Pick footer", "blocksy"),
+          // @changed - now use the id=>label pairing
           choices: t.sections.map((function(e) {
             var t = e.id;
             return {
               key: t,
-              value: {
-                "type-1": Object(o.__)("Default", "blocksy"),
-                "type-2": Object(o.__)("Secondary", "blocksy"),
-                "type-3": Object(o.__)("Centered", "blocksy")
-              } [t]
+              value: _values [t] 
             }
           }))
+          // /changed
         },
         value: n.id
       })
@@ -18065,41 +18072,51 @@
       className: "ct-option-description"
     },
     // @changed - change description
-    Object(o.__)("Choose which footer you want to edit", "blocksy")), Object(r.createElement)("div", {
-      className: "ct-tabs"
-    }, Object(r.createElement)("ul", null, ["items", "options"].map((function(e) {
-      return Object(r.createElement)("li", {
-        key: e,
-        onClick: function(t) {
-          t.preventDefault(), u(e)
-        },
-        className: a()({
-          active: e === s
-        })
-      }, {
-        items: Object(o.__)("Elements", "blocksy"),
-        options: Object(o.__)("General", "blocksy")
-      } [e])
-    }))), Object(r.createElement)("div", {
-      className: "ct-current-tab"
-    }, Object(r.createElement)(x, {
+    Object(o.__)("Choose which footer you want to edit", "blocksy")),
+    // @changed - Removed footer_data tab and replace it with direct list like Header
+    Object(r.createElement)("h3", { className: "ct-title" }, Object(o.__)("Footer Elements", "blocksy")),
+    Object(r.createElement)(x, {
       builderValue: n,
       builderValueDispatch: i,
       inlinedItemsFromBuilder: c,
       displayList: "items" === s
-    }), "options" === s && Object(r.createElement)(_.a, {
-      onChange: function(e, t) {
-        i({
-          type: "BUILDER_GLOBAL_SETTING_ON_CHANGE",
-          payload: {
-            optionId: e,
-            optionValue: t
-          }
-        })
-      },
-      options: p,
-      value: Object(j.b)(p, Array.isArray(n.settings) ? {} : n.settings)
-    }))), Object(r.createElement)(N, {
+    }),
+    // Object(r.createElement)("div", {
+    //   className: "ct-tabs"
+    // }, Object(r.createElement)("ul", null, ["items", "options"].map((function(e) {
+    //   return Object(r.createElement)("li", {
+    //     key: e,
+    //     onClick: function(t) {
+    //       t.preventDefault(), u(e)
+    //     },
+    //     className: a()({
+    //       active: e === s
+    //     })
+    //   }, {
+    //     items: Object(o.__)("Elements", "blocksy"),
+    //     options: Object(o.__)("General", "blocksy")
+    //   } [e])
+    // }))), Object(r.createElement)("div", {
+    //   className: "ct-current-tab"
+    // }, Object(r.createElement)(x, {
+    //   builderValue: n,
+    //   builderValueDispatch: i,
+    //   inlinedItemsFromBuilder: c,
+    //   displayList: "items" === s
+    // }), "options" === s && Object(r.createElement)(_.a, {
+    //   onChange: function(e, t) {
+    //     i({
+    //       type: "BUILDER_GLOBAL_SETTING_ON_CHANGE",
+    //       payload: {
+    //         optionId: e,
+    //         optionValue: t
+    //       }
+    //     })
+    //   },
+    //   options: p,
+    //   value: Object(j.b)(p, Array.isArray(n.settings) ? {} : n.settings)
+    // }))),
+    Object(r.createElement)(N, {
       builderValue: n,
       builderValueDispatch: i
     }))

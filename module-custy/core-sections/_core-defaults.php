@@ -29,6 +29,7 @@ function _custy_core_default_values( $defaults ) {
     ],
     
     'siteBackground' => blocksy_background_default_value( [
+      'background_type' => 'color',
       'backgroundColor' => [
         'default' => [ 'color' => '#f8f9fb' ],
       ],

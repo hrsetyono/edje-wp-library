@@ -73,12 +73,16 @@ class Blocksy_Customizer_Builder {
 
 		$result['header'] = $this->get_registered_items_by('header', 'all', true);
 		$result['footer'] = $this->get_registered_items_by('footer', 'all', true);
+		
 		$result['footer_data'] = [
-			'footer_options' => blocksy_get_options(
-				BLOCKSY_DIR . '/panel-builder/footer/options.php',
-				[],
-				false
-			)
+			'footer_options' => [],
+
+			// @changed - footer tabs are removed, so no need for getting the data
+			// 'footer_options' => blocksy_get_options(
+			// 	BLOCKSY_DIR . '/panel-builder/footer/options.php',
+			// 	[],
+			// 	false
+			// )
 		];
 
 		$result['secondary_items'] = [

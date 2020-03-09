@@ -48,6 +48,13 @@ class CustyBuilder {
    * Get Header values
    */
   static function get_header( $id = null ) {
+    // check for cache
+    global $custy_header_data;
+    if( !empty( $custy_header_data ) ) {
+      return $custy_header_data;
+    }
+
+    // check to only allow 1 header per page
     global $custy_header_id;
     $custy_header_id = $custy_header_id ?? $id ?? 'main';
 
@@ -61,8 +68,8 @@ class CustyBuilder {
     $placements = Custy::get_mod( 'header_placements' );
     $section = $bv->get_section( $placements, $custy_header_id );
     
-    $data = $bv->format_header( $section );
-    return $data;
+    $custy_header_data = $bv->format_header( $section );
+    return $custy_header_data;
   }
 
 
@@ -70,6 +77,13 @@ class CustyBuilder {
    * Get Footer values
    */
   static function get_footer( $id = null ) {
+    // check for cache
+    global $custy_footer_data;
+    if( !empty( $custy_footer_data ) ) {
+      return $custy_footer_data;
+    }
+
+    // check to only allow 1 footer per page
     global $custy_footer_id;
     $custy_footer_id = $custy_footer_id ?? $id ?? 'main';
 
@@ -79,11 +93,12 @@ class CustyBuilder {
     }
 
     $bv = new Custy_BuilderValues();
+
     $placements = Custy::get_mod( 'footer_placements' );
     $section = $bv->get_section( $placements, $custy_footer_id );
 
-    $data = $bv->format_footer( $section );
-    return $data;
+    $custy_footer_data = $bv->format_footer( $section );
+    return $custy_footer_data;
   }
 
 

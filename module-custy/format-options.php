@@ -393,6 +393,7 @@ class Custy_Options {
         $base_vars = [
           'background',
           'backgroundColor',
+          'backgroundSize'
         ];
 
         $vars = $this->format_css_desc_prefix( $base_vars, $args['css'] );

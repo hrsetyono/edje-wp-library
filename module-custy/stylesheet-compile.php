@@ -40,6 +40,7 @@ class Custy_CompileStyles {
    */
   function compile_from_items( $item_options, $type = 'header' ) {
     $data = [];
+    $default_values = Custy::get_default_values( $type );
 
     switch( $type ) {
       case 'header':
@@ -61,7 +62,7 @@ class Custy_CompileStyles {
 
       $selector = $item['css_selector'] ?? ':root';
 
-      $this->current_values = $values;
+      $this->current_values = wp_parse_args( $values, $default_values[ $item_id ] );
       $this->compile_from_options( $options, $selector );
     }
   }
@@ -144,7 +145,7 @@ class Custy_CompileStyles {
    */
   private function compile_from_color_picker( $selector, $css_arg, $values, $option_id ) {
     if( !isset( $values ) ) {
-      trigger_error( 'Value for option: ' . $option_id . ' is null. Cause: (1) Default value is not set (2) Header/Footer item got renamed - ', E_USER_ERROR );
+      trigger_error( 'Value for option: ' . $option_id . ' is null. Have you set default value?', E_USER_ERROR );
       return;
     }
 

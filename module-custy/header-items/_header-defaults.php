@@ -84,25 +84,6 @@ function _custy_header_default_values( $defaults ) {
     'textMaxWidth' => '100%',
   ];
 
-  $social_values = [
-    'social_links' => [
-      [ 'id' => 'facebook', 'enabled' => true ],
-      [ 'id' => 'twitter', 'enabled' => true ],
-      [ 'id' => 'instagram', 'enabled' => true ],
-    ],
-    'icon_color' => 'official',
-    'customColor' => [
-      'icon' => [ 'color' => 'var(--textInvert)' ],
-      'background' => [ 'color' => 'var(--main)' ]
-    ],
-    'icon_style' => 'circle',
-    'has_text' => 'no',
-    'text_visibility' => [
-      'desktop' => true,
-      'tablet' => false,
-      'mobile' => 'false'
-    ],
-  ];
 
   $defaults = wp_parse_args( [ 'header' => [
     // ROWS
@@ -196,7 +177,25 @@ function _custy_header_default_values( $defaults ) {
     ],
 
     // SOCIAL ACCOUNTS
-    'social' => $social_values,
+    'social' => [
+      'social_links' => [
+        [ 'id' => 'facebook', 'enabled' => true ],
+        [ 'id' => 'twitter', 'enabled' => true ],
+        [ 'id' => 'instagram', 'enabled' => true ],
+      ],
+      'icon_color' => 'official',
+      'customColor' => [
+        'icon' => [ 'color' => 'var(--textInvert)' ],
+        'background' => [ 'color' => 'var(--main)' ]
+      ],
+      'icon_style' => 'circle',
+      'has_text' => 'no',
+      'text_visibility' => [
+        'desktop' => true,
+        'tablet' => false,
+        'mobile' => false
+      ],
+    ],
     
     // MOBILE MENU
     'mobile-menu' => $mobile_menu_values,
