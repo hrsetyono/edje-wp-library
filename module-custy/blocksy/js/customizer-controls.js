@@ -17685,40 +17685,14 @@
           return e.id === t.id
         })), a ? a.values : {}),
         s = "initial";
-        
-      // @changed - use default columns_layout value instead of hardcoded one
       
-      // if( Object.keys( c ).length === 0 && c.constructor === Object ) {
-      //   var item = null;
-      //   if( Array.isArray( n.items ) ) {
-      //     item = n.items.find( (i) => i.id == t.id );
-      //   } else {
-      //     item = n.items[ t.id ];
-      //   }
-        
-      //   s = item.values[ t.columns.length + '_columns_layout' ];
-      // } else {
-      //   console.log( 'c is not empty' );
-      //   s = c[ t.columns.length + "_columns_layout"];
-      // }
-
-      // return 2 === t.columns.length && (s = c["2_columns_layout"] || item.values['2_columns_layout']),
-      // 3 === t.columns.length && (s = c["3_columns_layout"] || item.values['3_columns_layout']),
-      // 4 === t.columns.length && (s = c["4_columns_layout"] || item.values['4_columns_layout']),
-
-      return 2 === t.columns.length && (s = c["2_columns_layout"] || {
-        desktop: "repeat(2, 1fr)",
-        tablet: "initial",
-        mobile: "initial"
-      }), 3 === t.columns.length && (s = c["3_columns_layout"] || {
-        desktop: "repeat(3, 1fr)",
-        tablet: "initial",
-        mobile: "initial"
-      }), 4 === t.columns.length && (s = c["4_columns_layout"] || {
-        desktop: "repeat(4, 1fr)",
-        tablet: "initial",
-        mobile: "initial"
-      }), s && s.desktop && (s = s.desktop), Object(r.createElement)("li", {
+      // @changed - instead of hardcoded layout, use the default values
+      var rowData = ct_customizer_localizations.footer_defaults[ t.id ];
+      return 2 === t.columns.length && (s = c["2_columns_layout"] || rowData['2_columns_layout']),
+      3 === t.columns.length && (s = c["3_columns_layout"] || rowData['3_columns_layout']),
+      4 === t.columns.length && (s = c["4_columns_layout"] || rowData['4_columns_layout']),
+      // /changed
+      s && s.desktop && (s = s.desktop), Object(r.createElement)("li", {
         className: "builder-row"
       }, Object(r.createElement)("div", {
         className: "ct-row-actions",

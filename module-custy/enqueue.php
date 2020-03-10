@@ -111,6 +111,8 @@ function _custy_enqueue_customizer_control() {
     'customizer_reset_none' => wp_create_nonce( 'ct-customizer-reset' ),
     'static_public_url' => BLOCKSY_URL . '/blocksy/',
     'header_builder_data' => $builder->get_data_for_customizer(),
+    'header_defaults' => Custy::get_default_values( 'header' ),
+    'footer_defaults' => Custy::get_default_values( 'footer' ),
     'all_mods' => get_theme_mods()
   ] );
 

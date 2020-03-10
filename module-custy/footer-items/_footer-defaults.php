@@ -104,8 +104,8 @@ function _custy_footer_default_values( $defaults ) {
         'background' => [ 'color' => 'var(--main)' ]
       ],
       'icon_style' => 'circle',
-      'has_text' => 'no',
-      'text_visibility' => [
+      'has_label' => 'no',
+      'label_visibility' => [
         'desktop' => true,
         'tablet' => false,
         'mobile' => false

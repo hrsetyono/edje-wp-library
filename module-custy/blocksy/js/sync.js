@@ -1082,7 +1082,10 @@
         c.removeAttribute("data-divider");
         var s = [];
         "none" !== a.footerRowTopDivider.style && s.push("top"), "none" !== a.footerRowBottomDivider.style && s.push("bottom"), s.length > 0 && (c.dataset.divider = s.join(":"))
-      }(c.firstElementChild.removeAttribute("data-stack"), 2 === parseInt(a.items_per_row, 10)) && ("initial" === (a["2_columns_layout"] || {
+      }(
+      // @changed - disabled this because it ouputs error
+      // c.firstElementChild.removeAttribute("data-stack"),
+      2 === parseInt(a.items_per_row, 10)) && ("initial" === (a["2_columns_layout"] || {
         desktop: "repeat(2, 1fr)",
         tablet: "initial",
         mobile: "initial"

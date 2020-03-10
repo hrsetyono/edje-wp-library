@@ -189,7 +189,7 @@ function _custy_get_social_options() {
   }, $list );
 
   // Parse each item into Social Label option
-  $social_texts = array_reduce( array_keys( $list ), function( $result, $key ) use ( $list ) {
+  $social_labels = array_reduce( array_keys( $list ), function( $result, $key ) use ( $list ) {
     
     if( isset( $list[ $key ]['divider'] ) ) {
       $result[ custy_rand_id() ] = [ 'divider' => '' ];
@@ -260,18 +260,18 @@ function _custy_get_social_options() {
 
       custy_rand_id() => [ 'divider' => '' ],
 
-      'has_text' => [
-        'label' => __( 'Has Text?' ),
+      'has_label' => [
+        'label' => __( 'Has Label?' ),
         'type' => 'ct-switch',
       ],
 
-      custy_rand_id() => [ 'condition' => [ 'has_text' => 'yes' ], 'options' => array_merge( [
-        'text_visibility' => [
-          'label' => __( 'Text Visibility' ),
+      custy_rand_id() => [ 'condition' => [ 'has_label' => 'yes' ], 'options' => array_merge( [
+        'label_visibility' => [
+          'label' => __( 'Label Visibility' ),
           'type' => 'ct-visibility',
         ],
         custy_rand_id() => [ 'divider' => '' ],
-      ], $social_texts ) ],
+      ], $social_labels ) ],
 
     ] ],
   ];

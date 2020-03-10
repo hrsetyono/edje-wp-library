@@ -179,22 +179,25 @@ function _custy_header_default_values( $defaults ) {
     // SOCIAL ACCOUNTS
     'social' => [
       'social_links' => [
-        [ 'id' => 'facebook', 'enabled' => true ],
-        [ 'id' => 'twitter', 'enabled' => true ],
-        [ 'id' => 'instagram', 'enabled' => true ],
+        [ 'id' => 'location', 'enabled' => true ],
+        [ 'id' => 'email', 'enabled' => true ],
+        [ 'id' => 'phone', 'enabled' => true ],
       ],
-      'icon_color' => 'official',
+      'icon_color' => 'custom',
       'customColor' => [
         'icon' => [ 'color' => 'var(--textInvert)' ],
         'background' => [ 'color' => 'var(--main)' ]
       ],
-      'icon_style' => 'circle',
-      'has_text' => 'no',
-      'text_visibility' => [
+      'icon_style' => 'icon-only',
+      'has_label' => 'yes',
+      'label_visibility' => [
         'desktop' => true,
         'tablet' => false,
         'mobile' => false
       ],
+      'phone_label' => '+123-456-789',
+      'location_label' => '',
+      'email_label' => '',
     ],
     
     // MOBILE MENU
@@ -224,7 +227,6 @@ function _custy_header_default_values( $defaults ) {
           [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
           [ 'id' => 'logo', 'values' => $defaults['header']['logo'] ],
           [ 'id' => 'social', 'values' => $defaults['header']['social'] ],
-          [ 'id' => 'button', 'values' => $defaults['header']['button'] ],
           [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
           [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
 
@@ -240,48 +242,36 @@ function _custy_header_default_values( $defaults ) {
         ],
         'desktop' => [
           [ 'id' => 'top-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'social' ] ],
+            [ 'id' => 'start', 'items' => ['search'] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'button' ] ],
-            // [ 'id' => 'start-middle', 'items' => [] ],
-            // [ 'id' => 'end-middle', 'items' => [] ],
+            [ 'id' => 'end', 'items' => [ 'social' ] ],
           ] ],
           [ 'id' => 'middle-row', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'logo' ] ],
             [ 'id' => 'middle', 'items' => [] ],
             [ 'id' => 'end', 'items' => [ 'menu' ] ],
-            // [ 'id' => 'start-middle', 'items' => [] ],
-            // [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'bottom-row', 'placements' => [
             [ 'id' => 'start', 'items' => [] ],
             [ 'id' => 'middle', 'items' => [] ],
             [ 'id' => 'end', 'items' => [] ],
-            // [ 'id' => 'start-middle', 'items' => [] ],
-            // [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
         ],
         'mobile' => [
           [ 'id' => 'top-row', 'placements' => [
             [ 'id' => 'start', 'items' => [] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'social' ] ],
-            // [ 'id' => 'start-middle', 'items' => [] ],
-            // [ 'id' => 'end-middle', 'items' => [] ],
+            [ 'id' => 'end', 'items' => [ 'social' ] ]
           ] ],
           [ 'id' => 'middle-row', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'logo' ] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'trigger' ] ],
-            // [ 'id' => 'start-middle', 'items' => [] ],
-            // [ 'id' => 'end-middle', 'items' => [] ],
+            [ 'id' => 'end', 'items' => [ 'trigger' ] ]
           ] ],
           [ 'id' => 'bottom-row', 'placements' => [
             [ 'id' => 'start', 'items' => [] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            // [ 'id' => 'start-middle', 'items' => [] ],
-            // [ 'id' => 'end-middle', 'items' => [] ],
+            [ 'id' => 'end', 'items' => [] ]
           ] ],
           [ 'id' => 'offcanvas', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'mobile-menu', 'button' ] ],
