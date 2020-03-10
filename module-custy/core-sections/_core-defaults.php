@@ -125,36 +125,36 @@ function _custy_core_default_values( $defaults ) {
     ] ),
 
     'h1Size' => [
-      'mobile' => '32px',
-      'tablet' => '40px',
       'desktop' => '46px',
+      'tablet' => '40px',
+      'mobile' => '32px',
     ],
     'h2Size' => [
-      'mobile' => '26px',
-      'tablet' => '30px',
       'desktop' => '36px',
+      'tablet' => '30px',
+      'mobile' => '26px',
     ],
     'h3Size' => [
-      'mobile' => '22px',
-      'tablet' => '26px',
       'desktop' => '30px',
+      'tablet' => '26px',
+      'mobile' => '22px',
     ],
     'h4Size' => [
-      'mobile' => '20px',
-      'tablet' => '22px',
       'desktop' => '26px',
+      'tablet' => '22px',
+      'mobile' => '20px',
     ],
     'h5Size' => [
-      'mobile' => '18px',
-      'tablet' => '20px',
       'desktop' => '20px',
+      'tablet' => '20px',
+      'mobile' => '18px',
     ],
     'h6Size' => [
-      'mobile' => '16px',
-      'tablet' => '18px',
       'desktop' => '18px',
+      'tablet' => '18px',
+      'mobile' => '16px',
     ],
-
+    
   ], $defaults );
 
   return $defaults;

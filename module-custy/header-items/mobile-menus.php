@@ -1,7 +1,7 @@
 <?php
 
 $menu_options = [
-  'menu' => [
+  'menu_id' => [
     'label' => __( 'Select Menu' ),
     'type' => 'ct-select',
     'placeholder' => __( 'Select menu...' ),
@@ -12,59 +12,15 @@ $menu_options = [
     ), 
   ],
 
-  'mobile_menu_style' => [
-    'label' => __( 'Mobile Menu Style' ),
+  'style' => [
+    'label' => __( 'Style' ),
     'type' => 'ct-radio',
     'choices' => [
       'default' => __( 'Default' ),
       'compact' => __( 'Compact' ),
     ],
   ],
-
-  // PARENT
-  custy_rand_id() => [ 'divider' => '' ],
-
-  'mobileMenuBackground' => [
-    'label' => __( 'Background' ),
-    'type'  => 'ct-color-picker',
-    'pickers' => [
-      'default' => __( 'Default' ),
-    ],
-    'css' => [
-      '--mobileMenuBackground' => 'default',
-    ]
-  ],
-
-  'mobileMenuTextColor' => [
-    'label' => __( 'Text Color' ),
-    'type'  => 'ct-color-picker',
-    'pickers' => [
-      'default' => __( 'Default' ),
-      'hover' => __( 'Hover' ),
-    ],
-    'css' => [
-      '--mobileMenuColor' => 'default',
-      '--mobileMenuColorHover' => 'hover'
-    ]
-  ],
-
-  // DROPDOWN
-  custy_rand_id() => [ 'condition' => [ 'mobile_menu_style' => 'default' ], 'options' => [
-    
-    custy_rand_id() => [ 'divider' => '' ],
-
-    'parentFontSize' => [
-      'label' => __( 'Font Size' ),
-      'type' => 'ct-select/text',
-      'css' => '--parentFontSize'
-    ],
-
-    'dropdownFontSize' => [
-      'label' => __( 'Dropdown Font Size' ),
-      'type' => 'ct-select/text',
-      'css' => '--dropdownFontSize'
-    ],
-  ] ],
+  
 ];
 
 

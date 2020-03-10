@@ -165,10 +165,10 @@ function custy_get_social_list( $id = null ) {
 /**
  * Get the options for Social links in Header / Footer builder
  */
-function _custy_get_social_options() {
+function _custy_get_social_options( $type = 'header' ) {
   $list = custy_get_social_list();
 
-  // Without divider
+  // Remove the divider in list
   $clean_list = array_filter( $list, function( $item ) {
     return !isset( $item['divider'] );
   } );
@@ -208,21 +208,37 @@ function _custy_get_social_options() {
     return $result;
   }, [] );
 
+  // Add extra option depending on the type
+  $extra_design_options = [];
+  if( $type === 'footer' ) {
+    $extra_design_options = [
+      'alignment' => [
+        'label' => __( 'Alignment' ),
+        'type' => 'ct-radio/alignment',
+      ],
+
+      custy_rand_id() => [ 'divider' => '' ],
+    ];
+  }
+
 
   return [
     custy_rand_id() => [ 'tab' => 'Links', 'options' => array_merge( [
-      'social_links' => [
-        'label' => __( 'Social Links' ),
+
+      'links' => [
+        'label' => __( 'Links' ),
         'type' => 'ct-layers',
         'manageable' => true,
         'desc' => __( 'Fill in the links below' ),
         'settings' => $clean_list,
       ],
+
     ], $social_links ) ],
 
-    custy_rand_id() => [ 'tab' => 'Design', 'options' => [
-      'icon_color' => [
-        'label' => __( 'Icon Color' ),
+    custy_rand_id() => [ 'tab' => 'Design', 'options' => array_merge( $extra_design_options, [
+
+      'color_style' => [
+        'label' => __( 'Color Style' ),
         'type' => 'ct-radio',
         'choices' => [
           'custom' => __( 'Custom' ),
@@ -230,8 +246,8 @@ function _custy_get_social_options() {
         ],
       ],
 
-      'icon_style' => [
-        'label' => __( 'Icon Style' ),
+      'shape_style' => [
+        'label' => __( 'Shape Style' ),
         'type' => 'ct-radio',
         'choices' => [
           'icon-only' => __( 'Icon Only' ),
@@ -240,7 +256,7 @@ function _custy_get_social_options() {
         ],
       ],
 
-      custy_rand_id() => [ 'condition' => [ 'icon_color' => 'custom' ], 'options' => [
+      custy_rand_id() => [ 'condition' => [ 'color_style' => 'custom' ], 'options' => [
         'customColor' => [
           'label' => __( 'Custom Color' ),
           'type'  => 'ct-color-picker',
@@ -260,20 +276,24 @@ function _custy_get_social_options() {
 
       custy_rand_id() => [ 'divider' => '' ],
 
+      // LABELS
       'has_label' => [
         'label' => __( 'Has Label?' ),
         'type' => 'ct-switch',
       ],
 
       custy_rand_id() => [ 'condition' => [ 'has_label' => 'yes' ], 'options' => array_merge( [
+
         'label_visibility' => [
           'label' => __( 'Label Visibility' ),
           'type' => 'ct-visibility',
         ],
+        
         custy_rand_id() => [ 'divider' => '' ],
+
       ], $social_labels ) ],
 
-    ] ],
+    ] ) ],
   ];
 }
 

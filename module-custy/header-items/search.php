@@ -5,8 +5,8 @@ $item = [
   'css_selector' => '[data-id="search"]',
   'options' => [
 
-    'search_style' => [
-      'label' => __( 'Search Style' ),
+    'style' => [
+      'label' => __( 'Style' ),
       'desc' => __( 'On mobile it is always set to Expanding' ),
       'type' => 'ct-radio',
       'choices' => [
@@ -15,15 +15,13 @@ $item = [
       ],
     ],
 
-    custy_rand_id() => [ 'divider' => '' ],
-
-    'search_placeholder' => [
+    'placeholder' => [
       'label' => __( 'Placeholder Text' ),
       'type' => 'text',
     ],
 
     'searchBackground' => [
-      'label' => __( 'Background' ),
+      'label' => __( 'Search Background' ),
       'type'  => 'ct-color-picker',
       'pickers' => [
         'default' => __( 'Default' ),
@@ -35,16 +33,16 @@ $item = [
       ],
     ],
 
-    custy_rand_id() => [ 'divider' => 'Submit Button' ],
+    custy_rand_id() => [ 'divider' => 'SUBMIT BUTTON' ],
 
-    'submit_button_text' => [
-      'label' => __( 'Button Text' ),
+    'submit_text' => [
+      'label' => __( 'Submit Text' ),
       'desc' => __( 'Can be a simple text or SVG Icon' ),
       'type' => 'textarea',
     ],
 
-    'submitButtonColor' => [
-      'label' => __( 'Button Text Color' ),
+    'submitColor' => [
+      'label' => __( 'Submit Color' ),
       'type'  => 'ct-color-picker',
       'pickers' => [
         'default' => __( 'Default' ),
@@ -56,8 +54,8 @@ $item = [
       ],
     ],
 
-    'submitButtonBackground' => [
-      'label' => __( 'Button Background' ),
+    'submitBackground' => [
+      'label' => __( 'Submit Background' ),
       'type'  => 'ct-color-picker',
       'pickers' => [
         'default' => __( 'Default' ),

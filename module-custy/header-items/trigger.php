@@ -7,8 +7,8 @@ $item = [
   'css_selector' => '[data-id="trigger"]',
   'options' => [
 
-    'trigger_style' => [
-      'label' => __( 'Trigger Style' ),
+    'style' => [
+      'label' => __( 'Style' ),
       'type' => 'ct-image-picker',
       'attr' => [
         'data-type' => 'background',

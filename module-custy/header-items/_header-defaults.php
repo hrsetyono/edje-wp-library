@@ -6,52 +6,47 @@
  * @filter custy_default_values
  */
 function _custy_header_default_values( $defaults ) {
-  $row_values = [
-    'rowBackground' => blocksy_background_default_value([
-      'backgroundColor' => [
-        'default' => [ 'color' => 'var(--textInvert)' ],
-      ],
-    ]),
-    'row_padding' => 'medium',
+  $menu_values = [
+    'menu_id' => blocksy_get_default_menu(),
   ];
 
-  $menu_values = [
-    'menu' => blocksy_get_default_menu(),
+  $logo_values = [
+    'logo_type' => 'text',
 
-    'parentBackground' => [
-      'default' => [ 'color' => 'CT_CSS_SKIP_RULE' ],
-      'hover' => [ 'color' => 'var(--mainLight)' ],
-    ],
-    'parentTextColor' => [
+    // Logo text
+    'text' => get_option('blogname'),
+    'textSize' => 'var(--mediumFontSize)',
+    // Logo Image
+    'image' => [ 'attachment_id' => null, 'url' => null ],
+    'has_mobile_image' => 'no',
+    'mobile_image' => [ 'attachment_id' => null, 'url' => null ],
+    // Logo SVG
+    'svg_code' => '<svg xmlns="http://www.w3.org/2000/svg" width="70" height="60" viewBox="0 0 452 389"><defs><clipPath id="b"><rect width="452" height="389"/></clipPath></defs><g id="a" clip-path="url(#b)"><rect width="452" height="389" fill="rgba(255,255,255,0)"/><path d="M0-225,225-612,450-225Zm391-32L327.222-368.035,263.406-257ZM59-257H223.1l84.459-145.268L225-546Zm391,32v0Z" transform="translate(1 613)" fill="#fff"/></g></svg>',
+
+
+    'logoColor' => [
       'default' => [ 'color' => 'var(--text)' ],
       'hover' => [ 'color' => 'var(--main)' ],
     ],
-    'parentFontSize' => 'var(--fontSize)',
+    'logoMaxWidth' => '70px',
+    'logoMaxHeight' => '60px',
 
-    'dropdownBackground' => [
-      'default' => [ 'color' => 'var(--text)' ],
-      'hover' => [ 'color' => 'var(--main)' ],
+    'has_tagline' => 'no',
+    'tagline' => get_option('blogdescription'),
+    'taglineColor' => [
+      'default' => [ 'color' => 'var(--textDim)' ]
     ],
-    'dropdownTextColor' => [
-      'default' => [ 'color' => 'var(--textInvert)' ],
-      'hover' => [ 'color' => 'var(--textInvert)' ],
-    ],
-    'dropdownFontSize' => 'var(--smallFontSize)',
+    'taglineSize' => 'var(--smallFontSize)',
+    'tagline_visibility' => [
+      'desktop' => true,
+      'tablet' => true,
+      'mobile' => false,
+    ]
   ];
 
   $mobile_menu_values = [
-    'menu' => blocksy_get_default_menu(),
-    'mobile_menu_style' => 'default',
-    'mobileMenuBackground' => [
-      'default' => [ 'color' => 'CT_CSS_SKIP_RULE' ]
-    ],
-    'mobileMenuTextColor' => [
-      'default' => [ 'color' => 'var(--textInvert)' ],
-      'hover' => [ 'color' => 'var(--sub)' ],
-    ],
-    
-    'parentFontSize' => 'var(--mediumFontSize)',
-    'dropdownFontSize' => 'var(--fontSize)',
+    'menu_id' => blocksy_get_default_menu(),
+    'style' => 'default',
   ];
 
   $button_values = [
@@ -74,6 +69,29 @@ function _custy_header_default_values( $defaults ) {
     ],
   ];
 
+  $search_values = [
+    'style' => 'expanding',
+    'placeholder' => __( 'Search...' ),
+
+    'searchBackground' => [
+      'default' => [ 'color' => 'var(--textInvert)' ],
+      'focus' => [ 'color' => 'var(--textInvert)' ],
+    ],
+    
+    'submit_text' => '<svg viewBox="0 0 512 512"><path d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"/></svg>',
+
+    'submitColor' => [
+      'default' => [ 'color' => 'var(--textInvert)' ],
+      'hover' => [ 'color' => 'var(--textInvert)' ],
+    ],
+    'submitBackground' => [
+      'default' => [ 'color' => 'var(--text)' ],
+      'hover' => [ 'color' => 'var(--main)' ],
+    ],
+
+
+  ];
+
   $free_text_values = [
     'content' => 'Sample Text',
     'textColor' => [
@@ -84,12 +102,55 @@ function _custy_header_default_values( $defaults ) {
     'textMaxWidth' => '100%',
   ];
 
+  $social_values = [
+    'links' => [
+      [ 'id' => 'location', 'enabled' => true ],
+      [ 'id' => 'email', 'enabled' => true ],
+      [ 'id' => 'phone', 'enabled' => true ],
+    ],
+    'color_style' => 'custom',
+    'shape_style' => 'icon-only',
+    'customColor' => [
+      'icon' => [ 'color' => 'var(--textInvert)' ],
+      'background' => [ 'color' => 'var(--main)' ]
+    ],
+    
+    'has_label' => 'yes',
+    'label_visibility' => [
+      'desktop' => true,
+      'tablet' => true,
+      'mobile' => true
+    ],
+    'phone_label' => '+123-456-789',
+    'location_label' => '',
+    'email_label' => '',
+  ];
+
 
   $defaults = wp_parse_args( [ 'header' => [
     // ROWS
-    'top-row' => $row_values,
-    'middle-row' => $row_values,
-    'bottom-row' => $row_values,
+    'top-row' => [
+      'rowBackground' => blocksy_background_default_value([
+        'backgroundColor' => [ 'default' => [ 'color' => 'var(--text)' ] ],
+      ]),
+      'padding' => 'small',
+    ],
+    'middle-row' => [
+      'rowBackground' => blocksy_background_default_value([
+        'backgroundColor' => [
+          'default' => [ 'color' => 'var(--textInvert)' ],
+        ],
+      ]),
+      'padding' => 'medium',
+    ],
+    'bottom-row' => [
+      'rowBackground' => blocksy_background_default_value([
+        'backgroundColor' => [
+          'default' => [ 'color' => 'var(--textInvert)' ],
+        ],
+      ]),
+      'padding' => 'small',
+    ],
     
     // OFF CANVAS
     'offcanvas' => [
@@ -112,100 +173,23 @@ function _custy_header_default_values( $defaults ) {
     'menu2' => $menu_values,
 
     // LOGO
-    'logo' => [
-      'logo_type' => 'text',
+    'logo' => $logo_values,
 
-      // Logo text
-      'text' => get_option('blogname'),
-      'textSize' => 'var(--mediumFontSize)',
-      // Logo Image
-      'image' => [ 'attachment_id' => null, 'url' => null ],
-      'has_mobile_image' => 'no',
-      'mobile_image' => [ 'attachment_id' => null, 'url' => null ],
-      // Logo SVG
-      'svg_code' => '<svg xmlns="http://www.w3.org/2000/svg" width="70" height="60" viewBox="0 0 452 389"><defs><clipPath id="b"><rect width="452" height="389"/></clipPath></defs><g id="a" clip-path="url(#b)"><rect width="452" height="389" fill="rgba(255,255,255,0)"/><path d="M0-225,225-612,450-225Zm391-32L327.222-368.035,263.406-257ZM59-257H223.1l84.459-145.268L225-546Zm391,32v0Z" transform="translate(1 613)" fill="#fff"/></g></svg>',
-
-
-      'logoColor' => [
-        'default' => [ 'color' => 'var(--text)' ],
-        'hover' => [ 'color' => 'var(--main)' ],
-      ],
-      'logoMaxWidth' => '70px',
-      'logoMaxHeight' => '60px',
-
-
-      'has_tagline' => 'no',
-      'tagline' => get_option('blogdescription'),
-      'taglineColor' => [
-        'default' => [ 'color' => 'var(--textDim)' ]
-      ],
-      'taglineSize' => 'var(--smallFontSize)',
-      'tagline_visibility' => [
-        'desktop' => true,
-        'tablet' => true,
-        'mobile' => false,
-      ]
-    ],
-
-    // BUTTON
     'button' => $button_values,
     'button2' => $button_values,
-
-    // FREE TEXT
+    
     'free-text' => $free_text_values,
     'free-text2' => $free_text_values,
-
-    // SEARCH
-    'search' => [
-      'search_style' => 'expanding',
-      'search_placeholder' => __( 'Search...' ),
-      
-      'submit_button_text' => '<svg viewBox="0 0 512 512"><path d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"/></svg>',
-      'submitButtonColor' => [
-        'default' => [ 'color' => 'var(--textInvert)' ],
-        'hover' => [ 'color' => 'var(--textInvert)' ],
-      ],
-      'submitButtonBackground' => [
-        'default' => [ 'color' => 'var(--text)' ],
-        'hover' => [ 'color' => 'var(--main)' ],
-      ],
-
-      'searchBackground' => [
-        'default' => [ 'color' => 'var(--textInvert)' ],
-        'focus' => [ 'color' => 'var(--textInvert)' ],
-      ]
-    ],
-
-    // SOCIAL ACCOUNTS
-    'social' => [
-      'social_links' => [
-        [ 'id' => 'location', 'enabled' => true ],
-        [ 'id' => 'email', 'enabled' => true ],
-        [ 'id' => 'phone', 'enabled' => true ],
-      ],
-      'icon_color' => 'custom',
-      'customColor' => [
-        'icon' => [ 'color' => 'var(--textInvert)' ],
-        'background' => [ 'color' => 'var(--main)' ]
-      ],
-      'icon_style' => 'icon-only',
-      'has_label' => 'yes',
-      'label_visibility' => [
-        'desktop' => true,
-        'tablet' => false,
-        'mobile' => false
-      ],
-      'phone_label' => '+123-456-789',
-      'location_label' => '',
-      'email_label' => '',
-    ],
     
-    // MOBILE MENU
+    'search' => $search_values,
+    
+    'social' => $social_values,
+
     'mobile-menu' => $mobile_menu_values,
     'mobile-menu2' => $mobile_menu_values,
 
     'trigger' => [
-      'trigger_style' => 'trigger-1',
+      'style' => 'trigger-1',
       'triggerColor' => [
         'default' => [ 'color' => 'var(--text)' ],
         'hover' => [ 'color' => 'var(--main)' ],
@@ -230,12 +214,7 @@ function _custy_header_default_values( $defaults ) {
           [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
           [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
 
-          [ 'id' => 'top-row', 'values' => [
-            'rowBackground' => blocksy_background_default_value([
-              'backgroundColor' => [ 'default' => [ 'color' => 'var(--text)' ] ],
-            ]),
-            'row_padding' => 'small',
-          ] ],
+          [ 'id' => 'top-row', 'values' => $defaults['header']['top-row'] ],
           [ 'id' => 'middle-row', 'values' => $defaults['header']['middle-row'] ],
           [ 'id' => 'bottom-row', 'values' => $defaults['header']['bottom-row'] ],
           [ 'id' => 'offcanvas', 'values' => $defaults['header']['offcanvas'] ],

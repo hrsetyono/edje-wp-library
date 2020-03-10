@@ -104,6 +104,7 @@ $section = [
         'units' => [
           'px' => [ 'min' => 960, 'max' => 1200 ],
         ],
+        'css' => '--siteWidth'
       ],
 
       'blogWidth' => [
@@ -113,6 +114,7 @@ $section = [
         'units' => [
           'px' => [ 'min' => 480, 'max' => 720 ],
         ],
+        'css' => '--blogWidth'
       ],
 
       custy_rand_id() => [ 'divider' => __( 'Global Variables' ) ],

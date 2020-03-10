@@ -2,14 +2,14 @@
 
 $row_options = [
   'rowBackground' => [
-    'label' => __( 'Background' ),
+    'label' => __( 'Row Background' ),
     'type'  => 'ct-background',
     'css' => '--row$',
   ],
 
   custy_rand_id() => [ 'divider' => '' ],
 
-  'row_padding' => [
+  'padding' => [
     'label' => __( 'Padding' ),
     'type' => 'ct-radio',
     'choices' => [
@@ -50,7 +50,7 @@ $items = [
 
       
       'offcanvasBackground' => [
-        'label' => __( 'Background' ),
+        'label' => __( 'Offcanvas Background' ),
         'type'  => 'ct-background',
         'css' => '--offcanvas$'
       ],
