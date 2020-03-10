@@ -17685,6 +17685,27 @@
           return e.id === t.id
         })), a ? a.values : {}),
         s = "initial";
+        
+      // @changed - use default columns_layout value instead of hardcoded one
+      
+      // if( Object.keys( c ).length === 0 && c.constructor === Object ) {
+      //   var item = null;
+      //   if( Array.isArray( n.items ) ) {
+      //     item = n.items.find( (i) => i.id == t.id );
+      //   } else {
+      //     item = n.items[ t.id ];
+      //   }
+        
+      //   s = item.values[ t.columns.length + '_columns_layout' ];
+      // } else {
+      //   console.log( 'c is not empty' );
+      //   s = c[ t.columns.length + "_columns_layout"];
+      // }
+
+      // return 2 === t.columns.length && (s = c["2_columns_layout"] || item.values['2_columns_layout']),
+      // 3 === t.columns.length && (s = c["3_columns_layout"] || item.values['3_columns_layout']),
+      // 4 === t.columns.length && (s = c["4_columns_layout"] || item.values['4_columns_layout']),
+
       return 2 === t.columns.length && (s = c["2_columns_layout"] || {
         desktop: "repeat(2, 1fr)",
         tablet: "initial",

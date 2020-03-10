@@ -52,7 +52,11 @@ function _custy_footer_default_values( $defaults ) {
     ], $row_values ),
     
     'middle-row' => wp_parse_args( [
-      'items_per_row' => 3,
+      'items_per_row' => 2,
+      '2_columns_layout' => [
+        'desktop' => '1fr 2fr',
+        'tablet' => 'stacked',
+      ],
       'row_padding' => 'large',
     ], $row_values ),
     
@@ -64,6 +68,7 @@ function _custy_footer_default_values( $defaults ) {
 
     'menu' => [
       'menu' => blocksy_get_default_menu(),
+      'menu_style' => 'only-parent',
     ],
 
     'copyright' => [
@@ -72,6 +77,10 @@ function _custy_footer_default_values( $defaults ) {
 
     'widget-area-1' => [
       'widget' => 'ct-footer-sidebar-1',
+      'widgetTextColor' => [
+        'default' => [ 'color' => 'var(--text)' ],
+        'hover' => [ 'color' => 'var(--mainLight)' ],
+      ]
     ],
     'widget-area-2' => [
       'widget' => 'ct-footer-sidebar-2',
@@ -115,6 +124,7 @@ function _custy_footer_default_values( $defaults ) {
       'settings' => [],
       'items' => [
         [ 'id' => 'menu', 'values' => $defaults['footer']['menu'] ],
+        [ 'id' => 'social', 'values' => $defaults['footer']['social'] ],
         [ 'id' => 'copyright', 'values' => $defaults['footer']['copyright'] ],
         
         [ 'id' => 'top-row', 'values' => $defaults['footer']['top-row'] ],
@@ -123,12 +133,11 @@ function _custy_footer_default_values( $defaults ) {
       ],
       'rows' => [
         [ 'id' => 'top-row', 'columns' => [
-          [ 'menu' ]
+          [ 'social' ]
         ] ],
         [ 'id' => 'middle-row', 'columns' => [
           [ 'widget-area-1' ],
-          [ 'widget-area-2' ],
-          [ 'widget-area-3' ]
+          [ 'menu' ],
         ] ],
         [ 'id' => 'bottom-row', 'columns' => [
           [ 'copyright' ]

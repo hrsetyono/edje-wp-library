@@ -16,5 +16,17 @@ $item = [
       ), 
     ],
 
+    custy_rand_id() => [ 'divider' => '' ],
+
+    'menu_style' => [
+      'label' => __( 'Menu Style' ),
+      'type' => 'ct-radio',
+      'desc' => __( 'If Include Children: only up to 2nd level' ),
+      'choices' => [
+        'only-parent' => __( 'Only Parent' ),
+        'include-child' => __( 'Include Children' ),
+      ],
+    ],
+
   ]
 ];

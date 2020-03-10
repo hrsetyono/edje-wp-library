@@ -127,13 +127,14 @@ $row_options = [
       ] ],
     ],
 
+    
     custy_rand_id() => [ 'divider' => '' ],
-
-
+    
     'row_visibility' => [
       'label' => __( 'Visibility' ),
       'type' => 'ct-visibility',
     ],
+
   ] ],
 
   custy_rand_id() => [ 'tab' => __( 'Design' ), 'options' => [
