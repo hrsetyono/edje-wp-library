@@ -1,104 +1,39 @@
 <?php
 
-$row_options = [
-  'rowBackground' => [
-    'label' => __( 'Row Background' ),
-    'type'  => 'ct-background',
-    'css' => '--row$',
-  ],
-];
+$items = [];
+$rows = [ 'top', 'middle', 'bottom' ];
 
-$items = [
-  'top-row' => [
-    'title' => __( 'Top Row' ),
+foreach( $rows as $row ) {
+  $items[ "{$row}-row" ] = [
+    'title' => ucfirst( $row ) . ' Row',
     'is_primary' => true,
-    'options' => $row_options,
-    'css_selector' => '[data-id="header-top-row"]',
-  ],
-
-  'middle-row' => [
-    'title' => __( 'Middle Row' ),
-    'is_primary' => true,
-    'options' => $row_options,
-    'css_selector' => '[data-id="header-middle-row"]',
-  ],
-
-  'bottom-row' => [
-    'title' => __( 'Bottom Row' ),
-    'is_primary' => true,
-    'options' => $row_options,
-    'css_selector' => '[data-id="header-bottom-row"]',
-  ],
-
-  'offcanvas' => [
-    'title' => __( 'Offcanvas' ),
-    'is_primary' => true,
-    'css_selector' => '[data-id="offcanvas"]',
     'options' => [
-
-      
-      'offcanvasBackground' => [
-        'label' => __( 'Offcanvas Background' ),
+      'rowBackground' => [
+        'label' => __( 'Row Background' ),
         'type'  => 'ct-background',
-        'css' => '--offcanvas$'
+        'css' => '--row$',
       ],
-
+    
       custy_rand_id() => [ 'divider' => '' ],
-
-      'reveal_from' => [
-        'label' => __( 'Reveal From' ),
-        'type' => 'ct-radio',
-        'choices' => [
-          'left' => __( 'Left' ),
-          'above' => __( 'Above' ),
-          'right' => __( 'Right' ),
+    
+      'rowHeight' => [
+        'label' => __( 'Row Height' ),
+        'type' => 'ct-slider',
+        'responsive' => true,
+        'units' => [
+          'px' => [ 'min' => 32, 'max' => 80 ],
         ],
+        'css' => "--{$row}RowHeight",
+        'css_selector' => ':root'
       ],
-
-      'items_alignment' => [
-        'label' => __( 'Items Alignment' ),
-        'type' => 'ct-radio/alignment',
-      ],
-
+    
       custy_rand_id() => [ 'divider' => '' ],
-      
-      'close_button_style' => [
-        'label' => __( 'Close Button Style' ),
-        'type' => 'ct-image-picker',
-        'attr' => [
-          'data-type' => 'background',
-          'data-columns' => '3',
-          'data-padding' => 'medium',
-        ],
-        'choices' => [
-          'close' => [
-            'src'   => custy_get_svg( 'close' ),
-            'title' => __( 'Standard' ),
-          ],
-          'close-circle' => [
-            'src'   => custy_get_svg( 'close-circle' ),
-            'title' => __( 'Circle' ),
-          ],
-          'close-square' => [
-            'src'   => custy_get_svg( 'close-square' ),
-            'title' => __( 'Square' ),
-          ],
-        ],
-      ],
-
-      'closeButtonColor' => [
-        'label' => __( 'Close Button Color' ),
-        'type'  => 'ct-color-picker',
-        'pickers' => [
-          'default' => __( 'Default' ),
-          'hover' => __( 'Hover' ),
-        ],
-        'css' => [
-          '--closeButtonColor' => 'default',
-          '--closeButtonColorHover' => 'hover'
-        ]
-      ],
-
+    
+      'is_sticky' => [
+        'label' => __( 'Is Sticky?' ),
+        'type' => 'ct-switch',
+      ]
     ],
-  ],
-];
+    'css_selector' => "[data-id=\"header-{$row}-row\"]",
+  ];
+}

@@ -10,6 +10,20 @@ function _custy_header_default_values( $defaults ) {
     'menu_id' => blocksy_get_default_menu(),
   ];
 
+  $row_values = [
+    'rowBackground' => blocksy_background_default_value([
+      'backgroundColor' => [
+        'default' => [ 'color' => 'var(--textInvert)' ],
+      ],
+    ]),
+    'rowHeight' => [
+      'desktop' => '60px',
+      'tablet' => '50px',
+      'mobile' => '50px',
+    ],
+    'is_sticky' => 'no',
+  ];
+
   $logo_values = [
     'logo_type' => 'text',
 
@@ -116,25 +130,22 @@ function _custy_header_default_values( $defaults ) {
 
   $defaults = wp_parse_args( [ 'header' => [
     // ROWS
-    'top-row' => [
+    'top-row' => wp_parse_args( [
       'rowBackground' => blocksy_background_default_value([
         'backgroundColor' => [ 'default' => [ 'color' => 'var(--text)' ] ],
       ]),
-    ],
-    'middle-row' => [
-      'rowBackground' => blocksy_background_default_value([
-        'backgroundColor' => [
-          'default' => [ 'color' => 'var(--textInvert)' ],
-        ],
-      ]),
-    ],
-    'bottom-row' => [
-      'rowBackground' => blocksy_background_default_value([
-        'backgroundColor' => [
-          'default' => [ 'color' => 'var(--textInvert)' ],
-        ],
-      ]),
-    ],
+      'rowHeight' => [
+        'desktop' => '40px',
+        'tablet' => '36px',
+        'mobile' => '36px',
+      ],
+    ], $row_values ),
+    
+    'middle-row' => wp_parse_args([
+      'is_sticky' => 'yes'
+    ], $row_values ),
+
+    'bottom-row' => $row_values,
     
     // OFF CANVAS
     'offcanvas' => [
@@ -209,33 +220,45 @@ function _custy_header_default_values( $defaults ) {
             [ 'id' => 'start', 'items' => ['search'] ],
             [ 'id' => 'middle', 'items' => [] ],
             [ 'id' => 'end', 'items' => [ 'social' ] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'middle-row', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'logo' ] ],
             [ 'id' => 'middle', 'items' => [] ],
             [ 'id' => 'end', 'items' => [ 'menu' ] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'bottom-row', 'placements' => [
             [ 'id' => 'start', 'items' => [] ],
             [ 'id' => 'middle', 'items' => [] ],
             [ 'id' => 'end', 'items' => [] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
         ],
         'mobile' => [
           [ 'id' => 'top-row', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'search' ] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'social' ] ]
+            [ 'id' => 'end', 'items' => [ 'social' ] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'middle-row', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'logo' ] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'trigger' ] ]
+            [ 'id' => 'end', 'items' => [ 'trigger' ] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'bottom-row', 'placements' => [
             [ 'id' => 'start', 'items' => [] ],
             [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ]
+            [ 'id' => 'end', 'items' => [] ],
+            [ 'id' => 'start-middle', 'items' => [] ],
+            [ 'id' => 'end-middle', 'items' => [] ],
           ] ],
           [ 'id' => 'offcanvas', 'placements' => [
             [ 'id' => 'start', 'items' => [ 'mobile-menu', 'button' ] ],
