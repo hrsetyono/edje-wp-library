@@ -56,39 +56,26 @@ function _custy_header_default_values( $defaults ) {
     'has_icon' => 'no',
     'png_icon' => [],
     'svg_icon' => '',
-
-    'button_size' => 'small',
-    'button_style' => 'outline',
+    
+    'size' => 'normal',
+    'style' => 'outline',
     'buttonBackground' => [
       'default' => [ 'color' => 'var(--main)' ],
       'hover' => [ 'color' => 'var(--mainDark)' ]
     ],
-    'buttonTextColor' => [
+    'buttonColor' => [
       'default' => [ 'color' => 'var(--textInvert)' ],
       'hover' => [ 'color' => 'var(--textInvert)' ],
     ],
   ];
 
   $search_values = [
-    'style' => 'expanding',
     'placeholder' => __( 'Search...' ),
-
-    'searchBackground' => [
-      'default' => [ 'color' => 'var(--textInvert)' ],
-      'focus' => [ 'color' => 'var(--textInvert)' ],
-    ],
     
-    'submit_text' => '<svg viewBox="0 0 512 512"><path d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"/></svg>',
+    'search_icon' => '<svg width="20" height="20" viewBox="0 0 512 512"><path d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"/></svg>',
 
-    'submitColor' => [
-      'default' => [ 'color' => 'var(--textInvert)' ],
-      'hover' => [ 'color' => 'var(--textInvert)' ],
-    ],
-    'submitBackground' => [
-      'default' => [ 'color' => 'var(--text)' ],
-      'hover' => [ 'color' => 'var(--main)' ],
-    ],
-
+    'has_submit_button' => 'yes',
+    'submit_text' => '<svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M218.101 38.101L198.302 57.9c-4.686 4.686-4.686 12.284 0 16.971L353.432 230H12c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h341.432l-155.13 155.13c-4.686 4.686-4.686 12.284 0 16.971l19.799 19.799c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L235.071 38.101c-4.686-4.687-12.284-4.687-16.97 0z"/></svg>'
 
   ];
 
@@ -133,7 +120,6 @@ function _custy_header_default_values( $defaults ) {
       'rowBackground' => blocksy_background_default_value([
         'backgroundColor' => [ 'default' => [ 'color' => 'var(--text)' ] ],
       ]),
-      'padding' => 'small',
     ],
     'middle-row' => [
       'rowBackground' => blocksy_background_default_value([
@@ -141,7 +127,6 @@ function _custy_header_default_values( $defaults ) {
           'default' => [ 'color' => 'var(--textInvert)' ],
         ],
       ]),
-      'padding' => 'medium',
     ],
     'bottom-row' => [
       'rowBackground' => blocksy_background_default_value([
@@ -149,7 +134,6 @@ function _custy_header_default_values( $defaults ) {
           'default' => [ 'color' => 'var(--textInvert)' ],
         ],
       ]),
-      'padding' => 'small',
     ],
     
     // OFF CANVAS
@@ -211,6 +195,7 @@ function _custy_header_default_values( $defaults ) {
           [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
           [ 'id' => 'logo', 'values' => $defaults['header']['logo'] ],
           [ 'id' => 'social', 'values' => $defaults['header']['social'] ],
+          [ 'id' => 'search', 'values' => $defaults['header']['search'] ],
           [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
           [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
 
@@ -238,7 +223,7 @@ function _custy_header_default_values( $defaults ) {
         ],
         'mobile' => [
           [ 'id' => 'top-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
+            [ 'id' => 'start', 'items' => [ 'search' ] ],
             [ 'id' => 'middle', 'items' => [] ],
             [ 'id' => 'end', 'items' => [ 'social' ] ]
           ] ],

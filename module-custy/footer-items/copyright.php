@@ -18,33 +18,5 @@ $item = [
         'toolbar2' => ''
       ],
     ],
-
-    custy_rand_id() => [ 'divider' => '' ],
-
-    'textSize' => [
-      'label' => __( 'Text Size' ),
-      'type' => 'ct-select/text',
-      'css' => '--textSize'
-    ],
-
-    'textColor' => [
-      'label' => __( 'Text Color' ),
-      'type'  => 'ct-color-picker',
-      'pickers' => [
-        'default' => __( 'Default' )
-      ],
-      'css' => [
-        '--textColor' => 'default'
-      ]
-    ],
-
-    custy_rand_id() => [ 'divider' => '' ],
-    
-    'textAlignment' => [
-      'label' => __( 'Text Alignment' ),
-      'type' => 'ct-radio/alignment',
-      'css' => '--textAlignment'
-    ],
-
   ]
 ];

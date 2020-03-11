@@ -19,7 +19,7 @@ $row_options = [
   ],
 
   custy_rand_id() => [ 'divider' => '' ],
-  
+
   // @todo: for unknown reason, this option is not saved to database. So you need to count() the items to get items_per_row
   'items_per_row' => [
     'label' => __( 'Items per Row' ),
@@ -139,17 +139,6 @@ $row_options = [
   'visibility' => [
     'label' => __( 'Visibility' ),
     'type' => 'ct-visibility',
-  ],
-
-  'padding' => [
-    'label' => __( 'Padding' ),
-    'type' => 'ct-radio',
-    'choices' => [
-      'none' => __( 'None' ),
-      'small' => __( 'Small' ),
-      'medium' => __( 'Medium' ),
-      'large' => __( 'Large' ),
-    ],
   ],
 ];
 

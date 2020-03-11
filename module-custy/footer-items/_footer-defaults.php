@@ -34,7 +34,6 @@ function _custy_footer_default_values( $defaults ) {
       'tablet' => true,
       'mobile' => true
     ],
-    'padding' => 'medium',
   ];
 
   $menu_values = [
@@ -62,11 +61,6 @@ function _custy_footer_default_values( $defaults ) {
 
   $copyright_values = [
     'copyright_text' => __( 'Copyright &copy; [current-year] - [site-title]' ),
-    'textSize' => 'var(--smallFontSize)',
-    'textColor' => [
-      'default' => [ 'color' => 'var(--textInvert)' ],
-    ],
-    'textAlignment' => 'center',
   ];
 
   $social_values = [
@@ -104,12 +98,10 @@ function _custy_footer_default_values( $defaults ) {
     
     'middle-row' => wp_parse_args( [
       'items_per_row' => 3,
-      'padding' => 'large',
     ], $row_values ),
     
     'bottom-row' => wp_parse_args( [
       'items_per_row' => 1,
-      'padding' => 'small',
     ], $row_values ),
     
     // Widgets

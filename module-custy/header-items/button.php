@@ -57,8 +57,8 @@ $button_options = [
 
   custy_rand_id() => [ 'tab' => __( 'Design' ), 'options' => [ 
 
-    'button_size' => [
-      'label' => __( 'Button Size' ),
+    'size' => [
+      'label' => __( 'Size' ),
       'type' => 'ct-radio',
       'choices' => [
         'small' => __( 'Small' ),
@@ -69,8 +69,8 @@ $button_options = [
 
     custy_rand_id() => [ 'divider' => '' ],
 
-    'button_style' => [
-      'label' => __( 'Button Style' ),
+    'style' => [
+      'label' => __( 'Style' ),
       'type' => 'ct-radio',
       'attr' => [ 'data-type' => 'background' ],
       'choices' => [
@@ -81,12 +81,12 @@ $button_options = [
     ],
     
     'buttonBackground' => [
-      'label' => __( 'Background' ),
+      'label' => __( 'Button Background' ),
       'type'  => 'ct-color-picker',
       'pickers' => [
         'default' => [
           'title' => __( 'Default' ),
-          'condition' => [ 'button_style' => 'solid' ]
+          'condition' => [ 'style' => 'solid' ]
         ],
         'hover' => __( 'Hover' ),
       ],
@@ -96,8 +96,8 @@ $button_options = [
       ],
     ],
 
-    'buttonTextColor' => [
-      'label' => __( 'Text Color' ),
+    'buttonColor' => [
+      'label' => __( 'Button Color' ),
       'type'  => 'ct-color-picker',
       'pickers' => [
         'default' => __( 'Default' ),

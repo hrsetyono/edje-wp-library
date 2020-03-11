@@ -6,18 +6,6 @@ $row_options = [
     'type'  => 'ct-background',
     'css' => '--row$',
   ],
-
-  custy_rand_id() => [ 'divider' => '' ],
-
-  'padding' => [
-    'label' => __( 'Padding' ),
-    'type' => 'ct-radio',
-    'choices' => [
-      'none' => __( 'None' ),
-      'small' => __( 'Small' ),
-      'medium' => __( 'Medium' ),
-    ],
-  ],
 ];
 
 $items = [
