@@ -25,12 +25,6 @@ $item = [
         'type' => 'text',
       ],
 
-      'textSize' => [
-        'label' => __( 'Text Size' ),
-        'type' => 'ct-select/text',
-        'css' => '--textSize'
-      ],
-
     ] ],
 
     // SVG LOGO
@@ -78,52 +72,6 @@ $item = [
 
     custy_rand_id() => [ 'divider' => '' ],
 
-    // COLOR
-    custy_rand_id() => [ 'condition' => [ 'logo_type' => 'text|svg' ], 'options' => [
-
-      'logoColor' => [
-        'label' => __( 'Color' ),
-        'type'  => 'ct-color-picker',
-        'pickers' => [
-          'default' => __( 'Default' ),
-          'hover' => __( 'Hover' ),
-        ],
-        'css' => [
-          '--logoColor' => 'default',
-          '--logoColorHover' => 'hover'
-        ]
-      ],
-
-    ] ],
-
-    // MAX WIDTH
-    custy_rand_id() => [ 'condition' => [ 'logo_type' => 'svg' ], 'options' => [
-      'logoMaxWidth' => [
-        'label' => __( 'Max Width' ),
-        'type' => 'ct-slider',
-        'responsive' => true,
-        'units' => [
-          'px' => [ 'min' => 40, 'max' => 320 ]
-        ],
-        'css' => '--logoMaxWidth'
-      ]
-    ] ],
-
-    // MAX HEIGHT
-    custy_rand_id() => [ 'condition' => [ 'logo_type' => 'image|svg' ], 'options' => [
-      'logoMaxHeight' => [
-        'label' => __( 'Max Height' ),
-        'type' => 'ct-slider',
-        'responsive' => true,
-        'units' => [
-          'px' => [ 'min' => 20, 'max' => 160 ],
-        ],
-        'css' => '--logoMaxHeight'
-      ],
-    ] ],
-
-    custy_rand_id() => [ 'divider' => '' ],
-
     
     // TAGLINE
     'has_tagline' => [
@@ -136,23 +84,6 @@ $item = [
       'tagline' => [
         'label' => __( 'Tagline' ),
         'type' => 'text',
-      ],
-
-      'taglineColor' => [
-        'label' => __( 'Color' ),
-        'type'  => 'ct-color-picker',
-        'pickers' => [
-          'default' => __( 'Default' ),
-        ],
-        'css' => [
-          '--taglineColor' => 'default',
-        ]
-      ],
-
-      'taglineSize' => [
-        'label' => __( 'Size' ),
-        'type' => 'ct-select/text',
-        'css' => '--taglineSize'
       ],
 
       'tagline_visibility' => [

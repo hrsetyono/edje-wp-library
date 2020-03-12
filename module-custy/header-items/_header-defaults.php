@@ -29,7 +29,6 @@ function _custy_header_default_values( $defaults ) {
 
     // Logo text
     'text' => get_option('blogname'),
-    'textSize' => 'var(--mediumFontSize)',
     // Logo Image
     'image' => [ 'attachment_id' => null, 'url' => null ],
     'has_mobile_image' => 'no',
@@ -37,20 +36,8 @@ function _custy_header_default_values( $defaults ) {
     // Logo SVG
     'svg_code' => '<svg xmlns="http://www.w3.org/2000/svg" width="70" height="60" viewBox="0 0 452 389"><defs><clipPath id="b"><rect width="452" height="389"/></clipPath></defs><g id="a" clip-path="url(#b)"><rect width="452" height="389" fill="rgba(255,255,255,0)"/><path d="M0-225,225-612,450-225Zm391-32L327.222-368.035,263.406-257ZM59-257H223.1l84.459-145.268L225-546Zm391,32v0Z" transform="translate(1 613)" fill="#fff"/></g></svg>',
 
-
-    'logoColor' => [
-      'default' => [ 'color' => 'var(--text)' ],
-      'hover' => [ 'color' => 'var(--main)' ],
-    ],
-    'logoMaxWidth' => '70px',
-    'logoMaxHeight' => '60px',
-
     'has_tagline' => 'no',
     'tagline' => get_option('blogdescription'),
-    'taglineColor' => [
-      'default' => [ 'color' => 'var(--textDim)' ]
-    ],
-    'taglineSize' => 'var(--smallFontSize)',
     'tagline_visibility' => [
       'desktop' => true,
       'tablet' => true,
@@ -91,16 +78,6 @@ function _custy_header_default_values( $defaults ) {
     'has_submit_button' => 'yes',
     'submit_text' => '<svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M218.101 38.101L198.302 57.9c-4.686 4.686-4.686 12.284 0 16.971L353.432 230H12c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h341.432l-155.13 155.13c-4.686 4.686-4.686 12.284 0 16.971l19.799 19.799c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L235.071 38.101c-4.686-4.687-12.284-4.687-16.97 0z"/></svg>'
 
-  ];
-
-  $free_text_values = [
-    'content' => 'Sample Text',
-    'textColor' => [
-      'default' => [ 'color' => 'var(--text)' ],
-      'link' => [ 'color' => 'var(--main)' ],
-    ],
-    'textSize' => 'var(--smallFontSize)',
-    'textMaxWidth' => '100%',
   ];
 
   $social_values = [
@@ -173,9 +150,6 @@ function _custy_header_default_values( $defaults ) {
     'button' => $button_values,
     'button2' => $button_values,
     
-    'free-text' => $free_text_values,
-    'free-text2' => $free_text_values,
-    
     'search' => $search_values,
     
     'social' => $social_values,
@@ -197,75 +171,73 @@ function _custy_header_default_values( $defaults ) {
   // PLACEMENTS
   $defaults = wp_parse_args( [ 'header_placements' => [
     'current_section' => 'main',
-    'sections' => [
-      [
-        'id' => 'main',
-        'label' => 'Main Header',
-        'mode' => 'placements',
-        'items' => [
-          [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
-          [ 'id' => 'logo', 'values' => $defaults['header']['logo'] ],
-          [ 'id' => 'social', 'values' => $defaults['header']['social'] ],
-          [ 'id' => 'search', 'values' => $defaults['header']['search'] ],
-          [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
-          [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
+    'sections' => [ [
+      'id' => 'main',
+      'label' => 'Main Header',
+      'mode' => 'placements',
+      'items' => [
+        [ 'id' => 'menu', 'values' => $defaults['header']['menu'] ],
+        [ 'id' => 'logo', 'values' => $defaults['header']['logo'] ],
+        [ 'id' => 'social', 'values' => $defaults['header']['social'] ],
+        [ 'id' => 'search', 'values' => $defaults['header']['search'] ],
+        [ 'id' => 'mobile-menu', 'values' => $defaults['header']['mobile-menu'] ],
+        [ 'id' => 'trigger', 'values' => $defaults['header']['trigger'] ],
 
-          [ 'id' => 'top-row', 'values' => $defaults['header']['top-row'] ],
-          [ 'id' => 'middle-row', 'values' => $defaults['header']['middle-row'] ],
-          [ 'id' => 'bottom-row', 'values' => $defaults['header']['bottom-row'] ],
-          [ 'id' => 'offcanvas', 'values' => $defaults['header']['offcanvas'] ],
-        ],
-        'desktop' => [
-          [ 'id' => 'top-row', 'placements' => [
-            [ 'id' => 'start', 'items' => ['search'] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'social' ] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'middle-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'logo' ] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'menu' ] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'bottom-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-        ],
-        'mobile' => [
-          [ 'id' => 'top-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'search' ] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'social' ] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'middle-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'logo' ] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [ 'trigger' ] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'bottom-row', 'placements' => [
-            [ 'id' => 'start', 'items' => [] ],
-            [ 'id' => 'middle', 'items' => [] ],
-            [ 'id' => 'end', 'items' => [] ],
-            [ 'id' => 'start-middle', 'items' => [] ],
-            [ 'id' => 'end-middle', 'items' => [] ],
-          ] ],
-          [ 'id' => 'offcanvas', 'placements' => [
-            [ 'id' => 'start', 'items' => [ 'mobile-menu', 'button' ] ],
-          ] ],
-        ],
+        [ 'id' => 'top-row', 'values' => $defaults['header']['top-row'] ],
+        [ 'id' => 'middle-row', 'values' => $defaults['header']['middle-row'] ],
+        [ 'id' => 'bottom-row', 'values' => $defaults['header']['bottom-row'] ],
+        [ 'id' => 'offcanvas', 'values' => $defaults['header']['offcanvas'] ],
       ],
-    ], // sections
+      'desktop' => [
+        [ 'id' => 'top-row', 'placements' => [
+          [ 'id' => 'start', 'items' => ['search'] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [ 'social' ] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
+        [ 'id' => 'middle-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [ 'logo' ] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [ 'menu' ] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
+        [ 'id' => 'bottom-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
+      ],
+      'mobile' => [
+        [ 'id' => 'top-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [ 'search' ] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [ 'social' ] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
+        [ 'id' => 'middle-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [ 'logo' ] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [ 'trigger' ] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
+        [ 'id' => 'bottom-row', 'placements' => [
+          [ 'id' => 'start', 'items' => [] ],
+          [ 'id' => 'middle', 'items' => [] ],
+          [ 'id' => 'end', 'items' => [] ],
+          [ 'id' => 'start-middle', 'items' => [] ],
+          [ 'id' => 'end-middle', 'items' => [] ],
+        ] ],
+        [ 'id' => 'offcanvas', 'placements' => [
+          [ 'id' => 'start', 'items' => [ 'mobile-menu', 'button' ] ],
+        ] ],
+      ],
+    ] ], // sections
   ] ], $defaults );
 
 

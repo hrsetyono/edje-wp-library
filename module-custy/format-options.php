@@ -211,6 +211,12 @@ class Custy_Options {
           $args['choices'] = [ 'left' => '', 'center' => '', 'right' => '' ];
           break;
 
+        case 'ct-radio/alignment-no-center':
+          $args['type'] = 'ct-radio';
+          $args['attr'] = [ 'data-type' => 'alignment' ];
+          $args['choices'] = [ 'left' => '', 'right' => '' ];
+          break;
+
         // SELECT
         case 'ct-select':
           $args['choices'] = blocksy_ordered_keys( $args['choices'] );
