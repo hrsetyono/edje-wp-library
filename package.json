@@ -11,7 +11,5 @@
     "sass": "node-sass -w ./ -o ./ --output-style compressed",
     "sass-editor": "node-sass -w module-editor/sass -o module-editor/assets --output-style compressed",
     "bsync-editor": "browser-sync start --proxy \"demo.test/basic-theme\" --files \"module-editor/assets/*.css\"",
-    "sass-custy": "node-sass -w module-custy/sass -o module-custy/css --output-style compressed",
-    "bsync-custy": "browser-sync start --proxy \"demo.test/basic-theme\" --files \"module-custy/css/*.css\""
   }
 }

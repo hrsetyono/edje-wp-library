@@ -31,24 +31,12 @@ function _h_enqueue_classic_editor() {
 
 /////
 
-
-/**
- * Register ACF Block, only usable in action "acf/init"
- * - After that, you need to set a Field Group to be displayed when Block is equal to this.
- */
-function h_register_block( $slug, $args ) {
-  if( !function_exists('acf_register_block') ) { return; }
-
-  require_once __DIR__ . '/acf-blocks.php';
-
-  $block = new \h\ACF_Block( $slug, $args );
-  $block->register();
-}
-
 /**
  * Register ACF Block for Post Listing
  * - You need to create a TWIG file in views/blocks named `h-$pt-list.twig`. Replace $pt with post type
  * - In the template, you can use `posts` object to loop through.
+ * 
+ * @deprecated - too complicated to use, let them create their own ACF Block
  */
 function h_register_post_type_block( string $post_type, array $args = [] ) {
   if( !function_exists('acf_register_block') ) { return; }
@@ -58,15 +46,6 @@ function h_register_post_type_block( string $post_type, array $args = [] ) {
   $block = new \h\Block_Post_List( $post_type, $args );
   $block->register();
 }
-
-/**
- * Alias for h_register_post_type_block()
- * @deprecated - This is the old function name
- */
-function h_register_post_block( string $post_type, array $args = [] ) {
-  h_register_post_type_block( $post_type, $args );
-}
-
 
 
 /**

@@ -36,7 +36,6 @@ require_once "module-timber/_index.php";
 
 require_once "module-editor/_index.php";
 require_once "module-editor-faq/_index.php";
-require_once "module-custy/_index.php";
   
 
 class Edje_WP_Library {
