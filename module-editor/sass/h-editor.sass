@@ -1,0 +1,515 @@
+// $include-grid: true
+// $include-tile: true
+// $output-framework: true
+
+// @import "../../_edje/_index"
+
+$acf-bg: #f3f3f4
+
+.has-text-align-right
+  text-align: right !important
+.has-text-align-center
+  text-align: center !important
+.has-text-align-left
+  text-align: left !important
+
+// Fixed bug where you can't select the Toolbar of Wide-aligned block
+.block-editor-block-list__layout .block-editor-block-list__block
+  &[data-align="wide"],
+  &[data-align="full"]
+    z-index: 25
+  
+
+///// COLUMNS
+
+
+
+///// PARAGRAPH
+
+// empty paragraph
+[data-is-placeholder-visible="true"]
+  + .wp-block-paragraph::before
+    content: ""
+    position: absolute
+    top: -0.5rem
+    right: -0.5rem
+    left: -0.5rem
+    bottom: -0.5rem
+    border: 1px dashed rgba(black, .3)
+
+.wp-block-paragraph.has-drop-cap:first-letter
+  font-size: 6rem
+  line-height: 4.5rem
+
+
+///// LIST
+
+[data-type="core/list"]
+  ol ol,
+  ul ol
+    list-style-type: lower-alpha
+
+///// BLOCK QUOTE
+
+.wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
+  padding-top: 1rem
+  border-top: 4px solid #000
+
+.wp-block-quote.is-style-large
+  padding-bottom: 1rem
+  border-top: 4px solid gray
+  border-bottom: 4px solid gray
+  text-align: center
+
+  p
+    font-style: normal
+
+
+///// IMAGE
+
+[data-type="core/image"][data-align="left"],
+[data-type="core/image"][data-align="right"]
+  .editor-block-list__block-edit,
+  .components-resizable-box__container,
+  img
+    max-width: 305px
+
+  [data-block]
+    margin-top: 0
+    margin-bottom: 0
+
+
+[data-type="core/heading"]
+  clear: both
+
+[data-type="core/file"]
+  .wp-block-file__content-wrapper
+    text-align: center
+
+
+///// GALLERY
+
+// if not cropped, put caption below image
+.wp-block-gallery:not(.is-cropped)
+  figure
+    flex-direction: column
+  
+  .blocks-gallery-item .editor-rich-text
+    position: relative
+    overflow-y: visible
+    margin-top: auto
+  
+  .block-editor-rich-text__inline-toolbar
+    transform: translateY(-100%)
+
+  .block-editor-rich-text figcaption
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
+    background-image: none
+    color: var(--text)
+
+  figcaption a
+    color: inherit
+
+// Slider style
+.wp-block-gallery.is-style-h-slider
+
+  .blocks-gallery-item
+    flex-grow: inherit
+
+  .blocks-gallery-item:nth-child(1),
+  .blocks-gallery-item:nth-child(2)
+    position: relative
+
+    &::before
+      position: absolute
+      top: 50%
+      font-size: 3rem
+      font-family: "dashicons"
+      transform: translateY( -50% )
+
+  .blocks-gallery-item:nth-child(1)::before
+    content: "\f341"
+    right: 100%
+
+  .blocks-gallery-item:nth-child(2)::before
+    content: "\f345"
+    left: 100%
+
+
+///// COVER
+
+.wp-block-cover .wp-block-cover__inner-container
+
+.wp-block-cover
+  h1, h2
+    padding-right: 0
+    padding-left: 0
+    text-align: left
+  
+
+///// GROUP
+
+.wp-block-group
+  &:not(.has-background)
+    border-top: 1px dashed var(--textDim)
+    border-bottom: 1px dashed var(--textDim)
+
+  &.has-background
+    padding: 33px 0
+
+
+///// MEDIA TEXT
+
+.wp-block-media-text
+  align-items: flex-start
+  grid-template-columns: 50% auto !important
+
+  &.is-style-h-smaller-image,
+  &.is-style-h-larger-image.has-media-on-the-right
+    grid-template-columns: 33% auto !important
+
+  &.is-style-h-larger-image,
+  &.is-style-h-smaller-image.has-media-on-the-right
+    grid-template-columns: 67% auto !important
+
+  // hide resizer
+  .block-library-media-text__media-container + span
+    display: none
+
+
+///// FILE
+
+.wp-block-file
+  background-color: rgba(black, .05)
+  padding: 1rem
+
+///// TABLE
+
+.wp-block-table
+  --tableBorder: black
+  --tableHeader: #{ rgba(black, .1) }
+  --tableBg: white
+  --tableStripe: #{ rgba(black, .05) }
+
+  thead tr,
+  tfoot tr
+    background-color: var(--tableHeader)
+    font-weight: 700
+    text-align: left
+    
+  thead tr
+    border-bottom: 3px solid var(--tableBorder)
+  tfoot tr
+    border-top: 3px solid var(--tableBorder)
+  tr
+    background-color: var(--tableBg)
+  th,
+  td
+    border: 1px solid var(--tableBorder)
+
+  [class*="-background-color"]
+    --tableStripe: white
+
+  .has-subtle-pale-green-background-color
+    --tableBorder: var(--green)
+    --tableHeader: rgba(var(--greenRGB), .2)
+    --tableBg: rgba(var(--greenRGB), .1)
+
+  .has-subtle-pale-blue-background-color
+    --tableBorder: var(--blue)
+    --tableHeader: rgba(var(--blueRGB), .2)
+    --tableBg: rgba(var(--blueRGB), .1)
+
+  .has-subtle-pale-pink-background-color
+    --tableBorder: var(--red)
+    --tableHeader: rgba(var(--redRGB), .2)
+    --tableBg: rgba(var(--redRGB), .1)
+
+
+// Table stripes
+.wp-block-table.is-style-stripes
+  border-collapse: collapse
+
+  th,
+  td
+    border: 1px solid var(--tableBorder)
+
+  // The default stripe is on Odd row, remove it
+  tbody tr:nth-child(odd),
+  &.has-background tbody tr:nth-child(odd)
+    background-color: var(--tableBg)
+
+  tbody tr:nth-child(odd)
+    background-color: var(--tableStripe)
+
+
+// Table color setting in Sidebar
+button.components-color-palette__item
+  &[aria-label*="pale blue"]
+    color: var(--blue) !important
+  &[aria-label*="pale pink"]
+    color: var(--red) !important
+  &[aria-label*="pale green"]
+    color: var(--green) !important
+
+span.component-color-indicator
+  &[aria-label*="pale blue"]
+    background: var(--blue) !important
+  &[aria-label*="pale green"]
+    background: var(--green) !important
+  &[aria-label*="pale pink"]
+    background: var(--red) !important
+
+
+
+///// BUTTON
+
+.wp-block-button-wrapper
+  width: 100%
+
+
+[data-align="center"] .wp-block-button__inline-link
+  margin-right: auto
+  margin-left: auto
+  
+.wp-block-button__link
+  background-color: var(--main)
+
+  .is-style-outline &
+    background-color: transparent !important
+    border-color: auto
+    color: var(--main)
+
+  .is-style-transparent &
+    background-color: transparent !important
+    border: none
+    color: var(--main)
+    text-transform: uppercase
+    letter-spacing: 0.05em
+
+    &:focus
+      box-shadow: none
+ 
+///// SEPARATOR
+
+[data-type="core/separator"]
+  [data-block]
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
+
+
+///// SOCIAL LINKS
+
+[data-type="core/social-links"]
+
+  .editor-block-list__layout
+    flex-wrap: wrap
+
+
+.wp-social-link
+  margin-bottom: 0.5rem
+  border-radius: var(--gRadius)
+
+  .is-style-pill-shape &
+    border-radius: 20px
+
+
+///// ACF GUTENBERG
+
+.acf-block-body
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+
+  .acf-label,
+  .acf-input p,
+  .acf-label .description,
+  .acf-table
+    font-size: 13px
+
+%acf-wide-field
+  margin-right: -3rem
+  margin-left: -3rem
+
+// ACF Block - styled to be similar to Embed block
+div.acf-block-body .acf-fields
+  display: grid
+  justify-content: center
+  padding: 1.5rem 4.5rem
+  min-height: 200px
+  grid-template-columns: repeat(10, 1fr)
+  grid-column-gap: 1rem
+  grid-row-gap: 1rem
+  border: none
+
+  .acf-block-panel &
+    min-height: auto
+    padding-top: 2rem
+    padding-bottom: 2rem
+
+  > *
+    width: 100% !important
+    grid-column: span 10
+
+  $widths: ( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 )
+  @each $w in $widths
+    > [data-width^="#{$w}"]
+      grid-column: span #{$w}
+
+  &::after
+    display: none
+
+  select
+    text-transform: capitalize
+
+  // single field
+  div.acf-field
+    padding: 0
+
+// Background color (also change the Embed block color)
+div.acf-block-body .acf-fields,
+div.components-placeholder
+  background-color: $acf-bg
+
+
+// MESSAGE Field
+div.acf-block-body div.acf-field.acf-field-message
+  align-self: flex-end
+  padding: 0.5rem 1rem
+  background-color: rgba(white, .5)
+
+  .acf-label
+    margin: 0
+    text-align: center
+    font-size: 14px
+
+  label
+    cursor: default
+
+  p
+    margin: 0
+    text-align: center
+
+
+// ACF RADIO field
+div.acf-block-body .acf-field-radio
+  .acf-label
+    margin-right: 1rem
+
+  .acf-radio-list
+    margin-bottom: 0
+
+// ACF GALLERY field
+div.acf-block-body
+  .acf-gallery-toolbar ul
+    margin-bottom: 0
+
+  .acf-gallery-main
+    right: 0 !important
+
+  .acf-gallery-side
+    position: absolute
+    z-index: 10
+  
+  .acf-gallery-side-info
+    width: auto
+    margin: -10px -10px 1em
+
+
+// ACF WYSIWYG field
+
+// Remove most buttons in TinyMCE Editor
+div.acf-block-component .acf-field-wysiwyg
+  [aria-label*="Underline"],
+  [aria-label*="Blockquote"],
+  [aria-label*="Strikethrough"],
+  [aria-label*="Align"],
+  [aria-label*="Undo"],
+  [aria-label*="Redo"],
+  [aria-label*="Fullscreen"],
+  [aria-label*="Read More"],
+  [aria-label*="Toolbar Toggle"]
+    display: none
+
+div.acf-block-component .acf-field-wysiwyg .mce-edit-area iframe
+  height: 200px
+
+
+// ACF RELATIONSHIP field
+
+div.acf-block-body .acf-relationship
+  @extend %acf-wide-field
+
+
+// ACF TAB field
+
+div.acf-block-body .acf-fields > .acf-tab-wrap
+  background-color: transparent
+
+  .acf-tab-group
+    margin-right: -4.5rem
+    margin-left: -4.5rem
+    padding-right: 4.5rem
+    padding-left: 4.5rem
+    border-top: none
+    
+    li.active a
+      background-color: $acf-bg
+
+
+// ACF REPEATER field
+
+div.acf-block-body .acf-repeater
+  @extend %acf-wide-field
+
+  .acf-table
+    border-collapse: collapse
+
+  .acf-row-handle
+    background-color: #f9f9f9
+
+  .acf-row-handle.order
+    border-right: 1px solid #dfdfdf
+
+div.acf-block-body .acf-repeater.-block
+  .acf-fields
+    padding: 0.5rem !important
+    border-bottom: 1px solid #dfdfdf
+
+
+div.acf-block-body .acf-repeater.-row
+  .acf-fields
+    grid-row-gap: 0
+  .acf-field
+    padding: 0.5rem
+  .acf-label
+    padding: 0
+  .acf-input
+    padding: 0 0.25rem
+
+
+// ACF FLEXIBLE CONTENT field
+
+div.acf-block-body .acf-flexible-content
+  @extend %acf-wide-field
+
+  .acf-fields
+    background-color: rgba(white, .1)
+
+// fields at sidebar
+div.edit-post-sidebar .acf-block-fields
+  padding-top: 1rem
+  padding-bottom: 1rem
+
+  div.acf-field
+    margin-bottom: 1rem
+    padding: 0 1rem
+    width: 100% !important
+
+    &.acf-field-message
+      display: none
+
+
+//
+.acf-block-post-list
+  a
+    pointer-events: none

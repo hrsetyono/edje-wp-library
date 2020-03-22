@@ -4,7 +4,7 @@
  */
 class Modify_Jetpack {
   function __construct() {
-    add_action( 'init', [$this, 'init'] );
+    add_action( 'plugins_loaded', [$this, 'loaded'] );
 
     add_action( 'wp_head', [$this, 'wp_head'], 2 );
     add_action( 'wp_footer', [$this, 'wp_footer'] );
@@ -12,10 +12,16 @@ class Modify_Jetpack {
     // disable jetpack css
     add_filter( 'jetpack_implode_frontend_css', '__return_false' );
     add_filter( 'jetpack_lazy_images_blacklisted_classes', [$this, 'blacklisted_lazyload_classes'] );
+
+    // remove sharing buttons to be added manually with shortcode
+    add_action( 'loop_start', [$this, 'remove_share_buttons'] );
+    add_shortcode( 'h-jetpack-sharing', [$this, 'shortcode_jetpack_sharing'] );
   }
 
-
-  function init() {
+  /**
+   * @action plugins_loaded
+   */
+  function loaded() {
     add_filter( 'wp', [$this, 'remove_related_posts'], 20 );
 
     // add woocommerce to sitemap
@@ -80,5 +86,35 @@ class Modify_Jetpack {
   function blacklisted_lazyload_classes( $classes ) {
     $classes[] = 'custom-logo';
     return $classes;
+  }
+
+  /**
+   * Remove default placement of sharing buttons
+   * 
+   * @action loop_start
+   */
+  function remove_share_buttons() {
+    remove_filter( 'the_content', 'sharing_display', 19 );
+    remove_filter( 'the_excerpt', 'sharing_display', 19 );
+
+    if ( class_exists( 'Jetpack_Likes' ) ) {
+      remove_filter( 'the_content', array( Jetpack_Likes::init(), 'post_likes' ), 30, 1 );
+    }
+  }
+
+  /**
+   * Display Jetpack's sharing button
+   * 
+   * [h-jetpack-sharing]
+   */
+  function shortcode_jetpack_sharing() {
+    if ( function_exists( 'sharing_display' ) ) {
+      sharing_display( '', true );
+    }
+    
+    if ( class_exists( 'Jetpack_Likes' ) ) {
+      $custom_likes = new Jetpack_Likes;
+      echo $custom_likes->post_likes( '' );
+    }
   }
 }

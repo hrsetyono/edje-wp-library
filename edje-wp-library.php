@@ -1,23 +1,24 @@
 <?php
-/*
-Plugin Name: Edje WP Library
-Description: Simplify WordPress complicated functions. Designed to work with Timber.
-Plugin URI: http://github.com/hrsetyono/edje-wp-library
-Author: Pixel Studio
-Author URI: https://pixelstudio.id
-Version: 4.0.0-beta
-*/
+/**
+ * Plugin Name: Edje WP Library
+ * Description: Simplify WordPress complicated functions. Designed to work with Timber.
+ * Plugin URI: http://github.com/hrsetyono/edje-wp-library
+ * Requires at least: 5.3
+ * Requires PHP: 7.0
+ * License: MIT
+ * Author: Pixel Studio
+ * Author URI: https://pixelstudio.id
+ * Version: 3.7.0
+ */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '4.0.0' );
+define( 'H_VERSION', '3.7.0' );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 define( 'H_DIR', __DIR__ ); // for require
 define( 'H_URL', plugin_dir_url( __FILE__ ) ); // for linking assets
-define( 'BLOCKSY_DIR', H_DIR . '/module-blocksy' );
-define( 'BLOCKSY_URL', H_URL . 'module-blocksy' ); 
 
 
 if( !class_exists('Edje_WP_Library') ):
@@ -31,10 +32,10 @@ require_once "module-post-type/_index.php";
 require_once "module-admin-sidenav/_index.php";
 require_once "module-customizer/_index.php";
 require_once "module-api/_index.php";
+require_once "module-timber/_index.php";
 
 require_once "module-editor/_index.php";
 require_once "module-editor-faq/_index.php";
-require_once "module-blocksy/_index.php";
   
 
 class Edje_WP_Library {

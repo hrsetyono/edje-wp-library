@@ -1,8 +1,11 @@
 <?php namespace h;
 
+
 /**
  * Show Posts in Grid view
  * - Auto-generated when creating Post Type
+ * 
+ * @deprecated - too complicated to use, let them create their own ACF Block
  */
 class Block_Post_list {
   private $post_type;
