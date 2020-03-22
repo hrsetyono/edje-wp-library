@@ -9,7 +9,6 @@ class Customizer_Default {
     $this->option = get_option( 'h' );
 
     add_action( 'customize_register', [$this, 'head_footer_code'] );
-    add_action( 'customize_register', [$this, 'site_identity'] );
 
     // add the custom code to Head or Footer
     add_action( 'wp_head', [$this, 'add_head_code'], 100 );
@@ -46,22 +45,6 @@ class Customizer_Default {
     ] );
   }
 
-
-  /**
-   * Add Theme Color and Mobile Logo
-   */
-  function site_identity( $wp_customize ) {
-    $c = h_customizer( $wp_customize );
-
-    $c->add_settings_to_title_tagline( [
-      'background_color' => [
-        'type' => 'color',
-        'label' => __('Theme Color'),
-        'description' => __('Used for taskbar color in Mobile browser')
-      ],
-    ]);
-  }
-
   ////
 
   /**
@@ -69,12 +52,6 @@ class Customizer_Default {
    * @action wp_head 100
    */
   function add_head_code() {
-    // Add Theme color tag
-    $color = get_background_color();
-    if( $color ) {
-      echo "<meta name='theme-color' content='#$color'>";
-    }
-
     // Add custom HEAD code
     if( isset( $this->option['head_code'] ) ) {
       echo $this->option['head_code'];
