@@ -19,10 +19,9 @@ class Modify_Head_Footer {
     // remove default js or css 
     add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'] );
 
-    
-    // NOTE: Clashes with CDN making the CSS and JS hard to update
-    // add_filter( 'script_loader_src', [$this, 'remove_script_version'], 15 );
-    // add_filter( 'style_loader_src', [$this, 'remove_script_version'], 15 );
+    add_action( 'customize_register', [$this, 'customize_register'] );
+    add_action( 'wp_head', [$this, 'add_custom_head_code'], 100 );
+    add_action( 'wp_footer', [$this, 'add_custom_footer_code'], 100 );
   }
 
 
@@ -47,13 +46,66 @@ class Modify_Head_Footer {
 
 
   /**
-   * Remove the versioning in JS and CSS url
-   * @filter script_loader_src 15
-   * @filter style_loader_src 15
+   * Create Customizer field to add extra code in Header/Footer
+   * 
+   * @param $wpc - WP_Customize object
+   * 
+   * @action customize_register
    */
-  function remove_script_version( $src ){
-    $parts = explode( '?', $src );
-    return $parts[0];
+  function customize_register( $wpc ) {
+    $setting_args = [
+      'type' => 'option',
+      'transport' => 'postMessage',
+      'default' => '',
+    ];
+
+    $editor_settings = [
+      'codemirror' => [ 'mode' => 'htmlmixed' ],
+    ];
+
+    // Add section
+    $wpc->add_section( 'h_code_section', [
+      'title' => __( 'Head & Footer Code' ),
+      'description' => __( 'Add custom code for Head and Footer area' ),
+    ] );
+
+    // Add options
+    $wpc->add_setting( 'h[head_code]', $setting_args );
+    $wpc->add_setting( 'h[footer_code]', $setting_args );
+
+    // Add control
+    $wpc->add_control( new \WP_Customize_Code_Editor_Control( $wpc, 'h[head_code]', [
+      'label' => __( 'HEAD code' ),
+      'editor_settings' => $editor_settings,
+      'section' => 'h_code_section',
+      'settings' => 'h[head_code]',
+    ] ) );
+
+    $wpc->add_control( new \WP_Customize_Code_Editor_Control( $wpc, 'h[footer_code]', [
+      'label' => __( 'FOOTER code' ),
+      'editor_settings' => $editor_settings,
+      'section' => 'h_code_section',
+      'settings' => 'h[footer_code]',
+    ] ) );
   }
 
+  /**
+   * Add custom code to wp_head() section.
+   * 
+   * @action wp_head 100
+   */
+  function add_custom_head_code() {
+    echo get_option( 'h' )['head_code'] ?? '';
+  }
+
+  /*
+    Add custom code to wp_footer() section.
+
+    @action wp_footer 100
+  */
+  function add_custom_footer_code() {
+    echo get_option( 'h' )['footer_code'] ?? '';
+  }
 }
+
+new Modify_Head_Footer();

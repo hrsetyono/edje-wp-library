@@ -15,7 +15,6 @@ class Modify_Jetpack {
 
     // remove sharing buttons to be added manually with shortcode
     add_action( 'loop_start', [$this, 'remove_share_buttons'] );
-    add_shortcode( 'h-jetpack-sharing', [$this, 'shortcode_jetpack_sharing'] );
   }
 
   /**
@@ -101,20 +100,6 @@ class Modify_Jetpack {
       remove_filter( 'the_content', array( Jetpack_Likes::init(), 'post_likes' ), 30, 1 );
     }
   }
-
-  /**
-   * Display Jetpack's sharing button
-   * 
-   * [h-jetpack-sharing]
-   */
-  function shortcode_jetpack_sharing() {
-    if ( function_exists( 'sharing_display' ) ) {
-      sharing_display( '', true );
-    }
-    
-    if ( class_exists( 'Jetpack_Likes' ) ) {
-      $custom_likes = new Jetpack_Likes;
-      echo $custom_likes->post_likes( '' );
-    }
-  }
 }
+
+new Modify_Jetpack();

@@ -54,3 +54,5 @@ class Modify_Login {
     endif;
   }
 }
+
+new Modify_Login();

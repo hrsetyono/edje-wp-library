@@ -11,8 +11,7 @@ class Customizer_Default {
     add_action( 'customize_register', [$this, 'head_footer_code'] );
 
     // add the custom code to Head or Footer
-    add_action( 'wp_head', [$this, 'add_head_code'], 100 );
-    add_action( 'wp_footer', [$this, 'add_footer_code'], 100 );
+
   }
 
 

@@ -9,9 +9,9 @@ class Modify_SEO {
     remove_action( 'wp_head', 'feed_links_extra', 3 );
 
     // prevent url guessing
-    add_filter('redirect_canonical', [$this, 'redirect_canonical'] );
+    add_filter( 'redirect_canonical', [$this, 'redirect_canonical'] );
 
-    // If Yoast installed, use its SEO tag
+    // Disable Jetpack SEO if TSF or Yoast is installed
     if( \_H::is_plugin_active('tsf') || \_H::is_plugin_active('yoast') ) {
       add_filter('jetpack_enable_open_graph', '__return_false');
     }
@@ -26,3 +26,5 @@ class Modify_SEO {
     return $url;
   }
 }
+
+new Modify_SEO();

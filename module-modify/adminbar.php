@@ -17,3 +17,5 @@ class Modify_Adminbar {
     add_filter( 'pre_option_show_avatars', '__return_zero' );
   }
 }
+
+new Modify_Adminbar();

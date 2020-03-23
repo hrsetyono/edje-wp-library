@@ -123,12 +123,6 @@ class Customizer {
         $control = new \WP_Customize_Header_Image_Control( $this->wp, $name, $args );
         break;
 
-      // custom
-      case 'visual_editor':
-        require_once __DIR__ . '/customizer-tinymce.php';
-        $control = new Customize_TinyMCE_Control( $this->wp, $name, $args );
-        break;
-
       default:
         break;
     }

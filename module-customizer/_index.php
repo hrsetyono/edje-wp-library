@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @deprecated - Replaced with Custy (https://github.com/hrsetyono/wp-custy/)
+ */
 add_action( 'plugins_loaded' , '_h_load_customizer' );
 add_action( 'customize_controls_print_styles', '_h_enqueue_customizer' );
 

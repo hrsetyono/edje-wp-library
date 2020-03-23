@@ -75,3 +75,5 @@ class Modify_Admin {
   }
 
 }
+
+new Modify_Admin();

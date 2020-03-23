@@ -4,6 +4,9 @@ class H_Shortcode {
   function __construct() {
     add_shortcode( 'grid', [$this, 'grid'] );
     add_shortcode( 'button', [$this, 'button'] );
+
+    add_shortcode( 'h-related-posts', [$this, 'related_posts'] );
+    add_shortcode( 'h-jetpack-sharing', [$this, 'shortcode_jetpack_sharing'] );
   }
 
   /*
@@ -68,5 +71,50 @@ class H_Shortcode {
     }
 
     return $content;
+  }
+
+
+  /**
+   * Show Related Posts
+   * 
+   * [h-related-posts count="3"]
+   */
+  function related_posts( $atts, $content = null ) {
+    global $post;
+
+    $atts = shortcode_atts([
+      'count' => '3'
+    ], $atts);
+
+    $context = [
+      'style' => 'grid',
+      'mods' => Custy::get_mods(),
+      'posts' => Timber::get_posts([
+        'post_type' => 'post',
+        'posts_per_page' => $atts['count'],
+        'post__not_in' => [ $post->ID ],
+        'category__in' => wp_get_post_categories( $post->ID ),
+        'orderby' => 'rand'
+      ]),
+    ];
+
+    return Timber::compile( '_posts.twig', $context );
+  }
+
+
+  /**
+   * Display Jetpack's sharing button
+   * 
+   * [h-jetpack-sharing]
+   */
+  function shortcode_jetpack_sharing() {
+    if ( function_exists( 'sharing_display' ) ) {
+      sharing_display( '', true );
+    }
+    
+    if ( class_exists( 'Jetpack_Likes' ) ) {
+      $custom_likes = new Jetpack_Likes;
+      echo $custom_likes->post_likes( '' );
+    }
   }
 }

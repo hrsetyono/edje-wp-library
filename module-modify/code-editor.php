@@ -54,3 +54,5 @@ class Modify_Code_Editor {
     return $settings;
   }
 }
+
+new Modify_Code_Editor();
