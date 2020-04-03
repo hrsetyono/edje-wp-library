@@ -1,22 +1,23 @@
 <?php namespace h;
 
 /**
- * Add FAQ structured data taken from FAQ block
+ * Add FAQ structured data taken from Pullquote block
  */
-class FAQ_Schema {
+class PullFAQ_Schema {
   function __construct() {
     add_action( 'wp_footer', [$this, 'add_faq_data'], 100 );
+    $this->faq_style();
   }
 
   /**
-   * Scrap the content for H-FAQ block and format its data as JSON LD
+   * Scrap the content for Pullquote and format its data as JSON LD
    */
   function add_faq_data() {
     global $post;
     $content = isset( $post ) ? $post->post_content : null;
 
     // this regex only works for latest Gutenberg version where they wrap Pullquote with <figure>
-    preg_match_all( '/wp-block-h-faq(?!.*--noindex).*>(.+)<\/details/Ui', $content, $faqs );
+    preg_match_all( '/wp-block-pullquote.+<blockquote[^<]*>(<p>.+)<\/blockquote/', $content, $faqs );
 
     // if FAQ found
     if( empty( $faqs[1] ) ) { return; }
@@ -28,12 +29,11 @@ class FAQ_Schema {
     ];
 
     foreach( $faqs[1] as $f ) {
-      // parse the Question and Answer
-      preg_match( '/<summary.+>(.+)<\/summary>/Ui', $f, $question );
-      preg_match( '/h-faq-answer.+>(.+)<\/div>$/Ui', $f, $answer );
+      if( $f == '<p></p>' ) { continue; } // if empty
 
-      // abort if question or answer is empty
-      if( $question[1] === '' || $answer[1] === '' ) { continue; }
+      // parse the Question and Answer
+      preg_match( '/<cite>(.+)<\/cite>/', $f, $question );
+      preg_match( '/(.+)<cite>/', $f, $answer );
 
       // Add to question lists
       $data['mainEntity'][] = [
@@ -49,6 +49,18 @@ class FAQ_Schema {
     $json_ld = json_encode( $data );
     echo "<!-- Edje FAQ --><script type='application/ld+json'>$json_ld</script>";
   }
+
+  /**
+   * Add FAQ style
+   */
+  function faq_style() {
+    if( !function_exists('register_block_style') ) { return; }
+
+    register_block_style( 'core/pullquote', array(
+      'name'  => 'hidden-from-google',
+      'label' => 'Hidden from Google',
+    ));
+  }
 }
 
-new FAQ_Schema();
+new PullFAQ_Schema();

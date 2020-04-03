@@ -33,6 +33,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/verse':
     case 'core/preformatted':
     case 'core/table':
+    case 'core/pullquote':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
       } );
@@ -67,13 +68,6 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/cover':
       return lodash.assign( {}, settings, {
         attributes: lodash.assign( {}, settings.attributes, { align: { type: 'string', default: 'full' } } ),
-      } );
-
-    case 'core/pullquote':
-      return lodash.assign( {}, settings, {
-        title: 'FAQ',
-        description: 'Question with hidden answer that is displayed on click. (Originally Pullquote, customized by Edje)',
-        supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
       } );
 
     // Hide these useless blocks
@@ -121,6 +115,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core-embed/tumblr':
     case 'core-embed/videopress':
     case 'core-embed/wordpress-tv':
+    case 'core-embed/tiktok':
 
     case 'jetpack/slideshow':
     case 'jetpack/gif':

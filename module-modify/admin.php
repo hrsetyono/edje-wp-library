@@ -22,9 +22,6 @@ class Modify_Admin {
 
     // remove wp logo
     add_action( 'admin_bar_menu', [$this, 'remove_wp_logo'], 999 );
-
-
-    add_filter( 'site_transient_update_plugins', [$this, 'disable_plugin_updates'] );
   }
 
   /**
@@ -60,18 +57,6 @@ class Modify_Admin {
    */
   function remove_wp_logo( $wp_admin_bar ) {
     $wp_admin_bar->remove_node( 'wp-logo' );
-  }
-
-
-  /**
-   * Disable plugin update that can mess the site
-   * 
-   * @filter site_transient_update_plugins
-   */
-  function disable_plugin_updates( $value ) {
-    unset( $value->response[ 'timber-library/timber.php' ] );
-    unset( $value->response[ 'gutenberg/gutenberg.php' ] );
-    return $value;
   }
 
 }

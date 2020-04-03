@@ -8,8 +8,12 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "sass": "node-sass -w ./ -o ./ --output-style compressed",
     "sass-editor": "node-sass -w module-editor/sass -o module-editor/assets --output-style compressed",
-    "bsync-editor": "browser-sync start --proxy \"demo.test/basic-theme\" --files \"module-editor/assets/*.css\"",
+    "bsync-editor": "browser-sync start --proxy \"lab.test/\" --files \"module-editor/assets/*.css\"",
+
+    "sass-faq": "node-sass -w module-editor-faq/assets -o module-editor-faq/assets --output-style compressed",
+    "bsync-faq": "browser-sync start --proxy \"lab.test/\" --files \"module-editor-faq/assets/*.css\"",
+
+    "sass": "node-sass -w ./ -o ./ --output-style compressed"
   }
 }

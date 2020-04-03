@@ -1,52 +1,79 @@
-@import "../../_edje/_index"
+// CSS for FAQ Editor
+// This loads before the block's CSS
 
-.wp-block-pullquote
-  +h( pv0 )
-  background-color: var(--bgColor)
+div.wp-block-h-faq
+  --faqTitleBg: #e5e5e5
+  --faqTitleColor: #191e23
 
-  blockquote
-    +h( d-flex fd-column ta-left )
+  position: relative
+  border: 2px solid var(--faqTitleBg)
+  border-radius: 4px
 
-    > *
-      +h( order2 )
+  .wp-block
+    margin-top: 0
+    p
+      margin: 0
 
-  p, li
-    +h( ph1 mb0 fs-body h0 ov-hidden  transition )
+  .dashicons-before
+    cursor: pointer
+    position: absolute
+    top: 0.75rem
+    right: 0.75rem
+    padding: 0.25rem
+    width: 1.75rem
+    height: 1.75rem
 
-  cite
-    +h( d-flex order1 cursor-pointer relative pv0_5 ph1 bg-black_05 )
-    +h( fw700 fs-m  transition brad )
-    font-style: normal
+    color: var(--faqTitleColor)
+    border-radius: var(--gRadius)
+
+    &:hover
+      background-color: var(--faqTitleColor)
+      color: var(--faqTitleBg)
+    &:active
+      transition: none
+      transform: translateY(1px)
+
+  
+
+
+.rich-text.h-faq-question
+  margin-top: 0
+  margin-bottom: 0
+  padding: 0.75rem
+  background-color: var(--faqTitleBg)
+  font-weight: 400
+  font-size: 1.25rem
+  color: var(--faqTitleColor)
+
+  &::before
+    content: "+"
+    display: inline-block
+    font-family: monospace
+    margin-right: 1rem
+
+  .is-selected &,
+  .is-typing &,
+  .has-child-selected &,
+  [open] &
 
     &::before
-      content: "+"
-      +h( d-iblock mr1  ff-monospace )
-    &:hover
-      +h( bg-black_20 )
-    &:focus
-      outline: 1px dotted #212121
-      outline: 5px auto -webkit-focus-ring-color
-
-  &.--expanded
-    cite
-      +h( mb1 )
-
-    cite::before
       content: "-"
 
-    p, li
-      +h( mb1 h-auto )
 
+div.h-faq-answer
+  overflow: hidden
+  visibility: hidden
+  height: 0
 
-.wp-block-pullquote.is-style-solid-color
-  +h( brad )
+  .is-selected &,
+  .is-typing &,
+  .has-child-selected &,
+  [open] &
+    visibility: visible
+    height: auto
+    padding: 1.5rem
 
-  cite
-    +h( bg-transparent )
-  
-  cite:hover
-    +h( bg-white_25 )
-
-  &.--expanded
-    cite
-      +h( bg-transparent )
+  p
+    margin: 0
+  p + p
+    margin-top: 0.5rem
