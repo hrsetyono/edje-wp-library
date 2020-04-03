@@ -11,6 +11,8 @@
     "sass-editor": "node-sass -w module-editor/sass -o module-editor/assets --output-style compressed",
     "bsync-editor": "browser-sync start --proxy \"lab.test/\" --files \"module-editor/assets/*.css\"",
 
+    "sass-vendor": "node-sass -w module-vendor/sass -o module-vendor/css --output-style compressed",
+
     "sass-faq": "node-sass -w module-editor-faq/assets -o module-editor-faq/assets --output-style compressed",
     "bsync-faq": "browser-sync start --proxy \"lab.test/\" --files \"module-editor-faq/assets/*.css\"",
 

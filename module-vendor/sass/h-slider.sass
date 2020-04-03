@@ -1,36 +1,52 @@
 // hSlider v2.1.1
 // https://github.com/hrsetyono/hSlider
 
-@import "../../_edje/_index"
+$main-color: var(--main, #2196F3)
+$transition: var(--gTransition, all .25s ease-in-out)
 
 .hSlider
-  +h( relative w100p p0 )
+  position: relative
+  width: 100%
+  padding: 0
 
 .hSlider-container
-  +h( relative w100p h100p ov-hidden brad )
+  position: relative
+  width: 100%
+  height: 100%
+  overflow: hidden
+  border-radius: var(--gRadius, 4px)
 
 .hSlider-slides
-  +h( relative d-flex h100p transition select-none )
+  position: relative
+  display: flex
+  height: 100%
+  
+  user-select: none
+  transition: $transition
   will-change: transform
   -webkit-tap-highlight-color: transparent
 
 .hSlider-slide
-  +h( d-flex ai-start flex1 w100p h100p )
+  display: flex
+  align-items: flex-start
+  flex: 1
+  width: 100%
+  height: 100%
 
 .hSlider-slide > *
-  +h( w100p )
+  width: 100%
 
   .per-slide-2 &
-    +h( w50p )
+    width: 50%
   
   .per-slide-3 &
-    width: 33.333%
+    width: calc( 100% / 3 )
 
   .per-slide-4 &
-    +h( w25p )
+    width: 25%
 
   .per-slide-5 &
-    +h( w20p )
+    width: 20%
 
   .per-slide-6 &
     width: calc( 100% / 6 )
@@ -42,16 +58,31 @@
     width: calc( 100% / 8 )
 
 .hSlider
-  +h( mb3 )
+  margin-bottom: 3rem
 
 
 // Arrow
 .hSlider-arrow
-  +h( d-flex ai-center jc-center cursor-pointer absolute top50p p0 b0 o40 )
-  +h( c-white ta-center brad-circle transition )
+  display: flex
+  align-items: center
+  justify-content: center
+
+  cursor: 
+  position: absolute
+  top: 50%
+  padding: 0
+  border: 0
+  opacity: .4
+
   width: 35px
   height: 35px
   background: var(--text)
+  
+  color: white
+  text-align: center
+  border-radius: 50%
+
+  transition: $transition
   transform: translateY(-50%)
   
   &::before
@@ -65,10 +96,10 @@
     border-color: transparent
 
 .hSlider-arrow:hover
-  +h( o100 )
+  opacity: 1
 
 .hSlider-arrow--left
-  +h( right100p )
+  right: 100%
 
   &::before
     right: 2px
@@ -76,7 +107,7 @@
     border-right-color: #fff
 
 .hSlider-arrow--right
-  +h( left100p )
+  left: 100%
   
   &::before
     left: 2px
@@ -86,30 +117,40 @@
 
 // Dots
 .hSlider-dots
-  +h( absolute d-flex jc-center ai-center top100p w100p )
+  position: absolute
+  display: flex
+  justify-content: center
+  align-items: center
+  top: 100%
+  width: 100%
   height: 2rem
 
   button
-    +h( cursor-pointer )
+    cursor: pointer
 
 .hSlider-dot
-  +h( b0 o40 transition )
+  border: 0
+  opacity: .4
   padding: 6px
   flex: 0 0 auto
   background: 0 0
+  transition: $transition
 
   &::before
     content: ''
-    +h( d-block b0 brad-circle bg-main )
+    display: block
+    border: 0
+    border-radius: 50%
+    background-color: $main-color
     padding: 6px
 
   &:hover,
   &.active
-    +h( o100 )
+    opacity: 1
 
   &.active::before
-    +h( bc-main )
-    box-shadow: 0 0 0 2px var(--main)
+    border-color: $main-color
+    box-shadow: 0 0 0 2px $main-color
 
   &:only-child
-    +h( d-none )
+    display: none

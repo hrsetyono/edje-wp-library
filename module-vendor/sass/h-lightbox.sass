@@ -1,62 +1,81 @@
 // hLightbox v2
 // https://github.com/hrsetyono/hLightbox
 
-@import "../../_edje/_index"
-
 .hLightbox
-  +h( fixed top0 left0 w100p h100vh )
-  +h( bg-black_75 )
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100vh
+
+  background: rgba(black, .75)
   opacity: .01
   z-index: 10000
   will-change: opacity
   transition: opacity .25s ease-in-out
 
   &:not( .hLightbox--unclosable )
-    +h( cursor-pointer )
+    cursor: pointer
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
 
 
 .hLightbox--visible
-  +h( o100 )
+  opacity: 1
 
 .hLightbox-content
-  +h( absolute top50p left50p cursor-default events-all transition )
-  transform: scale(0.9) translateX(-50%) translateY(-50%)
+  position: absolute
   z-index: 1
-  will-change: transform
+  top: 50%
+  left: 50%
+  cursor: default
+  pointer-events: all
+
   max-width: 95%
   max-height: 95vh
+
+  will-change: transform
+  transition: all .25s ease-in-out
+  transform: scale(0.9) translateX(-50%) translateY(-50%)
+
 
   .hLightbox--visible &
     transform: scale(1) translateX(-50%) translateY(-50%)
 
   > *
-    +h( ovy-auto )
+    overflow-y: auto
     max-height: 95vh
 
 
 .hLightbox--iframe iframe:first-child,
 .hLightbox--img img:first-child,
 .hLightbox--video video:first-child
-  +h( d-block bg-white )
+  display: block
+  background-color: white
 
 
 .hLightbox-close
-  +h( d-flex ai-center jc-center cursor-pointer absolute )
-  +h( brad transition )
+  display: flex
+  align-items: center
+  justify-content: center
+  cursor: 
+  position: absolute
+  
   top: 0
   right: -10px
   height: 3rem
   width: 3rem
-  background-color: rgba(var(--redRGB), 0.3)
+  background-color: rgba(#f44336, 0.3)
   font-size: 0
 
+  transition: all .25s ease-in-out
   transform: translateX(100%)
+  border-radius: var(--gRadius, 4px)
 
   &::before
     content: "✕"
-    +h( d-inline-block c-white )
+    display: inline-block
+    color: white
     font-size: 1.5rem
     
   &:hover
-    background-color: rgba(var(--redRGB), 0.6)
+    background-color: rgba(#f44336, 0.6)

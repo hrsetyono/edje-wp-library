@@ -1,0 +1,31 @@
+// Allow custom icon on "At a Glance" dashboard
+#dashboard_right_now li[class*="dashicons"]
+  &::before
+    padding-right: 5px
+    color: #82878c
+
+  a::before,
+  > span::before
+    content: ''
+    padding: 0
+
+
+///// THE SEO FRAMEWORK
+
+// Metabox - disable tabs
+.tsf-flex-nav-tab-wrapper,
+body.js .tsf-flex-nav-tab-wrapper
+  display: none
+
+
+// hide some tooltip in post listing
+.tsf-seo-bar-inner-wrap
+  .tsf-tooltip-wrap:nth-child(n+3) .tsf-seo-bar-good
+    display: none
+
+
+// Hide advanced Term metabox
+table.tsf-term-meta
+  ~ .tsf-term-meta,
+  ~ h2
+    display: none
