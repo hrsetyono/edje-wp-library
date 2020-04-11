@@ -4,53 +4,79 @@
 */
 class Post_Column {
   private $post_type;
-  private $columns;
+  private $columns = [];
 
   public function __construct() {}
 
-  /*
-    Override all columns from the post type table.
-    @since 0.9.0
-
-    @param $post_type (string)
-    @param $args (array) - List of columns
-  */
-  function override( $post_type, $args ) {
-    $this->post_type = $post_type;
-    $this->columns = $this->_parse_args( $args );
-
-    $this->_manage_columns( array($this, '_override') );
-  }
-
-  /*
-    Append a column to the post type table. Placed before "date".
-
-    @param $post_type (string)
-    @param $arg (string / array) - Keyword or Argument for the new column
-  */
-  function add( $post_type, $arg ) {
+  /**
+   * Override all columns of a post type table
+   */
+  function override_columns( string $post_type, array $columns ) {
     $this->post_type = $post_type;
 
-    // if keyword
-    if( is_string( $arg ) ) {
-      $this->columns = $this->_parse_args( array($arg) );
-    }
-    // if array AND has Name
-    elseif( is_array( $arg ) && isset( $arg['name'] ) ) {
-      $args = isset( $arg['content'] )
-        ? array( $arg['name'] => $arg['content'] )
-        : array( $arg['name'] );
-      $this->columns = $this->_parse_args( $args );
-    } else {
-      var_dump( 'ERROR - H::add_column has invalid arguments' );
-      return false;
+    foreach( $columns as $slug => $args ) {
+      $parsed = $this->parse_column( $slug, $args );
+      $this->columns[ $slug ] = $parsed;
     }
 
-    $this->_manage_columns( array($this, '_add') );
+    $this->_manage_columns( [$this, '_override_columns'] );
   }
 
+
+  /**
+   * Append a column to the post type table.
+   */
+  function add_column( string $post_type, string $slug, array $args = [] ) {
+    $this->post_type = $post_type;
+
+    $parsed_col = $this->parse_column( $slug, $args );
+    $this->columns[ $slug ] = $parsed_col;
+
+    $this->_manage_columns( [$this, '_add_column'] );
+  }
 
   /////
+  
+  /**
+   * Format the args to cleaner
+   */
+  private function parse_column( $slug, $args = [] ) {
+    $args = wp_parse_args( $args, [
+      'name' => null,
+      'content' => false,
+      'icon' => false,
+      'sortable' => false,
+      'position_before' => '',
+      'position_after' => '',
+    ] );
+
+
+    $args['name'] = $args['name'] ?? \_H::to_title( $slug );
+
+
+    // Comments always goes with icon
+    if( $slug === 'comments' ) { 
+      $args['icon'] = 'dashicons-admin-comments';
+    }
+
+    // If has icon, replace its name
+    if( $args['icon'] ) {
+      if( preg_match( '/^dashicons-/', $args['icon'], $has_prefix ) ) {
+        $args['icon'] =  'dashicons-' . $args['icon'];
+      }
+       
+      $args['name'] = "<span class='dashicons {$args['icon']}'></span> <span class='screen-reader-text'>{$args['name']}</span>";
+    }
+
+    // If both position is empty, add one
+    if( empty( $args['position_before'] ) && empty( $args['position_after'] ) ) {
+      $args['position_before'] = 'date';
+    }
+
+
+    return $args;
+  }
+
 
   /*
     Manage filters and actions to create custom columns
@@ -58,15 +84,16 @@ class Post_Column {
     @param $manage_cb (function) - Callback to create column orders.
   */
   function _manage_columns( $manage_cb ) {
-    $manage_columns = "manage_{$this->post_type}_posts_columns";
-    $fill_columns = "manage_{$this->post_type}_posts_custom_column";
-    $sortable_columns = "manage_edit-{$this->post_type}_sortable_columns";
-
-    add_filter( $manage_columns, $manage_cb, 100 );
-    add_action( $fill_columns, array($this, '_fill_columns'), 10, 2 );
-    add_filter( $sortable_columns, array($this, '_enable_sort_columns') );
-    add_filter( 'request', array($this, '_allow_sort_by_metakey') );
+    $pt = $this->post_type;
+    add_filter( "manage_{$pt}_posts_columns",         $manage_cb, 100 );
+    add_action( "manage_{$pt}_posts_custom_column",   [$this, '_fill_columns'], 10, 2 );
+    add_filter( "manage_edit-{$pt}_sortable_columns", [$this, '_enable_sort_columns'] );
+    add_filter( 'request', [$this, '_allow_sort_by_metakey'] );
   }
+  
+
+  /////
+
 
   /*
     @filter manage_CPT_posts_columns
@@ -74,47 +101,47 @@ class Post_Column {
     @param array $defaults - The current column list
     @return array - The new list
   */
-  function _override( $defaults ) {
+  function _override_columns( $defaults ) {
     $columns = $this->columns;
 
-    $list = array();
-    foreach( $columns as $c ) {
-      $list[ $c['slug'] ] = $c['name'];
+    $list = [];
+    foreach( $columns as $slug => $args ) {
+      $list[ $slug ] = $args['name'];
     }
 
-    $list = array( 'cb' => $defaults['cb'] ) + $list;
+    // always start with checkbox
+    $list = [ 'cb' => $defaults['cb'] ] + $list;
     return $list;
   }
 
-  /*
-    @filter manage_CPT_posts_columns
 
-    @param array $defaults - The current column list
-    @return array - The updated list
-  */
-  function _add( $defaults ) {
-    $column = reset( $this->columns );
+  /**
+   * @filter manage_CPT_posts_columns
+   * 
+   * @param array $defaults - The current column list
+   * @return array - The updated list
+   */
+  function _add_column( $defaults ) {
+    reset( $this->columns );
+    $first_key = key( $this->columns );
 
-    // if position is specified
-    $position = isset( $column['position'] ) ? $column['position'] : false;
-    if( $position && isset( $defaults[ $position ]) ) {
+    $column = $this->columns[ $first_key ];
 
-      $list = array();
-      foreach( $defaults as $slug => $col ) {
-        $list[ $slug ] = $col;
-
-        // if loop have reached the position
-        if( $position == $slug ) {
-          $list[ $column['slug'] ] = $column['name'];
-        }
+    // form a new list
+    $list = [];
+    foreach( $defaults as $slug => $name ) {
+      if( $column['position_before'] === $slug ) {
+        $list[ $column['slug'] ] = $column['name'];
       }
-      return $list;
+
+      $list[ $slug ] = $name;
+
+      if( $column['position_after'] === $slug ) {
+        $list[ $column['slug'] ] = $column['name'];
+      }
     }
-    // if no position
-    else {
-      $defaults[ $column['slug'] ] = $column['name'];
-      return $defaults;
-    }
+    
+    return $list;
   }
 
   /*
@@ -178,7 +205,6 @@ class Post_Column {
     @params array $defaults - Sortable column list
     @return array - The updated sortable column list
   */
-
   function _enable_sort_columns( $defaults ) {
     $sortable_columns = $this->_get_sortable_columns( $this->columns );
 
@@ -187,6 +213,7 @@ class Post_Column {
     }
     return $defaults;
   }
+
 
   /*
     Add parameters to allow sorting by Custom field
@@ -212,65 +239,6 @@ class Post_Column {
     return $vars;
   }
 
-  /////
-
-  /*
-    Parse all the annotation in the dataset into accepted Array format
-
-    @param array $args - Original column args
-    @return array - The parsed and neat column data
-  */
-  private function _parse_args( $args ) {
-    $columns = array();
-
-    foreach( $args as $key => $value ) {
-      // Since the array is mix between Key-Value and Single, the Key become integer for single array
-      // We need to replace it with the value
-      $name = is_int( $key ) ? $value : $key;
-
-      $col = $this->_format_arg( $name, $value );
-      $columns[ $col['slug'] ] = $col;
-    }
-
-    return $columns;
-  }
-
-  /*
-    Format an argument into neat array
-
-    @param $name (string) - The column header name
-    @param $value (string / function)
-    @return array - The formatted argument
-  */
-  private function _format_arg( $name, $value ) {
-    $col = array(
-      'name' => '',
-      'slug' => '',
-      'content' => $value,
-      'sortable' => preg_match( '/\^/', $name ) ? true : false,
-      'icon' => preg_match( '/#(dashicons-\S+)/', $name, $matches ) ? $matches[1] : '',
-      'position' => preg_match( '/>(\S+)/', $name, $matches ) ? $matches[1] : '',
-    );
-
-    // clean name
-    $name = preg_replace( '/#dashicons-\S+|\^|>\S+/', '', $name );
-    $name = trim( $name );
-
-    // format slug
-    $col['slug'] = \_H::to_param( $name );
-    if( $col['slug'] === 'comments' ) { // Comments always goes with icon
-      $col['icon'] = 'dashicons-admin-comments';
-    }
-
-    // format name
-    $name = \_H::to_title( $name );
-    if( $col['icon'] ) {
-      $name = "<span class='dashicons {$col['icon']}'></span> <span class='screen-reader-text'>{$name}</span>";
-    }
-    $col['name'] = $name;
-
-    return $col;
-  }
 
   /*
     Get list of Sortable columns

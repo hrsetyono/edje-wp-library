@@ -41,13 +41,13 @@ function h_register_taxonomy( string $name, array $args ) {
 /**
  * Override all columns in the Post Type table with this one.
  */
-function h_override_columns( string $post_type, array $args ) {
+function h_override_columns( string $post_type, array $columns ) {
   if( !is_admin() ) { return; }
 
   require_once __DIR__ . '/post-column.php';
 
   $pc = new \h\Post_Column();
-  $pc->override( $post_type, $args );
+  $pc->override_columns( $post_type, $columns );
 }
 
 /**
@@ -64,13 +64,13 @@ function h_register_columns( string $post_type, array $args ) {
  * @param string $post_type
  * @param $args - Column keywords or arguments with callable
  */
-function h_add_column( string $post_type, $args ) {
+function h_add_column( string $post_type, $column ) {
   if( !is_admin() ) { return; }
 
   require_once __DIR__ . '/post-column.php';
 
   $pc = new \h\Post_Column();
-  $pc->add( $post_type, $args );
+  $pc->add_column( $post_type, $column );
 }
 
 

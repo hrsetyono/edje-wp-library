@@ -1,11 +1,5 @@
 
 wp.domReady( function() {
-  // GALLERY
-  wp.blocks.registerBlockStyle( 'core/gallery', {
-    name: 'h-slider',
-    label: 'Slider'
-  } );
-
   // MEDIA TEXT
   wp.blocks.registerBlockStyle( 'core/media-text', {
     name: 'h-larger-image',

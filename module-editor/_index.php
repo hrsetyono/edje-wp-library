@@ -14,8 +14,8 @@ add_action( 'plugins_loaded' , function() {
  */
 function _h_enqueue_editor() {
   $assets = plugin_dir_url(__FILE__) . 'assets';
-  wp_enqueue_style( 'h-editor', $assets . '/h-editor.css', [] );
-  wp_enqueue_script( 'h-editor', $assets . '/h-editor.js', [], false, true );
+  wp_enqueue_style( 'h-editor', $assets . '/h-editor.css', [], H_VERSION );
+  wp_enqueue_script( 'h-editor', $assets . '/h-editor.js', [], H_VERSION, true );
 }
 
 /**

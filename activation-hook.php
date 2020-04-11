@@ -116,25 +116,6 @@ class H_Hook {
         ]
       ],
 
-      // BLOG
-      [
-        'name' => 'Blog Nav',
-        'location' => 'blog-nav',
-        'items' => [
-          [
-            'menu-item-title' => 'All Posts',
-            'menu-item-object' => 'post',
-            'menu-item-status' => 'publish',
-            'menu-item-type' => 'post_type_archive',
-          ],
-          [
-            'menu-item-object-id' => 1,
-            'menu-item-object' => 'category',
-            'menu-item-status' => 'publish',
-            'menu-item-type' => 'taxonomy',
-          ],
-        ]
-      ]
     );
 
     $locations = get_theme_mod( 'nav_menu_locations' );
