@@ -29,7 +29,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/table':
     case 'core/pullquote':
       return lodash.assign( {}, settings, {
-        supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
+        supports: lodash.assign( {}, settings.supports, { align: [ 'wide'] } ),
       } );
     
     // Remove align left and right
@@ -54,7 +54,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/columns':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
-        attributes: lodash.assign( {}, settings.attributes, { align: { type: 'string', default: 'wide' } } ),
+        attributes: lodash.assign( {}, settings.attributes, { align: [{ type: 'string', default: 'wide' }] } ),
       } );
 
     // Group and Cover defaults to full

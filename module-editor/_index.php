@@ -4,7 +4,7 @@ add_action( 'plugins_loaded' , function() {
   require_once __DIR__ . '/block-styles.php';
 
   if( is_admin() ) { 
-    add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 20 );
+    add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 100 );
     add_action( 'admin_init', '_h_enqueue_classic_editor' );
   }
 } );

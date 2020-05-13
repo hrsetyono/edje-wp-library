@@ -12,6 +12,8 @@ class FAQ_Schema {
    * Scrap the content for H-FAQ block and format its data as JSON LD
    */
   function add_faq_data() {
+    if( is_home() ) { return; } // abort if blog page
+
     global $post;
     $content = isset( $post ) ? $post->post_content : null;
 
