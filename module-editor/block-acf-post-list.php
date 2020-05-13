@@ -30,6 +30,7 @@ class Block_Post_list {
     $this->taxonomy = $taxonomies[0] ?? null;
   }
 
+
   function register() {
     add_action( 'acf/init', [$this, 'create_fields'] );
     add_action( 'acf/init', [$this, 'create_block'] );
@@ -77,12 +78,27 @@ class Block_Post_list {
     $description = "Show list of {$this->label}. Rendered file: ";
     $description .= class_exists('Timber') ? "/views/acf-blocks/{$block_name}.twig" : "/acf-blocks/{$block_name}.php";
 
-    h_register_block( $block_name, [
+    acf_register_block_type( [
+      'name' => $block_name,
       'title' => "{$this->label} List",
       'icon' => $this->menu_icon,
       'post_types' => [ 'post', 'page', $this->post_type ],
       'description' => $description,
-      'context_filter' => [$this, '_format_value'],
+      
+      'render_callback' => function( $context ) {
+        $slug = str_replace( 'acf/', '', $context['name'] );
+
+        $context = $this->_get_fields( $context );
+        $context = apply_filters( "h/block_context/$slug" , $this->_format_value( $context ) );
+
+        // Render the template
+        if( class_exists( 'Timber' ) ) {
+          \Timber::render( [ "acf-blocks/$slug.twig" ], $context );
+        } else {
+          set_query_var( 'block', $context );
+          get_template_part( "acf-blocks/$slug", '' );
+        }
+      },
     ] );
   }
 
