@@ -172,6 +172,38 @@ class Block_Post_list {
 
 
   /**
+   * Reform the data from ACF Block to only include the Fields data
+   */
+  private function _get_fields( array $block ) : array {
+    $data = [
+      'block' => [
+        'id' => $block['id'],
+        'name' => $block['name'],
+        'align' => $block['align'],
+        'className' => $block['className'] ?? '',
+      ]
+    ];
+
+    foreach( $block['data'] as $key => $value ) {
+      // If start with underscore, continue
+      if( substr( $key, 0, 1 ) === '_' ) { continue; }
+
+      $name = $key;
+      
+      // If start with "field", get the field name
+      if( substr( $key, 0, 6 ) === 'field_' ) {
+        $field_object = get_field_object( $key );
+        $name = $field_object['name'];
+      }
+
+      $data[ $name ] = get_field( $key );
+    }
+
+    return $data;
+  }
+
+
+  /**
    * Format the fields argument for acf_add_local_field_group()
    */
   function _get_fields_args() : array {

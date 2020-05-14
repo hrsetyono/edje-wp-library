@@ -4,8 +4,6 @@
  */
 class Modify_Jetpack {
   function __construct() {
-    add_action( 'plugins_loaded', [$this, 'loaded'] );
-
     add_action( 'wp_head', [$this, 'wp_head'], 2 );
     add_action( 'wp_footer', [$this, 'wp_footer'] );
 
@@ -15,18 +13,13 @@ class Modify_Jetpack {
 
     // remove sharing buttons to be added manually with shortcode
     add_action( 'loop_start', [$this, 'remove_share_buttons'] );
-  }
-
-  /**
-   * @action plugins_loaded
-   */
-  function loaded() {
-    add_filter( 'wp', [$this, 'remove_related_posts'], 20 );
 
     // add woocommerce to sitemap
     if( \_H::is_plugin_active('woocommerce') ) {
       add_filter( 'jetpack_sitemap_post_types', [$this, 'add_woocommerce_to_sitemap'] );
     }
+
+    add_filter( 'wp', [$this, 'remove_related_posts'], 20 );
   }
 
   /*
@@ -36,7 +29,7 @@ class Modify_Jetpack {
   function remove_related_posts() {
     if( class_exists('Jetpack_RelatedPosts') ) {
       $jprp = \Jetpack_RelatedPosts::init();
-      $callback = [$jprp, 'filter_add_target_to_dom'];
+      $callback = [ $jprp, 'filter_add_target_to_dom' ];
       remove_filter( 'the_content', $callback, 40 );
     }
   }

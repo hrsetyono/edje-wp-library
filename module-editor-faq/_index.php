@@ -25,8 +25,8 @@ function _h_register_faq_block() {
   if( current_theme_supports( 'h-faq-block' ) ) {
     $dir = plugin_dir_url(__FILE__) . 'assets';
 
-    wp_register_script( 'h-faq', $dir . '/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , null, true );
-    wp_register_style( 'h-faq', $dir . '/h-faq.css', [ 'wp-edit-blocks' ] );
+    wp_register_script( 'h-faq', $dir . '/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
+    wp_register_style( 'h-faq', $dir . '/h-faq.css', [ 'wp-edit-blocks' ], H_VERSION );
 
     register_block_type( 'h/faq', [
       'editor_style' => 'h-faq',
