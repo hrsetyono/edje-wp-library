@@ -13,9 +13,9 @@ add_action( 'plugins_loaded' , function() {
  * @action wp_enqueue_scripts
  */
 function _h_enqueue_editor() {
-  $assets = plugin_dir_url(__FILE__) . 'assets';
-  wp_enqueue_style( 'h-editor', $assets . '/h-editor.css', [], H_VERSION );
-  wp_enqueue_script( 'h-editor', $assets . '/h-editor.js', [], H_VERSION, true );
+  $assets = plugin_dir_url(__FILE__);
+  wp_enqueue_style( 'h-editor', $assets . 'css/h-editor.css', [], H_VERSION );
+  wp_enqueue_script( 'h-editor', $assets . 'js/h-editor.js', [], H_VERSION, true );
 }
 
 /**
@@ -24,7 +24,7 @@ function _h_enqueue_editor() {
  * @action admin_init
  */
 function _h_enqueue_classic_editor() {
-  $assets = plugin_dir_url(__FILE__) . 'assets';
+  $assets = plugin_dir_url(__FILE__) . 'css';
   add_editor_style( $assets . '/h-classic-editor.css' );
 }
 

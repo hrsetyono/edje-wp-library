@@ -8,8 +8,8 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "sass-editor": "node-sass -w module-editor/sass -o module-editor/assets --output-style compressed",
-    "bsync-editor": "browser-sync start --proxy \"lab.test/\" --files \"module-editor/assets/*.css\"",
+    "sass-editor": "node-sass -w module-editor/sass -o module-editor/css --output-style compressed",
+    "bsync-editor": "browser-sync start --proxy \"lab.test/\" --files \"module-editor/css/*.css\"",
 
     "sass-vendor": "node-sass -w module-vendor/sass -o module-vendor/css --output-style compressed",
 

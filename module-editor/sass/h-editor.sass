@@ -17,20 +17,6 @@ $acf-bg: #f3f3f4
 .wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks
   padding: 0 3rem
 
-.editor-styles-wrapper > *
-  font-family: var(--fontFamily)
-
-.editor-post-title__block .editor-post-title__input,
-.editor-styles-wrapper .wp-block h1,
-.editor-styles-wrapper .wp-block h2,
-.editor-styles-wrapper .wp-block h3,
-.editor-styles-wrapper .wp-block h4,
-.editor-styles-wrapper .wp-block h5,
-.editor-styles-wrapper .wp-block h6,
-.editor-styles-wrapper .has-drop-cap:not(:focus)::first-letter
-  font-family: var(--hFontFamily)
-
-
 ///// PARAGRAPH
 
 // empty paragraph
@@ -140,20 +126,6 @@ $acf-bg: #f3f3f4
 
 .wp-block-media-text
   align-items: flex-start
-  grid-template-columns: 50% auto !important
-
-  &.is-style-h-smaller-image,
-  &.is-style-h-larger-image.has-media-on-the-right
-    grid-template-columns: 33% auto !important
-
-  &.is-style-h-larger-image,
-  &.is-style-h-smaller-image.has-media-on-the-right
-    grid-template-columns: 67% auto !important
-
-  // hide resizer
-  .block-library-media-text__media-container + span
-    display: none
-
 
 ///// FILE
 
@@ -239,6 +211,16 @@ span.component-color-indicator
     background: var(--red) !important
 
 
+///// COLUMNS
+
+.wp-block-columns.has-background
+  padding: 0
+  background-color: transparent !important
+
+  .wp-block-column
+    background-color: var(--bgColor)
+    padding: 1rem
+
 
 ///// BUTTON
 
@@ -295,7 +277,7 @@ span.component-color-indicator
 ///// ACF GUTENBERG
 
 .acf-block-body
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: var(--fontFamily)
 
   .acf-label,
   .acf-input p,

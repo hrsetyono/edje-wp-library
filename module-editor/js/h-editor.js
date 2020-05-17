@@ -28,6 +28,7 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/preformatted':
     case 'core/table':
     case 'core/pullquote':
+    case 'core/heading':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: [ 'wide'] } ),
       } );
@@ -45,16 +46,11 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
         supports: lodash.assign( {}, settings.supports, { align: ['center'] } ),
       } );
 
-    case 'core/heading':
-      return lodash.assign( {}, settings, {
-        supports: lodash.assign( {}, settings.supports, { align: ['center', 'wide'] } ),
-      } );
-
     // Columns default is now wide
     case 'core/columns':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: ['wide'] } ),
-        attributes: lodash.assign( {}, settings.attributes, { align: [{ type: 'string', default: 'wide' }] } ),
+        attributes: lodash.assign( {}, settings.attributes, { align: { type: 'string', default: 'wide' } } ),
       } );
 
     // Group and Cover defaults to full
@@ -113,6 +109,8 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
 
     case 'jetpack/slideshow':
     case 'jetpack/gif':
+    case 'jetpack/markdown':
+    case 'jetpack/opentable':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { inserter: false } ),
       } );
