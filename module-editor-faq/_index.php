@@ -23,10 +23,10 @@ function _h_register_faq_block() {
 
   // If support FAQ Block
   if( current_theme_supports( 'h-faq-block' ) ) {
-    $dir = plugin_dir_url(__FILE__) . 'assets';
+    $dir = plugin_dir_url(__FILE__);
 
-    wp_register_script( 'h-faq', $dir . '/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
-    wp_register_style( 'h-faq', $dir . '/h-faq.css', [ 'wp-edit-blocks' ], H_VERSION );
+    wp_register_script( 'h-faq', $dir . 'js/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
+    wp_register_style( 'h-faq', $dir . 'css/h-faq.css', [ 'wp-edit-blocks' ], H_VERSION );
 
     register_block_type( 'h/faq', [
       'editor_style' => 'h-faq',
@@ -61,8 +61,8 @@ function _h_load_faq() {
  * @action enqueue_block_editor_assets
  */
 function _h_enqueue_pullfaq_editor() {
-  $assets = plugin_dir_url(__FILE__) . '/assets';
-  wp_enqueue_style( 'h-faq-pullquote', $assets . '/h-pullfaq-editor.css', ['wp-edit-blocks'] );
+  $assets = plugin_dir_url(__FILE__);
+  wp_enqueue_style( 'h-faq-pullquote', $assets . 'css/h-pullfaq-editor.css', ['wp-edit-blocks'] );
 }
 
 /**
@@ -71,7 +71,7 @@ function _h_enqueue_pullfaq_editor() {
  * @action wp_enqueue_scripts
  */
 function _h_enqueue_faq() {
-  $assets = plugin_dir_url(__FILE__) . 'assets';
-  wp_enqueue_style( 'h-pullfaq', $assets . '/h-pullfaq.css', [] );
-  wp_enqueue_script( 'h-pullfaq', $assets . '/h-pullfaq.js', [], false, true );
+  $assets = plugin_dir_url(__FILE__);
+  wp_enqueue_style( 'h-pullfaq', $assets . 'css/h-pullfaq.css', [] );
+  wp_enqueue_script( 'h-pullfaq', $assets . 'js/h-pullfaq.js', [], false, true );
 }

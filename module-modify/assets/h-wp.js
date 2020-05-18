@@ -55,7 +55,6 @@ function jetpackSharing() {
   if( document.querySelector('.sharedaddy') == null ) { return; }
 
   _initMoreButton();
-  _initPrintButton();
 
 
   /**
@@ -80,19 +79,6 @@ function jetpackSharing() {
 
         // remove hidden share
         $shareHidden.parentElement.removeChild( $shareHidden );
-      } );
-    }
-  }
-
-  /**
-   * Print the website when Sharedaddy's print button is clicked
-   */
-  function _initPrintButton() {
-    let $printButtons = document.querySelectorAll( '.sd-content .share-print' );
-    for( let $pb of $printButtons ) {
-      $pb.addEventListener( 'click', (e) => {
-        e.preventDefault(); e.stopPropagation();
-        window.print();
       } );
     }
   }

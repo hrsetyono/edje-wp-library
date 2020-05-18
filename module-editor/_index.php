@@ -13,9 +13,80 @@ add_action( 'plugins_loaded' , function() {
  * @action wp_enqueue_scripts
  */
 function _h_enqueue_editor() {
+  $disallowed_blocks = apply_filters( 'h_disallowed_blocks', [
+    'core/video',
+    'core/nextpage',
+    'core/social-links',
+
+    // widget
+    'core/calendar',
+    'core/tag-cloud',
+    'core/search',
+    'core/latest-comments',
+    'core/latest-posts',
+    'core/rss',
+    'core/legacy-widget',
+    'core/archives',
+    'core/categories',
+
+    // embed
+    'core-embed/amazon-kindle',
+    'core-embed/soundcloud',
+    'core-embed/spotify',
+    'core-embed/flickr',
+    'core-embed/vimeo',
+    'core-embed/amazon-kindle',
+    'core-embed/animoto',
+    'core-embed/cloudup',
+    'core-embed/collegehumor',
+    'core-embed/crowdsignal',
+    'core-embed/dailymotion',
+    'core-embed/funnyordie',
+    'core-embed/hulu',
+    'core-embed/imgur',
+    'core-embed/issuu',
+    'core-embed/kickstarter',
+    'core-embed/meetup-com',
+    'core-embed/mixcloud',
+    'core-embed/photobucket',
+    'core-embed/polldaddy',
+    'core-embed/reddit',
+    'core-embed/reverbnation',
+    'core-embed/screencast',
+    'core-embed/scribd',
+    'core-embed/slideshare',
+    'core-embed/speaker-deck',
+    'core-embed/smugmug',
+    'core-embed/speaker',
+    'core-embed/ted',
+    'core-embed/tumblr',
+    'core-embed/videopress',
+    'core-embed/wordpress-tv',
+    'core-embed/tiktok',
+
+    // jetpack
+    'jetpack/slideshow',
+    'jetpack/contact-info',
+    'jetpack/business-hours',
+    'jetpack/calendly',
+    'jetpack/eventbrite',
+    'jetpack/gif',
+    'jetpack/markdown',
+    'jetpack/opentable',
+    'jetpack/google-calendar',
+    'jetpack/podcast-player',
+    'jetpack/map',
+    'jetpack/pinterest',
+    'jetpack/revue',
+    'jetpack/repeat-visitor',
+    'jetpack/tiled-gallery',
+  ] );
+
   $assets = plugin_dir_url(__FILE__);
   wp_enqueue_style( 'h-editor', $assets . 'css/h-editor.css', [], H_VERSION );
   wp_enqueue_script( 'h-editor', $assets . 'js/h-editor.js', [], H_VERSION, true );
+
+  wp_localize_script( 'h-editor', 'localizeH', [ 'disallowedBlocks' => $disallowed_blocks ] );
 }
 
 /**

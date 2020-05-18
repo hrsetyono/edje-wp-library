@@ -135,8 +135,9 @@ $acf-bg: #f3f3f4
 
 ///// TABLE
 
+  
 .wp-block-table
-  --tableBorder: black
+  --tableBorder: var(--text)
   --tableHeader: #{ rgba(black, .1) }
   --tableBg: white
   --tableStripe: #{ rgba(black, .05) }
@@ -153,62 +154,40 @@ $acf-bg: #f3f3f4
     border-top: 3px solid var(--tableBorder)
   tr
     background-color: var(--tableBg)
-  th,
-  td
-    border: 1px solid var(--tableBorder)
+  th, td
+    border: 1px solid rgba(black, .2)
 
-  [class*="-background-color"]
-    --tableStripe: white
+  .has-background
+    background-color: var(--tableBg)
 
   .has-subtle-pale-green-background-color
     --tableBorder: var(--green)
     --tableHeader: rgba(var(--greenRGB), .2)
-    --tableBg: rgba(var(--greenRGB), .1)
+    --tableStripe: rgba(var(--greenRGB), .1)
 
   .has-subtle-pale-blue-background-color
     --tableBorder: var(--blue)
     --tableHeader: rgba(var(--blueRGB), .2)
-    --tableBg: rgba(var(--blueRGB), .1)
+    --tableStripe: rgba(var(--blueRGB), .1)
 
   .has-subtle-pale-pink-background-color
     --tableBorder: var(--red)
     --tableHeader: rgba(var(--redRGB), .2)
-    --tableBg: rgba(var(--redRGB), .1)
+    --tableStripe: rgba(var(--redRGB), .1)
 
 
 // Table stripes
 .wp-block-table.is-style-stripes
   border-collapse: collapse
 
-  th,
-  td
-    border: 1px solid var(--tableBorder)
-
-  // The default stripe is on Odd row, remove it
-  tbody tr:nth-child(odd),
-  &.has-background tbody tr:nth-child(odd)
-    background-color: var(--tableBg)
+  th, td
+    border: 1px solid rgba(black, .2)
 
   tbody tr:nth-child(odd)
+    background-color: var(--tableBg)
+
+  tbody tr:nth-child(even)
     background-color: var(--tableStripe)
-
-
-// Table color setting in Sidebar
-button.components-color-palette__item
-  &[aria-label*="pale blue"]
-    color: var(--blue) !important
-  &[aria-label*="pale pink"]
-    color: var(--red) !important
-  &[aria-label*="pale green"]
-    color: var(--green) !important
-
-span.component-color-indicator
-  &[aria-label*="pale blue"]
-    background: var(--blue) !important
-  &[aria-label*="pale green"]
-    background: var(--green) !important
-  &[aria-label*="pale pink"]
-    background: var(--red) !important
 
 
 ///// COLUMNS

@@ -13,6 +13,11 @@ wp.domReady( function() {
 
   // IMAGE
   wp.blocks.unregisterBlockStyle( 'core/image', 'circle-mask' );
+
+  for( name of localizeH.disallowedBlocks ) {
+    wp.blocks.unregisterBlockType( name );
+  }
+
 });
 
 // Modify settings for Core blocks
@@ -58,61 +63,6 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/cover':
       return lodash.assign( {}, settings, {
         attributes: lodash.assign( {}, settings.attributes, { align: { type: 'string', default: 'full' } } ),
-      } );
-
-    // Hide these useless blocks
-    case 'core/video':
-    case 'core/nextpage':
-      
-    case 'core/calendar':
-    case 'core/tag-cloud':
-    case 'core/search':
-    case 'core/latest-comments':
-    case 'core/latest-posts':
-    case 'core/rss':
-    case 'core/legacy-widget':
-    case 'core/archives':
-
-    case 'core-embed/amazon-kindle':
-    case 'core-embed/soundcloud':
-    case 'core-embed/spotify':
-    case 'core-embed/flickr':
-    case 'core-embed/vimeo':
-    case 'core-embed/amazon-kindle':
-    case 'core-embed/animoto':
-    case 'core-embed/cloudup':
-    case 'core-embed/collegehumor':
-    case 'core-embed/crowdsignal':
-    case 'core-embed/dailymotion':
-    case 'core-embed/funnyordie':
-    case 'core-embed/hulu':
-    case 'core-embed/imgur':
-    case 'core-embed/issuu':
-    case 'core-embed/kickstarter':
-    case 'core-embed/meetup-com':
-    case 'core-embed/mixcloud':
-    case 'core-embed/photobucket':
-    case 'core-embed/polldaddy':
-    case 'core-embed/reddit':
-    case 'core-embed/reverbnation':
-    case 'core-embed/screencast':
-    case 'core-embed/scribd':
-    case 'core-embed/slideshare':
-    case 'core-embed/speaker-deck':
-    case 'core-embed/smugmug':
-    case 'core-embed/speaker':
-    case 'core-embed/ted':
-    case 'core-embed/tumblr':
-    case 'core-embed/videopress':
-    case 'core-embed/wordpress-tv':
-    case 'core-embed/tiktok':
-
-    case 'jetpack/slideshow':
-    case 'jetpack/gif':
-    case 'jetpack/markdown':
-    case 'jetpack/opentable':
-      return lodash.assign( {}, settings, {
-        supports: lodash.assign( {}, settings.supports, { inserter: false } ),
       } );
   }
 

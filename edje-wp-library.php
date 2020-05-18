@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 3.8.4
+ * Version: 3.8.5
  */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '3.8.4' );
+define( 'H_VERSION', '3.8.5' );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 define( 'H_DIR', __DIR__ ); // for require
@@ -23,17 +23,18 @@ define( 'H_URL', plugin_dir_url( __FILE__ ) ); // for linking assets
 
 if( !class_exists('Edje_WP_Library') ):
 
-require_once "helper/_index.php";
+require_once 'helper/_index.php';
 
-require_once "module-modify/_index.php";
-require_once "module-vendor/_index.php";
+require_once 'module-modify/_index.php';
+require_once 'module-vendor/_index.php';
   
-require_once "module-post-type/_index.php";
-require_once "module-admin-sidenav/_index.php";
-require_once "module-api/_index.php";
+require_once 'module-post-type/_index.php';
+require_once 'module-admin-sidenav/_index.php';
+require_once 'module-api/_index.php';
+// require_once 'module-customizer/_index.php;
 
-require_once "module-editor/_index.php";
-require_once "module-editor-faq/_index.php";
+require_once 'module-editor/_index.php';
+require_once 'module-editor-faq/_index.php';
   
 
 class Edje_WP_Library {
@@ -43,6 +44,8 @@ class Edje_WP_Library {
       require_once 'activation-hook.php';
       register_activation_hook( H_BASE, [$this, 'register_activation_hook'] );
     }
+
+    add_filter( 'plugin_row_meta', [$this, 'add_doc_links'], 10, 2 );
   }
 
   /**
@@ -51,6 +54,17 @@ class Edje_WP_Library {
   function register_activation_hook() {
     $hook = new H_Hook();
     $hook->on_activation();
+  }
+
+  /**
+   * @action plugin_row_meta 10
+   */
+  function add_doc_links( $links, $file ) {
+    if( $file === plugin_basename(__FILE__) ) {
+      $links[] = '<a target="_blank" rel="noopener noreferrer" href="https://github.com/hrsetyono/edje-wp-library/wiki/"> View Documentation » </a>';
+    }
+
+    return $links;
   }
 }
 

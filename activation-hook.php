@@ -24,7 +24,6 @@ class H_Hook {
       $this->_create_blogpage();
 
       $this->_set_default_setting();
-      $this->_create_default_nav();
 
       $options['init'] = true;
     }
@@ -97,49 +96,6 @@ class H_Hook {
     }
   }
 
-
-  /*
-    Create default navigation menu
-  */
-  private function _create_default_nav() {
-    $navs = array(
-      // MAIN
-      [
-        'name' => 'Main Nav',
-        'location' => 'main-nav',
-        'items' => [
-          [
-            'menu-item-title' => 'Home',
-            'menu-item-url' => home_url(),
-            'menu-item-status' => 'publish',
-          ]
-        ]
-      ],
-
-    );
-
-    $locations = get_theme_mod( 'nav_menu_locations' );
-
-    foreach( $navs as $nav ):
-      // if the nav location is occupied OR nav name already exists
-      if( has_nav_menu( $nav['location'] ) || wp_get_nav_menu_object( $nav['name'] ) ) {
-        continue;
-      }
-
-      // create empty menu
-      $menu_id = wp_create_nav_menu( $nav['name'] );
-
-      // add menu items
-      foreach( $nav['items'] as $item ) {
-        wp_update_nav_menu_item( $menu_id, 0, $item );
-      }
-
-      // set the menu location
-      $locations[ $nav['location'] ] = $menu_id;
-      set_theme_mod( 'nav_menu_locations', $locations );
-    endforeach;
-  }
-
   /*
     Create sample post content
   */
@@ -179,7 +135,7 @@ class H_Hook {
     update_option('medium_size_w', 480);
     update_option('medium_size_h', 480);
 
-    update_option('large_size_w', 1280);
+    update_option('large_size_w', 1120);
     update_option('large_size_h', 800);
 
     update_option('medium_large_size_w', 0);

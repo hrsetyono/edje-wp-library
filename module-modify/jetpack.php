@@ -1,8 +1,8 @@
-<?php namespace h;
+<?php
 /**
  * Modify Jetpack modules
  */
-class Modify_Jetpack {
+class H_ModifyJetpack {
   function __construct() {
     add_action( 'wp_head', [$this, 'wp_head'], 2 );
     add_action( 'wp_footer', [$this, 'wp_footer'] );
@@ -11,15 +11,18 @@ class Modify_Jetpack {
     add_filter( 'jetpack_implode_frontend_css', '__return_false' );
     add_filter( 'jetpack_lazy_images_blacklisted_classes', [$this, 'blacklisted_lazyload_classes'] );
 
-    // remove sharing buttons to be added manually with shortcode
-    add_action( 'loop_start', [$this, 'remove_share_buttons'] );
+    // remove sharing buttons to be added manually with shortcode [h-jetpack-sharing]
+    add_action( 'init', [$this, 'remove_share_buttons'], 999 );
 
-    // add woocommerce to sitemap
-    if( \_H::is_plugin_active('woocommerce') ) {
-      add_filter( 'jetpack_sitemap_post_types', [$this, 'add_woocommerce_to_sitemap'] );
-    }
-
+    // remove related posts to be added manually with shortcode [h-related-posts]
     add_filter( 'wp', [$this, 'remove_related_posts'], 20 );
+
+    // Add SVG logo to sharing button, the svg file is stored in Custy
+    if( class_exists( 'Custy' ) ) {
+      add_filter( 'jetpack_sharing_display_text', [$this, 'add_svg_to_sharing'], 10, 2 );
+      add_filter( 'jetpack_sharing_display_title', [$this, 'add_color_to_sharing'], 10, 2 );
+      add_filter( 'jetpack_sharing_display_link', [$this, 'add_onclick_to_sharing_print'], 10, 2 );
+    }
   }
 
   /*
@@ -28,22 +31,10 @@ class Modify_Jetpack {
   */
   function remove_related_posts() {
     if( class_exists('Jetpack_RelatedPosts') ) {
-      $jprp = \Jetpack_RelatedPosts::init();
+      $jprp = Jetpack_RelatedPosts::init();
       $callback = [ $jprp, 'filter_add_target_to_dom' ];
       remove_filter( 'the_content', $callback, 40 );
     }
-  }
-
-  /*
-    Add WooCommerce's product to Sitemap
-
-    @filter jetpack_sitemap_post_types
-    @param array $post_types
-    @return array
-  */
-  function add_woocommerce_to_sitemap( $post_types ) {
-    $post_types[] = 'product';
-    return $post_types;
   }
 
   /*
@@ -53,10 +44,7 @@ class Modify_Jetpack {
   function wp_head() {
     wp_dequeue_script( 'devicepx' );
     wp_dequeue_style( 'sharedaddy' );
-
-    if( function_exists('sharing_maybe_enqueue_scripts') && sharing_maybe_enqueue_scripts() ) {
-      wp_enqueue_style( 'social-logos' ); 
-    }
+    wp_dequeue_style( 'social-logos' );
   }
 
   /*
@@ -93,6 +81,77 @@ class Modify_Jetpack {
       remove_filter( 'the_content', array( Jetpack_Likes::init(), 'post_likes' ), 30, 1 );
     }
   }
+
+
+  /**
+   * Add CSS Var color to the Sharing button
+   */
+
+  /**
+   * Add SVG icon before the text
+   * 
+   * @filter jetpack_sharing_display_text
+   * 
+   * @param string $text - The text shown
+   * @param object $share - Sharing object
+   */
+  function add_svg_to_sharing( $text, $share ) {
+    // No need for icon if style is Text Only
+    if( $share->button_style === 'text' ) {
+      return $text;
+    }
+
+    $slug = $share->shortname;
+
+    if( $slug == 'jetpack-whatsapp' ) {
+      $slug = 'whatsapp';
+    }
+
+    // if print, use this svg icon because it's not in the list
+    if( $slug == 'print' ) {
+      $svg = '<svg width="20px" height="20px" viewBox="0 0 512 512"><path d="M400 264c-13.25 0-24 10.74-24 24 0 13.25 10.75 24 24 24s24-10.75 24-24c0-13.26-10.75-24-24-24zm32-88V99.88c0-12.73-5.06-24.94-14.06-33.94l-51.88-51.88c-9-9-21.21-14.06-33.94-14.06H110.48C93.64 0 80 14.33 80 32v144c-44.18 0-80 35.82-80 80v128c0 8.84 7.16 16 16 16h64v96c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-96h64c8.84 0 16-7.16 16-16V256c0-44.18-35.82-80-80-80zM128 48h192v48c0 8.84 7.16 16 16 16h48v64H128V48zm256 416H128v-64h256v64zm80-112H48v-96c0-17.64 14.36-32 32-32h352c17.64 0 32 14.36 32 32v96z"/></svg>';
+    }
+    else {
+      $social = Custy::get_social_list( $slug );
+      $svg = $social['svg'];
+    }
+
+    return "$svg <b>$text</b>";
+  }
+
+
+  /**
+   * Add new 'style' attribute containing --color variable
+   * 
+   * @filter jetpack_sharing_display_title
+   */
+  function add_color_to_sharing( $title, $share ) {
+    $slug = $share->shortname;
+
+    if( $slug === 'jetpack-whatsapp' ) {
+      $slug = 'whatsapp';
+    }
+
+    $social = Custy::get_social_list( $slug );
+    $color = $social['color'];
+
+    return "$title\" style=\"--color: $color;";
+  }
+
+
+  /**
+   * Add onclick event on Print share button
+   * 
+   * @filter jetpack_sharing_display_link
+   */
+  function add_onclick_to_sharing_print( $url, $share ) {
+    if( $share->shortname === 'print' ) {
+      $url = '#print';
+      return "$url\" onclick=\"window.print();";
+    }
+
+    return $url;
+  }
 }
 
-new Modify_Jetpack();
+new H_ModifyJetpack();

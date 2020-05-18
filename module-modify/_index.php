@@ -18,7 +18,7 @@ function _h_load_modify() {
     require_once __DIR__ . '/login.php';
     require_once __DIR__ . '/seo.php';
 
-    if( _H::is_plugin_active('jetpack') ) {
+    if( class_exists( 'Jetpack' ) ) {
       require_once __DIR__ . '/jetpack.php';
     }
   }
