@@ -7,45 +7,10 @@
 document.addEventListener( 'DOMContentLoaded', onReady );
 
 function onReady() {
-  commentFormToggle();
   jetpackSharing();
 }
 
 /////
-
-
-/**
- * Open Comment Form and add Placeholder to the textarea
- */
-function commentFormToggle() {
-  // exit if comment form not found
-  if( document.querySelector('#reply-title') === null ) { return; }
-
-  // Create placeholder's text based on Form Title.
-  let replyTitle = document.querySelector( '#reply-title' ).childNodes;
-  let replyTo = replyTitle[1].childNodes[0].nodeValue;
-  let placeholder = replyTitle[0].nodeValue + (replyTo ? replyTo : '') + '…';
-
-  // change the comment field's placeholder
-  document.querySelector('.comment-form textarea').setAttribute( 'placeholder', placeholder );
-  
-  // click listener to toggle the form
-  document.querySelector('.comment-form').addEventListener( 'click', activateForm );
-  
-  let $replyLinks = document.querySelectorAll( '.comment-reply-link' );
-  for( let $rl of $replyLinks ) {
-    $rl.addEventListener( 'click', activateForm );
-  }
-
-  //
-  function activateForm( e ) {
-    e.preventDefault();
-    var $form = document.querySelector( '.comment-form' );
-    $form.classList.add( '--active' );
-    $form.removeEventListener( 'click', activateForm );
-    $form.querySelector( 'textarea' ).focus();
-  }
-}
 
 
 /**

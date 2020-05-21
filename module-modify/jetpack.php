@@ -132,6 +132,10 @@ class H_ModifyJetpack {
       $slug = 'whatsapp';
     }
 
+    if( $slug === 'print' ) {
+      return $title;
+    }
+
     $social = Custy::get_social_list( $slug );
     $color = $social['color'];
 
