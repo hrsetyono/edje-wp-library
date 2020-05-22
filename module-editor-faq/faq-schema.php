@@ -35,7 +35,7 @@ class FAQ_Schema {
       preg_match( '/h-faq-answer.+>(.+)<\/div>$/Ui', $f, $answer );
 
       // abort if question or answer is empty
-      if( $question[1] === '' || $answer[1] === '' ) { continue; }
+      if( !isset( $question[1] ) || !isset( $answer[1] ) ) { continue; }
 
       // Add to question lists
       $data['mainEntity'][] = [

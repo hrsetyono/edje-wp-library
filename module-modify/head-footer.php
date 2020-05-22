@@ -33,15 +33,6 @@ class Modify_Head_Footer {
     if ( !is_admin() ) {
       wp_deregister_script( 'jquery-ui-core' );
     }
-
-    $assets = plugin_dir_url(__FILE__) . 'assets';
-
-    wp_enqueue_script( 'h-wp', $assets . '/h-wp.js', [], false, true );
-
-    // Enable comment's reply form
-    if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-      wp_enqueue_script( 'comment-reply' );
-    }
   }
 
 
