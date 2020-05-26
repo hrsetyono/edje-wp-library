@@ -6,7 +6,7 @@ if( !class_exists( 'H_Comment' ) ) {
  */
 class H_Comment {
   function __construct() {
-    add_action( 'after_setup_theme', [$this, 'init'], 9999 ); 
+    add_action( 'wp', [$this, 'init'] ); 
     add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
   }
 
@@ -18,12 +18,9 @@ class H_Comment {
     if( !get_theme_support( 'h-comment-editor' ) ) { return; }
 
     remove_filter( 'comment_text', 'wptexturize', 10 );
-
-    if( !is_admin() ) {
-      remove_filter( 'comment_text', 'make_clickable', 9 );
-      remove_filter( 'comment_text', 'wpautop', 30 );
-      add_filter( 'comment_text', [$this, 'parse_markdown' ] );
-    }
+    remove_filter( 'comment_text', 'make_clickable', 9 );
+    remove_filter( 'comment_text', 'wpautop', 30 );
+    add_filter( 'comment_text', [$this, 'parse_markdown' ] );
   }
 
   /**
