@@ -119,7 +119,7 @@ All these features are enabled by default:
 
 ## 6. Used In
 
-Since this is a library, you won't see it visually, but some websites that use this plugin are:
+Here are some websites that use this plugin:
 
 - [WordPress Tips - Advanced Tutorial](https://wptips.dev)
 - [Angela Chung - Fashion Designer](https://angela-chung.com)
@@ -132,3 +132,5 @@ Since this is a library, you won't see it visually, but some websites that use t
 - [Pandarin - Mandarin Learning Center](https://pandarin.net)
 - [Pixel Studio - Web Designer](https://pixelstudio.id)
 - [Premiera Skincare](https://premieraskincare.com/)
+
+Note: Since this is a library, you won't see it visually. 
