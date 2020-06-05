@@ -14,7 +14,7 @@ function hEditor(a,b){'use strict';function c(a){let b=document.createElement('d
 /**
  * Additional code by Edje to apply hEditor
  */
-(function( $ ) { 'use strict';
+(function() { 'use strict';
   document.addEventListener( 'DOMContentLoaded', onReady );
   
   function onReady() {
@@ -35,4 +35,4 @@ function hEditor(a,b){'use strict';function c(a){let b=document.createElement('d
       } );
     }
   }
-})( jQuery );
+})();
