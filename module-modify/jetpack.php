@@ -17,12 +17,10 @@ class H_ModifyJetpack {
     // remove related posts to be added manually with shortcode [h-related-posts]
     add_filter( 'wp', [$this, 'remove_related_posts'], 20 );
 
-    // Add SVG logo to sharing button, the svg file is stored in Custy
-    if( class_exists( 'Custy' ) ) {
-      add_filter( 'jetpack_sharing_display_text', [$this, 'add_svg_to_sharing'], 10, 2 );
-      add_filter( 'jetpack_sharing_display_title', [$this, 'add_color_to_sharing'], 10, 2 );
-      add_filter( 'jetpack_sharing_display_link', [$this, 'add_onclick_to_sharing_print'], 10, 2 );
-    }
+    // Add SVG logo to sharing button
+    add_filter( 'jetpack_sharing_display_text', [$this, 'add_svg_to_sharing'], 10, 2 );
+    add_filter( 'jetpack_sharing_display_title', [$this, 'add_color_to_sharing'], 10, 2 );
+    add_filter( 'jetpack_sharing_display_link', [$this, 'add_onclick_to_sharing_print'], 10, 2 );
   }
 
   /*
@@ -103,7 +101,7 @@ class H_ModifyJetpack {
 
     $slug = $share->shortname;
 
-    if( $slug == 'jetpack-whatsapp' ) {
+    if( $slug === 'jetpack-whatsapp' ) {
       $slug = 'whatsapp';
     }
 
@@ -112,7 +110,7 @@ class H_ModifyJetpack {
       $svg = '<svg width="20px" height="20px" viewBox="0 0 512 512"><path d="M400 264c-13.25 0-24 10.74-24 24 0 13.25 10.75 24 24 24s24-10.75 24-24c0-13.26-10.75-24-24-24zm32-88V99.88c0-12.73-5.06-24.94-14.06-33.94l-51.88-51.88c-9-9-21.21-14.06-33.94-14.06H110.48C93.64 0 80 14.33 80 32v144c-44.18 0-80 35.82-80 80v128c0 8.84 7.16 16 16 16h64v96c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-96h64c8.84 0 16-7.16 16-16V256c0-44.18-35.82-80-80-80zM128 48h192v48c0 8.84 7.16 16 16 16h48v64H128V48zm256 416H128v-64h256v64zm80-112H48v-96c0-17.64 14.36-32 32-32h352c17.64 0 32 14.36 32 32v96z"/></svg>';
     }
     else {
-      $social = Custy::get_social_list( $slug );
+      $social = H::get_social_icon( $slug );
       $svg = $social['svg'];
     }
 
@@ -136,7 +134,7 @@ class H_ModifyJetpack {
       return $title;
     }
 
-    $social = Custy::get_social_list( $slug );
+    $social = H::get_social_icon( $slug );
     $color = $social['color'];
 
     return "$title\" style=\"--color: $color;";

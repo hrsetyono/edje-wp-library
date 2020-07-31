@@ -16,6 +16,9 @@
     "sass-faq": "node-sass -w module-editor-faq/sass -o module-editor-faq/css --output-style compressed",
     "bsync-faq": "browser-sync start --proxy \"lab.test/\" --files \"module-editor-faq/assets/*.css\"",
 
+    "sass-widgets": "node-sass -w module-widgets/css -o module-widgets/css --output-style compressed",
+    "bsync-widgets": "browser-sync start --proxy \"lab.test/\" --files \"module-widgets/css/*.css\"",
+
     "sass": "node-sass -w ./ -o ./ --output-style compressed"
   }
 }

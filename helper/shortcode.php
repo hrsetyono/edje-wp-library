@@ -87,8 +87,6 @@ class H_Shortcode {
     ], $atts);
 
     $context = [
-      'style' => 'grid',
-      'mods' => Custy::get_mods(),
       'posts' => Timber::get_posts([
         'post_type' => 'post',
         'posts_per_page' => $atts['count'],

@@ -7,6 +7,45 @@ $acf-bg: #f3f3f4
 .has-text-align-left
   text-align: left !important
 
+// Change the default font setting
+.styles-wrapper
+  background-color: var(--siteBackground)
+
+.editor-styles-wrapper > *
+  font-family: var(--fontFamily)
+  font-weight: var(--fontWeight)
+
+.editor-post-title__block .editor-post-title__input,
+.editor-styles-wrapper .wp-block h1,
+.editor-styles-wrapper .wp-block h2,
+.editor-styles-wrapper .wp-block h3,
+.editor-styles-wrapper .wp-block h4,
+.editor-styles-wrapper .wp-block h5,
+.editor-styles-wrapper .wp-block h6,
+.editor-styles-wrapper .has-drop-cap:not(:focus)::first-letter
+  font-family: var(--hFontFamily)
+  font-weight: var(--hFontWeight)
+  text-transform: var(--hTextTransform)
+
+.editor-styles-wrapper .wp-block h1
+  font-size: var(--h1Size)
+
+.editor-styles-wrapper .wp-block h2
+  font-size: var(--h2Size)
+
+.editor-styles-wrapper .wp-block h3
+  font-size: var(--h3Size)
+
+.editor-styles-wrapper .wp-block h4
+  font-size: var(--h4Size)
+
+.editor-styles-wrapper .wp-block h5
+  font-size: var(--h5Size)
+
+.editor-styles-wrapper .wp-block h6
+  font-size: var(--h6Size)
+
+
 // Fixed bug where you can't select the Toolbar of Wide-aligned block
 .block-editor-block-list__layout .block-editor-block-list__block
   &[data-align="wide"],

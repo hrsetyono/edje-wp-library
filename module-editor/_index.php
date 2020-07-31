@@ -6,6 +6,8 @@ add_action( 'plugins_loaded' , function() {
   if( is_admin() ) { 
     add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 20 );
     add_action( 'admin_init', '_h_enqueue_classic_editor' );
+  } else {
+    add_action( 'wp_head', '_h_output_editor_palette' );
   }
 } );
 
@@ -100,6 +102,35 @@ function _h_enqueue_classic_editor() {
 }
 
 
+/**
+ * Create classes for Gutenberg colors
+ * @action wp_head
+ */
+function _h_output_editor_palette() {
+  $palette = get_theme_support( 'editor-color-palette' );
+  
+  // format styles
+  $styles = '';
+  foreach( $palette[0] as $name => $value ) {
+    $slug = $value['slug'];
+    $color = $value['color'];
+
+    // if value is a CSS var
+    if( strpos( $color, 'var' ) > -1 ) {
+      $styles .= ".has-{$slug}-background-color { --bgColor: {$color}; --bgColorRGB: {$color}RGB }";
+      $styles .= ".has-{$slug}-color { --textColor: {$color}; --textColorRGB: {$color}RGB }";
+    }
+    // else, it's a normal CSS
+    else {
+      $styles .= ".has-{$slug}-background-color { background-color: {$color}; }";
+      $styles .= ".has-{$slug}-color { color: {$color}; }";
+    }
+  }
+
+  echo "<style> $styles </style>";
+}
+
+
 /////
 
 /**
@@ -121,7 +152,8 @@ function h_register_post_type_block( string $post_type, array $args = [] ) {
 
 /**
  * Format array for Gutenberg's palette theme_suport. Also output CSS classes at HEAD.
- * 
+ *
+ * @deprecated - No need to use function for this 
  * @return array - Formatted colors array suitable for theme_support.
  */
 function h_color_palette( array $raw_colors ) {

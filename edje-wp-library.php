@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 3.10.1
+ * Version: 4.0.0
  */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '3.10.1' );
+define( 'H_VERSION', '4.0.0' );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 define( 'H_DIR', __DIR__ ); // for require
@@ -32,11 +32,13 @@ require_once 'module-post-type/_index.php';
 require_once 'module-admin-sidenav/_index.php';
 require_once 'module-api/_index.php';
 require_once 'module-comment/_index.php';
+require_once 'module-widgets/_index.php';
 // require_once 'module-customizer/_index.php;
 
 require_once 'module-editor/_index.php';
 require_once 'module-editor-faq/_index.php';
   
+
 
 class Edje_WP_Library {
   function __construct() {
@@ -58,6 +60,8 @@ class Edje_WP_Library {
   }
 
   /**
+   * Add "Documentation" link in the plugin listing (besides the Deactivate link)
+   * 
    * @action plugin_row_meta 10
    */
   function add_doc_links( $links, $file ) {
