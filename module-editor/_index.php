@@ -27,12 +27,10 @@ function _h_enqueue_editor() {
     'core/latest-comments',
     'core/latest-posts',
     'core/rss',
-    'core/legacy-widget',
     'core/archives',
     'core/categories',
 
     // embed
-    'core-embed/amazon-kindle',
     'core-embed/soundcloud',
     'core-embed/spotify',
     'core-embed/flickr',
@@ -43,14 +41,11 @@ function _h_enqueue_editor() {
     'core-embed/collegehumor',
     'core-embed/crowdsignal',
     'core-embed/dailymotion',
-    'core-embed/funnyordie',
-    'core-embed/hulu',
     'core-embed/imgur',
     'core-embed/issuu',
     'core-embed/kickstarter',
     'core-embed/meetup-com',
     'core-embed/mixcloud',
-    'core-embed/photobucket',
     'core-embed/polldaddy',
     'core-embed/reddit',
     'core-embed/reverbnation',
@@ -67,7 +62,6 @@ function _h_enqueue_editor() {
     'core-embed/tiktok',
 
     // jetpack
-    'jetpack/slideshow',
     'jetpack/contact-info',
     'jetpack/business-hours',
     'jetpack/calendly',
@@ -81,7 +75,9 @@ function _h_enqueue_editor() {
     'jetpack/pinterest',
     'jetpack/revue',
     'jetpack/repeat-visitor',
-    'jetpack/tiled-gallery',
+    // 'jetpack/contact-form-newsletter-form',
+    // 'jetpack/rsvp-form',
+    // 'jetpack/registration-form',
   ] );
 
   $assets = plugin_dir_url(__FILE__);
@@ -108,6 +104,9 @@ function _h_enqueue_classic_editor() {
  */
 function _h_output_editor_palette() {
   $palette = get_theme_support( 'editor-color-palette' );
+  
+  // abort if no palette
+  if( !$palette ) { return; }
   
   // format styles
   $styles = '';

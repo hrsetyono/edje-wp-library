@@ -110,7 +110,6 @@ $acf-bg: #f3f3f4
     margin-top: 0
     margin-bottom: 0
 
-
 [data-type="core/heading"]
   clear: both
 
@@ -118,11 +117,17 @@ $acf-bg: #f3f3f4
   .wp-block-file__content-wrapper
     text-align: center
 
+.wp-block[data-align="left"]> .wp-block-image
+  figcaption
+    text-align: left
+.wp-block[data-align="right"] > .wp-block-image
+  figcaption
+    text-align: right
+
 
 ///// GALLERY
 
-// if not cropped, put caption below image
-.wp-block-gallery:not(.is-cropped)
+.wp-block-gallery.is-style-h-bottom-caption
   figure
     flex-direction: column
   
@@ -140,8 +145,6 @@ $acf-bg: #f3f3f4
 
 
 ///// COVER
-
-.wp-block-cover .wp-block-cover__inner-container
 
 .wp-block-cover
   h1, h2
@@ -172,63 +175,6 @@ $acf-bg: #f3f3f4
   background-color: rgba(black, .05)
   padding: 1rem
 
-///// TABLE
-
-  
-.wp-block-table
-  --tableBorder: var(--text)
-  --tableHeader: #{ rgba(black, .1) }
-  --tableBg: white
-  --tableStripe: #{ rgba(black, .05) }
-
-  thead tr,
-  tfoot tr
-    background-color: var(--tableHeader)
-    font-weight: 700
-    text-align: left
-    
-  thead tr
-    border-bottom: 3px solid var(--tableBorder)
-  tfoot tr
-    border-top: 3px solid var(--tableBorder)
-  tr
-    background-color: var(--tableBg)
-  th, td
-    border: 1px solid rgba(black, .2)
-
-  .has-background
-    background-color: var(--tableBg)
-
-  .has-subtle-pale-green-background-color
-    --tableBorder: var(--green)
-    --tableHeader: rgba(var(--greenRGB), .2)
-    --tableStripe: rgba(var(--greenRGB), .1)
-
-  .has-subtle-pale-blue-background-color
-    --tableBorder: var(--blue)
-    --tableHeader: rgba(var(--blueRGB), .2)
-    --tableStripe: rgba(var(--blueRGB), .1)
-
-  .has-subtle-pale-pink-background-color
-    --tableBorder: var(--red)
-    --tableHeader: rgba(var(--redRGB), .2)
-    --tableStripe: rgba(var(--redRGB), .1)
-
-
-// Table stripes
-.wp-block-table.is-style-stripes
-  border-collapse: collapse
-
-  th, td
-    border: 1px solid rgba(black, .2)
-
-  tbody tr:nth-child(odd)
-    background-color: var(--tableBg)
-
-  tbody tr:nth-child(even)
-    background-color: var(--tableStripe)
-
-
 ///// COLUMNS
 
 .wp-block-columns.has-background
@@ -258,7 +204,7 @@ $acf-bg: #f3f3f4
     border-color: auto
     color: var(--main)
 
-  .is-style-transparent &
+  .is-style-h-transparent &
     background-color: transparent !important
     border: none
     color: var(--main)
