@@ -127,7 +127,8 @@ $acf-bg: #f3f3f4
 
 ///// GALLERY
 
-.wp-block-gallery.is-style-h-bottom-caption
+// if not cropped, put caption below image
+.wp-block-gallery:not(.is-cropped)
   figure
     flex-direction: column
   
@@ -142,7 +143,6 @@ $acf-bg: #f3f3f4
 
     a
       color: inherit
-
 
 ///// COVER
 
@@ -178,12 +178,7 @@ $acf-bg: #f3f3f4
 ///// COLUMNS
 
 .wp-block-columns.has-background
-  padding: 0
-  background-color: transparent !important
-
-  .wp-block-column
-    background-color: var(--bgColor)
-    padding: 1rem
+  border-radius: var(--gRadius, 4px)
 
 
 ///// BUTTON
@@ -264,10 +259,6 @@ div.acf-block-body .acf-fields
   grid-row-gap: 1rem
   border: none
 
-  // .acf-block-panel &
-  //   min-height: auto
-  //   padding-top: 2rem
-  //   padding-bottom: 2rem
 
   > *
     width: 100% !important
