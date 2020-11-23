@@ -17,6 +17,7 @@ add_action( 'plugins_loaded' , function() {
 function _h_enqueue_editor() {
   $disallowed_blocks = apply_filters( 'h_disallowed_blocks', [
     'core/video',
+    'core/pullquote',
     'core/nextpage',
     'core/social-links',
 
@@ -116,8 +117,12 @@ function _h_output_editor_palette() {
 
     // if value is a CSS var
     if( strpos( $color, 'var' ) > -1 ) {
-      $styles .= ".has-{$slug}-background-color { --bgColor: {$color}; --bgColorRGB: {$color}RGB }";
-      $styles .= ".has-{$slug}-color { --textColor: {$color}; --textColorRGB: {$color}RGB }";
+      // create the RGB name
+      preg_match( '/\((.+)\)/', $color, $matches );
+      $color_rgb = 'var(' . $matches[1] . 'RGB)';
+
+      $styles .= ".has-{$slug}-background-color { --bgColor: {$color}; --bgColorRGB: {$color_rgb} }";
+      $styles .= ".has-{$slug}-color { --textColor: {$color}; --textColorRGB: {$color_rgb} }";
     }
     // else, it's a normal CSS
     else {

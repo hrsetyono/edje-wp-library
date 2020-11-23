@@ -22,7 +22,7 @@ class H_ModifyJetpack {
     add_filter( 'jetpack_sharing_display_title', [$this, 'add_color_to_sharing'], 10, 2 );
     add_filter( 'jetpack_sharing_display_link', [$this, 'add_onclick_to_sharing_print'], 10, 2 );
   }
-
+  
   /*
     Remove Jetpack Related Post from default position
     @filter wp

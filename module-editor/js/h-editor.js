@@ -45,6 +45,12 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
         supports: lodash.assign( {}, settings.supports, { align: [] } ),
       } );
 
+    // only allow center and wide
+    case 'core/buttons':
+      return lodash.assign( {}, settings, {
+        supports: lodash.assign( {}, settings.supports, { align: ['center', 'wide'] } ),
+      } );
+
     // only allow center
     case 'core/social-links':
       return lodash.assign( {}, settings, {

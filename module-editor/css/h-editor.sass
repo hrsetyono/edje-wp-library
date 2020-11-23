@@ -1,57 +1,5 @@
 $acf-bg: #f3f3f4
 
-.has-text-align-right
-  text-align: right !important
-.has-text-align-center
-  text-align: center !important
-.has-text-align-left
-  text-align: left !important
-
-// Change the default font setting
-.styles-wrapper
-  background-color: var(--siteBackground)
-
-.editor-styles-wrapper > *
-  font-family: var(--fontFamily)
-  font-weight: var(--fontWeight)
-
-.editor-post-title__block .editor-post-title__input,
-.editor-styles-wrapper .wp-block h1,
-.editor-styles-wrapper .wp-block h2,
-.editor-styles-wrapper .wp-block h3,
-.editor-styles-wrapper .wp-block h4,
-.editor-styles-wrapper .wp-block h5,
-.editor-styles-wrapper .wp-block h6,
-.editor-styles-wrapper .has-drop-cap:not(:focus)::first-letter
-  font-family: var(--hFontFamily)
-  font-weight: var(--hFontWeight)
-  text-transform: var(--hTextTransform)
-
-.editor-styles-wrapper .wp-block h1
-  font-size: var(--h1Size)
-
-.editor-styles-wrapper .wp-block h2
-  font-size: var(--h2Size)
-
-.editor-styles-wrapper .wp-block h3
-  font-size: var(--h3Size)
-
-.editor-styles-wrapper .wp-block h4
-  font-size: var(--h4Size)
-
-.editor-styles-wrapper .wp-block h5
-  font-size: var(--h5Size)
-
-.editor-styles-wrapper .wp-block h6
-  font-size: var(--h6Size)
-
-
-// Fixed bug where you can't select the Toolbar of Wide-aligned block
-.block-editor-block-list__layout .block-editor-block-list__block
-  &[data-align="wide"],
-  &[data-align="full"]
-    z-index: 25
-
 // Fixed bug where Wide column is almost full when on smaller screen
 .wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks
   padding: 0 3rem
@@ -74,28 +22,6 @@ $acf-bg: #f3f3f4
   line-height: 4.5rem
 
 
-///// LIST
-
-[data-type="core/list"]
-  ol ol,
-  ul ol
-    list-style-type: lower-alpha
-
-///// BLOCK QUOTE
-
-.wp-block-quote[style*="text-align:center"], .wp-block-quote[style*="text-align: center"]
-  padding-top: 1rem
-  border-top: 4px solid #000
-
-.wp-block-quote.is-style-large
-  padding-bottom: 1rem
-  border-top: 4px solid gray
-  border-bottom: 4px solid gray
-  text-align: center
-
-  p
-    font-style: normal
-
 
 ///// IMAGE
 
@@ -117,12 +43,49 @@ $acf-bg: #f3f3f4
   .wp-block-file__content-wrapper
     text-align: center
 
-.wp-block[data-align="left"]> .wp-block-image
+.wp-block[data-align="left"],
+.wp-block[data-align="right"]
+  > .wp-block-image
+    max-width: 50%
+
+    .components-resizable-box__container
+      width: 100% !important
+      height: auto !important
+    .components-resizable-box__handle
+      display: none
+
   figcaption
-    text-align: left
-.wp-block[data-align="right"] > .wp-block-image
-  figcaption
-    text-align: right
+    text-align: var(--textAlign)
+  
+  
+.wp-block[data-align="left"]
+  --textAlign: left
+.wp-block[data-align="right"]
+  --textAlign: right
+
+
+///// MEDIA TEXT
+
+
+.wp-block-media-text
+  --columnMedia: minmax(0, 1fr)
+  --columnContent: minmax(0, 1fr)
+  grid-template-columns: var(--columnMedia) var(--columnContent) !important
+
+  &.has-media-on-the-right
+    grid-template-columns: var(--columnContent) var(--columnMedia) !important
+
+
+  .components-resizable-box__container.has-show-handle .components-resizable-box__handle
+    display: none
+
+  &.is-style-h-larger-image
+    --columnMedia: 3fr
+    --columnContent: 2fr
+
+  &.is-style-h-smaller-image
+    --columnMedia: 2fr
+    --columnContent: 3fr
 
 
 ///// GALLERY
@@ -164,11 +127,6 @@ $acf-bg: #f3f3f4
     padding: 33px 0
 
 
-///// MEDIA TEXT
-
-.wp-block-media-text
-  align-items: flex-start
-
 ///// FILE
 
 .wp-block-file
@@ -191,23 +149,6 @@ $acf-bg: #f3f3f4
   margin-right: auto
   margin-left: auto
   
-.wp-block-button__link
-  background-color: var(--main)
-
-  .is-style-outline &
-    background-color: transparent !important
-    border-color: auto
-    color: var(--main)
-
-  .is-style-h-transparent &
-    background-color: transparent !important
-    border: none
-    color: var(--main)
-    text-transform: uppercase
-    letter-spacing: 0.05em
-
-    &:focus
-      box-shadow: none
  
 ///// SEPARATOR
 
@@ -429,3 +370,17 @@ div.edit-post-sidebar .acf-block-fields
 .acf-block-post-list
   a
     pointer-events: none
+
+
+//// JETPACK
+
+
+// Hide the useless form block from selection
+
+.components-autocomplete__result.components-button
+  &[id*="block-jetpack/contact-form-"]
+    display: none
+
+.block-editor-block-types-list__list-item
+  [class*="editor-block-list-item-jetpack-contact-form-"]
+    opacity: .3
