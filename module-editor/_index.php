@@ -6,6 +6,7 @@ add_action( 'plugins_loaded' , function() {
   if( is_admin() ) { 
     add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 20 );
     add_action( 'admin_init', '_h_enqueue_classic_editor' );
+    add_action( 'admin_head', '_h_output_editor_palette' );
   } else {
     add_action( 'wp_head', '_h_output_editor_palette' );
   }

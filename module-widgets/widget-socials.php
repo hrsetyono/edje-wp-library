@@ -4,7 +4,20 @@
  * 
  */
 class H_Widget_Socials extends H_Widget {
+  public $choices = [];
+
   function __construct() {
+    $this->choices = apply_filters( 'h_widget_social_choices', [
+      'facebook' => 'Facebook',
+      'instagram' => 'Instagram',
+      'twitter' => 'Twitter',
+      'whatsapp' => 'WhatsApp',
+      'youtube' => 'Youtube',
+      'email' => '- Email',
+      'phone' => '- Phone',
+      'location' => '- Location',
+    ]);
+
     parent::__construct( 'h_socials', __( '- Socials' ), [
       'description' => __( 'Social Media links' )
     ] );
@@ -76,16 +89,7 @@ class H_Widget_Socials extends H_Widget {
                 'class' => '',
                 'id' => '',
               ),
-              'choices' => array(
-                'facebook' => 'Facebook',
-                'instagram' => 'Instagram',
-                'twitter' => 'Twitter',
-                'whatsapp' => 'WhatsApp',
-                'youtube' => 'Youtube',
-                'email' => '- Email',
-                'phone' => '- Phone',
-                'location' => '- Location',
-              ),
+              'choices' => $this->choices,
               'default_value' => array(
               ),
               'allow_null' => 0,

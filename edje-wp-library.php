@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 4.1.3
+ * Version: 4.1.4
  */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
 
 // Constant
-define( 'H_VERSION', '4.1.3' );
+define( 'H_VERSION', '4.1.4' );
 define( 'H_BASE', basename(dirname(__FILE__) ).'/'.basename(__FILE__) );
 
 define( 'H_DIR', __DIR__ ); // for require
@@ -91,7 +91,7 @@ class H {
     $func_name = "h_$name";
 
     if( is_callable( $func_name ) ) {
-      return call_user_func_array( "h_$name", $args );
+      return call_user_func_array( $func_name, $args );
     } else {
       trigger_error( "The function H::$name does not exist.", E_USER_ERROR );
     }
