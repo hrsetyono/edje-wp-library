@@ -13,6 +13,7 @@ class H_Widget_Socials extends H_Widget {
       'twitter' => 'Twitter',
       'whatsapp' => 'WhatsApp',
       'youtube' => 'Youtube',
+      'pinterest' => 'Pinterest',
       'email' => '- Email',
       'phone' => '- Phone',
       'location' => '- Location',
