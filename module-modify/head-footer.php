@@ -25,24 +25,12 @@ class Modify_Head_Footer {
     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
     add_filter( 'emoji_svg_url', '__return_false' );
 
-    // remove default js or css 
-    add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'] );
 
     add_action( 'customize_register', [$this, 'customize_register'] );
     add_action( 'wp_head', [$this, 'add_custom_head_code'], 100 );
     add_action( 'wp_footer', [$this, 'add_custom_footer_code'], 100 );
   }
 
-
-  /**
-   * Change some default CSS or JS
-   * @action wp_enqueue_scripts
-   */
-  function enqueue_assets() {
-    if ( !is_admin() ) {
-      wp_deregister_script( 'jquery-ui-core' );
-    }
-  }
 
 
   /**
