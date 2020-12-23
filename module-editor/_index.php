@@ -105,6 +105,13 @@ function _h_enqueue_classic_editor() {
  * @action wp_head
  */
 function _h_output_editor_palette() {
+  // abort if in Admin but not inside Gutenberg editor
+  if( is_admin() ) {
+    global $current_screen;
+    $in_editor = method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor();
+    if( !$in_editor ) { return; }
+  }
+
   $palette = get_theme_support( 'editor-color-palette' );
   
   // abort if no palette

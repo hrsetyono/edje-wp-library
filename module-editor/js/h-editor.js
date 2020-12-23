@@ -1,23 +1,11 @@
 
 wp.domReady( function() {
-  // MEDIA TEXT
-  wp.blocks.registerBlockStyle( 'core/media-text', {
-    name: 'h-larger-image',
-    label: 'Larger Image'
-  } );
-
-  wp.blocks.registerBlockStyle( 'core/media-text', {
-    name: 'h-smaller-image',
-    label: 'Smaller Image'
-  } );
-
   // IMAGE
   wp.blocks.unregisterBlockStyle( 'core/image', 'circle-mask' );
 
-  for( name of localizeH.disallowedBlocks ) {
+  for( let name of localizeH.disallowedBlocks ) {
     wp.blocks.unregisterBlockType( name );
   }
-
 });
 
 // Modify settings for Core blocks
@@ -43,12 +31,6 @@ wp.hooks.addFilter( 'blocks.registerBlockType', 'h/set_default_alignment', ( set
     case 'core/audio':
       return lodash.assign( {}, settings, {
         supports: lodash.assign( {}, settings.supports, { align: [] } ),
-      } );
-
-    // only allow center and wide
-    case 'core/buttons':
-      return lodash.assign( {}, settings, {
-        supports: lodash.assign( {}, settings.supports, { align: ['center', 'wide'] } ),
       } );
 
     // only allow center
