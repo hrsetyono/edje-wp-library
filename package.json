@@ -1,24 +1,20 @@
 {
-  "name": "edje-wp-library",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hrsetyono/edje-wp-library.git"
-  },
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "sass-editor": "node-sass -w module-editor/css -o module-editor/css --output-style compressed",
-    "bsync-editor": "browser-sync start --proxy \"lab.test/\" --files \"module-editor/css/*.css\"",
-
-    "sass-vendor": "node-sass -w module-vendor/sass -o module-vendor/css --output-style compressed",
-
-    "sass-faq": "node-sass -w module-editor-faq/sass -o module-editor-faq/css --output-style compressed",
-    "bsync-faq": "browser-sync start --proxy \"lab.test/\" --files \"module-editor-faq/assets/*.css\"",
-
-    "sass-widgets": "node-sass -w module-widgets/css -o module-widgets/css --output-style compressed",
-    "bsync-widgets": "browser-sync start --proxy \"lab.test/\" --files \"module-widgets/css/*.css\"",
-
-    "sass": "node-sass -w ./ -o ./ --output-style compressed"
-  }
+    "name": "edje-wp-library",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hrsetyono/edje-wp-library.git"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "sass-editor": "node-sass -w module-editor/css -o module-editor/css --output-style compressed",
+        "bsync-editor": "browser-sync start --proxy \"lab.test/\" --files \"module-editor/css/*.css\"",
+        "sass-vendor": "node-sass -w module-vendor/sass -o module-vendor/css --output-style compressed",
+        "sass-faq": "node-sass -w module-editor-faq/sass -o module-editor-faq/css --output-style compressed",
+        "bsync-faq": "browser-sync start --proxy \"lab.test/\" --files \"module-editor-faq/assets/*.css\"",
+        "sass-widgets": "node-sass -w module-widgets/css -o module-widgets/css --output-style compressed",
+        "bsync-widgets": "browser-sync start --proxy \"lab.test/\" --files \"module-widgets/css/*.css\"",
+        "sass": "node-sass -w ./ -o ./ --output-style compressed"
+    }
 }
