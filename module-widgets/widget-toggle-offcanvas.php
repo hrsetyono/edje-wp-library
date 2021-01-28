@@ -23,49 +23,4 @@ class H_Widget_Toggle_Offcanvas extends H_Widget {
     $content = apply_filters( 'h_widget_toggle', $content, $fields );
     echo $args['before_widget'] . $content . $args['after_widget'];
   }
-
-  function add_acf_fields() {
-    acf_add_local_field_group(array(
-      'key' => 'group_5f1e27d9215a5',
-      'title' => 'Edje Widget - Toggle Offcanvas',
-      'fields' => array(
-        array(
-          'key' => 'field_5f1e27e3d2fa2',
-          'label' => 'Label',
-          'name' => 'label',
-          'type' => 'text',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'default_value' => 'Menu',
-          'placeholder' => '',
-          'prepend' => '',
-          'append' => '',
-          'maxlength' => '',
-        ),
-      ),
-      'location' => array(
-        array(
-          array(
-            'param' => 'widget',
-            'operator' => '==',
-            'value' => 'h_toggle',
-          ),
-        ),
-      ),
-      'menu_order' => 0,
-      'position' => 'normal',
-      'style' => 'default',
-      'label_placement' => 'top',
-      'instruction_placement' => 'label',
-      'hide_on_screen' => '',
-      'active' => true,
-      'description' => '',
-    ));
-  }
 }

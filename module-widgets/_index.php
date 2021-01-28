@@ -4,6 +4,8 @@ add_action( 'widgets_init', '_h_register_sidebar' );
 add_action( 'widgets_init', '_h_register_widgets' );
 add_action( 'widgets_init', '_h_unregister_widgets' );
 
+add_filter( 'acf/settings/load_json', 'my_acf_json_load_point', 20 );
+
 add_action( 'admin_enqueue_scripts', '_h_enqueue_widget_assets' );
 
 
@@ -101,6 +103,12 @@ function _h_unregister_widgets() {
 }
 
 
+function h_load_acf_json_widgets( $paths ) {  
+  $paths[] = plugin_dir_path( __FILE__ ) . '/acf-json';
+  return $paths;
+}
+
+
 /**
  * @action admin_enqueue_scripts
  */
@@ -124,10 +132,6 @@ if( !class_exists( 'H_Widget' ) ):
 class H_Widget extends WP_Widget {
   function __construct( $slug, $name, $args ) {
     parent::__construct( $slug, $name, $args );
-
-    if( function_exists('acf_add_local_field_group') ) {
-      $this->add_acf_fields();
-    }
   }
 
 
