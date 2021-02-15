@@ -12,9 +12,10 @@ class H_Widget_Separator extends H_Widget {
         'description' => __( 'Split the widgets' )
     ] );
   }
+
   public function widget( $args, $instance ) {
     $id = $args['widget_id'];
-    $size = get_field( 'size', "widget_$id" );
+    $size = get_field( 'footer_size', "widget_$id" );
     $style = '';
 
     if( $size !== 'auto' ) {
