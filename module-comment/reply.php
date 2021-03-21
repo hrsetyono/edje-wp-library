@@ -1,4 +1,7 @@
 <?php
+/**
+ * Send email whenever someone reply to your comment
+ */
 
 if( !class_exists( 'H_CommentReply' ) ) {
 

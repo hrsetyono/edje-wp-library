@@ -1,30 +1,26 @@
-<?php namespace h;
+<?php
 /**
  * Modify anything related to SEO, including redirection
  */
-class Modify_SEO {
-  function __construct() {
-    // remove extra rss
-    remove_action( 'wp_head', 'feed_links', 2 );
-    remove_action( 'wp_head', 'feed_links_extra', 3 );
 
-    // prevent url guessing
-    add_filter( 'redirect_canonical', [$this, 'redirect_canonical'] );
+// remove extra rss
+remove_action( 'wp_head', 'feed_links', 2 );
+remove_action( 'wp_head', 'feed_links_extra', 3 );
 
-    // Disable Jetpack SEO if TSF or Yoast is installed
-    if( \_H::is_plugin_active('tsf') || \_H::is_plugin_active('yoast') ) {
-      add_filter('jetpack_enable_open_graph', '__return_false');
-    }
-  }
-
-  /**
-   * Prevent URL guessing
-   * @filter redirect_canonical
-   */
-  function redirect_canonical( $url ) {
-    if( is_404() ) { return; }
-    return $url;
-  }
+// Disable Jetpack SEO if TSF or Yoast is installed
+if( _H::is_plugin_active('tsf') || _H::is_plugin_active('yoast') ) {
+  add_filter('jetpack_enable_open_graph', '__return_false');
 }
 
-new Modify_SEO();
+add_filter( 'redirect_canonical', '_h_prevent_url_guessing' );
+
+
+
+/**
+ * Prevent URL guessing
+ * @filter redirect_canonical
+ */
+function _h_prevent_url_guessing( $url ) {
+  if( is_404() ) { return; }
+  return $url;
+}

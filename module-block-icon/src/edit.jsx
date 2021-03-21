@@ -89,7 +89,7 @@ export default function ( props ) {
             </small>
           </div>
 
-          <SVGInline src={ _getIconURL( atts.iconName ) }
+          <SVGInline src={ 'https://cdn.pixelstudio.id/h-block-icon/' + atts.iconName + '.svg' }
             onFound={ markup => props.setAttributes({ iconMarkup: markup }) } />
         </div> }
 
@@ -176,12 +176,6 @@ export default function ( props ) {
     props.setAttributes({ iconName: value });
   }
 
-  /**
-   * Form the URL from icon name
-   */
-  function _getIconURL( name ) {
-    return hLocalizeIcon.DIR + 'svg/' + name + '.svg';
-  }
 
 
   /**

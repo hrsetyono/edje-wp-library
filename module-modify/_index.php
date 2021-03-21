@@ -8,7 +8,7 @@ function _h_load_modify() {
   // admin
   if( is_admin() ) {
     require_once __DIR__ . '/admin.php';
-
+    
     if( defined('DISALLOW_FILE_EDIT') && !DISALLOW_FILE_EDIT ) {
       require_once __DIR__ . '/code-editor.php';
     }

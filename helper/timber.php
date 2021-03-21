@@ -32,7 +32,6 @@ class H_Timber {
       $twig->addFilter( new Twig_SimpleFilter( 'methods', [$this, '_filter_methods'] ) );
     }
 
-
     return $twig;
   }
 
