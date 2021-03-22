@@ -155,3 +155,5 @@ class H_Timber {
     var_dump( get_class_methods( $object ) );
   }
 }
+
+new H_Timber();

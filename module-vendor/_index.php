@@ -1,6 +1,6 @@
 <?php
 
-add_action( 'plugins_loaded' , '_h_load_vendor' );
+add_action( 'plugins_loaded' , '_h_load_vendor', 1 );
 add_action( 'wp_enqueue_scripts', '_h_enqueue_vendor' );
 
 

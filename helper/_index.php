@@ -10,6 +10,5 @@ add_action( 'plugins_loaded' , function() {
 
   if( class_exists('Timber') ) {
     require_once __DIR__ . '/timber.php';
-    new H_Timber();
   }
 } );
