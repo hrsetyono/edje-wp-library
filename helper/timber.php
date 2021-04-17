@@ -20,6 +20,7 @@ class H_Timber {
     // @deprecated - use h_markdown instead
     $twig->addFilter( new Twig_SimpleFilter( 'markdown', [$this, '_filter_markdown'] ) );
     $twig->addFilter( new Twig_SimpleFilter( 'h_markdown', [$this, '_filter_markdown'] ) );
+    $twig->addFilter( new Twig_SimpleFilter( 'h_markdown_no_p', [$this, '_filter_markdown_no_p'] ) );
 
     $twig->addFilter( new Twig_SimpleFilter( 'h_get_timber_menu', [$this, '_filter_get_timber_menu'] ) );
     $twig->addFilter( new Twig_SimpleFilter( 'h_get_visible_attr', [$this, '_filter_get_visible_attr'] ) );
@@ -41,11 +42,26 @@ class H_Timber {
   /**
    * Parse Markdown
    *  
-   * `{{ post.custom_field | markdown }}`
+   * `{{ post.custom_field | h_markdown }}`
    */
   function _filter_markdown( $text ) {
     $pd = new \Parsedown();
     $text_compiled = $pd->text( $text );
+    return do_shortcode( $text_compiled );
+  }
+
+  /**
+   * Parse Markdown without wrapper <p>
+   * 
+   * `{{ post.custom_field | h_markdown_no_p }}`
+   * 
+   * @since 5.1.0
+   */
+  function _filter_markdown_no_p( $text ) {
+    $pd = new \Parsedown();
+    $text_compiled = $pd->text( $text );
+    $text_compiled = preg_replace( '/<(\/)?p>/', '', $text_compiled ); // remove outer <p>
+
     return do_shortcode( $text_compiled );
   }
 

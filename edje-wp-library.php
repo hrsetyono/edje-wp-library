@@ -8,7 +8,7 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 5.0.1
+ * Version: 5.1.0
  */
 
 if( !defined( 'WPINC' ) ) { die; } // exit if accessed directly
