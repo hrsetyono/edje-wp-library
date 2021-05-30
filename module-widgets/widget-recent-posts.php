@@ -16,7 +16,8 @@ class H_Widget_Recent_Posts extends H_Widget {
 
     $title = get_field( 'title', "widget_$id" );
     $number_of_posts = get_field( 'number_of_posts', "widget_$id" );
-    $option = get_field( 'option', "widget_$id" );
+    $style = get_field( 'style', "widget_$id" );
+
 
     // get posts
     $posts = get_posts([
@@ -31,21 +32,20 @@ class H_Widget_Recent_Posts extends H_Widget {
     foreach( $posts as $p ) {
       $link = get_permalink( $p );
       $title = $p->post_title;
-      $thumbnail = in_array( 'thumbnail', $option )
-        ? get_the_post_thumbnail( $p, 'thumbnail' ) : '';
-      $date = in_array( 'date', $option )
-        ? '<span class="post-date">' . get_the_date( '', $p ) . '</span>' : '';
+      $thumbnail = in_array( 'show_thumbnail', $style )
+        ? "<div class='wp-block-latest-posts__featured-image'><a href='{$link}'>" . get_the_post_thumbnail( $p, 'thumbnail' ) . "</a></div>" : '';
+      
+      $date = in_array( 'show_date', $style )
+        ? '<time class="wp-block-latest-posts__post-date">' . get_the_date( '', $p ) . '</time>' : '';
 
       $content_posts .= "<li>
-        <a href='{$link}'>
-          {$thumbnail}
-          <h6>{$title}</h6>
-        </a>
+        {$thumbnail}
+        <a href='{$link}'>{$title}</a>
         {$date}
       </li>";
     }
 
-    $content .= "<ul> $content_posts </ul>";
+    $content .= "<ul class='wp-block-latest-posts__list columns-1 alignwide wp-block-latest-posts'> $content_posts </ul>";
 
     $content = apply_filters( 'h_widget_recent_posts', $content, $args );
     echo $args['before_widget'] . $content . $args['after_widget'];
