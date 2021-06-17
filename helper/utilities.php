@@ -68,6 +68,26 @@ function h_POST( string $url, $data = [] ) {
 }
 
 
+/**
+ * Convert the text into markdown
+ * 
+ * @param string $text
+ * @param bool $no_wrapper
+ * @return string
+ */
+function h_markdown( $text, $no_wrapper = false ) {
+  $pd = new Parsedown();
+  $text_compiled = $pd->text( $text );
+
+  // remove outer <p>
+  if( $no_wrapper ) {
+    $text_compiled = preg_replace( '/<(\/)?p>/', '', $text_compiled );
+  }
+
+  return do_shortcode( $text_compiled );
+}
+
+
 
 /**
  * Get social media SVG icon and color

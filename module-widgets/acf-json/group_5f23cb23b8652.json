@@ -57,11 +57,12 @@
             },
             "choices": {
                 "show_date": "Show Date?",
-                "show_thumbnail": "Show Thumbnail?"
+                "show_thumbnail": "Show Thumbnail?",
+                "show_author": "Show Author?"
             },
             "allow_custom": 0,
             "default_value": [
-                "thumbnail"
+                "show_thumbnail", "show_date"
             ],
             "layout": "vertical",
             "toggle": 0,

@@ -1,7 +1,7 @@
 <?php
 
 add_shortcode( 'button', '_h_shortcode_button' );
-add_shortcode( 'h-related-posts', '_h_shortcode_related_posts' );
+// add_shortcode( 'h-related-posts', '_h_shortcode_related_posts' );
 add_shortcode( 'h-jetpack-sharing', '_h_shortcode_jetpack_sharing' );
 
 
@@ -26,32 +26,6 @@ function _h_shortcode_button( $atts, $content = null ) {
   }
 
   return $content;
-}
-
-
-/**
- * Show Related Posts
- * 
- * [h-related-posts count="3"]
- */
-function _h_shortcode_related_posts( $atts, $content = null ) {
-  global $post;
-
-  $atts = shortcode_atts([
-    'count' => '3'
-  ], $atts);
-
-  $context = [
-    'posts' => Timber::get_posts([
-      'post_type' => 'post',
-      'posts_per_page' => $atts['count'],
-      'post__not_in' => [ $post->ID ],
-      'category__in' => wp_get_post_categories( $post->ID ),
-      'orderby' => 'rand'
-    ]),
-  ];
-
-  return Timber::compile( '_posts.twig', $context );
 }
 
 

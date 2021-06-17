@@ -6,9 +6,6 @@ add_action( 'plugins_loaded' , function() {
   if( is_admin() ) { 
     add_action( 'enqueue_block_editor_assets', '_h_enqueue_editor', 20 );
     add_action( 'admin_init', '_h_enqueue_classic_editor' );
-    add_action( 'admin_head', '_h_output_editor_palette' );
-  } else {
-    add_action( 'wp_head', '_h_output_editor_palette' );
   }
 } );
 
@@ -17,38 +14,8 @@ add_action( 'plugins_loaded' , function() {
  */
 function _h_enqueue_editor() {
   $disallowed_blocks = apply_filters( 'h_disallowed_blocks', [
-    'core/video',
-    'core/pullquote',
     'core/nextpage',
-    'core/social-links',
-
-    // widget
-    'core/calendar',
-    'core/tag-cloud',
-    'core/search',
-    'core/latest-comments',
-    'core/latest-posts',
-    'core/rss',
-    'core/archives',
-    'core/categories',
-
-    // jetpack
-    'jetpack/contact-info',
-    'jetpack/business-hours',
-    'jetpack/calendly',
-    'jetpack/eventbrite',
-    'jetpack/gif',
-    'jetpack/markdown',
-    'jetpack/opentable',
-    'jetpack/google-calendar',
-    'jetpack/podcast-player',
-    'jetpack/map',
-    'jetpack/pinterest',
-    'jetpack/revue',
-    'jetpack/repeat-visitor',
-    // 'jetpack/contact-form-newsletter-form',
-    // 'jetpack/rsvp-form',
-    // 'jetpack/registration-form',
+    'core/more',
   ] );
 
   $assets = plugin_dir_url(__FILE__);
@@ -72,6 +39,8 @@ function _h_enqueue_classic_editor() {
 /**
  * Create classes for Gutenberg colors
  * @action wp_head
+ * 
+ * @deprecated 5.2.0 - Generate this in theme instead
  */
 function _h_output_editor_palette() {
   // abort if in Admin but not inside Gutenberg editor

@@ -2,6 +2,7 @@
 wp.domReady( function() {
   // IMAGE
   wp.blocks.unregisterBlockStyle( 'core/image', 'circle-mask' );
+  wp.blocks.unregisterBlockStyle( 'core/image', 'rounded' );
 
   for( let name of localizeH.disallowedBlocks ) {
     wp.blocks.unregisterBlockType( name );
