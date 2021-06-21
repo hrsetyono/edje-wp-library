@@ -11,18 +11,26 @@ class H_Widget_Button extends H_Widget {
   }
 
   function widget( $args, $instance ) {
-    $content = '';
     $id = $args['widget_id'];
 
     $link = get_field( 'link', "widget_$id" );
+    $style = get_field( 'style', "widget_$id" );
     $icon = get_field( 'icon', "widget_$id" );
-    $extra_classes = get_field( 'extra_classes', "widget_$id" );
 
-    $content = "<a href='{$link['url']}' class='button {$extra_classes}' target='{$link['target']}'>
-      {$icon} <span>{$link['title']}</span>
-    </a>";
+    // Get Link data
+    $url = $link['url'] ?? '';
+    $target = $link['target'] ?? '_self';
+    $title = empty( $link['title'] ) ? '' : '<span>' . $link['title'] . '</span>';
+    
+    $content = $args['before_widget'] .
+      "<div class='wp-block-button is-style-{$style}'>
+        <a class='wp-block-button__link' href='{$url}' target='{$target}'>
+          {$icon} {$title}
+        </a>
+      </div>" .
+    $args['after_widget'];
 
     $content = apply_filters( 'h_widget_button', $content, $args );
-    echo $args['before_widget'] . $content . $args['after_widget'];
+    echo $content;
   }
 }

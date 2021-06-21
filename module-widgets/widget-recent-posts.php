@@ -11,24 +11,20 @@ class H_Widget_Recent_Posts extends H_Widget {
   }
 
   function widget( $args, $instance ) {
-    $content = '';
     $id = $args['widget_id'];
 
-    $title = get_field( 'title', "widget_$id" );
     $number_of_posts = get_field( 'number_of_posts', "widget_$id" );
     $style = get_field( 'style', "widget_$id" );
-
+    $title = get_field( 'title', "widget_$id" );
+    $title = $title ? $args['before_title'] . $title . $args['after_title'] : '';
 
     // get posts
     $posts = get_posts([
       'posts_per_page' => $number_of_posts,
     ]);
 
-    // output title
-    $content .= $args['before_title'] . $title . $args['after_title'];
-
     // output posts
-    $content_posts = '';
+    $list = '';
     foreach( $posts as $p ) {
       $link = get_permalink( $p );
       $title = $p->post_title;
@@ -41,16 +37,20 @@ class H_Widget_Recent_Posts extends H_Widget {
       $author = in_array( 'show_author', $style )
         ? '<div class="wp-block-latest-posts__post-author">' . get_the_author_meta( 'display_name', $p->post_author ) . '</div>' : '';
 
-      $content_posts .= "<li>
+      $list .= "<li>
         {$thumbnail}
         <a href='{$link}'>{$title}</a>
         {$author} {$date}
       </li>";
     }
 
-    $content .= "<ul class='wp-block-latest-posts__list columns-1 wp-block-latest-posts'> $content_posts </ul>";
+    // output title
+    $content = $args['before_widget'] .
+      $title .
+      "<ul class='wp-block-latest-posts__list columns-1 wp-block-latest-posts'> $list </ul>" .
+    $args['after_widget'];
 
     $content = apply_filters( 'h_widget_recent_posts', $content, $args );
-    echo $args['before_widget'] . $content . $args['after_widget'];
+    echo $content;
   }
 }

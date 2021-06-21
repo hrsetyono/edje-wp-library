@@ -1,42 +1,24 @@
 <?php
-/**
- * Create a custom FAQ block and add FAQ schema data
- */
-
-if( is_admin() ) {
-  _h_register_faq_block();
-  add_filter( 'safe_style_css', '_h_faq_safe_style' );
-} else {
-  add_action( 'wp_footer', '_h_add_faq_schema', 100 );
-}
 
 
-/**
+_h_register_faq_block_v1();
+add_action( 'wp_footer', '_h_add_faq_schema_v1', 100 );
+
+
+
+/*
  * Register a custom FAQ block
  */
-function _h_register_faq_block() {
-  $dir = plugin_dir_url(__FILE__);
+function _h_register_faq_block_v1() {
+ $dir = plugin_dir_url(__FILE__);
 
-  wp_register_script( 'h-faq', $dir . 'js/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
-  wp_register_style( 'h-faq', $dir . 'css/h-faq.css', [ 'wp-edit-blocks' ], H_VERSION );
+ wp_register_script( 'h-faq', $dir . 'v1/h-faq-v1.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
+ wp_register_style( 'h-faq', $dir . 'v1/h-faq-v1.css', [ 'wp-edit-blocks' ], H_VERSION );
 
-  register_block_type( 'h/faq', [
-    'editor_style' => 'h-faq',
-    'editor_script' => 'h-faq',
-  ] );
-}
-
-/**
- * Allow this CSS Var to be saved in database
- * 
- * @filter safe_style_css
- */
-function _h_faq_safe_style( $attr ) {
-  $attr[] = '--textColor';
-  $attr[] = '--bgColor';
-  $attr[] = '--faqTitleBg';
-  $attr[] = '--faqTitleColor';
-  return $attr;
+ register_block_type( 'h/faq', [
+   'editor_style' => 'h-faq',
+   'editor_script' => 'h-faq',
+ ] );
 }
 
 
@@ -45,13 +27,13 @@ function _h_faq_safe_style( $attr ) {
  * 
  * @action wp_footer
  */
-function _h_add_faq_schema() {
+function _h_add_faq_schema_v1() {
   if( is_home() ) { return; } // abort if blog page
 
   global $post;
   $content = isset( $post ) ? $post->post_content : null;
 
-  // this regex only works for latest Gutenberg version where they wrap Pullquote with <figure>
+  // Find FAQ with --noindex class
   preg_match_all( '/wp-block-h-faq(?!.*--noindex).*>(.+)<\/details/Ui', $content, $faqs );
 
   // if FAQ found

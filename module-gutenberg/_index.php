@@ -9,6 +9,11 @@ add_action( 'plugins_loaded' , function() {
   }
 } );
 
+if( is_admin() ) {
+  add_filter( 'safe_style_css', '_h_gutenberg_safe_style' );
+}
+
+
 /**
  * @action wp_enqueue_scripts
  */
@@ -33,6 +38,20 @@ function _h_enqueue_editor() {
 function _h_enqueue_classic_editor() {
   $assets = plugin_dir_url(__FILE__) . 'css';
   add_editor_style( $assets . '/h-classic-editor.css' );
+}
+
+/**
+ * Allow this CSS Var to be saved in database
+ * 
+ * @filter safe_style_css
+ */
+function _h_gutenberg_safe_style( $attr ) {
+  $attr[] = '--textColor';
+  $attr[] = '--bgColor';
+  $attr[] = '--iconColor';
+  $attr[] = '--faqTitleBg';
+  $attr[] = '--faqTitleColor';
+  return $attr;
 }
 
 

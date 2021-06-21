@@ -2,11 +2,11 @@
 // This loads before the block's CSS
 
 div.wp-block-h-faq
-  --faqTitleBg: #e5e5e5
-  --faqTitleColor: #191e23
+  --bgColor: #e5e5e5
+  --textColor: #191e23
 
   position: relative
-  border: 2px solid var(--faqTitleBg)
+  border: 2px solid var(--bgColor)
   border-radius: var(--gRadius)
 
   .wp-block
@@ -23,12 +23,12 @@ div.wp-block-h-faq
     width: 1.75rem
     height: 1.75rem
 
-    color: var(--faqTitleColor)
+    color: var(--textColor)
     border-radius: var(--gRadius)
 
     &:hover
-      background-color: var(--faqTitleColor)
-      color: var(--faqTitleBg)
+      background-color: var(--textColor)
+      color: var(--bgColor)
     &:active
       transition: none
       transform: translateY(1px)
@@ -36,14 +36,14 @@ div.wp-block-h-faq
   
 
 
-.wp-block-h-faq .rich-text.h-faq-question
+.wp-block-h-faq .rich-text.wp-block-h-faq__question
   margin-top: 0
   margin-bottom: 0
   padding: 0.75rem
-  background-color: var(--faqTitleBg)
+  background-color: var(--bgColor)
   font-weight: 400
   font-size: 1rem
-  color: var(--faqTitleColor)
+  color: var(--textColor)
 
   &::before
     content: "+"
@@ -60,7 +60,7 @@ div.wp-block-h-faq
       content: "-"
 
 
-div.h-faq-answer
+div.wp-block-h-faq__answer
   overflow: hidden
   visibility: hidden
   height: 0

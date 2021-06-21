@@ -18,6 +18,29 @@
             "return_format": "array"
         },
         {
+            "key": "field_60cc9951ff941",
+            "label": "Style",
+            "name": "style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "outline": "Outline",
+                "h-transparent": "Transparent"
+            },
+            "default_value": ["default"],
+            "layout": "horizontal",
+            "toggle": 0,
+            "return_format": "value"
+        },
+        {
             "key": "field_5f1d389b70aed",
             "label": "Icon",
             "name": "icon",
@@ -35,26 +58,8 @@
             "maxlength": "",
             "rows": 6,
             "new_lines": ""
-        },
-        {
-            "key": "field_5f1d3bda627a2",
-            "label": "Extra Classes",
-            "name": "extra_classes",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         }
+        
     ],
     "location": [
         [

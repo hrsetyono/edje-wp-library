@@ -5,15 +5,12 @@
 .wp-block-h-icon
   --iconSize: 60px
   --iconPadding: 1rem
+
   display: flex
   align-items: flex-start
-  background-color: var(--bgColor, rgba(black, .1))
 
   color: var(--textColor, inherit)
   border-radius: 4px
-
-  &.has-background
-    padding: 0.75rem
 
   figure
     min-width: var(--iconSize)
@@ -22,8 +19,19 @@
     height: var(--iconSize)
     margin: 0
     padding: var(--iconPadding)
-    background-color: rgba(black, .1)
+    background-color: var(--bgColor, #e5e5e5)
     border-radius: 50%
+
+  
+  &.is-style-boxed
+    --iconPadding: 0
+    --iconSize: 28px
+
+    padding: 0.75rem
+    background-color: var(--bgColor, #e5e5e5)
+
+    figure
+      background-color: transparent
 
 
   // toolbar option
@@ -52,18 +60,26 @@
 
   path,
   rect
-    fill: currentColor
+    fill: var(--iconColor, currentColor)
 
   svg
     max-width: 100%
     max-height: 100%
 
 
-///// Description
+///// Content
 
 .wp-block-h-icon
-  &:not(.has-description)
+  &.has-no-description
     align-items: center
+    
+    // Hide the description if empty
+    dd
+      display: none
+
+      // Show the hidden description when block is selected
+      .wp-block.is-selected &
+        display: block
 
   dl, dt, dd, dd p
     margin: 0
@@ -71,49 +87,14 @@
     flex: 1
     width: 100%
   dt
-    margin-bottom: 0.5rem
     font-family: var(--hFontFamily)
     font-weight: 700
     font-size: 1.5rem
-  
+    line-height: 1
+  dd
+    margin-top: 0.5rem
   dd p + p
     margin-top: 0.5rem
-
-
-///// STYLE
-
-.wp-block-h-icon.is-style-smaller,
-.wp-block-h-icon.is-style-smaller-color-icon-only
-  --iconSize: 50px
-  --iconPadding: 0.75rem
-  align-items: center
-  padding: 0
-
-  &.has-background
-    padding: 0.5rem
-  &.has-description
-    align-items: flex-start
-
-  dt
-    margin-bottom: 0
-    font-size: 1.125rem
-    text-transform: none
-    letter-spacing: 0
-
-
-.wp-block-h-icon.is-style-color-icon-only,
-.wp-block-h-icon.is-style-smaller-color-icon-only
-  background-color: transparent
-  padding: 0
-  color: inherit
-
-  figure
-    background-color: var(--bgColor)
-  path
-    fill: var(--textColor)
-    
-
-
 
 ///// INSPECTOR
 

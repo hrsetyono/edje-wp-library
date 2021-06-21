@@ -10,73 +10,36 @@ import { ToolbarButton,
   TextControl,
   TextareaControl } from '@wordpress/components';
 import SVGInline from './_react-svg-inline.jsx';
-import Helper from './_helpers.js';
 import URLPicker from './_url-picker.jsx';
 
 
 export default function ( props ) {
   let atts = props.attributes;
 
-  const colorSettings = [
-    {
-      label: 'Text Color',
-      value: atts.textColor,
-      onChange: (value) => {
-        props.setAttributes( { textColor: value ? value : 'none' } )
-      }
-    },
-    {
-      label: 'Background Color',
-      value: atts.bgColor,
-      onChange: (value) => {
-        props.setAttributes( { bgColor: value ? value : 'none' } )
-      }
-    },
+  let allowedRichTextFormats = [
+    'core/bold', 'core/italic', 'core/strikethrough', 'core/subscript', 'core/superscript',
+    'core/image', 'core/text-color', 'core/code'
   ];
 
-  const blockControls = [
-    {
-      icon: 'table-col-before',
-      title: 'Icon on Left',
-      className: atts.iconPosition === 'left' ? 'is-pressed' : '',
-      onClick: () => {
-        props.setAttributes( { iconPosition: 'left' } );
-      },
-    },
-    {
-      icon: 'table-row-before',
-      title: 'Icon on Top',
-      className: atts.iconPosition === 'top' ? 'is-pressed' : '',
-      onClick: () => {
-        props.setAttributes( { iconPosition: 'top' } );
-      },
-    },
-    {
-      icon: 'table-col-after',
-      title: 'Icon on Right',
-      className: atts.iconPosition === 'right' ? 'is-pressed' : '',
-      onClick: () => {
-        props.setAttributes( { iconPosition: 'right' } );
-      },
-    },
-  ];
+  // allow link if not fully clickable
+  if( !atts.isFullyClickable ) {
+    allowedRichTextFormats.push( 'core/link' );
+  }
 
-  return ( <div className={ Helper.formatClassName( props ) }
-    style={{
-      '--textColor': atts.textColor,
-      '--bgColor': atts.bgColor,
-    }}>
+  // format className for the div
+  let className = `${ props.className }
+    has-icon-position-${ atts.iconPosition }
+    has-text-align-${ atts.align }
+    ${ atts.bgColor === 'none' ? '' : 'has-background'  }
+    ${ atts.description === '<p></p>' || atts.description === '' ? 'has-no-description' : 'has-description' }`;
 
+  return ( <>
     <InspectorControls>
       <PanelBody title="Settings" initialOpen="true">
 
         <ToggleControl label="Is Fully Clickable?"
           checked={ atts.isFullyClickable }
           onChange={ _onToggleFullyClickable } />
-
-        <ToggleControl label="Has Description?"
-          checked={ atts.hasDescription }
-          onChange={ value => props.setAttributes({ hasDescription: value }) } />
 
         { atts.useRawSVG || <div className="h-icon-control">
           <div>
@@ -108,11 +71,32 @@ export default function ( props ) {
 
       <PanelColorSettings title="Color"
         initialOpen="true"
-        colorSettings={ colorSettings }>
+        colorSettings={ [
+          {
+            label: 'Text Color',
+            value: atts.textColor,
+            onChange: (value) => {
+              props.setAttributes( { textColor: value ? value : '' } )
+            }
+          },
+          {
+            label: 'Background Color',
+            value: atts.bgColor,
+            onChange: (value) => {
+              props.setAttributes( { bgColor: value ? value : '' } )
+            }
+          },
+          {
+            label: 'Icon Color',
+            value: atts.iconColor,
+            onChange: (value) => {
+              props.setAttributes( { iconColor: value ? value : '' } )
+            }
+          },
+        ] }>
       </PanelColorSettings>
 
     </InspectorControls>
-
 
     <BlockControls>
       <ToolbarGroup>
@@ -136,26 +120,6 @@ export default function ( props ) {
         onChange={ value => props.setAttributes( { align: value ? value : 'none' } ) } />
     </BlockControls>
 
-    <figure dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}></figure>
-
-    <dl>
-      <RichText tagName='dt'
-        inline={ true }
-        placeholder='Enter heading…'
-        value={ atts.heading }
-        withoutInteractiveFormatting={ atts.isFullyClickable }
-        onChange={ value => props.setAttributes({ heading: value }) }	/>
-
-      { atts.hasDescription &&
-        <RichText tagName='dd'
-          multiline='p'
-          placeholder='Enter description…'
-          value={ atts.description }
-          withoutInteractiveFormatting={ atts.isFullyClickable }
-          onChange={ value => props.setAttributes({ description: value }) } />
-      }
-    </dl>
-
     { atts.isFullyClickable && <URLPicker
       url={ atts.url }
       setAttributes={ props.setAttributes }
@@ -166,7 +130,35 @@ export default function ( props ) {
         props.setAttributes( { linkTarget: linkTarget } );
       } }
     /> }
-  </div> );
+
+    <div className={ className }
+      style={{
+        '--textColor': atts.textColor,
+        '--bgColor': atts.bgColor,
+        '--iconColor': atts.iconColor,
+      }}>
+
+      <figure dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}></figure>
+
+      <dl>
+        <RichText tagName='dt'
+          className='wp-block-h-icon__title'
+          inline={ true }
+          placeholder='Enter title…'
+          value={ atts.heading }
+          allowedFormats={ allowedRichTextFormats }
+          onChange={ value => props.setAttributes({ heading: value }) }	/>
+
+        <RichText tagName='dd'
+          className='wp-block-h-icon__description'
+          multiline='p'
+          placeholder='Enter description…'
+          value={ atts.description }
+          allowedFormats={ allowedRichTextFormats }
+          onChange={ value => props.setAttributes({ description: value }) } />
+      </dl>
+    </div>
+  </> );
 
 
   /**
@@ -175,8 +167,6 @@ export default function ( props ) {
   function _updateIconMarkup( value ) {
     props.setAttributes({ iconName: value });
   }
-
-
 
   /**
    * Clean the anchor inside heading and description 

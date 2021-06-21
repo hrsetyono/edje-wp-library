@@ -3,6 +3,25 @@
     "title": "Edje Widget - Socials",
     "fields": [
         {
+            "key": "field_60ccafd05fe9d",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5f1e8509cf033",
             "label": "Links",
             "name": "links",
@@ -35,11 +54,33 @@
                         "id": ""
                     },
                     "choices": {
-                        "facebook": "Facebook",
-                        "instagram": "Instagram",
-                        "phone": "Phone",
-                        "twitter": "Twitter",
-                        "whatsapp": "WhatsApp"
+                        "Popular": {
+                            "facebook": "Facebook",
+                            "instagram": "Instagram",
+                            "tiktok": "Tiktok",
+                            "twitter": "Twitter",
+                            "whatsapp": "WhatsApp",
+                            "youtube": "Youtube"
+                        },
+                        "General": {
+                            "email": "Email",
+                            "phone": "Phone",
+                            "location": "Location",
+                            "fax": "Fax"
+                        },
+                        "Other": {
+                            "linkedin": "LinkedIn",
+                            "github": "Github",
+                            "pinterest": "Pinterest",
+                            "reddit": "Reddit",
+                            "skype": "Skype",
+                            "telegram": "Telegram",
+                            "tiktok": "Tiktok",
+                            "tumblr": "Tumblr",
+                            "twitch": "Twitch",
+                            "wechat": "WeChat"
+                        },
+                        "custom": "Custom"
                     },
                     "default_value": [],
                     "allow_null": 0,
@@ -58,13 +99,90 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "65",
                         "class": "",
                         "id": ""
                     },
                     "return_format": "array"
                 }
             ]
+        },
+        {
+            "key": "field_60cc59c43e1e7",
+            "label": "Style",
+            "name": "style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "pill-shape": "Circle",
+                "logos-only": "Logos Only"
+            },
+            "default_value": ["default"],
+            "layout": "horizontal",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_60cd8e99a1ec3",
+            "label": "Color",
+            "name": "color",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "original": "Original",
+                "monotone": "Monotone"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_60cd8f24a1ec4",
+            "label": "Size",
+            "name": "size",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Small",
+                "normal": "Normal",
+                "large": "Large",
+                "huge": "Huge"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "normal",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
         }
     ],
     "location": [

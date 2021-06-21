@@ -52,19 +52,4 @@ export default {
     }
   },
 
-
-  /**
-   * Format the class name for Icon block 
-   * 
-   * @param props (array) - The React block properties
-   */
-  formatClassName: function ( props ) {
-    let atts = props.attributes;
-
-    return `${ props.className }
-      has-icon-position-${ atts.iconPosition }
-      has-text-align-${ atts.align }
-      ${ atts.bgColor === 'none' ? '' : 'has-background'  }
-      ${ atts.hasDescription ? 'has-description' : '' }`;
-  }
 };
