@@ -6,7 +6,11 @@ add_action( 'widgets_init', '_h_unregister_widgets' );
 
 add_filter( 'acf/settings/load_json', '_h_load_acf_json_widgets', 20 );
 
-add_action( 'admin_enqueue_scripts', '_h_enqueue_widget_assets' );
+
+if( is_admin() ) {
+  add_action( 'after_setup_theme', '_h_disable_gutenberg_widgets', 100 );
+  add_action( 'admin_enqueue_scripts', '_h_enqueue_widget_assets' );
+}
 
 
 
@@ -66,8 +70,6 @@ function _h_register_widgets() {
   require_once __DIR__ . '/widget-toggle-offcanvas.php';
   require_once __DIR__ . '/widget-recent-posts.php';
 
-
-  
   register_widget( 'H_Widget_Button' );
   register_widget( 'H_Widget_Logo' );
   register_widget( 'H_Widget_Toggle_Offcanvas' );
@@ -82,7 +84,6 @@ function _h_register_widgets() {
  * @action widgets_init
  */
 function _h_unregister_widgets() {
-
   $disabled_widgets = apply_filters( 'h_disabled_widgets', [
     'WP_Widget_Calendar',
     'WP_Widget_Archives',
@@ -118,6 +119,19 @@ function _h_enqueue_widget_assets() {
   wp_enqueue_style( 'h-widgets', $dir . 'css/h-widgets.css', [], H_VERSION );
 }
 
+
+/**
+ * Disables the block editor from managing widgets.
+ * Taken from Classic Widgets v0.2 plugin https://wordpress.org/plugins/classic-widgets/
+ * 
+ * @action after_setup_theme
+ */
+function _h_disable_gutenberg_widgets() {
+  if( get_theme_support( 'h-classic-widgets' ) ) {
+    add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
+    add_filter( 'use_widgets_block_editor', '__return_false' );
+  }
+}
 
 
 
