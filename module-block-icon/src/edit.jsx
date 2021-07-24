@@ -158,13 +158,13 @@ export default function ( props ) {
         '--iconColor': atts.iconColor,
       }}>
       
-      { (atts.useImage && atts.imageURL) ?
+      { (atts.useImage) ?
         <figure className='wp-block-h-icon__figure'>
           <img src={ atts.imageURL } />
         </figure>
       :
         <figure className='wp-block-h-icon__figure'
-          dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}>  
+          dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}>
         </figure>
       }
 
