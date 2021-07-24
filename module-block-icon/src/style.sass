@@ -12,17 +12,6 @@
   color: var(--textColor, inherit)
   border-radius: 4px
 
-  figure
-    min-width: var(--iconSize)
-    max-width: var(--iconSize)
-    width: var(--iconSize)
-    height: var(--iconSize)
-    margin: 0
-    padding: var(--iconPadding)
-    background-color: var(--bgColor, #e5e5e5)
-    border-radius: 50%
-
-  
   &.is-style-boxed
     --iconPadding: 0
     --iconSize: 28px
@@ -30,10 +19,7 @@
     padding: 0.75rem
     background-color: var(--bgColor, #e5e5e5)
 
-    figure
-      background-color: transparent
-
-
+  
   // toolbar option
   &.has-icon-position-left
     figure
@@ -57,6 +43,24 @@
 
   &.has-text-align-right
     justify-content: flex-end
+
+.wp-block-h-icon__figure
+  min-width: var(--iconSize)
+  max-width: var(--iconSize)
+  width: var(--iconSize)
+  height: var(--iconSize)
+  margin: 0
+  padding: var(--iconPadding)
+  background-color: var(--bgColor, #e5e5e5)
+  border-radius: 50%
+
+  .is-style-boxed &
+    background-color: transparent
+
+  .use-image &
+    --iconSize: 60px
+    padding: 0
+    background-color: transparent
 
   path,
   rect
@@ -116,3 +120,8 @@
 
     svg
       width: 75%
+
+
+.wp-block-h-icon__image-preview
+  max-height: 200px
+  max-width: 100%

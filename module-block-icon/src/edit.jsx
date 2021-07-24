@@ -2,13 +2,15 @@ import { RichText,
   BlockControls,
   AlignmentToolbar,
   InspectorControls,
-  PanelColorSettings } from '@wordpress/block-editor';
+  PanelColorSettings,
+  MediaUpload } from '@wordpress/block-editor';
 import { ToolbarButton,
   ToolbarGroup,
   ToggleControl,
   PanelBody,
   TextControl,
-  TextareaControl } from '@wordpress/components';
+  TextareaControl,
+  Button } from '@wordpress/components';
 import SVGInline from './_react-svg-inline.jsx';
 import URLPicker from './_url-picker.jsx';
 
@@ -31,7 +33,37 @@ export default function ( props ) {
     has-icon-position-${ atts.iconPosition }
     has-text-align-${ atts.align }
     ${ atts.bgColor === 'none' ? '' : 'has-background'  }
-    ${ atts.description === '<p></p>' || atts.description === '' ? 'has-no-description' : 'has-description' }`;
+    ${ atts.description === '<p></p>' || atts.description === '' ? 'has-no-description' : 'has-description' }
+    ${ atts.useImage ? 'use-image' : '' }`;
+
+  let useFontAwesome = !atts.useRawSVG && !atts.useImage;
+
+  let colorSettings = [
+    {
+      label: 'Text Color',
+      value: atts.textColor,
+      onChange: (value) => {
+        props.setAttributes( { textColor: value ? value : '' } )
+      }
+    },
+    {
+      label: 'Background Color',
+      value: atts.bgColor,
+      onChange: (value) => {
+        props.setAttributes( { bgColor: value ? value : '' } )
+      }
+    },
+  ];
+
+  if( !atts.useImage ) {
+    colorSettings.push({
+      label: 'Icon Color',
+      value: atts.iconColor,
+      onChange: (value) => {
+        props.setAttributes( { iconColor: value ? value : '' } )
+      }
+    });
+  }
 
   return ( <>
     <InspectorControls>
@@ -41,7 +73,7 @@ export default function ( props ) {
           checked={ atts.isFullyClickable }
           onChange={ _onToggleFullyClickable } />
 
-        { atts.useRawSVG || <div className="h-icon-control">
+        { useFontAwesome && <div className="h-icon-control">
           <div>
             <TextControl label="Icon Name"
               value={ atts.iconName }
@@ -58,7 +90,7 @@ export default function ( props ) {
 
         <ToggleControl label="Use Raw SVG?"
           checked={ atts.useRawSVG }
-          onChange={ value => props.setAttributes({ useRawSVG: value }) } />
+          onChange={ value => props.setAttributes({ useRawSVG: value, useImage: false }) } />
 
         { atts.useRawSVG && <TextareaControl
           label="Raw SVG"
@@ -66,34 +98,22 @@ export default function ( props ) {
           help="Paste in the SVG code here"
           onChange={ value => props.setAttributes({ iconMarkup: value }) }
         /> }
+
+        <ToggleControl label="Use Image?"
+          checked={ atts.useImage }
+          onChange={ value => props.setAttributes({ useImage: value, useRawSVG: false }) } />
+
+        { atts.useImage && <MediaUpload allowedTypes="image"
+          value={ atts.mediaID }
+          onSelect={ onSelectImage }
+          render={ renderImage }
+        /> }
         
       </PanelBody>
 
       <PanelColorSettings title="Color"
         initialOpen="true"
-        colorSettings={ [
-          {
-            label: 'Text Color',
-            value: atts.textColor,
-            onChange: (value) => {
-              props.setAttributes( { textColor: value ? value : '' } )
-            }
-          },
-          {
-            label: 'Background Color',
-            value: atts.bgColor,
-            onChange: (value) => {
-              props.setAttributes( { bgColor: value ? value : '' } )
-            }
-          },
-          {
-            label: 'Icon Color',
-            value: atts.iconColor,
-            onChange: (value) => {
-              props.setAttributes( { iconColor: value ? value : '' } )
-            }
-          },
-        ] }>
+        colorSettings={ colorSettings }>
       </PanelColorSettings>
 
     </InspectorControls>
@@ -137,8 +157,16 @@ export default function ( props ) {
         '--bgColor': atts.bgColor,
         '--iconColor': atts.iconColor,
       }}>
-
-      <figure dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}></figure>
+      
+      { (atts.useImage && atts.imageURL) ?
+        <figure className='wp-block-h-icon__figure'>
+          <img src={ atts.imageURL } />
+        </figure>
+      :
+        <figure className='wp-block-h-icon__figure'
+          dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}>  
+        </figure>
+      }
 
       <dl>
         <RichText tagName='dt'
@@ -186,5 +214,26 @@ export default function ( props ) {
     }
 
     props.setAttributes( attsToSet );
+  }
+
+  /**
+   * Assign the image data into attribute
+   */
+  function onSelectImage( image ) {
+    props.setAttributes( { imageURL: image.url, imageID: image.id } );
+  }
+
+  /**
+   * Render image (if uploaded) and upload button
+   */
+  function renderImage( obj ) {
+    let className = atts.imageID	? 'button button--transparent' : 'button';
+    
+    return (<>
+      <Button className={ className } onClick={ obj.open }>
+        { atts.imageID ? 'Change Image' : 'Upload Image' }
+      </Button>
+      { atts.imageID && <img class="wp-block-h-icon__image-preview" src={ atts.imageURL } /> }
+    </>);
   }
 }
