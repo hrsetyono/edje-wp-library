@@ -101,7 +101,7 @@ export default function ( props ) {
 
         <ToggleControl label="Use Image?"
           checked={ atts.useImage }
-          onChange={ value => props.setAttributes({ useImage: value, useRawSVG: false }) } />
+          onChange={ value => props.setAttributes({ useImage: value, useRawSVG: false, iconMarkup: '' }) } />
 
         { atts.useImage && <MediaUpload allowedTypes="image"
           value={ atts.mediaID }
