@@ -14,7 +14,7 @@ class H_Widget_Socials extends H_Widget {
     $id = $args['widget_id'];
 
     $items = get_field( 'links', "widget_$id" );
-    $title = get_field( 'title', "widget_$id" );
+    $title = trim( get_field( 'title', "widget_$id" ) );
     $title = $title ? $args['before_title'] . $title . $args['after_title'] : '';
 
     // for extra classes
@@ -34,10 +34,10 @@ class H_Widget_Socials extends H_Widget {
       $svg = $data['svg'];
       // $color = $data['color'];
       $url = $i['link']['url'] ?? '';
-      $title = $i['link']['title'] ?? '';
+      $label = $i['link']['title'] ?? '';
 
-      if( !empty( $title ) ) {
-        $svg .= " <span> {$title} </span>";
+      if( !empty( $label ) ) {
+        $svg .= " <span> {$label} </span>";
         $classes .= ' has-label';
       }
 
