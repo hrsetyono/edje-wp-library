@@ -31,7 +31,7 @@ class H_Widget_Socials extends H_Widget {
       $classes = "wp-social-link wp-block-social-link wp-social-link-{$name}";
 
       $data = H::get_social_icon( $name );
-      $svg = $data['svg'];
+      $svg = '<figure>' . $data['svg'] . '</figure>';
       // $color = $data['color'];
       $url = $i['link']['url'] ?? '';
       $label = $i['link']['title'] ?? '';

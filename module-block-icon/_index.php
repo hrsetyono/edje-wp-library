@@ -88,7 +88,7 @@ function _h_render_icon_block( $atts, $default_atts ) {
 
   // format content
   $heading = $atts['heading'];
-  $has_description = !( $attrs['description'] === '<p></p>' || $atts['description'] === '' );
+  $has_description = !( $atts['description'] === '<p></p>' || $atts['description'] === '' );
   $description = $has_description ? "<dd>{$atts['description']}</dd>" : '';
   $content = "<dl> <dt>$heading</dt> $description </dl>";
 
@@ -103,8 +103,8 @@ function _h_render_icon_block( $atts, $default_atts ) {
   $target = $atts['linkTarget'];
 
   // format class name
-  $extra_classes = "{$atts['className']} ";
-  $extra_classes .= "has-icon-position-{$atts['iconPosition']} ";
+  $extra_classes = $atts['className'] ?? '';
+  $extra_classes .= " has-icon-position-{$atts['iconPosition']} ";
   $extra_classes .= "has-text-align-{$atts['align']} ";
   $extra_classes .= $has_description ? 'has-description ' : 'has-no-description ';
   $extra_classes .= $atts['useImage'] ? 'use-image ' : '';
