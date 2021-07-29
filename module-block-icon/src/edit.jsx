@@ -168,9 +168,8 @@ export default function ( props ) {
         </figure>
       }
 
-      <dl>
+      <dl className='wp-block-h-icon__content'>
         <RichText tagName='dt'
-          className='wp-block-h-icon__title'
           inline={ true }
           placeholder='Enter title…'
           value={ atts.heading }
@@ -178,7 +177,6 @@ export default function ( props ) {
           onChange={ value => props.setAttributes({ heading: value }) }	/>
 
         <RichText tagName='dd'
-          className='wp-block-h-icon__description'
           multiline='p'
           placeholder='Enter description…'
           value={ atts.description }

@@ -44,7 +44,16 @@
   &.has-text-align-right
     justify-content: flex-end
 
+  &.has-no-description
+    align-items: center
+
+
+// Figure
 .wp-block-h-icon__figure
+  display: flex
+  align-items: center
+  justify-content: center
+
   min-width: var(--iconSize)
   max-width: var(--iconSize)
   width: var(--iconSize)
@@ -71,13 +80,14 @@
     max-height: 100%
 
 
-///// Content
+// Content
+.wp-block-h-icon__content
+  flex: 1
+  width: 100%
+  margin: 0
 
-.wp-block-h-icon
-  &.has-no-description
-    align-items: center
-    
-    // Hide the description if empty
+  // Hide the description if empty
+  .has-no-description &
     dd
       display: none
 
@@ -85,11 +95,8 @@
       .wp-block.is-selected &
         display: block
 
-  dl, dt, dd, dd p
+  dt, dd, dd p
     margin: 0
-  dl
-    flex: 1
-    width: 100%
   dt
     font-family: var(--hFontFamily)
     font-weight: 700

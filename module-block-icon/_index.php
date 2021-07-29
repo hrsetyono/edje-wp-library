@@ -90,7 +90,7 @@ function _h_render_icon_block( $atts, $default_atts ) {
   $heading = $atts['heading'];
   $has_description = !( $atts['description'] === '<p></p>' || $atts['description'] === '' );
   $description = $has_description ? "<dd>{$atts['description']}</dd>" : '';
-  $content = "<dl> <dt>$heading</dt> $description </dl>";
+  $content = "<dl class='wp-block-h-icon__content'> <dt>$heading</dt> $description </dl>";
 
   // format the style
   $style = '';
