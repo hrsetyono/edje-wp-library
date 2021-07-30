@@ -30,7 +30,7 @@ class Post_Type {
    * @action dashboard_glance_items
    */
   function add_custom_post_glance() {
-    $pt = $this->name;
+    $pt = $this->post_type;
     $args = $this->args;
 
     if( !post_type_exists( $pt ) ) { return; };
