@@ -56,11 +56,12 @@ function _h_render_faq_block( $atts, $default_atts ) {
     return $render;
   }
 
-  $extra_classes = "{$atts['className']} ";
-  $extra_classes .= $atts['noIndex'] ? '--noindex ' : '';
+  $extra_classes = $atts['className'] ?? '';
+  $extra_classes .= $atts['noIndex'] ? ' --noindex ' : ' ';
 
   $is_open = $atts['initiallyOpen'] ? 'open ' : '';
 
+  $style = '';
   $style .= $atts['textColor'] ? "--textColor: {$atts['textColor']};" : '';
   $style .= $atts['bgColor'] ? "--bgColor: {$atts['bgColor']};" : '';
 

@@ -4,11 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitcb5c8189c9a395555038e3f9362627c2
+class ComposerStaticInit30f529fa89f18da0eca936e5d84b7505
 {
     public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -74,16 +74,17 @@ class ComposerStaticInitcb5c8189c9a395555038e3f9362627c2
 
     public static $classMap = array (
         'AltoRouter' => __DIR__ . '/..' . '/altorouter/altorouter/AltoRouter.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitcb5c8189c9a395555038e3f9362627c2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitcb5c8189c9a395555038e3f9362627c2::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitcb5c8189c9a395555038e3f9362627c2::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitcb5c8189c9a395555038e3f9362627c2::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitcb5c8189c9a395555038e3f9362627c2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit30f529fa89f18da0eca936e5d84b7505::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit30f529fa89f18da0eca936e5d84b7505::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit30f529fa89f18da0eca936e5d84b7505::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit30f529fa89f18da0eca936e5d84b7505::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit30f529fa89f18da0eca936e5d84b7505::$classMap;
 
         }, null, ClassLoader::class);
     }
