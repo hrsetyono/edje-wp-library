@@ -21,6 +21,7 @@ function _h_enqueue_editor() {
   $disallowed_blocks = apply_filters( 'h_disallowed_blocks', [
     'core/nextpage',
     'core/more',
+    'core/pullquote',
   ] );
 
   $assets = plugin_dir_url(__FILE__);

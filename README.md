@@ -2,88 +2,87 @@
 
 ![Edje Wordpress](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/logo.jpg)
 
-WordPress is a fantastic web platform, but it's complicated for developer. This plugin helps simplifying many functions.
+This plugin contains features that we keep using in our client's website. They are:
 
-**REQUIREMENT**
+1. [FAQ Block](#faq-block)
+1. [Icon Block](#icon-block)
+1. [Comment Editor](#comment-editor)
+1. [Header and Footer Code](#header-and-footer-code)
+1. [Header and Footer Widgets](#header-and-footer-widgets)
+1. [Other Features](#other-features)
 
-- PHP 7.0+
-- WordPress 5.0+
+**Requirement**: PHP 7.3 and WordPress 5.5.
 
-**TABLE OF CONTENTS**
+-----
 
-1. [Custom Post Type](#1-custom-post-type)
-1. [Custom Taxonomy](#2-custom-taxonomy)
-1. [Theme Customizer](#3-theme-customizer)
-1. [Post Table Columns](#4-post-table-columns)
-1. [Other Features](#5-other-features)
-1. [Used In](#6-used-in)
-1. [Changelog](https://github.com/hrsetyono/edje-wp-library/wiki/Changelog)
+## FAQ Block
 
-## 1. Custom Post Type
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-FAQ-Block)
 
-[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type)
+![Edje WordPress - FAQ Block](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/gutenberg-faq-block-v2.jpg)
 
-![Edje WordPress - Product Custom Post Type](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-cpt.jpg)
+Create a question where you can click to show the answer. It requires this theme support:
 
 ```php
-H::register_post_type( 'product', [
-  'icon' => 'dashicons-cart',
-  'supports' => [ 'comments' ]
-] );
+add_theme_support( 'h-faq-block-v2' );
 ```
 
-## 2. Custom Taxonomy
+Features:
 
-[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
+- Automatically generate JSON LD Schema to include the FAQ within Google search result.
+- Modern markup with `<details>` and `<summary>`.
+- No frontend CSS. Refer to the [documentation](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-FAQ-Block) for basic one.
 
-![Edje WordPress - Product Custom Post Type](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-tax.jpg)
+## Icon Block
+
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-Icon-Block)
+
+![Edje WordPress - Icon Block](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/gutenberg-icon-block.jpg)
+
+Create a box with SVG icon and description.
+
+It requires this theme support:
 
 ```php
-H::register_taxonomy( 'brand' , [
-  'post_type' => 'product',
-] );
+add_theme_support( 'h-icon-block' );
 ```
 
+Features:
 
-## 3. Theme Customizer
+- Integration with FontAwesome FREE. Simply type in the name of the icon and it will get the SVG code.
+- Change position of icon to left, above, or right.
+- Option to use Image file instead of SVG.
+- No frontend CSS. Refer to the [documentation](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-Icon-Block) for basic one.
 
-[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Theme-Customizer)
+## Comment Editor
 
-You can access this from **Appearance > Customizer**. By default, only Administrator role can see this page.
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Comment-%E2%80%93-Editor-&-Reply-Notification)
 
-![Edje Customize Example](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/cust-sample-header.jpg)
+![Edje WordPress - Comment Markdown](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/comment-md-editor.jpg)
+
+Enable a Markdown editor in the comment form.
+
+It requires this theme support:
 
 ```php
-add_action( 'customize_register', 'my_customize_register' );
-
-function my_customize_register( $wp_customize ) {
-  $c = H::customizer( $wp_customize ); // init the class
-
-  $c->add_section( 'header' );
-
-  $c->add_theme_mod( 'head_code', 'code_editor htmlmixed' );
-  $c->add_theme_mod( 'background_color', 'color' );
-  $c->add_theme_mod( 'phone_no', 'text' );
-}
+add_theme_support( 'h-comment-editor' );
 ```
 
-## 4. ACF Blocks
+Features:
 
-[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/ACF-Blocks)
+- Saved in database as Markdown and compiled before rendered.
+- General keyboard shortcut like bold (CTRL+B), italic (CTRL+I), undo (CTRL+Z)
+- Added a checkbox for "Receive follow-up email when someone reply" below comment form.
 
-![Edje Wordpress - ACF Blocks](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/acf-block-sample.jpg)
+## Header and Footer Code
 
-```php
-// functions.php
+![Edje WordPress - Customizer Head Footer](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/customizer-head-footer.jpg)
 
-add_action( 'acf/init', 'my_create_blocks' );
+We added a new section in the Customizer to insert raw HTML code inside `wp_head()` and `wp_footer()`.
 
-function my_create_blocks() {
-  H::register_block( 'sample' );
-}
-```
+This is useful for Analytics code from Google or Facebook.
 
-## 5. Other Features
+## Other Features
 
 All these features are enabled by default:
 
@@ -98,39 +97,19 @@ All these features are enabled by default:
 - Disabled automatic URL guessing if a visitor enters 404 page.
 - Disabled Jetpack's Open Graph module when Yoast or The SEO Framework is installed.
 
-**CUSTOMIZER**
+**GUTENBERG**
 
-- Added Head and Footer code field.
-- Added Theme Color field in Site Identity for changing the actionbar color in Chrome mobile.
-
-**EDIT POST**
-
-- Removed Medium-Large size when uploading new image.
-- Changed the Category checklist to always be in same the position.
-- Added a better styling to Classic editor.
+- Removed "Circle Mask" style from Image.
+- Added "Transparent" style to Button.
+- Added "Full Color" style to Table.
+- Added "Larger Image" and "Smaller Image" style to Media-Text.
+- Created a filter `h_disallowed_blocks` that returns an array of disabled blocks. By default it disables only three: `core/pullquote`, `core/nextpage` and `core/more`.
 - Added better styling for ACF Block (as see in the ACF Block's screenshot above).
-- Changed Pullquote Block into FAQ Block that automatically output the JSON Schema to footer.
+- Changed the Category checklist to always be in same the position.
+- Removed Medium-Large size when uploading new image.
 
 **OTHER**
 
 - Removed "Created by Wordpress" message in the bottom-left of WP Admin
 - Changed the login error message to "Sorry, your username or password is wrong" instead of giving hint of which one is wrong.
 - Changed the Wordpress logo in login page to the one you have set in Customizer > Site Identity.
-
-## 6. Used In
-
-Here are some websites that use this plugin:
-
-- [WordPress Tips - Advanced Tutorial](https://wptips.dev)
-- [Angela Chung - Fashion Designer](https://angela-chung.com)
-- [Briliant Glass - Glassware Factory](https://briliant.glass)
-- [Fitnation - Premium Gym](https://fitnation.co.id)
-- [Istana Mie - Restaurant Franchise](https://istanamie.com)
-- [LTL School - Learn Mandarin in China](https://ltl-school.com)
-- [GES13 - Refrigeration Distributor](https://ges13.com)
-- [Paritama - Garden Architecture](https://paritama.com)
-- [Pandarin - Mandarin Learning Center](https://pandarin.net)
-- [Pixel Studio - Web Designer](https://pixelstudio.id)
-- [Premiera Skincare](https://premieraskincare.com/)
-
-Note: Since this is a library, you won't see it visually. 
