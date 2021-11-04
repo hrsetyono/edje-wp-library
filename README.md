@@ -8,7 +8,6 @@ This plugin contains features that we keep using in our client's website. They a
 1. [Icon Block](#icon-block)
 1. [Comment Editor](#comment-editor)
 1. [Header and Footer Code](#header-and-footer-code)
-1. [Header and Footer Widgets](#header-and-footer-widgets)
 1. [Other Features](#other-features)
 
 **Requirement**: PHP 7.3 and WordPress 5.5.

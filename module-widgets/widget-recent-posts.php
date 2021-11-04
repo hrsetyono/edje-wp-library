@@ -15,8 +15,8 @@ class H_Widget_Recent_Posts extends H_Widget {
 
     $number_of_posts = get_field( 'number_of_posts', "widget_$id" );
     $style = get_field( 'style', "widget_$id" );
-    $title = get_field( 'title', "widget_$id" );
-    $title = $title ? $args['before_title'] . $title . $args['after_title'] : '';
+    $widget_title = get_field( 'title', "widget_$id" );
+    $widget_title = $widget_title ? $args['before_title'] . $widget_title . $args['after_title'] : '';
 
     // get posts
     $posts = get_posts([
@@ -46,7 +46,7 @@ class H_Widget_Recent_Posts extends H_Widget {
 
     // output title
     $content = $args['before_widget'] .
-      $title .
+      $widget_title .
       "<ul class='wp-block-latest-posts__list columns-1 wp-block-latest-posts'> $list </ul>" .
     $args['after_widget'];
 

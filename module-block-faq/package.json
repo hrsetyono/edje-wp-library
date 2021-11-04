@@ -1,5 +1,5 @@
 {
-  "name": "edje-wp-library--icon",
+  "name": "edje-wp-library--faq",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
   },
   "scripts": {
     "sass-v1": "node-sass -w css -o css --output-style compressed",
-    "prod": "webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack --mode development --watch"
   },
   "browserslist": [

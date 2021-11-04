@@ -10,6 +10,10 @@ class Post_Type {
     $this->post_type = $post_type;
 
     $args['labels'] = $this->_create_labels( $this->post_type );
+    $args['supports'] = array_merge(
+      [ 'title', 'editor', 'thumbnail', 'excerpt' ],
+      $args['supports'] ?? []
+    );
     $this->args = $this->_parse_args( $this->post_type, $args );
   }
 
@@ -52,11 +56,6 @@ class Post_Type {
    */
   private function _parse_args( string $post_type, array $args ) : array {
     $slug = $args['slug'] ?? $post_type;
-
-    $args['supports'] = array_merge(
-      [ 'title', 'editor', 'thumbnail', 'excerpt' ],
-      $args['supports']
-    );
 
     $parsed_args = wp_parse_args( $args, [
       'menu_icon' => 'dashicons-admin-post',

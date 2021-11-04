@@ -36,8 +36,11 @@ class H_Widget_Socials extends H_Widget {
       $url = $i['link']['url'] ?? '';
       $label = $i['link']['title'] ?? '';
 
+      $pd = new \Parsedown();
+      $label_compiled = $pd->text($label);
+
       if( !empty( $label ) ) {
-        $svg .= " <span> {$label} </span>";
+        $svg .= " {$label_compiled}";
         $classes .= ' has-label';
       }
 
