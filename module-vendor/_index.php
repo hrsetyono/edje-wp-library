@@ -9,12 +9,6 @@ add_action( 'wp_enqueue_scripts', '_h_enqueue_vendor' );
  */
 function _h_load_vendor() {
   require_once __DIR__ . '/inflector.php';
-  require_once __DIR__ . '/parsedown.php';
-
-  if( !class_exists('Timber') ) {
-    require_once H_DIR . '/vendor/autoload.php';
-    $timber = new \Timber\Timber();
-  }
 }
 
 /**

@@ -26,7 +26,7 @@ function _h_add_comment_toolbar() {
  * @filter comment_text
  */
 function _h_parse_comment_markdown( $text ) {
-  $pd = new \Parsedown();
+  $pd = new Parsedown();
   $text_parsed = $pd->text( $text );
   return $text_parsed;
 }

@@ -7,10 +7,8 @@
 remove_action( 'wp_head', 'feed_links', 2 );
 remove_action( 'wp_head', 'feed_links_extra', 3 );
 
-// Disable Jetpack SEO if TSF or Yoast is installed
-if( _H::is_plugin_active('tsf') || _H::is_plugin_active('yoast') ) {
-  add_filter('jetpack_enable_open_graph', '__return_false');
-}
+// Disable Jetpack SEO
+add_filter('jetpack_enable_open_graph', '__return_false');
 
 add_filter( 'redirect_canonical', '_h_prevent_url_guessing' );
 
