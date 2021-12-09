@@ -8,12 +8,12 @@ add_action( 'init', '_h_register_icon_block' );
  */
 function _h_register_icon_block() {
   // if Gutenberg is not active
-  if ( !function_exists( 'register_block_type' ) ) { return; }
+  if (!function_exists('register_block_type')) { return; }
 
   // If doesn't support icon block
-  if( !current_theme_supports( 'h-icon-block' ) ) { return; }
-    
-
+  $support = get_theme_support('h-icon-block');
+  if (!$support) { return; }
+  
   $dir = plugin_dir_url(__FILE__);
   wp_register_script( 'h-icon', $dir . '/dist/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , null, true );
   wp_register_style( 'h-icon', $dir . '/dist/h-icon.css', [ 'wp-edit-blocks' ] );
@@ -48,9 +48,15 @@ function _h_register_icon_block() {
     'description' => [ 'type' => 'string', 'default' => '' ],
   ]);
 
+  // format the URL to get Icon SVG
+  $icon_url = isset($support[0]) && isset($support[0]['style'])
+    ? "https://cdn.pixelstudio.id/h-block-icon-{$support[0]['style']}"
+    : "https://cdn.pixelstudio.id/h-block-icon";
+  
   wp_localize_script( 'h-icon', 'hLocalizeIcon', [
     'DIR' => $dir,
-    'defaultAtts' => $default_atts
+    'defaultAtts' => $default_atts,
+    'iconURL' => $icon_url,
   ] );
 
   register_block_type( 'h/icon', [

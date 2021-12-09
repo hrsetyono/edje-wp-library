@@ -31,7 +31,7 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "prod": "webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack --mode development --watch"
   },
   "browserslist": [

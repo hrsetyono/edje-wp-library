@@ -75,17 +75,21 @@ export default function ( props ) {
 
         { useFontAwesome && <div className="h-icon-control">
           <div>
-            <TextControl label="Icon Name"
+            <TextControl
+              label="Icon Name"
               value={ atts.iconName }
-              onChange={ _updateIconMarkup } />
+              onChange={ _updateIconMarkup }
+            />
 
             <small style={{display: 'block', marginTop: '-1.5rem'}}>
               Visit here to see list of icons: <a href="https://fontawesome.com/icons?d=gallery&s=solid&m=free" target="_blank">FontAwesome.com</a>
             </small>
           </div>
 
-          <SVGInline src={ 'https://cdn.pixelstudio.id/h-block-icon/' + atts.iconName + '.svg' }
-            onFound={ markup => props.setAttributes({ iconMarkup: markup }) } />
+          <SVGInline
+            src={ hLocalizeIcon.iconURL + '/' + atts.iconName + '.svg' }
+            onFound={ markup => props.setAttributes({ iconMarkup: markup }) }
+          />
         </div> }
 
         <ToggleControl label="Use Raw SVG?"
