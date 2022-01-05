@@ -3,8 +3,6 @@
  * Get an array containing list of pagination items and current page
  */ 
 function h_get_pagination($prefs = []) {
-  require_once __DIR__ . '/pagination.php';
-
   $pagination = new H_Pagination($prefs);
   $pagination = get_object_vars($pagination);
   return $pagination;
