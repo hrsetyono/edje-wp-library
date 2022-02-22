@@ -21,6 +21,7 @@ class H_Widget_Recent_Posts extends H_Widget {
     // get posts
     $posts = get_posts([
       'posts_per_page' => $number_of_posts,
+      'suppress_filters' => false, // WPML support
     ]);
 
     // output posts
