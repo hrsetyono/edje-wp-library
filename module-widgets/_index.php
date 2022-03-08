@@ -38,11 +38,11 @@ function h_dynamic_sidebar($slug) {
  */
 function _h_register_sidebar() {
   $sidebars = [
-    'header-top' => __('Header Top'),
-    'header-mid' => __('Header Mid'),
-    'header-top-mobile' => __('Header Top (Mobile)'),
-    'header-mid-mobile' => __('Header Mid (Mobile)'),
-    'header-offcanvas' => __('Header Offcanvas'),
+    'subheader' => __('Subheader'),
+    'header' => __('Header'),
+    'subheader-mobile' => __('Subheader (Mobile)'),
+    'header-mobile' => __('Header (Mobile)'),
+    'offcanvas' => __('Offcanvas'),
 
     'footer-top' => __('Footer Top'),
     'footer-mid' => __('Footer Mid'),
@@ -157,7 +157,6 @@ class H_Widget extends WP_Widget {
     $id = $args['widget_id'];
 
     // do something
-
     $content = apply_filters('h_widget_name', $content, $args);
     echo $args['before_widget'] . $content . $args['after_widget'];
   }
