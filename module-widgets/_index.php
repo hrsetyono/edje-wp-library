@@ -6,7 +6,6 @@ add_action('widgets_init', '_h_unregister_widgets');
 
 add_filter('acf/settings/load_json', '_h_load_acf_json_widgets', 20);
 
-
 if (is_admin()) {
   add_action('after_setup_theme', '_h_disable_gutenberg_widgets', 100);
   add_action('admin_enqueue_scripts', '_h_enqueue_widget_assets');
@@ -172,7 +171,7 @@ class H_Widget extends WP_Widget {
    * Leave empty, will be handled by ACF
    */
   function update($new_instance, $old_instance) {
-
+    return $new_instance;
   }
   
 

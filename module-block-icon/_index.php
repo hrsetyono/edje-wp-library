@@ -15,8 +15,8 @@ function _h_register_icon_block() {
   if (!$support) { return; }
   
   $dir = plugin_dir_url(__FILE__);
-  wp_register_script( 'h-icon', $dir . '/dist/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , null, true );
-  wp_register_style( 'h-icon', $dir . '/dist/h-icon.css', [ 'wp-edit-blocks' ] );
+  wp_register_script( 'h-icon', $dir . '/dist/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
+  wp_register_style( 'h-icon', $dir . '/dist/h-icon.css', [ 'wp-edit-blocks' ], H_VERSION );
 
   $default_atts = apply_filters( 'h_block_icon_defaults', [
     // toolbar

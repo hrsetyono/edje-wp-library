@@ -82,7 +82,7 @@ export default function ( props ) {
             />
 
             <small style={{display: 'block', marginTop: '-1.5rem'}}>
-              Visit here to see list of icons: <a href="https://fontawesome.com/icons?d=gallery&s=solid&m=free" target="_blank">FontAwesome.com</a>
+              Visit here to see list of icons: <a href="https://fontawesome.com/v5/search?m=free&s=solid" target="_blank">FontAwesome.com</a>
             </small>
           </div>
 

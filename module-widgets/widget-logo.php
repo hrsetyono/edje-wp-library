@@ -5,9 +5,11 @@
  */
 class H_Widget_Logo extends H_Widget { 
   function __construct() {
-    parent::__construct('h_logo', __('- Logo'), [
-      'description' => __('Show logo from Customizer')
-    ]);
+    parent::__construct(
+      'h_logo',
+      __('- Logo'),
+      [ 'description' => __('Show logo from Customizer') ]
+    );
   }
 
   function widget($args, $instance) {
