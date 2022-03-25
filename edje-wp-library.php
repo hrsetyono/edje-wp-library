@@ -1,20 +1,20 @@
 <?php
 /**
  * Plugin Name: Edje WP Library
- * Description: Simplify WordPress complicated functions. Designed to work with Timber.
+ * Description: Simplify WordPress complicated functions. Designed to work with Edje Theme
  * Plugin URI: http://github.com/hrsetyono/edje-wp-library
  * Requires at least: 5.3
  * Requires PHP: 7.0
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 8.0.2
+ * Version: 8.0.3
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '8.0.2');
+define('H_VERSION', '8.0.32');
 define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 define('H_DIR', __DIR__); // for require
