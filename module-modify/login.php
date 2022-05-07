@@ -3,26 +3,26 @@
  * Modify Login page
  */
 
-add_filter( 'login_errors', '_h_change_login_errors_message' );
-add_action( 'login_head', '_h_add_logo_in_login_page' );
+add_filter('login_errors', '_h_change_login_errors_message');
+add_action('login_head', '_h_add_logo_in_login_page');
 
 
 /**
  * Change the error message when signing in
  * @filter login_errors
  */
-function _h_change_login_errors_message( $error ) {
-  if( is_string($error) ) {
-    return __('Sorry, your username or password is wrong', 'h');
+function _h_change_login_errors_message($error) {
+  if (is_string($error)) {
+    return __('Sorry, your username or password is wrong');
   } else {
     global $errors;
     $err_codes = $errors->get_error_codes();
 
-    $filters = array('invalid_username', 'incorrect_password', 'empty_password');
+    $filters = ['invalid_username', 'incorrect_password', 'empty_password'];
 
     // if there is at least one filter that intersected with the error
-    if( count( array_intersect($filters, $err_codes) ) >= 1 ) {
-      return __('Sorry, your username or password is wrong', 'h');
+    if (count(array_intersect($filters, $err_codes)) >= 1) {
+      return __('Sorry, your username or password is wrong');
     } else {
       return $error;
     }

@@ -38,19 +38,16 @@ function _h_parse_comment_markdown( $text ) {
  */
 function _h_comment_toolbar_enqueue_assets() {
   global $post;
-  $is_comment_open = isset( $post->comment_status ) && $post->comment_status == 'open';
+  $is_comment_open = isset($post->comment_status) && $post->comment_status == 'open';
 
   // Enable comment's reply form
-  if( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-    wp_enqueue_script( 'comment-reply' );
+  if (is_singular() && comments_open() && get_option('thread_comments')) {
+    wp_enqueue_script('comment-reply');
   }
 
   // If supported, add the editor
-  if( get_theme_support( 'h-comment-editor' ) && $is_comment_open ) {
-    $css_dir = plugin_dir_url(__FILE__) . 'assets';
-    $js_dir = plugin_dir_url(__FILE__) . 'assets';
-
-    wp_enqueue_style( 'h-editor', $css_dir . '/h-editor.css', [], '1.1.2' );
-    wp_enqueue_script( 'h-editor', $js_dir . '/h-editor.js', [], '1.1.2', true );
+  if (get_theme_support('h-comment-editor') && $is_comment_open) {
+    wp_enqueue_style('h-comment', H_DIST . '/h-comment.css', [], '1.1.3');
+    wp_enqueue_script('h-comment', H_DIST . '/h-comment.js', [], '1.1.3', true);
   }
 }

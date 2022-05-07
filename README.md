@@ -98,6 +98,8 @@ All these features are enabled by default:
 
 **GUTENBERG**
 
+- Added back Group's inner container that's removed in WP 5.9.
+- Removed layout and dimensions setting in Group that's introduced in WP 5.9.
 - Removed "Circle Mask" style from Image.
 - Added "Transparent" style to Button.
 - Added "Full Color" style to Table.
@@ -112,3 +114,4 @@ All these features are enabled by default:
 - Removed "Created by Wordpress" message in the bottom-left of WP Admin
 - Changed the login error message to "Sorry, your username or password is wrong" instead of giving hint of which one is wrong.
 - Changed the Wordpress logo in login page to the one you have set in Customizer > Site Identity.
+- Added `H::markdown($text)` function to parse markdown text.

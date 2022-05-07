@@ -23,7 +23,7 @@ class H_Widget_Separator extends H_Widget {
     }
 
     $content = "</ul><ul class=\"widget-column\" {$style}>";
-    $content = apply_filters( 'h_widget_separator', $content, $args );
+    $content = apply_filters('h_widget_separator', $content, $args);
 
     echo $content;
   }

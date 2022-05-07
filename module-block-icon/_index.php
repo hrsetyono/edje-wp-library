@@ -1,6 +1,6 @@
 <?php
 
-add_action( 'init', '_h_register_icon_block' );
+add_action('init', '_h_register_icon_block');
 
 
 /**
@@ -14,11 +14,10 @@ function _h_register_icon_block() {
   $support = get_theme_support('h-icon-block');
   if (!$support) { return; }
   
-  $dir = plugin_dir_url(__FILE__);
-  wp_register_script( 'h-icon', $dir . '/dist/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true );
-  wp_register_style( 'h-icon', $dir . '/dist/h-icon.css', [ 'wp-edit-blocks' ], H_VERSION );
+  wp_register_script('h-icon', H_DIST . '/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true);
+  wp_register_style('h-icon', H_DIST . '/h-icon.css', [ 'wp-edit-blocks' ], H_VERSION);
 
-  $default_atts = apply_filters( 'h_block_icon_defaults', [
+  $default_atts = apply_filters('h_block_icon_defaults', [
     // toolbar
     'align'        => [ 'type' => 'string', 'default' => 'left' ],
     'iconPosition' => [ 'type' => 'string', 'default' => 'left' ],
@@ -53,48 +52,48 @@ function _h_register_icon_block() {
     ? "https://cdn.pixelstudio.id/h-block-icon-{$support[0]['style']}"
     : "https://cdn.pixelstudio.id/h-block-icon";
   
-  wp_localize_script( 'h-icon', 'hLocalizeIcon', [
+  wp_localize_script('h-icon', 'hLocalizeIcon', [
     'DIR' => $dir,
     'defaultAtts' => $default_atts,
     'iconURL' => $icon_url,
-  ] );
+  ]);
 
-  register_block_type( 'h/icon', [
+  register_block_type('h/icon', [
     'editor_style' => 'h-icon',
     'editor_script' => 'h-icon',
-    'render_callback' => function( $atts ) use ( $default_atts ) {
-      return _h_render_icon_block( $atts, $default_atts );
+    'render_callback' => function($atts) use ($default_atts) {
+      return _h_render_icon_block($atts, $default_atts);
     }
-  ] );
+  ]);
 }
 
 /**
  * Render the icon block
  */
-function _h_render_icon_block( $atts, $default_atts ) {
+function _h_render_icon_block($atts, $default_atts) {
   // prevent loading in Editor screen
-  if( function_exists( 'get_current_screen' ) ) { return; }
+  if (function_exists('get_current_screen')) { return; }
 
-  $default_values = array_map( function( $a ) {
+  $default_values = array_map(function($a) {
     return $a['default'] ?? '';
-  }, $default_atts );
+  }, $default_atts);
 
-  $atts = wp_parse_args( $atts, $default_values );
+  $atts = wp_parse_args($atts, $default_values);
 
   // Take over the rendering process, if any
-  $render = apply_filters( 'h_block_icon_render', '', $atts );
-  if( $render ) {
+  $render = apply_filters('h_block_icon_render', '', $atts);
+  if ($render) {
     return $render;
   }
 
   // format the content
   $icon = "<figure class='wp-block-h-icon__figure'>" .
-      ( $atts['useImage'] ? "<img src='{$atts['imageURL']}'>" : $atts['iconMarkup'] ) .
+      ($atts['useImage'] ? "<img src='{$atts['imageURL']}'>" : $atts['iconMarkup']) .
     "</figure>";
 
   // format content
   $heading = $atts['heading'];
-  $has_description = !( $atts['description'] === '<p></p>' || $atts['description'] === '' );
+  $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $description = $has_description ? "<dd>{$atts['description']}</dd>" : '';
   $content = "<dl class='wp-block-h-icon__content'> <dt>$heading</dt> $description </dl>";
 

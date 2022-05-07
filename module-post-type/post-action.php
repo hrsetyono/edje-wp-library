@@ -16,9 +16,9 @@ class Post_Action {
   }
 
   public function add() {
-    if(!is_admin()) { return false; }
+    if (!is_admin()) { return false; }
 
-    add_filter( 'post_row_actions', array($this, '_add_row_actions'), null, 2 );
+    add_filter('post_row_actions', [$this, '_add_row_actions'], null, 2);
     $this->_add_hooks();
   }
 
@@ -90,9 +90,9 @@ class Post_Action {
     }
   }
 
-  /*
-    Format the arguments for Hooks creation
-  */
+  /**
+   * Format the arguments for Hooks creation
+   */
   private function _parse_for_hooks() {
     $args = array();
     $actions = $this->actions;
@@ -107,14 +107,14 @@ class Post_Action {
     return $args;
   }
 
-  /*
-    Format the passed arguments for Row action creation.
-  */
-  private function _parse_for_actions( $actions, $post ) {
-    $args = array();
+  /**
+   * Format the passed arguments for Row action creation.
+   */
+  private function _parse_for_actions($actions, $post) {
+    $args = [];
     $new_actions = $this->actions;
 
-    foreach( $new_actions as $key => $value ) {
+    foreach($new_actions as $key => $value) {
       $slug = is_int( $key ) ? $value : $key;
       $title = \_H::to_title($slug);
 
@@ -122,7 +122,7 @@ class Post_Action {
         case 'view':
         case 'edit':
         case 'trash':
-          $content = $actions[ $slug ];
+          $content = $actions[$slug];
           break;
 
         case 'quickedit':
@@ -132,7 +132,7 @@ class Post_Action {
 
         default:
           // if a function AND return null
-          if( is_callable($value) && is_null( $value(null) ) ) {
+          if(is_callable($value) && is_null($value(null))) {
             $redirect_uri = $this->_get_redirect_uri();
 
             $action_name = "h_action_{$slug}";
@@ -141,12 +141,15 @@ class Post_Action {
             $content = "<a href='{$href}'>{$title}</a>";
           }
           else {
-            $href = $value( $post->ID );
+            $href = $value($post->ID);
             $content = "<a href='{$href}'>{$title}</a>";
           }
       }
 
-      $args[ $slug ] = array( 'title' => $title, 'content' => $content );
+      $args[$slug] = [
+        'title' => $title,
+        'content' => $content
+      ];
     }
     return $args;
   }
@@ -155,10 +158,10 @@ class Post_Action {
     Get redirect URI after clicking
   */
   private function _get_redirect_uri() {
-    $paged = isset( $_GET['paged'] ) ? $_GET['paged'] : '';
+    $paged = isset($_GET['paged']) ? $_GET['paged'] : '';
     $uri = "edit.php?post_type={$this->post_type}";
 
-    if( $paged ) {
+    if ($paged) {
       $uri .= "&paged={$paged}";
     }
 

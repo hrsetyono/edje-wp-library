@@ -113,9 +113,7 @@ function _h_load_acf_json_widgets($paths) {
  * @action admin_enqueue_scripts
  */
 function _h_enqueue_widget_assets() {
-  $dir = plugin_dir_url(__FILE__);
-
-  wp_enqueue_style('h-widgets', $dir . 'css/h-widgets.css', [], H_VERSION);
+  wp_enqueue_style('h-widgets', H_DIST . '/h-widgets.css', [], H_VERSION);
 }
 
 
@@ -164,7 +162,7 @@ class H_Widget extends WP_Widget {
    * Leave empty, will be handled by ACF
    */
   function form($instance) {
-
+    
   }
 
   /**

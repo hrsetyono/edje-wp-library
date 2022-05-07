@@ -14,12 +14,12 @@ class H_Hook {
     $options = get_option('h_options');
 
     // create empty option if doesn't exist
-    if( !$options ) {
+    if (!$options) {
       add_option('h_options', [] );
     }
 
     // If first time activation
-    if( !isset($options['init'] ) ) {
+    if (!isset($options['init'])) {
       $this->_create_frontpage();
       $this->_create_blogpage();
 
@@ -29,13 +29,13 @@ class H_Hook {
     }
 
     // If sample post never created before
-    if( !isset($options['post_init']) ) {
+    if (!isset($options['post_init'])) {
       $this->_create_default_post();
 
       $options['post_init'] = true;
     }
 
-    update_option( 'h_options', $options );
+    update_option('h_options', $options);
   }
 
 
@@ -52,16 +52,16 @@ class H_Hook {
     Create default Frontpage
   */
   private function _create_frontpage() {
-    $frontpage_id = get_option( 'page_on_front' );
+    $frontpage_id = get_option('page_on_front');
 
     // if already exists, just change the title
-    if( $frontpage_id ) {
+    if ($frontpage_id) {
       $args = [
         'ID' => $frontpage_id,
         'post_title' => get_bloginfo()
       ];
 
-      wp_update_post( $args );
+      wp_update_post($args);
     }
     // if does not exists, create it
     else {
@@ -71,9 +71,9 @@ class H_Hook {
         'post_status' => 'publish',
       ];
 
-      $home_id = wp_insert_post( $home );
-      update_option( 'show_on_front', 'page' );
-      update_option( 'page_on_front', $home_id );
+      $home_id = wp_insert_post($home);
+      update_option('show_on_front', 'page');
+      update_option('page_on_front', $home_id);
     }
   }
 
@@ -81,18 +81,18 @@ class H_Hook {
     Create default Blog page
   */
   private function _create_blogpage() {
-    $blogpage_id = get_option( 'page_for_posts' );
+    $blogpage_id = get_option('page_for_posts');
 
     // If does not exists, create one
-    if( !$blogpage_id ) {
+    if (!$blogpage_id) {
       $blog = [
         'post_title' => 'Blog',
         'post_type' => 'page',
         'post_status' => 'publish',
       ];
 
-      $blog_id = wp_insert_post( $blog );
-      update_option( 'page_for_posts', $blog_id );
+      $blog_id = wp_insert_post($blog);
+      update_option('page_for_posts', $blog_id);
     }
   }
 
@@ -109,20 +109,20 @@ class H_Hook {
     ];
 
     // if post ID 1 exist, edit it
-    if( is_string(get_post_status(1)) ) {
+    if (is_string(get_post_status(1))) {
       $args['ID'] = 1;
-      wp_update_post( $args );
+      wp_update_post($args);
     }
     // if does not exist, create new post with ID 1
     else {
       $args['import_id'] = 1;
-      wp_insert_post( $args );
+      wp_insert_post($args);
     }
   }
 
-  /*
-    Default setting for Standard website
-  */
+  /**
+   * Default setting for Standard website
+   */
   private function _set_default_setting() {
     // general
     update_option('use_smiles', 0);

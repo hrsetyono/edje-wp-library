@@ -4,6 +4,11 @@ $acf-bg: #f3f3f4
 .wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks
   padding: 0 3rem
 
+.wp-block
+  // Fixed reusable block being constrained to narrow size
+  &.is-reusable
+    max-width: none
+
 ///// PARAGRAPH
 
 // empty paragraph
@@ -21,27 +26,48 @@ $acf-bg: #f3f3f4
   font-size: 6rem
   line-height: 4.5rem
 
-
-
-///// IMAGE
-
-[data-type="core/image"][data-align="left"],
-[data-type="core/image"][data-align="right"]
-  .editor-block-list__block-edit,
-  .components-resizable-box__container,
-  img
-    max-width: 305px
-
-  [data-block]
-    margin-top: 0
-    margin-bottom: 0
+///// HEADING
 
 [data-type="core/heading"]
   clear: both
 
-[data-type="core/file"]
-  .wp-block-file__content-wrapper
-    text-align: center
+  &.has-background
+    padding: 1rem 1.5rem
+
+  sub,
+  sup
+    text-transform: uppercase
+    letter-spacing: 0.05em
+    font-size: 50%
+    font-weight: 400
+
+///// LIST
+
+[data-type="core/list"]
+  ol
+    list-style-type: lower-alpha
+
+  &.has-background
+    padding: 1rem 1.5rem
+    padding-left: 2.5rem
+
+///// IMAGE
+
+// don't allow image resized beyond 100%
+.wp-block-image .components-resizable-box__container
+  max-width: 100% !important
+
+// fix floating
+.editor-styles-wrapper .block-editor-block-list__layout
+  div.wp-block[data-align="left"],
+  div.wp-block[data-align="right"]
+    float: none
+
+  div.wp-block[data-align="left"] > *:first-child
+    float: left
+  
+  div.wp-block[data-align="right"] > *:first-child
+    float: right
 
 .wp-block[data-align="left"],
 .wp-block[data-align="right"]
@@ -55,14 +81,22 @@ $acf-bg: #f3f3f4
       display: none
 
   figcaption
-    text-align: var(--textAlign)
+    text-align: left
   
-  
-.wp-block[data-align="left"]
-  --textAlign: left
-.wp-block[data-align="right"]
-  --textAlign: right
+.wp-block[data-align="right"] figcaption
+  text-align: right
 
+
+[data-type="core/image"][data-align="left"],
+[data-type="core/image"][data-align="right"]
+  .editor-block-list__block-edit,
+  .components-resizable-box__container,
+  img
+    max-width: 305px
+
+  [data-block]
+    margin-top: 0
+    margin-bottom: 0
 
 ///// MEDIA TEXT
 
@@ -102,7 +136,7 @@ $acf-bg: #f3f3f4
     padding-top: 0.5rem
     padding-bottom: 0.5rem
     background-image: none
-    color: var(--text)
+    color: var(--text, #222)
 
     a
       color: inherit
@@ -110,13 +144,25 @@ $acf-bg: #f3f3f4
 
 ///// GROUP
 
+// Center the [ + ] box when displaying empty group 
+.wp-block-group[data-type="core/group"] > .block-list-appender
+  margin-right: auto
+  margin-left: auto
+
 .wp-block-group
   &:not(.has-background)
-    border-top: 1px dashed var(--textDim)
-    border-bottom: 1px dashed var(--textDim)
+    border: 1px dashed var(--textDim, #888)
 
   &.has-background
-    padding: 33px 0
+    padding: 1.5rem
+
+  > *
+    max-width: var(--blogWidth, 650px)
+    margin-right: auto
+    margin-left: auto
+
+  > *[data-align="wide"]
+    max-width: var(--siteWidth, 1000px)
 
 
 ///// FILE
@@ -125,22 +171,36 @@ $acf-bg: #f3f3f4
   background-color: rgba(black, .05)
   padding: 1rem
 
+[data-type="core/file"]
+  .wp-block-file__content-wrapper
+    text-align: center
+
 ///// COLUMNS
 
 .wp-block-columns.has-background
   border-radius: var(--gRadius, 4px)
 
+.wp-block-column.has-background
+  padding: 1rem
+  border-radius: var(--gRadius, 4px)
+
+
+///// CODE
+
+pre.wp-block-code
+  background-color: rgba(black, 0.05)
+
+  code
+    background-color: transparent
 
 ///// BUTTON
 
 .wp-block-button-wrapper
   width: 100%
 
-
 [data-align="center"] .wp-block-button__inline-link
   margin-right: auto
   margin-left: auto
-  
  
 ///// SEPARATOR
 
@@ -160,7 +220,7 @@ $acf-bg: #f3f3f4
 
 .wp-social-link
   margin-bottom: 0.5rem
-  border-radius: var(--gRadius)
+  border-radius: var(--gRadius, 4px)
 
   .is-style-pill-shape &
     border-radius: 20px
@@ -169,7 +229,7 @@ $acf-bg: #f3f3f4
 ///// ACF GUTENBERG
 
 .acf-block-body
-  font-family: var(--fontFamily)
+  font-family: var(--fontFamily, sans-serif)
 
   .acf-label,
   .acf-input p,
@@ -366,9 +426,7 @@ div.edit-post-sidebar .acf-block-fields
 
 //// JETPACK
 
-
 // Hide the useless form block from selection
-
 .components-autocomplete__result.components-button
   &[id*="block-jetpack/contact-form-"]
     display: none
