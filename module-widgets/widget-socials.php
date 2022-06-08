@@ -35,6 +35,7 @@ class H_Widget_Socials extends H_Widget {
       // $color = $data['color'];
       $url = $i['link']['url'] ?? '';
       $label = $i['link']['title'] ?? '';
+      $target = $i['target'] ? $i['target'] : '_self';
 
       $pd = new \Parsedown();
       $label_compiled = $pd->text($label);
@@ -45,7 +46,7 @@ class H_Widget_Socials extends H_Widget {
       }
 
       $icons .= "<li class='{$classes}'>
-        <a class='wp-block-social-link-anchor' href='{$url}' target='_blank' rel='noopener nofollow'>
+        <a class='wp-block-social-link-anchor' href='{$url}' target='{$target}' rel='noopener nofollow'>
           {$svg}
         </a>
       </li>";
