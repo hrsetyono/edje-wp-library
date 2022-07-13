@@ -53,7 +53,6 @@ function _h_register_icon_block() {
     : "https://cdn.pixelstudio.id/h-block-icon";
   
   wp_localize_script('h-icon', 'hLocalizeIcon', [
-    'DIR' => $dir,
     'defaultAtts' => $default_atts,
     'iconURL' => $icon_url,
   ]);
