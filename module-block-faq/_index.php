@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Create a custom FAQ block that outputs its data into JSON LD Schema too
  */

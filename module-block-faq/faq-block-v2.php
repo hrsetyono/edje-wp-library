@@ -1,5 +1,4 @@
 <?php
-
 _h_register_faq_block_v2();
 add_action('wp_footer', '_h_add_faq_schema_v2', 100);
 
@@ -85,7 +84,7 @@ function _h_add_faq_schema_v2() {
   preg_match_all('/wp:h\/faq.+noIndex":true/Ui', $content, $noindex_faqs);
 
   // if noindex FAQ not found
-  if(empty($noindex_faqs[0])) { return; }
+  if (empty($noindex_faqs[0])) { return; }
 
   $data = [
     '@context' => 'https://schema.org',
@@ -93,7 +92,7 @@ function _h_add_faq_schema_v2() {
     'mainEntity' => [],
   ];
 
-  foreach($noindex_faqs[0] as $f) {
+  foreach ($noindex_faqs[0] as $f) {
     // parse the Question and Answer
     preg_match('/question":"(.+)"/Ui', $f, $question);
     preg_match('/answer":"(.+)"/Ui', $f, $answer);
