@@ -3,34 +3,62 @@
 /**
  * Button widget
  */
-class H_Widget_Button extends H_Widget { 
+class H_WidgetButton extends H_Widget { 
   function __construct() {
-    parent::__construct( 'h_button', __( '- Button' ), [
-      'description' => __( 'Create a Button' )
-    ] );
+    parent::__construct(
+      'h_button',
+      __('- Button'),
+      [
+        'description' => __('Create a Button')
+      ]
+    );
   }
 
-  function widget( $args, $instance ) {
-    $id = $args['widget_id'];
+  function widget($args, $instance) {
+    $widget_id = 'widget_' . $args['widget_id'];
+    $data = [
+      'style' => get_field('style', $widget_id),
+      'icon' => get_field('icon', $widget_id),
+      'link' => wp_parse_args(
+        get_field('link', $widget_id),
+        [
+          'url' => '',
+          'target' => '_self',
+          'title' => 'Click Me',
+        ]
+      ),
+    ];
 
-    $link = get_field( 'link', "widget_$id" );
-    $style = get_field( 'style', "widget_$id" );
-    $icon = get_field( 'icon', "widget_$id" );
+    $custom_render = apply_filters('h_widget_button', '', $data);
 
-    // Get Link data
-    $url = $link['url'] ?? '';
-    $target = $link['target'] ?? '_self';
-    $title = empty( $link['title'] ) ? '' : '<span>' . $link['title'] . '</span>';
-    
-    $content = $args['before_widget'] .
-      "<div class='wp-block-button is-style-{$style}'>
-        <a class='wp-block-button__link' href='{$url}' target='{$target}'>
-          {$icon} {$title}
-        </a>
-      </div>" .
-    $args['after_widget'];
+    echo $args['before_widget'];
+    echo $custom_render ? $custom_render : $this->render_widget($data);
+    echo $args['after_widget'];
+  }
 
-    $content = apply_filters( 'h_widget_button', $content, $args );
-    echo $content;
+  function render_widget($data) {
+    [
+      'link' => $link,
+      'style' => $style,
+      'icon' => $icon,
+    ] = $data;
+  
+    ob_start(); ?>
+    <div class="wp-block-button is-style-<?= $style ?>">
+      <a
+        class="wp-block-button__link"
+        href="<?= $link['url'] ?>"
+        target="<?= $link['target'] ?>"
+      >
+        <?= $icon ?>
+
+        <?php if ($link['title']): ?>
+          <span>
+            <?= $link['title'] ?>
+          </span>
+        <?php endif; ?>
+      </a>
+    </div>
+    <?php return ob_get_clean();
   }
 }

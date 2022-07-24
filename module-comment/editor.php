@@ -2,9 +2,8 @@
 /**
  * Add toolbar to Comment Form and parse the markdown
  */
-
-add_action( 'wp', '_h_add_comment_toolbar' ); 
-add_action( 'wp_enqueue_scripts', '_h_comment_toolbar_enqueue_assets' );
+add_action('wp', '_h_add_comment_toolbar'); 
+add_action('wp_enqueue_scripts', '_h_comment_toolbar_enqueue_assets');
 
 
 /**
@@ -13,21 +12,21 @@ add_action( 'wp_enqueue_scripts', '_h_comment_toolbar_enqueue_assets' );
  * @action after_setup_theme
  */
 function _h_add_comment_toolbar() {
-  if( !get_theme_support( 'h-comment-editor' ) ) { return; }
+  if (!get_theme_support('h-comment-editor')) { return; }
 
-  remove_filter( 'comment_text', 'wptexturize', 10 );
-  remove_filter( 'comment_text', 'make_clickable', 9 );
-  remove_filter( 'comment_text', 'wpautop', 30 );
-  add_filter( 'comment_text', '_h_parse_comment_markdown' );
+  remove_filter('comment_text', 'wptexturize', 10);
+  remove_filter('comment_text', 'make_clickable', 9);
+  remove_filter('comment_text', 'wpautop', 30);
+  add_filter('comment_text', '_h_parse_comment_markdown');
 }
 
 
 /**
  * @filter comment_text
  */
-function _h_parse_comment_markdown( $text ) {
+function _h_parse_comment_markdown($text) {
   $pd = new Parsedown();
-  $text_parsed = $pd->text( $text );
+  $text_parsed = $pd->text($text);
   return $text_parsed;
 }
 

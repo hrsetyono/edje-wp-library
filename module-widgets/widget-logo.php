@@ -3,7 +3,7 @@
 /**
  * Show the logo that is set in Customizer or allow overriding with own image.
  */
-class H_Widget_Logo extends H_Widget { 
+class H_WidgetLogo extends H_Widget { 
   function __construct() {
     parent::__construct(
       'h_logo',
@@ -13,30 +13,51 @@ class H_Widget_Logo extends H_Widget {
   }
 
   function widget($args, $instance) {
-    $content = '';
-    $id = $args['widget_id'];
-    
-    $logo = get_field('logo', "widget_$id");
-    $tagline = get_field('tagline', "widget_$id");
-    $tagline = $tagline ? "<span>{$tagline}</span>" : '';
+    $widget_id = 'widget_' . $args['widget_id'];
+    $data = [
+      'logo' => get_field('logo', $widget_id),
+      'logo_src' => '',
+      'tagline' => get_field('tagline', $widget_id),
+    ];
 
-    // if replace logo
-    if ($logo) {
-      $home_url = get_home_url();
-      $image_src = $logo['sizes']['medium'];
-
-      $logo = "<a href='{$home_url}' class='custom-logo-link' rel='home'> <img src={$image_src}> </a>";
+    // If has logo, get the medium size URL
+    if ($data['logo']) {
+      $data['logo_src'] = $data['logo']['sizes']['medium'];
     }
-    elseif (function_exists('the_custom_logo')) {
-      $logo = get_custom_logo();
+    // if logo is empty, use the logo from Customizer
+    else {
+      $default_logo_id = get_theme_mod('custom_logo');
+      $data['logo_src'] = wp_get_attachment_image_url($default_logo_id, 'medium');
     }
 
-    // format content
-    $content = $args['before_widget'] .
-      "<div class='wp-block-site-logo'> {$logo} {$tagline} </div>" .
-    $args['after_widget'];
+    $custom_render = apply_filters('h_widget_logo', '', $data);
 
-    $content = apply_filters('h_widget_logo', $content, $args);
-    echo $content;
+    echo $args['before_widget'];
+    echo $custom_render ? $custom_render : $this->render_widget($data);
+    echo $args['after_widget'];
+  }
+
+  function render_widget($data) {
+    [
+      'logo_src' => $logo_src,
+      'tagline' => $tagline,
+    ] = $data;
+
+    ob_start(); ?>
+    <div class="wp-block-site-logo">
+      <a
+        href="<?= get_home_url() ?>"
+        class='custom-logo-link'
+        rel="home"
+      >
+        <img src="<?= $logo_src ?>">
+      </a>
+      <?php if ($tagline): ?>
+        <span>
+          <?= $tagline ?>
+        </span>
+      <?php endif; ?>
+    </div>
+    <?php return ob_get_clean();
   }
 }

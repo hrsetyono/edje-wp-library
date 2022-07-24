@@ -1,12 +1,12 @@
 <?php
 
-add_action( 'plugins_loaded' , '_h_load_sidenav' );
+add_action('plugins_loaded' , '_h_load_sidenav');
 
 /**
  * @action plugins_loaded
  */
 function _h_load_sidenav() {
-  if( is_admin() ) {
+  if (is_admin()) {
     require_once __DIR__ . '/sidenav.php';
     require_once __DIR__ . '/sidenav-sub.php';
   }
@@ -19,10 +19,10 @@ function _h_load_sidenav() {
  * 
  * @deprecated Needs rework to be easier to use
  */
-function h_remove_menu( array $args ) {
-  if( !is_admin() ) { return; }
+function h_remove_menu(array $args) {
+  if (!is_admin()) { return; }
 
-  $menu = new \h\Sidenav( $args );
+  $menu = new H_Sidenav($args);
   $menu->remove();
 }
 
@@ -31,20 +31,20 @@ function h_remove_menu( array $args ) {
  * 
  * @deprecated Needs rework to be easier to use
  */
-function h_add_menus( array $args ) {
-  if( !is_admin() ) { return; }
+function h_add_menus(array $args) {
+  if (!is_admin()) { return;}
 
-  $menu = new \h\Sidenav( $args );
+  $menu = new H_Sidenav($args);
   $menu->add();
 }
 
 /**
  * Add a menu link in sidebar. Alias for H::add_menus but only for 1 link.
  */
-function h_add_menu( string $title, array $args ) {
-  h_add_menus( [
+function h_add_menu(string $title, array $args) {
+  h_add_menus([
     $title => $args
-  ] );
+  ]);
 }
 
 /**
@@ -52,13 +52,13 @@ function h_add_menu( string $title, array $args ) {
  * 
  * @deprecated Needs rework to be easier to use
  */
-function h_add_submenu( string $parent_title, array $args ) {
-  h_add_menus( [
+function h_add_submenu(string $parent_title, array $args) {
+  h_add_menus([
     $parent_title => [
       'position' => "on $parent_title",
       'submenu' => $args
     ]
-  ] );
+  ]);
 }
 
 /**
@@ -66,11 +66,11 @@ function h_add_submenu( string $parent_title, array $args ) {
  * 
  * @param Callable():int $get_number
  */
-function h_add_menu_counter( string $parent_title, Callable $get_number ) {
-  h_add_menus( [
+function h_add_menu_counter(string $parent_title, Callable $get_number) {
+  h_add_menus([
     $parent_title => [
       'position' => "on $parent_title",
       'counter' => $get_number,
     ]
-  ] );
+  ]);
 }

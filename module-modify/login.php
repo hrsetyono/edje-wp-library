@@ -38,14 +38,14 @@ function _h_add_logo_in_login_page() {
   $logo_id = get_theme_mod('custom_logo');
 
   // if logo exists
-  if($logo_id):
+  if ($logo_id):
     $logo = wp_get_attachment_image_src($logo_id , 'full');
     ?>
     <style>
       .login h1 a {
         background-position: center center;
         background-size: contain;
-        background-image: url("<?php echo $logo[0]; ?>");
+        background-image: url("<?= $logo[0]; ?>");
         width: 250px;
       }
     </style>

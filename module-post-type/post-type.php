@@ -1,8 +1,8 @@
-<?php namespace h;
+<?php
 /**
  * Create CPT (Custom Post Type)
  */
-class Post_Type {
+class H_PostType {
   private $post_type;
   private $args;
 
@@ -80,8 +80,8 @@ class Post_Type {
    * Create all the labels for CPT text
    */
   private function _create_labels(string $post_type) : array {
-    $title = \_H::to_title($post_type);
-    $plural = \Inflector::pluralize($title);
+    $title = _H::to_title($post_type);
+    $plural = Inflector::pluralize($title);
     $singular = $title;
 
     $labels = [

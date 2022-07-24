@@ -60,14 +60,14 @@ function _h_add_header_footer_customizer($wpc) {
   $wpc->add_setting('h[footer_code]', $setting_args);
 
   // Add control
-  $wpc->add_control(new \WP_Customize_Code_Editor_Control($wpc, 'h[head_code]', [
+  $wpc->add_control(new WP_Customize_Code_Editor_Control($wpc, 'h[head_code]', [
     'label' => __( 'HEAD code' ),
     'editor_settings' => $editor_settings,
     'section' => 'h_code_section',
     'settings' => 'h[head_code]',
   ]));
 
-  $wpc->add_control(new \WP_Customize_Code_Editor_Control($wpc, 'h[footer_code]', [
+  $wpc->add_control(new WP_Customize_Code_Editor_Control($wpc, 'h[footer_code]', [
     'label' => __( 'FOOTER code' ),
     'editor_settings' => $editor_settings,
     'section' => 'h_code_section',

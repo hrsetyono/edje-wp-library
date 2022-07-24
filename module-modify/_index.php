@@ -25,5 +25,4 @@ function _h_load_modify() {
 
   // both
   require_once __DIR__ . '/head-footer.php';
-  require_once __DIR__ . '/adminbar.php';
 }

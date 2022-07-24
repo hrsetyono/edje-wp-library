@@ -1,56 +1,41 @@
 <?php
-/*
-  Functions to run after plugin is activated
 
-  You need to define EDJE variable to true in WP Config
-
-      define( 'EDJE', true );
-*/
-class H_Hook {
-  /*
-    Run when the plugin is activated
-  */
+class H_ActivationHook {
+  /**
+   * Run when the plugin is activated
+   */
   function on_activation() {
     $options = get_option('h_options');
 
     // create empty option if doesn't exist
     if (!$options) {
-      add_option('h_options', [] );
+      add_option('h_options', []);
     }
 
     // If first time activation
     if (!isset($options['init'])) {
       $this->_create_frontpage();
       $this->_create_blogpage();
-
       $this->_set_default_setting();
 
       $options['init'] = true;
     }
 
-    // If sample post never created before
-    if (!isset($options['post_init'])) {
-      $this->_create_default_post();
-
-      $options['post_init'] = true;
-    }
-
     update_option('h_options', $options);
   }
 
-
-  /*
-    Run when the plugin is deactivated
-  */
+  /**
+   * Run when the plugin is deactivated
+   */
   function deactivation_hook() {
 
   }
 
   /////
 
-  /*
-    Create default Frontpage
-  */
+  /**
+   * Create default Frontpage
+   */
   private function _create_frontpage() {
     $frontpage_id = get_option('page_on_front');
 
@@ -77,9 +62,9 @@ class H_Hook {
     }
   }
 
-  /*
-    Create default Blog page
-  */
+  /**
+   * Create default Blog page
+   */
   private function _create_blogpage() {
     $blogpage_id = get_option('page_for_posts');
 
@@ -93,30 +78,6 @@ class H_Hook {
 
       $blog_id = wp_insert_post($blog);
       update_option('page_for_posts', $blog_id);
-    }
-  }
-
-  /*
-    Create sample post content
-  */
-  private function _create_default_post() {
-    $args = [
-      'post_title' => 'Welcome to WordPress',
-      'post_name' => 'welcome-to-wordpress',
-      'post_type' => 'post',
-      'post_content' => $this->sample_content,
-      'post_status' => 'publish'
-    ];
-
-    // if post ID 1 exist, edit it
-    if (is_string(get_post_status(1))) {
-      $args['ID'] = 1;
-      wp_update_post($args);
-    }
-    // if does not exist, create new post with ID 1
-    else {
-      $args['import_id'] = 1;
-      wp_insert_post($args);
     }
   }
 
@@ -141,149 +102,4 @@ class H_Hook {
     update_option('medium_large_size_w', 0);
     update_option('medium_large_size_h', 0);
   }
-
-
-  /*
-    Sample Blog post
-  */
-  private $sample_content = <<<EOD
-<!-- wp:paragraph -->
-<p>
-
-You're live! Nice. We've put together a little post to introduce you to the WordPress and get you started. You can manage your content by signing in to the admin area at "your-site.com/wp-admin/". When you arrive, you can go to Posts to&nbsp;either add new post or edit existing one from the list.
-
-</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Getting Started </h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>WordPress uses blocks to create website content. Click the (+) button and you will see available blocks. Go ahead and experiment it yourself.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>Writing in the editor is really easy. In paragraph block, you will see a row of buttons above that can be used to format the content. Where appropriate, you can use <em>CTRL+I</em>&nbsp;or&nbsp;<strong>CTRL+B</strong>&nbsp;as formatting shortcut.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link" href="https://pixelstudio.id">This is a Button block</a></div>
-<!-- /wp:button -->
-
-<!-- wp:paragraph -->
-<p>There's&nbsp;a List block too. For example:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-<ul><li>Item number one</li><li>Item number two <ul><li>Press the Indent button to create nested list </li></ul></li><li>A final item</li></ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-<p>Or with numbers!</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"ordered":true} -->
-<ol><li>Remember to buy some milk</li><li>Drink the milk <ol><li>Make sure it's not expired</li><li>Finish in one gulp </li></ol></li><li>Tweet that I remembered to buy the milk and drank it</li></ol>
-<!-- /wp:list -->
-
-<!-- wp:heading {"level":3} -->
-<h3>Links</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Want to link to a source? No problem. Paste in url, like <a href="https://wordpress.com/">https://wordpress.com/</a> then select it and click the Link button - it'll automatically be linked up.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>You can also customise your anchor text. Here's a link to <a href="http://wordpress.org/">the WordPress website</a>. Neat.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3} -->
-<h3>What about Images?</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>You can simply drag and drop the image to this editor. Or select Image block and choose how you want to add it.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>Want to add <strong>caption</strong>? That's easy too. Click on the Image block and you will see "Write Caption" field below.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image -->
-<figure class="wp-block-image"><img src="https://picsum.photos/800/400" alt=""/><figcaption>This is a caption</figcaption></figure>
-<!-- /wp:image -->
-
-<!-- wp:heading {"level":3} -->
-<h3>Quoting</h3>
-<!-- /wp:heading -->
-
-<!-- wp:quote -->
-<blockquote class="wp-block-quote"><p>Wisdomous - it's definitely a word.</p></blockquote>
-<!-- /wp:quote -->
-
-<!-- wp:paragraph -->
-<p>Sometimes a link isn't enough, you want to quote someone on what they've said. It was probably very wisdomous. Is wisdomous a word? Find out in a future release when we introduce spellcheck! For now - it's definitely a word.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3} -->
-<h3>Ready for a Break?</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Select Separator block and you've got yourself a fancy new divider. Aw yeah.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:separator -->
-<hr class="wp-block-separator"/>
-<!-- /wp:separator -->
-
-<!-- wp:heading -->
-<h2>Gallery</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Select Gallery block and choose the images. Then click the block and you can configure it from the sidebar</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:gallery {"ids":[507,509,508,506]} -->
-<ul class="wp-block-gallery columns-3 is-cropped"><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1037" alt="" data-id="507" data-link="https://picsum.photos/600/400?image=1037" class="wp-image-507"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1061" alt="" data-id="509" data-link="https://picsum.photos/600/400?image=1061" class="wp-image-509"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/600/400?image=1036" alt="" data-id="508" data-link="https://picsum.photos/600/400?image=1036" class="wp-image-508"/></figure></li><li class="blocks-gallery-item"><figure><img src="https://picsum.photos/800/600?image=1043" alt="" data-id="506" data-link="https://picsum.photos/800/600?image=1043" class="wp-image-506"/></figure></li></ul>
-<!-- /wp:gallery -->
-
-<!-- wp:heading -->
-<h2>Columns Layout</h2>
-<!-- /wp:heading -->
-
-<!-- wp:columns -->
-<div class="wp-block-columns has-2-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:image -->
-<figure class="wp-block-image"><img src="https://picsum.photos/300/400" alt=""/></figure>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-<p></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:paragraph -->
-<p>Columns is a tidy way to place image on the left or right.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>Currently it only supports same size column, but you can kinda customize it by adding CSS Class in Advanced tab.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-
-<!-- wp:paragraph -->
-<p>
-
-That should be enough to get you started. Have fun - and let us know what you think :)
-
-</p>
-<!-- /wp:paragraph -->
-EOD;
-
 }

@@ -1,9 +1,8 @@
-<?php namespace h;
-/*
-  Add Taxonomy filter to a CPT
-  @author Ohad Raz <admin@bainternet.info>
-*/
-class Post_Filter {
+<?php
+/**
+ * Create taxonomy filter to a post type
+ */
+class H_PostFilter {
   private $post_type;
   private $taxonomy;
   private $post_taxonomies;

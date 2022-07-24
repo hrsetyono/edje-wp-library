@@ -1,8 +1,7 @@
 <?php
 
-add_shortcode( 'button', '_h_shortcode_button' );
-// add_shortcode( 'h-related-posts', '_h_shortcode_related_posts' );
-add_shortcode( 'h-jetpack-sharing', '_h_shortcode_jetpack_sharing' );
+add_shortcode('button', '_h_shortcode_button');
+add_shortcode('h-jetpack-sharing', '_h_shortcode_jetpack_sharing');
 
 
 /**
@@ -35,12 +34,12 @@ function _h_shortcode_button( $atts, $content = null ) {
  * [h-jetpack-sharing]
  */
 function _h_shortcode_jetpack_sharing() {
-  if ( function_exists( 'sharing_display' ) ) {
-    sharing_display( '', true );
+  if (function_exists('sharing_display')) {
+    sharing_display('', true);
   }
   
-  if ( class_exists( 'Jetpack_Likes' ) ) {
+  if (class_exists('Jetpack_Likes')) {
     $custom_likes = new Jetpack_Likes;
-    echo $custom_likes->post_likes( '' );
+    echo $custom_likes->post_likes('');
   }
 }

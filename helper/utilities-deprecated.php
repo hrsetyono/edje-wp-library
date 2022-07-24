@@ -7,14 +7,18 @@
  * 
  * @deprecated - Just use the original register_rest_route()
  */
-function h_register_GET_route( string $path, $callback ) {
+function h_register_GET_route(string $path, $callback) {
   global $h_api_namespace;
-  $path = preg_replace( '/(:)(.+)/', '(?P<$2>.+)', $path );
+  $path = preg_replace('/(:)(.+)/', '(?P<$2>.+)', $path);
 
-  register_rest_route( $h_api_namespace, $path, [
-    'methods' => 'GET',
-    'callback' => $args['callback']
-  ] );
+  register_rest_route(
+    $h_api_namespace,
+    $path,
+    [
+      'methods' => 'GET',
+      'callback' => $args['callback']
+    ]
+  );
 }
 
 
@@ -25,13 +29,17 @@ function h_register_GET_route( string $path, $callback ) {
  * 
  * @deprecated - Just use the original register_rest_route()
  */
-function h_register_POST_route( string $path, $callback ) {
+function h_register_POST_route(string $path, $callback) {
   global $h_api_namespace;
-  $path = preg_replace( '/(:)(.+)/', '(?P<$2>.+)', $path );
+  $path = preg_replace('/(:)(.+)/', '(?P<$2>.+)', $path);
 
-  register_rest_route( $h_api_namespace, $path, [
-    'methods' => 'POST',
-    'callback' => $args['callback']
-  ] );
+  register_rest_route(
+    $h_api_namespace,
+    $path,
+    [
+      'methods' => 'POST',
+      'callback' => $args['callback']
+    ]
+  );
 }
 

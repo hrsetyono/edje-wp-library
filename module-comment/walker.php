@@ -1,9 +1,10 @@
 <?php
-
-class H_Walker_Comment extends Walker_Comment {
+/**
+ * Slightly customize the comment HTML markup to make styling easier
+ */
+class H_WalkerComment extends Walker_Comment {
   /**
-   * Customize the HTML5 output of a comment.
-   * Based on the source code of https://developer.wordpress.org/reference/classes/walker_comment/
+   * Ref: https://developer.wordpress.org/reference/classes/walker_comment/
    */
   protected function html5_comment($comment, $depth, $args) {
     $tag = ('div' === $args['style']) ? 'div' : 'li';
@@ -23,15 +24,15 @@ class H_Walker_Comment extends Walker_Comment {
       $moderation_note = __('Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved.');
     }
     ?>
-    <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
+    <<?= $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
       <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
         <footer class="comment-meta">
-          <?php echo $avatar; ?>
+          <?= $avatar; ?>
           <b>
-            <?php echo $comment_author; ?>
+            <?= $comment_author; ?>
           </b>
           <time>
-            <?php echo $comment_date . ' ' . __('ago'); ?>
+            <?= $comment_date . ' ' . __('ago'); ?>
           </time>
           <br>
           <?php
@@ -46,12 +47,12 @@ class H_Walker_Comment extends Walker_Comment {
             ));
           }
           ?>
-          <?php echo edit_comment_link( __( 'Edit' )); ?>
+          <?= edit_comment_link( __( 'Edit' )); ?>
         </footer>
         
         <?php if ('0' == $comment->comment_approved): ?>
           <p class="comment-awaiting-moderation">
-            <?php echo $moderation_note; ?>
+            <?= $moderation_note; ?>
           </p>
         <?php endif; ?>
 

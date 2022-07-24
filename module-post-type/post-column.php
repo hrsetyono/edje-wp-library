@@ -1,8 +1,8 @@
-<?php namespace h;
-/*
-  Add custom column to CPT listing table
-*/
-class Post_Column {
+<?php
+/**
+ * Create custom column in the post table
+ */
+class H_PostColumn {
   private $post_type;
   private $columns = [];
 
@@ -55,7 +55,7 @@ class Post_Column {
       'position_after' => '',
     ]);
 
-    $args['name'] = $args['name'] ?? \_H::to_title($slug);
+    $args['name'] = $args['name'] ?? _H::to_title($slug);
 
     // Comments always goes with icon
     if ($slug === 'comments') { 
@@ -72,7 +72,7 @@ class Post_Column {
     }
 
     // If both position is empty, add one
-    if(empty($args['position_before']) && empty($args['position_after'])) {
+    if (empty($args['position_before']) && empty($args['position_after'])) {
       $args['position_before'] = 'date';
     }
 
@@ -106,7 +106,7 @@ class Post_Column {
     $columns = $this->columns;
 
     $list = [];
-    foreach($columns as $slug => $args) {
+    foreach ($columns as $slug => $args) {
       $list[$slug] = $args['name'];
     }
 
@@ -157,7 +157,7 @@ class Post_Column {
   function _fill_columns($slug, $post_id) {
     global $post;
     $columns = $this->columns;
-    if(!isset($columns[$slug])) { return false; }
+    if (!isset($columns[$slug])) { return false; }
 
     switch ($slug) {
       case 'cb':

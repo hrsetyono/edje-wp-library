@@ -121,8 +121,9 @@
                 "id": ""
             },
             "choices": {
-                "default": "Default",
+                "default": "Default (Square)",
                 "pill-shape": "Circle",
+                "outline" : "Outline",
                 "logos-only": "Logos Only"
             },
             "default_value": ["default"],

@@ -7,7 +7,7 @@ import { ToggleControl,
 export default function ( props ) {
   let atts = props.attributes;
 
-  return ( <>
+  return (<>
     <InspectorControls>
       <PanelBody
         title='Settings'
@@ -80,5 +80,5 @@ export default function ( props ) {
           props.setAttributes( { answer: value } );
         } } />
     </div>
-  </> );
+  </>);
 }

@@ -1,11 +1,11 @@
-<?php namespace h;
-/*
-  Add / Remove item from Admin side navigation
-*/
-class Sidenav {
+<?php
+/**
+ * Add or Remove item from WP-Admin sidenav
+ */
+class H_Sidenav {
   private $args;
 
-  function __construct( $args ) {
+  function __construct($args) {
     $this->args = $args;
   }
 
@@ -13,59 +13,65 @@ class Sidenav {
     Add new menu items
   */
   public function add() {
-    if( !is_admin() ) { return false; }
+    if (!is_admin()) { return false; }
 
-    add_action( 'admin_menu', array($this, '_add') );
+    add_action('admin_menu', [$this, '_add']);
   }
 
   /*
     Remove the admin menu by specifying the display text (case sensitive)
   */
   public function remove() {
-    if( !is_admin() ) { return false; }
+    if (!is_admin()) { return false; }
 
-    add_action( 'admin_menu', array($this, '_remove') );
+    add_action('admin_menu', [$this, '_remove']);
   }
 
   /////////
 
   public function _add() {
     global $menu;
-    end( $menu );
+    end($menu);
 
     $args = $this->args;
 
-    foreach( $args as $title => $value ):
+    foreach ($args as $title => $value):
       $position = null;
       $icon = null;
 
       // get position if specified
-      if( isset( $value['position'] ) ) {
-        $position = $this->get_position( $menu, $value['position'] );
+      if (isset($value['position'])) {
+        $position = $this->get_position($menu, $value['position']);
       }
 
-      if( isset( $value['icon'] ) ) {
-        $icon = \_H::to_icon( $value['icon'] );
+      if (isset($value['icon'])) {
+        $icon = _H::to_icon($value['icon']);
       }
 
       // add top level menu if slug is specified
-      if( isset( $value['slug'] ) ) {
-        add_menu_page( $title, $title, 'manage_options',
-          $value['slug'], null, $icon, $position
+      if (isset($value['slug'])) {
+        add_menu_page(
+          $title,
+          $title,
+          'manage_options',
+          $value['slug'],
+          null,
+          $icon,
+          $position
         );
       }
 
       // if has submenu
-      if( isset($value['submenu'] ) ) {
-        $parent_slug = isset( $value['slug'] ) ? $value['slug'] : $menu[ $position ][2];
+      if (isset($value['submenu'])) {
+        $parent_slug = isset($value['slug']) ? $value['slug'] : $menu[$position][2];
 
-        $smenu = new Sidenav_Sub( $parent_slug, $value['submenu'] );
+        $smenu = new H_SidenavSub($parent_slug, $value['submenu']);
         $smenu->add();
       }
 
       // If has counter
-      if( isset( $value['counter'] ) ) {
-        $menu[ $position ][0] .= $this->add_counter( $value['counter'] );
+      if (isset($value['counter'])) {
+        $menu[$position][0] .= $this->add_counter($value['counter']);
       }
 
     endforeach;
@@ -77,12 +83,12 @@ class Sidenav {
 
     $args = $this->args;
 
-    foreach( $menu as $index => $value ):
-      if( $value[0] ) {
-        $i = explode( ' <', $value[0] ); // sometimes has <span> HTML, so take the first one
+    foreach ($menu as $index => $value):
+      if ($value[0]) {
+        $i = explode(' <', $value[0]); // sometimes has <span> HTML, so take the first one
 
-        if( in_array( $i[0], $args ) ) {
-          unset( $menu[ $index ] );
+        if (in_array($i[0], $args)) {
+          unset($menu[$index]);
         }
       }
     endforeach;
@@ -95,7 +101,7 @@ class Sidenav {
 
     @param $count_cb (function) - A callback that returns integer
   */
-  private function add_counter( $count_cb ) {
+  private function add_counter($count_cb) {
     $count = $count_cb();
     return " <span class='update-plugins count-$count'><span class='plugin-count'>$count</span></span>";
   }
@@ -119,15 +125,15 @@ class Sidenav {
     $increment = 0;
 
     // Look for the base position
-    foreach($menu as $key => $value) {
-      if($value[0] == $title) {
+    foreach ($menu as $key => $value) {
+      if ($value[0] == $title) {
         $position = $key;
         break;
       }
     }
 
     // Set for increment or decrement
-    switch($placement) {
+    switch ($placement) {
       case 'above':
         $increment = -1;
         break;
@@ -141,7 +147,7 @@ class Sidenav {
     // If position already occupied, add one
     do {
       $position += $increment;
-    } while(isset( $menu[$position]) );
+    } while(isset($menu[$position]));
 
     return $position;
   }

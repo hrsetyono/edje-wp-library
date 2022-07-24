@@ -19,8 +19,7 @@ if (is_admin()) {
 function h_dynamic_sidebar($slug) {
   ob_start();
   dynamic_sidebar($slug);
-  $widgets = ob_get_contents();
-  ob_end_clean();
+  $widgets = ob_get_clean();
 
   preg_match_all('/<\/ul>\s?<ul class="widget-column".+>/Ui', $widgets, $matches);
 
@@ -69,12 +68,12 @@ function _h_register_widgets() {
   require_once __DIR__ . '/widget-toggle-offcanvas.php';
   require_once __DIR__ . '/widget-recent-posts.php';
 
-  register_widget('H_Widget_Button');
-  register_widget('H_Widget_Logo');
-  register_widget('H_Widget_Toggle_Offcanvas' );
-  register_widget('H_Widget_Socials');
-  register_widget('H_Widget_Separator');
-  register_widget('H_Widget_Recent_Posts');
+  register_widget('H_WidgetButton');
+  register_widget('H_WidgetLogo');
+  register_widget('H_WidgetToggleOffcanvas' );
+  register_widget('H_WidgetSocials');
+  register_widget('H_WidgetSeparator');
+  register_widget('H_WidgetRecentPosts');
 }
 
 

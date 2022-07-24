@@ -4,6 +4,8 @@
 
 This plugin contains features that we keep using in our client's website. They are:
 
+1. [Custom Post Type](#custom-post-type)
+1. [Custom Table Columns](custom-table-columns)
 1. [FAQ Block](#faq-block)
 1. [Icon Block](#icon-block)
 1. [Comment Editor](#comment-editor)
@@ -13,6 +15,58 @@ This plugin contains features that we keep using in our client's website. They a
 **Requirement**: PHP 7.3 and WordPress 5.5.
 
 -----
+
+## Custom Post Type
+
+Read full documentation: [Post Type »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type) and [Taxonomy »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
+
+Create custom post type:
+
+```php
+H::register_post_type('product' , [
+  'menu_icon' => 'dashicons-cart',
+  'slug' => 'p',
+  'supports' => ['comments', 'revisions']
+]);
+```
+
+![Edje WordPress - Product Custom Post Type](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-cpt.jpg)
+
+Create custom taxonomy:
+
+```php
+H::register_taxonomy('brand', 'product');
+```
+
+![Edje WordPress - Custom Taxonomy](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-tax.jpg)
+
+## Custom Table Columns
+
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Table-Columns)
+
+![Edje WordPress - Complex Column](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/column.jpg)
+
+```php
+H::override_columns('product', [
+  'title' => [], // 'title', 'date', 'thumbnail', 'author' are reserved keywords
+  'price' => [], // custom field automatically populated
+  'discount' => [
+    'name' => 'Discount',
+    'content' => 'my_show_discounted_price'
+  ]
+  'date' => [],
+]);
+
+function my_show_discounted_price($post, $fields) { 
+  $discount = isset($fields['discount']) ? $fields['discount'][0] : null;
+  $price = isset($fields['price']) ? $fields['price'][0] : null;
+
+  $total = $price - ($price * $discount / 100);
+  $saving = $price - $total;
+
+  return "{$discount}% Discount - You save {$saving}";
+}
+```
 
 ## FAQ Block
 

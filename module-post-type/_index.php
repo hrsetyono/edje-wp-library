@@ -20,7 +20,7 @@ function _h_load_post_type() {
 function h_register_post_type(string $post_type, array $args = []) {
   require_once __DIR__ . '/post-type.php';
 
-  $pt = new \h\Post_Type($post_type, $args);
+  $pt = new H_PostType($post_type, $args);
   $pt->register();
 }
 
@@ -31,7 +31,7 @@ function h_register_taxonomy(string $taxonomy, string $post_type, array $args) {
   require_once __DIR__ . '/taxonomy.php';
   require_once __DIR__ . '/post-filter.php';
 
-  $tx = new \h\Taxonomy($taxonomy, $post_type, $args);
+  $tx = new H_Taxonomy($taxonomy, $post_type, $args);
   $tx->register();
 }
 
@@ -46,7 +46,7 @@ function h_override_columns(string $post_type, array $columns) {
 
   require_once __DIR__ . '/post-column.php';
 
-  $pc = new \h\Post_Column();
+  $pc = new H_PostColumn();
   $pc->override_columns($post_type, $columns);
 }
 
@@ -69,7 +69,7 @@ function h_add_column(string $post_type, $column) {
 
   require_once __DIR__ . '/post-column.php';
 
-  $pc = new \h\Post_Column();
+  $pc = new H_PostColumn();
   $pc->add_column($post_type, $column);
 }
 
@@ -79,7 +79,7 @@ function h_add_column(string $post_type, $column) {
 // function h_add_actions($post_type, $actions) {
 //   if (!is_admin()) { return; }
 
-//   $pa = new \h\Post_Action($post_type, $actions);
+//   $pa = new H_PostAction($post_type, $actions);
 //   $pa->add();
 // }
 
@@ -87,6 +87,6 @@ function h_add_column(string $post_type, $column) {
 // function h_replace_actions($post_type, $actions) {
 //   if (!is_admin()) { return; }
 
-//   $pa = new \h\Post_Action($post_type, $actions);
+//   $pa = new H_PostAction($post_type, $actions);
 //   $pa->replace();
 // }

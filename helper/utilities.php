@@ -9,24 +9,24 @@
  * Shorthand: (need to define base url in `API_URL` constant)
  * `H::GET( '/get-endpoint' );`
  */
-function h_GET( string $url, $data = [] ) {
+function h_GET(string $url, $data = []) {
   // if URL doesn't start with "http", prepend API_URL
-  if( !preg_match( '/^http/', $url, $matches ) ) {
+  if (!preg_match('/^http/', $url, $matches)) {
     $url = API_URL . $url;
   }
 
-  if( $data ) {
-    $url = sprintf( "%s?%s", $url, http_build_query($data) );
+  if ($data) {
+    $url = sprintf("%s?%s", $url, http_build_query($data));
   }
   
   $curl = curl_init();
-  curl_setopt( $curl, CURLOPT_URL, $url );
-  curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1) ;
+  curl_setopt($curl, CURLOPT_URL, $url);
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-  $result = curl_exec( $curl );
-  curl_close( $curl );
+  $result = curl_exec($curl);
+  curl_close($curl);
 
-  return json_decode( $result, true );
+  return json_decode($result, true);
 }
 
 
@@ -39,30 +39,34 @@ function h_GET( string $url, $data = [] ) {
  * Shorthand: (need to define base url in `API_URL` constant)  
  * `H::POST( '/post-endpoint', [ 'param1' => 'value1' ] );`
  */
-function h_POST( string $url, $data = [] ) {
+function h_POST(string $url, $data = []) {
   // if URL doesn't start with "http", prepend API_URL
-  if( !preg_match( '/^http/', $url, $matches ) ) {
+  if (!preg_match('/^http/', $url, $matches)) {
     $url = API_URL . $url;
   }
 
-  $payload = json_encode( $data );
+  $payload = json_encode($data);
 
   // Prepare new cURL resource
-  $ch = curl_init( $url );
-  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-  curl_setopt( $ch, CURLINFO_HEADER_OUT, true );
-  curl_setopt( $ch, CURLOPT_POST, true );
-  curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
   
   // Set HTTP Header for POST request 
-  curl_setopt( $ch, CURLOPT_HTTPHEADER, [
-    'Content-Type: application/json',
-    'Content-Length: ' . strlen( $payload )
-  ] );
+  curl_setopt(
+    $ch,
+    CURLOPT_HTTPHEADER,
+    [
+      'Content-Type: application/json',
+      'Content-Length: ' . strlen($payload)
+    ]
+  );
   
   // Submit the POST request
-  $response = curl_exec( $ch );
-  curl_close( $ch );
+  $response = curl_exec($ch);
+  curl_close($ch);
 
   return $response;
 }
@@ -76,8 +80,8 @@ function h_POST( string $url, $data = [] ) {
  * 
  *     H::get_social_icon( 'facebook );
  */
-function h_get_social_icon( $slug = null ) {
-  $list = apply_filters( 'h_social_icons', [
+function h_get_social_icon($slug = null) {
+  $list = apply_filters('h_social_icons', [
     'facebook' => [
       'label' => __( 'Facebook' ),
       'color' => '#1977f2',
@@ -240,10 +244,10 @@ function h_get_social_icon( $slug = null ) {
       'placeholder' => 'https://www.youtube.com/channel/your-channel',
       'svg' => '<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" focusable="false"><path d="M21.8,8.001c0,0-0.195-1.378-0.795-1.985c-0.76-0.797-1.613-0.801-2.004-0.847c-2.799-0.202-6.997-0.202-6.997-0.202 h-0.009c0,0-4.198,0-6.997,0.202C4.608,5.216,3.756,5.22,2.995,6.016C2.395,6.623,2.2,8.001,2.2,8.001S2,9.62,2,11.238v1.517 c0,1.618,0.2,3.237,0.2,3.237s0.195,1.378,0.795,1.985c0.761,0.797,1.76,0.771,2.205,0.855c1.6,0.153,6.8,0.201,6.8,0.201 s4.203-0.006,7.001-0.209c0.391-0.047,1.243-0.051,2.004-0.847c0.6-0.607,0.795-1.985,0.795-1.985s0.2-1.618,0.2-3.237v-1.517 C22,9.62,21.8,8.001,21.8,8.001z M9.935,14.594l-0.001-5.62l5.404,2.82L9.935,14.594z"></path></svg>',
     ],
-  ] );
+  ]);
 
-  if( isset( $slug ) ) {
-    return $list[ $slug ] ?? trigger_error( 'Social Item "' . $slug . '" does not exists' );
+  if (isset($slug)) {
+    return $list[$slug] ?? trigger_error("Social Item \"{$slug}\" does not exists");
   }
 
   return $list;

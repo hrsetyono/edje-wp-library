@@ -6,7 +6,7 @@ if (is_admin()) {
 }
 
 /**
- * @action wp_enqueue_scripts
+ * @action enqueue_block_editor_assets
  */
 function _h_enqueue_editor() {
   $disallowed_blocks = apply_filters('h_disallowed_blocks', [
@@ -15,7 +15,6 @@ function _h_enqueue_editor() {
     'core/pullquote',
   ]);
 
-  $assets = plugin_dir_url(__FILE__);
   wp_enqueue_style('h-gutenberg', H_DIST . '/h-gutenberg.css', [], H_VERSION);
   wp_enqueue_script('h-gutenberg', H_DIST . '/h-gutenberg.js', [], H_VERSION, true);
 

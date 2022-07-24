@@ -1,7 +1,9 @@
 import './style.sass';
 
+const { wp } = window;
+
 wp.domReady(() => {
-  localizeH.disallowedBlocks.forEach((name) => {
+  window.localizeH.disallowedBlocks.forEach((name) => {
     wp.blocks.unregisterBlockType(name);
   });
 });
@@ -64,6 +66,15 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
             type: 'string',
             default: 'wide',
           },
+        },
+      };
+      break;
+
+    case 'core/button':
+      settings.supports = {
+        ...settings.supports,
+        ...{
+          __experimentalBorder: false,
         },
       };
       break;

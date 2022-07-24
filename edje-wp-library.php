@@ -3,18 +3,18 @@
  * Plugin Name: Edje WP Library
  * Description: Simplify WordPress complicated functions. Designed to work with Edje Theme
  * Plugin URI: http://github.com/hrsetyono/edje-wp-library
- * Requires at least: 5.3
- * Requires PHP: 7.0
+ * Requires at least: 5.8
+ * Requires PHP: 7.3
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 9.0.2
+ * Version: 9.1.0
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '9.0.2');
+define('H_VERSION', '9.1.0');
 define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 define('H_DIR', __DIR__); // for require
@@ -41,11 +41,8 @@ require_once 'module-block-icon/_index.php';
 
 class Edje_WP_Library {
   function __construct() {
-    // Run activation hook only if EDJE is set to true in wp-config.
-    if (defined('EDJE')) {  
-      require_once 'activation-hook.php';
-      register_activation_hook(H_BASE, [$this, 'register_activation_hook']);
-    }
+    require_once 'activation-hook.php';
+    register_activation_hook(H_BASE, [$this, 'register_activation_hook']);
 
     add_filter('plugin_row_meta', [$this, 'add_doc_links'], 10, 2);
   }
@@ -54,7 +51,7 @@ class Edje_WP_Library {
    * Register activation and deactivation hook
    */
   function register_activation_hook() {
-    $hook = new H_Hook();
+    $hook = new H_ActivationHook();
     $hook->on_activation();
   }
 

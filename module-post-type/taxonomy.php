@@ -1,8 +1,8 @@
-<?php namespace h;
+<?php
 /**
  * Create Custom Taxonomy
  */
-class Taxonomy {
+class H_Taxonomy {
   private $taxonomy;
   private $post_type;
   private $args;
@@ -23,7 +23,7 @@ class Taxonomy {
 
     // add taxonomy filter
     if (is_admin()) {
-      $pf = new Post_Filter($this->post_type, $this->taxonomy);
+      $pf = new H_PostFilter($this->post_type, $this->taxonomy);
       $pf->add();
     }
   }
@@ -53,12 +53,12 @@ class Taxonomy {
    * Create text labels for Taxonomy.
    */
   private function _create_labels(string $taxonomy, string $label='') : array {
-    $title = \_H::to_title($taxonomy);
-    $title_plural = \Inflector::pluralize($title);
+    $title = _H::to_title($taxonomy);
+    $title_plural = Inflector::pluralize($title);
 
     // check if label is defined
     $label = $label ? $label : $title;
-    $label_plural = $label ? \Inflector::pluralize($label) : $title_plural;
+    $label_plural = $label ? Inflector::pluralize($label) : $title_plural;
 
     $labels = [
       'name' => $title_plural,
