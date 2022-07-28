@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 9.1.0
+ * Version: 9.2.0
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '9.1.0');
+define('H_VERSION', '9.2.0');
 define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 define('H_DIR', __DIR__); // for require

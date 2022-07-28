@@ -1,13 +1,14 @@
 <?php
-
 /**
  * Button widget
+ * 
+ * @deprecated since 9.2.0 - Replaced by Buttons
  */
 class H_WidgetButton extends H_Widget { 
   function __construct() {
     parent::__construct(
       'h_button',
-      __('- Button'),
+      __('x Button'),
       [
         'description' => __('Create a Button')
       ]

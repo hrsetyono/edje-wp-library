@@ -3,6 +3,23 @@
     "title": "Edje Widget - Button",
     "fields": [
         {
+            "key": "field_62e0eebd11234",
+            "label": "",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "<span class=\"dashicons dashicons-warning\" style=\"color:red\"></span> This has been replaced by BUTTONS widget.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
             "key": "field_5f1d380870aec",
             "label": "Link",
             "name": "link",

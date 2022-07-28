@@ -1,3 +1,10 @@
+// @deprecated - Button block hidden, replaced by Buttons
+// We don't remove the widget because it's still used in older site
+#available-widgets
+  [id*="_h_button-"]
+    display: none
+
+// Make ACF fields more compact inside widget box  
 .widgets-sortables
   .acf-widget-fields .acf-field .acf-label
     label
@@ -21,6 +28,9 @@
 .widgets-sortables .acf-repeater
   margin-right: -1rem
   margin-left: -1rem
+
+  .acf-fields
+    border: 1px solid #DFDFDF
 
   .acf-row-handle
     width: 8px

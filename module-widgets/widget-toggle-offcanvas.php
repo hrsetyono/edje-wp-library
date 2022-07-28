@@ -38,7 +38,7 @@ class H_WidgetToggleOffcanvas extends H_Widget {
     <a href="#menu">
       <?= $icon ?>
       <?php if ($label): ?>
-        <?= $label ?>
+        <span><?= $label ?></span>
       <?php endif; ?>
     </a>
     <?php return ob_get_clean();

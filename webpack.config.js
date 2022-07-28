@@ -12,7 +12,7 @@ const entryPoints = {
   'h-classic-editor': './module-gutenberg/src/h-classic-editor.scss',
   'h-comment': './module-comment/src/script.js',
   'h-admin': './module-modify/src/h-admin.sass',
-  'h-widgets': './module-widgets/src/style-admin.sass',
+  'h-widgets': './module-widgets/src/h-widgets.sass',
 };
 
 module.exports = {

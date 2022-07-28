@@ -63,17 +63,19 @@ function _h_register_sidebar() {
 function _h_register_widgets() {
   require_once __DIR__ . '/widget-logo.php';
   require_once __DIR__ . '/widget-separator.php';
-  require_once __DIR__ . '/widget-button.php';
   require_once __DIR__ . '/widget-socials.php';
   require_once __DIR__ . '/widget-toggle-offcanvas.php';
   require_once __DIR__ . '/widget-recent-posts.php';
-
-  register_widget('H_WidgetButton');
+  require_once __DIR__ . '/widget-button.php';
+  require_once __DIR__ . '/widget-buttons.php';
+  
   register_widget('H_WidgetLogo');
-  register_widget('H_WidgetToggleOffcanvas' );
+  register_widget('H_WidgetToggleOffcanvas');
   register_widget('H_WidgetSocials');
   register_widget('H_WidgetSeparator');
   register_widget('H_WidgetRecentPosts');
+  register_widget('H_WidgetButton');
+  register_widget('H_WidgetButtons');
 }
 
 
