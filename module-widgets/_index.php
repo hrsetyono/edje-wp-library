@@ -68,6 +68,7 @@ function _h_register_widgets() {
   require_once __DIR__ . '/widget-recent-posts.php';
   require_once __DIR__ . '/widget-button.php';
   require_once __DIR__ . '/widget-buttons.php';
+  require_once __DIR__ . '/widget-dark-toggle.php';
   
   register_widget('H_WidgetLogo');
   register_widget('H_WidgetToggleOffcanvas');
@@ -76,6 +77,7 @@ function _h_register_widgets() {
   register_widget('H_WidgetRecentPosts');
   register_widget('H_WidgetButton');
   register_widget('H_WidgetButtons');
+  register_widget('H_DarkToggle');
 }
 
 
@@ -103,7 +105,11 @@ function _h_unregister_widgets() {
   }
 }
 
-
+/**
+ * Allow ACF JSON to load from this directory
+ * 
+ * @filter acf/settings/load_json 20
+ */
 function _h_load_acf_json_widgets($paths) {  
   $paths[] = plugin_dir_path(__FILE__) . '/acf-json';
   return $paths;

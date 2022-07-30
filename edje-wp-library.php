@@ -33,6 +33,7 @@ require_once 'module-post-type/_index.php';
 require_once 'module-admin-sidenav/_index.php';
 require_once 'module-comment/_index.php';
 require_once 'module-widgets/_index.php';
+require_once 'module-menu/_index.php';
 
 require_once 'module-gutenberg/_index.php';
 require_once 'module-block-faq/_index.php';

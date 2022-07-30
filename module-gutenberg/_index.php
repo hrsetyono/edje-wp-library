@@ -14,6 +14,9 @@ if (is_admin()) {
   // remove group container class
   remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
   remove_filter('render_block', 'gutenberg_render_layout_support_flag', 10, 2);
+
+  // remove the SVG gradient
+  remove_action('wp_body_open', 'wp_global_styles_render_svg_filters', 10);
 }
 
 /**

@@ -8,11 +8,12 @@ const entryPoints = {
   'h-icon': './module-block-icon/src/index.jsx',
   'h-faq': './module-block-faq/v2/index.jsx',
 
-  'h-gutenberg': './module-gutenberg/src/script.js',
+  'h-gutenberg': './module-gutenberg/src/h-gutenberg.js',
   'h-classic-editor': './module-gutenberg/src/h-classic-editor.scss',
-  'h-comment': './module-comment/src/script.js',
+  'h-comment': './module-comment/src/h-comment.js',
   'h-admin': './module-modify/src/h-admin.sass',
   'h-widgets': './module-widgets/src/h-widgets.sass',
+  'h-menu-admin': './module-menu/src/h-menu-admin.js',
 };
 
 module.exports = {
