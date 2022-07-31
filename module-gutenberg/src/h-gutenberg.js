@@ -1,4 +1,4 @@
-import './style.sass';
+import './h-gutenberg.sass';
 
 const { wp } = window;
 
