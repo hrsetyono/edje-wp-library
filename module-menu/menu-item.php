@@ -46,7 +46,7 @@ function _h_menu_item_classes($items) {
 
     // if has shortcode
     preg_match('/\[(.+)\]/', $i->title, $matches);
-    if (shortcode_exists($matches[1])) {
+    if (isset($matches[1]) && shortcode_exists($matches[1])) {
       $i->classes[] = 'menu-item-has-shortcode';
       $i->title = '</a>' . do_shortcode($i->title) . '<a>';
       continue;
