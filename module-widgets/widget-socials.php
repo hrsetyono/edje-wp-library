@@ -48,6 +48,8 @@ class H_WidgetSocials extends H_Widget {
       if ($label) {
         $i['label'] = H::markdown($label);
         $i['extra_classes'] .= ' has-label ';
+      } else {
+        $i['label'] = '';
       }
 
       return $i;
