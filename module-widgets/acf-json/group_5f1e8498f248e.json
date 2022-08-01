@@ -121,9 +121,9 @@
                 "id": ""
             },
             "choices": {
-                "default": "Default (Square)",
+                "default": "Square",
                 "pill-shape": "Circle",
-                "outline" : "Outline",
+                "outline": "Outline",
                 "logos-only": "Logos Only"
             },
             "default_value": "default",
@@ -155,6 +155,30 @@
             "allow_null": 0,
             "other_choice": 0,
             "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_60cd8f24a13c7",
+            "label": "Orientation",
+            "name": "orientation",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "horizontal": "<span class='dashicons dashicons-arrow-right-alt'></span> Horizontal",
+                "vertical": "<span class='dashicons dashicons-arrow-down-alt'></span> Vertical"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "horizontal",
             "layout": "horizontal",
             "return_format": "value",
             "save_other_choice": 0
