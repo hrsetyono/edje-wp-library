@@ -92,7 +92,7 @@ function _h_register_sidebar_v2() {
       'name' => $name,
       'id' => $id,
       'before_sidebar' => "<div class='footer-widgets {$id}'> {$before_sidebar}", 
-      'after_sidebar' => "{$after_sidebar} </footer>",
+      'after_sidebar' => "{$after_sidebar} </div>",
     ]);
   }
 

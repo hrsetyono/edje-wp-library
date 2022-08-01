@@ -126,7 +126,7 @@
                 "outline" : "Outline",
                 "logos-only": "Logos Only"
             },
-            "default_value": ["default"],
+            "default_value": "default",
             "layout": "horizontal",
             "allow_null": 0,
             "multiple": 0,
