@@ -5,11 +5,13 @@
 This plugin contains features that we keep using in our client's website. They are:
 
 1. [Custom Post Type](#custom-post-type)
-1. [Custom Table Columns](custom-table-columns)
+1. [Custom Table Columns](#custom-table-columns)
+1. [Mega Menu](#mega-menu)
+1. [Header and Footer Builder](#header-and-footer-builder)
+1. [Header and Footer Code](#header-and-footer-code)
 1. [FAQ Block](#faq-block)
 1. [Icon Block](#icon-block)
 1. [Comment Editor](#comment-editor)
-1. [Header and Footer Code](#header-and-footer-code)
 1. [Other Features](#other-features)
 
 **Requirement**: PHP 7.3 and WordPress 5.5.
@@ -18,7 +20,10 @@ This plugin contains features that we keep using in our client's website. They a
 
 ## Custom Post Type
 
-Read full documentation: [Post Type »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type) and [Taxonomy »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
+Read full documentation:
+
+- [Post Type »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type)
+- [Taxonomy »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
 
 Create custom post type:
 
@@ -42,98 +47,68 @@ H::register_taxonomy('brand', 'product');
 
 ## Custom Table Columns
 
+Customize the columns of any post type in your WP Admin.
+
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Table-Columns)
 
 ![Edje WordPress - Complex Column](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/column.jpg)
 
-```php
-H::override_columns('product', [
-  'title' => [], // 'title', 'date', 'thumbnail', 'author' are reserved keywords
-  'price' => [], // custom field automatically populated
-  'discount' => [
-    'name' => 'Discount',
-    'content' => 'my_show_discounted_price'
-  ]
-  'date' => [],
-]);
+## Mega Menu
 
-function my_show_discounted_price($post, $fields) { 
-  $discount = isset($fields['discount']) ? $fields['discount'][0] : null;
-  $price = isset($fields['price']) ? $fields['price'][0] : null;
+Create a large menu split into 2, 3, or 4 columns. Built using native WP Menu and not even a custom Walker.
 
-  $total = $price - ($price * $discount / 100);
-  $saving = $price - $total;
+⚠️ Requires: ACF Pro and Theme Support `h-mega-menu`
 
-  return "{$discount}% Discount - You save {$saving}";
-}
-```
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Mega-Menu)
+
+![Edje WordPress - Mega Menu](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/mega-menu.jpg)
+
+## Header and Footer Builder
+
+Use classic widgets to create Header and Footer. Much easier and simpler than using the new Full Site Editor.
+
+⚠️ Requires: ACF Pro and Theme Support `h-widget-builder-v2`
+
+[Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Header-and-Footer-Builder)
+
+![Edje WordPress - Widget Builder](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/widget-builder.jpg)
+
+## Header and Footer Code
+
+Insert Google Analytics code or Facebook Pixel here.
+
+![Edje WordPress - Customizer Head Footer](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/customizer-head-footer.jpg)
 
 ## FAQ Block
+
+Create a question where you can click to show the answer. Automatically generates JSON-LD Schema.
+
+⚠️ Requires: Theme Support `h-faq-block-v2`
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-FAQ-Block)
 
 ![Edje WordPress - FAQ Block](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/gutenberg-faq-block-v2.jpg)
 
-Create a question where you can click to show the answer. It requires this theme support:
-
-```php
-add_theme_support( 'h-faq-block-v2' );
-```
-
-Features:
-
-- Automatically generate JSON LD Schema to include the FAQ within Google search result.
-- Modern markup with `<details>` and `<summary>`.
-- No frontend CSS. Refer to the [documentation](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-FAQ-Block) for basic one.
-
 ## Icon Block
+
+Create a block with SVG icon and description.
+
+⚠️ Requires: Theme Support `h-icon-block`
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-Icon-Block)
 
 ![Edje WordPress - Icon Block](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/gutenberg-icon-block.jpg)
 
-Create a box with SVG icon and description.
-
-It requires this theme support:
-
-```php
-add_theme_support( 'h-icon-block' );
-```
-
-Features:
-
-- Integration with FontAwesome FREE. Simply type in the name of the icon and it will get the SVG code.
-- Change position of icon to left, above, or right.
-- Option to use Image file instead of SVG.
-- No frontend CSS. Refer to the [documentation](https://github.com/hrsetyono/edje-wp-library/wiki/Gutenberg-–-Icon-Block) for basic one.
-
 ## Comment Editor
+
+Enable a Markdown editor in the comment form and email notification whenever someone wrote a comment reply.
+
+⚠️ Requires: Theme Support `h-comment-editor`
 
 [Read full documentation »](https://github.com/hrsetyono/edje-wp-library/wiki/Comment-%E2%80%93-Editor-&-Reply-Notification)
 
 ![Edje WordPress - Comment Markdown](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/comment-md-editor.jpg)
 
-Enable a Markdown editor in the comment form.
-
-It requires this theme support:
-
-```php
-add_theme_support( 'h-comment-editor' );
-```
-
-Features:
-
-- Saved in database as Markdown and compiled before rendered.
-- General keyboard shortcut like bold (CTRL+B), italic (CTRL+I), undo (CTRL+Z)
-- Added a checkbox for "Receive follow-up email when someone reply" below comment form.
-
-## Header and Footer Code
-
-![Edje WordPress - Customizer Head Footer](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/customizer-head-footer.jpg)
-
-We added a new section in the Customizer to insert raw HTML code inside `wp_head()` and `wp_footer()`.
-
-This is useful for Analytics code from Google or Facebook.
 
 ## Other Features
 
