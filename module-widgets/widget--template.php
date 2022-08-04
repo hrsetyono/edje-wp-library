@@ -4,13 +4,9 @@
  */
 class H_WidgetName extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_name',
-      __('- Name'),
-      [
-        'description' => __('Short description here')
-      ]
-    );
+    parent::__construct('h_name', __('- Name'), [
+      'description' => __('Short description here')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -30,11 +26,12 @@ class H_WidgetName extends H_Widget {
     [
       'acf_field' => $acf_field,
     ] = $data;
-
     ob_start(); ?>
+
     <div>
       <?= $acf_field ?>
     </div>
+
     <?php return ob_get_clean();
   }
 }

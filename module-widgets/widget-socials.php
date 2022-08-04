@@ -5,13 +5,9 @@
  */
 class H_WidgetSocials extends H_Widget {
   function __construct() {
-    parent::__construct(
-      'h_socials',
-      __('- Socials'),
-      [
-        'description' => __('Social Media links'),
-      ]
-    );
+    parent::__construct('h_socials', __('- Socials'), [
+      'description' => __('Social Media links'),
+    ]);
   }
 
   function widget($args, $instance) {
@@ -85,7 +81,6 @@ class H_WidgetSocials extends H_Widget {
     $orient_class = $orientation === 'horizontal' ? '' : "is-orientation-{$orientation}";
 
     $extra_classes = "{$style_class} is-style-{$style} has-{$color}-color {$size_class} {$orient_class}";
-  
     ob_start() ?>
 
     <?php if ($title): ?>

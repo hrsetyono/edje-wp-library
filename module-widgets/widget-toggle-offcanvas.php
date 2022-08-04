@@ -5,13 +5,9 @@
  */
 class H_WidgetToggleOffcanvas extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_toggle',
-      __('- Offcanvas Toggle'),
-      [
-        'description' => __('Button to open Offcanvas')
-      ]
-    );
+    parent::__construct('h_toggle', __('- Offcanvas Toggle'), [
+      'description' => __('Button to open Offcanvas')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -33,14 +29,15 @@ class H_WidgetToggleOffcanvas extends H_Widget {
       'label' => $label,
       'icon' => $icon,
     ] = $data;
-
     ob_start(); ?>
+
     <a href="#menu">
       <?= $icon ?>
       <?php if ($label): ?>
         <span><?= $label ?></span>
       <?php endif; ?>
     </a>
+
     <?php return ob_get_clean();
   }
 }

@@ -8,13 +8,9 @@
  */
 class H_WidgetSeparator extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_separator',
-      __('-----'),
-      [
-        'description' => __('Split the widgets')
-      ]
-    );
+    parent::__construct('h_separator', __('-----'), [
+      'description' => __('Split the widgets')
+    ]);
   }
 
   public function widget($args, $instance) {
