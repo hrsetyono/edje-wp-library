@@ -5,13 +5,9 @@
  */
 class H_WidgetRecentPosts extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_recent_posts',
-      __('- Recent Posts'),
-      [
-        'description' => __('Show latest posts')
-      ]
-    );
+    parent::__construct('h_recent_posts', __('- Recent Posts'), [
+      'description' => __('Show latest posts')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -64,13 +60,12 @@ class H_WidgetRecentPosts extends H_Widget {
   function render_widget($data) {
     [
       'posts' => $posts,
-
       'before_title' => $before_title,
       'after_title' => $after_title,
       'title' => $title,
     ] = $data;
-
     ob_start(); ?>
+
     <ul class="wp-block-latest-posts__list columns-1 wp-block-latest-posts">
       <?php if ($title): ?>
         <?= $before_title ?>
@@ -106,6 +101,7 @@ class H_WidgetRecentPosts extends H_Widget {
         </li>
       <?php endforeach; ?>
     </ul>
+
     <?php return ob_get_clean();
   }
 }

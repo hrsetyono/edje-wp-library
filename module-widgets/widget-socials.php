@@ -5,27 +5,28 @@
  */
 class H_WidgetSocials extends H_Widget {
   function __construct() {
-    parent::__construct(
-      'h_socials',
-      __('- Socials'),
-      [
-        'description' => __('Social Media links'),
-      ]
-    );
+    parent::__construct('h_socials', __('- Socials'), [
+      'description' => __('Social Media links'),
+    ]);
   }
 
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
       'items' => get_field('links', $widget_id),
-      'style' => get_field('style', $widget_id),
+      'style' => get_field('link_style', $widget_id),
       'color' => get_field('color', $widget_id),
       'size' => get_field('size', $widget_id),
+      'orientation' => get_field('orientation', $widget_id),
 
       'before_title' => $args['before_title'],
       'after_title' => $args['after_title'],
       'title' => trim(get_field('title', $widget_id)),
     ];
+
+    if (empty($data['style'])) {
+      $data['style'] = get_field('style', $widget_id);
+    }
 
     $data['items'] = array_map(function($i) {
       $name = $i['icon'];
@@ -68,14 +69,18 @@ class H_WidgetSocials extends H_Widget {
       'style' => $style,
       'color' => $color,
       'size' => $size,
+      'orientation' => $orientation,
 
       'before_title' => $before_title,
       'after_title' => $after_title,
       'title' => $title,
     ] = $data;
+    
+    $style_class = $style === 'default' ? '' : "";
+    $size_class = $size === 'normal' ? '' : "has-{$size}-icon-size";
+    $orient_class = $orientation === 'horizontal' ? '' : "is-orientation-{$orientation}";
 
-    $extra_classes = "is-style-{$style} has-{$size}-icon-size has-{$color}-color";
-  
+    $extra_classes = "{$style_class} is-style-{$style} has-{$color}-color {$size_class} {$orient_class}";
     ob_start() ?>
 
     <?php if ($title): ?>
@@ -93,7 +98,9 @@ class H_WidgetSocials extends H_Widget {
             target='<?= $i['link']['target'] ?>'
             rel="noopener nofollow"
           >
-            <?= $i['svg'] ?>
+            <figure class="wp-block-social-link__icon">
+              <?= $i['svg'] ?>
+            </figure>
             <?= $i['label'] ?>
           </a>
         </li>

@@ -18,6 +18,7 @@ add_action('after_setup_theme', function() {
   add_action('widgets_init', '_h_unregister_widgets');
   add_filter('acf/settings/load_json', '_h_load_acf_json_widgets', 20);
   
+  
   if (is_admin()) {
     add_filter('gutenberg_use_widgets_block_editor', '__return_false');
     add_filter('use_widgets_block_editor', '__return_false');
@@ -92,7 +93,7 @@ function _h_register_sidebar_v2() {
       'name' => $name,
       'id' => $id,
       'before_sidebar' => "<div class='footer-widgets {$id}'> {$before_sidebar}", 
-      'after_sidebar' => "{$after_sidebar} </footer>",
+      'after_sidebar' => "{$after_sidebar} </div>",
     ]);
   }
 
@@ -173,7 +174,6 @@ function _h_load_acf_json_widgets($paths) {
   return $paths;
 }
 
-
 /**
  * @action admin_enqueue_scripts
  */
@@ -237,7 +237,7 @@ endif;
 /**
  * Get sidebar data
  * 
- * @deprecated v2 - replaced by h_dynamic_header()
+ * @deprecated 9.3.0 - replaced by h_dynamic_header()
  * 
  * @param string $slug - the sidebar ID
  */
@@ -258,7 +258,8 @@ function h_dynamic_sidebar($slug) {
 
 /**
  * Register Sidebar for Header and Footer builder
- * @deprecated - replaced by v2
+ * 
+ * @deprecated 9.3.0 - replaced by _h_register_sidebar_v2()
  * 
  * @action widgets_init
  */

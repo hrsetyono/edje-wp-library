@@ -4,13 +4,9 @@
  */
 class H_DarkToggle extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_dark_toggle',
-      __('- Dark Mode Toggle'),
-      [
-        'description' => __('Switch between dark/light mode')
-      ]
-    );
+    parent::__construct('h_dark_toggle', __('- Dark Mode Toggle'), [
+      'description' => __('Switch between dark/light mode')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -44,8 +40,8 @@ class H_DarkToggle extends H_Widget {
       'label_light' => $label_light,
       'label_dark' => $label_dark,
     ] = $data;
-
     ob_start(); ?>
+
     <label class="h-dark-toggle is-style-<?= $style ?>">
       <?php if ($label_light): ?>
         <span>
@@ -62,6 +58,7 @@ class H_DarkToggle extends H_Widget {
         </span>
       <?php endif; ?>
     </label>
+
     <?php return ob_get_clean();
   }
 }

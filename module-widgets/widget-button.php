@@ -6,13 +6,9 @@
  */
 class H_WidgetButton extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_button',
-      __('x Button'),
-      [
-        'description' => __('Create a Button')
-      ]
-    );
+    parent::__construct('h_button', __('x Button'), [
+      'description' => __('Create a Button')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -42,9 +38,9 @@ class H_WidgetButton extends H_Widget {
       'link' => $link,
       'style' => $style,
       'icon' => $icon,
-    ] = $data;
-  
+    ] = $data;  
     ob_start(); ?>
+
     <div class="wp-block-button is-style-<?= $style ?>">
       <a
         class="wp-block-button__link"
@@ -60,6 +56,7 @@ class H_WidgetButton extends H_Widget {
         <?php endif; ?>
       </a>
     </div>
+
     <?php return ob_get_clean();
   }
 }

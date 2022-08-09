@@ -5,11 +5,9 @@
  */
 class H_WidgetLogo extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_logo',
-      __('- Logo'),
-      [ 'description' => __('Show logo from Customizer') ]
-    );
+    parent::__construct('h_logo', __('- Logo'), [
+      'description' => __('Show logo from Customizer')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -42,8 +40,8 @@ class H_WidgetLogo extends H_Widget {
       'logo_src' => $logo_src,
       'tagline' => $tagline,
     ] = $data;
-
     ob_start(); ?>
+
     <div class="wp-block-site-logo">
       <a
         href="<?= get_home_url() ?>"
@@ -58,6 +56,7 @@ class H_WidgetLogo extends H_Widget {
         </span>
       <?php endif; ?>
     </div>
+
     <?php return ob_get_clean();
   }
 }

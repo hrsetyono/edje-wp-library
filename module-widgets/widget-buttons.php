@@ -6,13 +6,9 @@
  */
 class H_WidgetButtons extends H_Widget { 
   function __construct() {
-    parent::__construct(
-      'h_buttons',
-      __('- Buttons'),
-      [
-        'description' => __('Create multiple buttons')
-      ]
-    );
+    parent::__construct('h_buttons', __('- Buttons'), [
+      'description' => __('Create multiple buttons')
+    ]);
   }
 
   function widget($args, $instance) {
@@ -34,8 +30,9 @@ class H_WidgetButtons extends H_Widget {
       'has_icon' => $has_icon,
       'buttons' => $buttons,
     ] = $data;
-  
+
     ob_start(); ?>
+
     <div class="wp-block-buttons">
     <?php foreach ($buttons as $b): ?>
       <div class="wp-block-button is-style-<?= $b['style'] ?>">
@@ -57,6 +54,7 @@ class H_WidgetButtons extends H_Widget {
       </div>
     <?php endforeach; ?>
     </div>
+
     <?php return ob_get_clean();
   }
 }
