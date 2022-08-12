@@ -15,10 +15,12 @@ function _h_mega_menu_classes($items) {
     // If parent item, check for mega menu ACF field
     if ($i->menu_item_parent === '0') {
       $columns = get_field('mega_menu', $i);
+      $alignment = get_field('mega_menu_alignment', $i);
 
       if ($columns) {
-        $i->classes[] = "h-mega-menu";
-        $i->classes[] = "h-mega-menu-$columns-columns";
+        $i->classes[] = "menu-item-has-mega-menu";
+        $i->classes[] = "has-{$columns}-columns";
+        $i->classes[] = "is-align-{$alignment}";
         $mega_menu_ids[] = $i->ID;
       }
 
@@ -26,11 +28,18 @@ function _h_mega_menu_classes($items) {
     }
     // Add special class if it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
-      $i->classes[] = 'h-mega-menu__column';
+      $i->classes[] = 'mega-menu__column';
 
-      // remove "has-children" class
-      $key = array_search('menu-item-has-children', $i->classes);
-      $i->classes[$key] = '';
+      // remove unnecessary class
+      $key = array_search('menu-item', $i->classes);
+      $key2 = array_search('menu-item-has-children', $i->classes);
+      
+      if ($key) {
+        $i->classes[$key] = '';
+      }
+      if ($key2) {
+        $i->classes[$key2] = '';
+      }
     }
   }
 
@@ -59,25 +68,32 @@ function _h_menu_item_classes($items) {
     // If title is "-", add empty class so it can be hidden
     if ($i->title === '-') {
       $i->title = '&nbsp;';
-      // $i->classes[] = 'menu-item-empty-title';
+      $i->classes[] = 'menu-item-empty-title';
     }
 
-    $is_child_item = $i->menu_item_parent !== '0' && $i->classes[1] == 'menu-item';
-    // Change the "menu-item" class into "submenu-item" if it's a child item
-    if ($is_child_item) {
-      $i->classes[1] = 'submenu-item';
+    // If a child item, change the "menu-item" class into "submenu-item"
+    $is_child = $i->menu_item_parent !== '0' && $i->classes[1] === 'menu-item';
+    if ($is_child) {
+      $key = array_search('menu-item', $i->classes);
+      
+      if ($key) {
+        $i->classes[$key] = 'submenu-item';
+      }
     }
 
     // Add style as extra class
     $styles = get_field('style', $i);
-    foreach ($styles as $s) {
-      $i->classes[] = "menu-item-$s";
-    }
+    
+    if (is_array($styles)) {
+      foreach ($styles as $s) {
+        $i->classes[] = "menu-item-$s";
+      }
 
-    // Check for background
-    if (in_array('has-background', $styles)) {
-      $bg_color = get_field('background_color', $i);
-      $i->classes[] = "menu-background-{$bg_color}";
+      // Check for background
+      if (in_array('has-background', $styles)) {
+        $bg_color = get_field('background_color', $i);
+        $i->classes[] = "menu-background-{$bg_color}";
+      }
     }
 
     // Render it
@@ -100,24 +116,25 @@ function _h_render_menu_item($i, $styles) {
   $description = H::markdown($i->post_content, true);
   $image_tag = '';
 
-  // Check for icon
-  if (in_array('has-icon', $styles)) {
-    $icon = get_field('icon', $i);
+  if (is_array($styles)) {
+    // Check for icon
+    if (in_array('has-icon', $styles)) {
+      $icon = get_field('icon', $i);
 
-    if ($icon) {
-      $src = $icon['sizes']['thumbnail'];
-      $image_tag = "<img src='{$src}'>";
+      if ($icon) {
+        $src = $icon['sizes']['thumbnail'];
+        $image_tag = "<img src='{$src}'>";
+      }
     }
-  }
 
-  // Check for image
-  if (in_array('has-image', $styles)) {
-    $image = get_field('image', $i);
-
-    if ($image) {
-      $src = $image['sizes']['medium'];
-      $alt = $image['alt'];
-      $image_tag = "<img src='{$src}' alt='{$alt}'>";
+    // Check for image
+    if (in_array('has-image', $styles)) {
+      $image = get_field('image', $i);
+      if ($image) {
+        $src = $image['sizes']['medium'];
+        $alt = $image['alt'];
+        $image_tag = "<img src='{$src}' alt='{$alt}'>";
+      }
     }
   }
 

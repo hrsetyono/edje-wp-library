@@ -43,6 +43,41 @@
             "return_format": "value"
         },
         {
+            "key": "field_62f5c35a93792",
+            "label": "Mega Menu Alignment",
+            "name": "mega_menu_alignment",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_62dccbd8afe3e",
+                        "operator": "!=empty"
+                    },
+                    {
+                        "field": "field_62dccbd8afe3e",
+                        "operator": "!=",
+                        "value": "4"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "left": "Left",
+                "center": "Center",
+                "right": "Right"
+            },
+            "allow_null": 0,
+            "default_value": "center",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
             "key": "field_62dd53fa63c37",
             "label": "Style",
             "name": "style",
@@ -199,7 +234,28 @@
             {
                 "param": "nav_menu_item",
                 "operator": "==",
-                "value": "all"
+                "value": "location\/top-menu-new"
+            }
+        ],
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/mega-menu-1"
+            }
+        ],
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/mega-menu-2"
+            }
+        ],
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/mega-menu-3"
             }
         ]
     ],
@@ -212,5 +268,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1660053696
+    "modified": 1660296979
 }
