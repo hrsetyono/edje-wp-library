@@ -32,22 +32,23 @@
   .menu-item-depth-1.menu-item-under-mega-menu &
     display: block
 
+// Hide "has image" and "has background" in parent item
 .menu-item-depth-0
   .acf-field[data-name="style"]
-    label:nth-child(2),
-    label:nth-child(3)
+    li:nth-child(2),
+    li:nth-child(3)
       display: none
 
-// Hide "has image" option in style
+// Hide "has image" if not in mega menu
 .menu-item-depth-1,
 .menu-item-depth-2:not(.menu-item-under-mega-menu)
-  .acf-field[data-name="style"] label:nth-child(2)
+  .acf-field[data-name="style"] li:nth-child(2)
     display: none
 
-// Hide "has background" option in style
+// Hide "has background" if not in mega menu
 .menu-item-depth-2,
 .menu-item-depth-1:not(.menu-item-under-mega-menu)
-  .acf-field[data-name="style"] label:nth-child(3)
+  .acf-field[data-name="style"] li:nth-child(3)
     display: none
 
 // Change the label for mega menu

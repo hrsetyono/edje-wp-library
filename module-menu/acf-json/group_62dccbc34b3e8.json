@@ -43,10 +43,45 @@
             "return_format": "value"
         },
         {
+            "key": "field_62f5c35a93792",
+            "label": "Mega Menu Alignment",
+            "name": "mega_menu_alignment",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_62dccbd8afe3e",
+                        "operator": "!=empty"
+                    },
+                    {
+                        "field": "field_62dccbd8afe3e",
+                        "operator": "!=",
+                        "value": "4"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "left": "Left",
+                "center": "Center",
+                "right": "Right"
+            },
+            "allow_null": 0,
+            "default_value": "center",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
             "key": "field_62dd53fa63c37",
             "label": "Style",
             "name": "style",
-            "type": "button_group",
+            "type": "checkbox",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -60,10 +95,12 @@
                 "has-image": "Has Image",
                 "has-background": "Has Background"
             },
-            "allow_null": 1,
-            "default_value": "",
-            "layout": "horizontal",
-            "return_format": "value"
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
         },
         {
             "key": "field_62e0eebd17759",
@@ -91,11 +128,11 @@
             "esc_html": 0
         },
         {
-            "key": "field_62dd5661e8e5f",
-            "label": "",
-            "name": "",
-            "type": "message",
-            "instructions": "",
+            "key": "field_62f2680f48380",
+            "label": "Icon",
+            "name": "icon",
+            "type": "image",
+            "instructions": "<span class=\"dashicons dashicons-editor-expand\"><\/span> Max size: 100x100",
             "required": 0,
             "conditional_logic": [
                 [
@@ -111,9 +148,16 @@
                 "class": "",
                 "id": ""
             },
-            "message": "<span class=\"dashicons dashicons-editor-expand\"><\/span> Max size: 100x100",
-            "new_lines": "wpautop",
-            "esc_html": 0
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": 100,
+            "max_height": 100,
+            "max_size": "",
+            "mime_types": ""
         },
         {
             "key": "field_62dcd8e12a22a",
@@ -123,13 +167,6 @@
             "instructions": "",
             "required": 0,
             "conditional_logic": [
-                [
-                    {
-                        "field": "field_62dd53fa63c37",
-                        "operator": "==",
-                        "value": "has-icon"
-                    }
-                ],
                 [
                     {
                         "field": "field_62dd53fa63c37",
@@ -197,7 +234,28 @@
             {
                 "param": "nav_menu_item",
                 "operator": "==",
-                "value": "all"
+                "value": "location\/top-menu-new"
+            }
+        ],
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/mega-menu-1"
+            }
+        ],
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/mega-menu-2"
+            }
+        ],
+        [
+            {
+                "param": "nav_menu_item",
+                "operator": "==",
+                "value": "location\/mega-menu-3"
             }
         ]
     ],
@@ -210,5 +268,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1659099462
+    "modified": 1660296979
 }

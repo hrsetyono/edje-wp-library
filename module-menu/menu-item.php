@@ -15,10 +15,12 @@ function _h_mega_menu_classes($items) {
     // If parent item, check for mega menu ACF field
     if ($i->menu_item_parent === '0') {
       $columns = get_field('mega_menu', $i);
+      $alignment = get_field('mega_menu_alignment', $i);
 
       if ($columns) {
-        $i->classes[] = "h-mega-menu";
-        $i->classes[] = "h-mega-menu-$columns-columns";
+        $i->classes[] = "menu-item-has-mega-menu";
+        $i->classes[] = "has-{$columns}-columns";
+        $i->classes[] = "is-align-{$alignment}";
         $mega_menu_ids[] = $i->ID;
       }
 
@@ -26,7 +28,18 @@ function _h_mega_menu_classes($items) {
     }
     // Add special class if it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
-      $i->classes[] = 'h-mega-menu__column';
+      $i->classes[] = 'mega-menu__column';
+
+      // remove unnecessary class
+      $key = array_search('menu-item', $i->classes);
+      $key2 = array_search('menu-item-has-children', $i->classes);
+      
+      if ($key) {
+        $i->classes[$key] = '';
+      }
+      if ($key2) {
+        $i->classes[$key2] = '';
+      }
     }
   }
 
@@ -54,28 +67,37 @@ function _h_menu_item_classes($items) {
 
     // If title is "-", add empty class so it can be hidden
     if ($i->title === '-') {
+      $i->title = '&nbsp;';
       $i->classes[] = 'menu-item-empty-title';
     }
 
-    $is_child_item = $i->menu_item_parent !== '0' && $i->classes[1] == 'menu-item';
-    // Change the "menu-item" class into "submenu-item" if it's a child item
-    if ($is_child_item) {
-      $i->classes[1] = 'submenu-item';
+    // If a child item, change the "menu-item" class into "submenu-item"
+    $is_child = $i->menu_item_parent !== '0' && $i->classes[1] === 'menu-item';
+    if ($is_child) {
+      $key = array_search('menu-item', $i->classes);
+      
+      if ($key) {
+        $i->classes[$key] = 'submenu-item';
+      }
     }
 
     // Add style as extra class
-    $style = get_field('style', $i);
-    if ($style) {
-      $i->classes[] = "menu-item-$style";
+    $styles = get_field('style', $i);
+    
+    if (is_array($styles)) {
+      foreach ($styles as $s) {
+        $i->classes[] = "menu-item-$s";
+      }
+
+      // Check for background
+      if (in_array('has-background', $styles)) {
+        $bg_color = get_field('background_color', $i);
+        $i->classes[] = "menu-background-{$bg_color}";
+      }
     }
 
-    // Check for background
-    if (in_array($style, ['has-background'])) {
-      $bg_color = get_field('background_color', $i);
-      $i->classes[] = "menu-background-{$bg_color}";
-    }
-
-    $i->title = _h_render_menu_item($i, $style);
+    // Render it
+    $i->title = _h_render_menu_item($i, $styles);
   }
 
   return $items;
@@ -85,34 +107,49 @@ function _h_menu_item_classes($items) {
  * Change the markup of the menu item
  * 
  * @param Object $i - menu item object
- * @param string $style
+ * @param array $styles
  * 
  * @return string - the HTML markup of the menu item
  */
-function _h_render_menu_item($i, $style) {
+function _h_render_menu_item($i, $styles) {
   $title = $i->title;
   $description = H::markdown($i->post_content, true);
-  $image_src = '';
-  $image_alt = '';
-  $bg_color = '';
-  
-  // Check for image
-  if (in_array($style, ['has-image', 'has-icon'])) {
-    $image = get_field('image', $i);
+  $image_tag = '';
 
-    if ($image) {
-      $image_src = $style === 'has-image'
-        ? $image['sizes']['medium']
-        : $image['sizes']['thumbnail'];
-      $image_alt = $image['alt'];
+  if (is_array($styles)) {
+    // Check for icon
+    if (in_array('has-icon', $styles)) {
+      $icon = get_field('icon', $i);
+
+      if ($icon) {
+        $src = $icon['sizes']['thumbnail'];
+        $image_tag = "<img src='{$src}'>";
+      }
+    }
+
+    // Check for image
+    if (in_array('has-image', $styles)) {
+      $image = get_field('image', $i);
+      if ($image) {
+        $src = $image['sizes']['medium'];
+        $alt = $image['alt'];
+        $image_tag = "<img src='{$src}' alt='{$alt}'>";
+      }
     }
   }
 
-  ob_start(); ?>
-    <?php if ($image_src): ?>
-      <img src="<?= $image_src ?>" alt="<?= $image_alt ?>">
-    <?php endif; ?>
+  $custom_render = apply_filters('h_menu_item', '', [
+    'title' => $title,
+    'description' => $description,
+    'image_tag' => $image_tag
+  ]);
 
+  if ($custom_render) {
+    return $custom_render;
+  }
+
+  ob_start(); ?>
+    <?= $image_tag ?>
     <?php if ($description): ?>
       <dt>
         <?= $title ?>
