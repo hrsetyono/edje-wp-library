@@ -16,6 +16,7 @@ class H_WidgetSeparator extends H_Widget {
   public function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'size' => get_field('footer_size', $widget_id),
       'style' => '',
     ];

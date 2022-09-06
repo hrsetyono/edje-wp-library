@@ -2,6 +2,12 @@
 /**
  * Create a dark mode toggle
  */
+
+if (current_theme_supports('h-dark-mode')) {
+  add_action('wp_body_open', '_h_add_dark_mode_script', 5);
+}
+
+
 class H_DarkToggle extends H_Widget { 
   function __construct() {
     parent::__construct('h_dark_toggle', __('- Dark Mode Toggle'), [
@@ -10,10 +16,9 @@ class H_DarkToggle extends H_Widget {
   }
 
   function widget($args, $instance) {
-    add_action('wp_body_open', '_h_add_dark_mode_script', 5);
-
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'style' => get_field('style', $widget_id),
       'label_light' => '',
       'label_dark' => '',
@@ -63,7 +68,6 @@ class H_DarkToggle extends H_Widget {
   }
 }
 
-
 /**
  * Output a script to <head> to check whether dark mode was on or not
  * 
@@ -73,6 +77,7 @@ function _h_add_dark_mode_script() { ?>
 <script>
   (function() { 'use strict';
     const darkMode = localStorage.hDarkMode === 'true';
+    console.log(darkMode);
     if (darkMode) {
       document.querySelector('body').classList.add('h-is-dark');
 
