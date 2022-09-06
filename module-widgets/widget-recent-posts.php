@@ -13,6 +13,7 @@ class H_WidgetRecentPosts extends H_Widget {
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'number_of_posts' => get_field('number_of_posts', $widget_id),
       'style' => get_field('style', $widget_id),
       'posts' => [],

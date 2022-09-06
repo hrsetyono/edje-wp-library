@@ -12,6 +12,7 @@ class H_WidgetName extends H_Widget {
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'acf_field' => get_field('acf_field', $widget_id),
     ];
 

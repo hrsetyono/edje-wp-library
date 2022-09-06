@@ -13,6 +13,7 @@ class H_WidgetSocials extends H_Widget {
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'items' => get_field('links', $widget_id),
       'style' => get_field('link_style', $widget_id),
       'color' => get_field('color', $widget_id),

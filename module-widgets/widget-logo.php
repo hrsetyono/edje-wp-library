@@ -13,6 +13,7 @@ class H_WidgetLogo extends H_Widget {
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'logo' => get_field('logo', $widget_id),
       'logo_src' => '',
       'tagline' => get_field('tagline', $widget_id),

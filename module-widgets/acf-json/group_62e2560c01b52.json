@@ -4,9 +4,9 @@
     "fields": [
         {
             "key": "field_62e258ed9034b",
-            "label": "Has Icon?",
-            "name": "has_icon",
-            "type": "true_false",
+            "label": "Addon",
+            "name": "addon",
+            "type": "radio",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,11 +15,16 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "choices": {
+                "has-icon": "Has Icon",
+                "has-image": "Has Image"
+            },
+            "allow_null": 1,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
         },
         {
             "key": "field_62e2563f32eac",
@@ -93,7 +98,7 @@
                             {
                                 "field": "field_62e258ed9034b",
                                 "operator": "==",
-                                "value": "1"
+                                "value": "has-icon"
                             }
                         ]
                     ],
@@ -107,6 +112,38 @@
                     "maxlength": "",
                     "rows": 4,
                     "new_lines": ""
+                },
+                {
+                    "key": "field_630db7423fc0a",
+                    "label": "Image",
+                    "name": "image",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_62e258ed9034b",
+                                "operator": "==",
+                                "value": "has-image"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
                 }
             ]
         }
@@ -129,5 +166,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1659004658
+    "modified": 1661843290
 }

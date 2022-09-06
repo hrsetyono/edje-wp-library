@@ -14,7 +14,8 @@ class H_WidgetButtons extends H_Widget {
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
-      'has_icon' => get_field('has_icon', $widget_id),
+      'widget_id' => $widget_id,
+      'addon' => get_field('addon', $widget_id),
       'buttons' => get_field('buttons', $widget_id),
     ];
 
@@ -27,7 +28,7 @@ class H_WidgetButtons extends H_Widget {
 
   function render_widget($data) {
     [
-      'has_icon' => $has_icon,
+      'addon' => $addon,
       'buttons' => $buttons,
     ] = $data;
 
@@ -35,7 +36,7 @@ class H_WidgetButtons extends H_Widget {
 
     <div class="wp-block-buttons">
     <?php foreach ($buttons as $b): ?>
-      <div class="wp-block-button is-style-<?= $b['style'] ?>">
+      <div class="wp-block-button is-style-<?= $b['style'] ?> <?= $addon ?>">
         <a
           class="wp-block-button__link"
           href="<?= $b['link']['url'] ?>"
@@ -43,6 +44,9 @@ class H_WidgetButtons extends H_Widget {
         >
           <?php if ($b['svg_icon']): ?>
             <?= $b['svg_icon'] ?>
+
+          <?php elseif($b['image']): ?>
+            <img src="<?= $b['image']['sizes']['thumbnail'] ?>">
           <?php endif; ?>
 
           <?php if ($b['link']['title']): ?>

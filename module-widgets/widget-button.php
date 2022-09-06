@@ -14,6 +14,7 @@ class H_WidgetButton extends H_Widget {
   function widget($args, $instance) {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
+      'widget_id' => $widget_id,
       'style' => get_field('style', $widget_id),
       'icon' => get_field('icon', $widget_id),
       'link' => wp_parse_args(
