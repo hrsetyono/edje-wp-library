@@ -234,28 +234,7 @@
             {
                 "param": "nav_menu_item",
                 "operator": "==",
-                "value": "location\/top-menu-new"
-            }
-        ],
-        [
-            {
-                "param": "nav_menu_item",
-                "operator": "==",
-                "value": "location\/mega-menu-1"
-            }
-        ],
-        [
-            {
-                "param": "nav_menu_item",
-                "operator": "==",
-                "value": "location\/mega-menu-2"
-            }
-        ],
-        [
-            {
-                "param": "nav_menu_item",
-                "operator": "==",
-                "value": "location\/mega-menu-3"
+                "value": "all"
             }
         ]
     ],
@@ -268,5 +247,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1660296979
+    "modified": 1662540257
 }
