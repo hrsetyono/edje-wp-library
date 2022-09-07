@@ -14,8 +14,8 @@ function _h_register_faq_block_v2() {
     'question' => [ 'type' => 'string' ],
     'answer' => [ 'type' => 'string' ],
 
-    'textColor' => [ 'type' => 'string', 'default' => 'var(--text)' ],
-    'bgColor' => [ 'type' => 'string', 'default' => '#e5e5e5' ],
+    'textColor' => [ 'type' => 'string', 'default' => '' ],
+    'bgColor' => [ 'type' => 'string', 'default' => '' ],
     'initiallyOpen' => [ 'type' => 'boolean', 'default' => false ],
     'noIndex' => [ 'type' => 'boolean', 'default' => false ]
   ]);
