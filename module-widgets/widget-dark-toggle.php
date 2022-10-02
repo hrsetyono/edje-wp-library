@@ -77,7 +77,6 @@ function _h_add_dark_mode_script() { ?>
 <script>
   (function() { 'use strict';
     const darkMode = localStorage.hDarkMode === 'true';
-    console.log(darkMode);
     if (darkMode) {
       document.querySelector('body').classList.add('h-is-dark');
 

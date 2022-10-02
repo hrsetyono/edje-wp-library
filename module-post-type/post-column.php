@@ -128,7 +128,7 @@ class H_PostColumn {
 
     $column = $this->columns[$first_key];
 
-    // form a new list
+    // form a new list to change the order
     $list = [];
     foreach ($defaults as $slug => $name) {
       if ($column['position_before'] === $slug) {
