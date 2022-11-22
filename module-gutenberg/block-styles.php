@@ -9,6 +9,8 @@ register_block_style('core/table', [ 'name' => 'h-full-color', 'label' => 'Full 
 
 register_block_style('core/quote', [ 'name' => 'h-timeline', 'label' => 'Timeline' ]);
 
+register_block_style('core/quote', [ 'name' => 'h-testimony', 'label' => 'Testimony' ]);
+
 // DESIGN
 register_block_style('core/button', [ 'name' => 'h-transparent', 'label' => 'Transparent' ]);
 
