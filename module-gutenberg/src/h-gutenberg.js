@@ -3,6 +3,9 @@ import './h-gutenberg.sass';
 const { wp } = window;
 
 wp.domReady(() => {
+  wp.blocks.unregisterBlockStyle('core/quote', 'plain');
+  wp.blocks.unregisterBlockStyle('core/image', 'rounded');
+
   window.localizeH.disallowedBlocks.forEach((name) => {
     wp.blocks.unregisterBlockType(name);
   });

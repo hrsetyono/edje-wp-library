@@ -9,7 +9,36 @@ $acf-bg: #f3f3f4
   &.is-reusable
     max-width: none
 
+
+// Change Styles selector to be like wp 6.0
+.block-editor-block-styles
+  margin-bottom: 1.5rem
+
+  .block-editor-block-styles__item-preview
+    display: none
+  .block-editor-block-styles__item
+    border: 2px solid #ccc
+    padding: 3px
+    &:hover
+      border-color: #007cba
+      color: #007cba
+    &.is-active
+      border-color: transparent
+      background-color: #2f2f2f
+      color: white
+
 ///// PARAGRAPH
+
+.editor-styles-wrapper
+  > *
+    font-family: var(--fontFamily, sans-serif)
+    font-size: var(--fontSize, 16px)
+    font-weight: var(--fontWeight, 400)
+    line-height: var(--lineHeight, 1.65)
+    color: var(--text, #333)
+
+  p.is-style-h-no-spacing
+    margin-bottom: calc(var(--blockGap) * -1) !important
 
 // empty paragraph
 [data-is-placeholder-visible="true"]
@@ -28,11 +57,43 @@ $acf-bg: #f3f3f4
 
 ///// HEADING
 
-[data-type="core/heading"]
+.editor-post-title__block .editor-post-title__input,
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6,
+.editor-styles-wrapper .has-drop-cap:not(:focus)::first-letter
+  font-family: var(--hFontFamily, sans-serif)
+  font-weight: var(--hFontWeight, 700)
+  text-transform: var(--hTextTransform, initial)
+  line-height: var(--hLineHeight, 1.25)
+  margin-bottom: 0
+
+.editor-styles-wrapper
+  h1
+    font-size: var(--h1Size, 46px)
+  h2
+    font-size: var(--h2Size, 38px)
+  h3
+    font-size: var(--h3Size, 30px)
+  h4
+    font-size: var(--h4Size, 24px)
+  h5
+    font-size: var(--h5Size, 20px)
+  h6
+    font-size: var(--h6Size, 16px)
+
+div.editor-styles-wrapper [data-type="core/heading"]
   clear: both
 
   &.has-background
     padding: 1rem 1.5rem
+
+  &.is-style-h-no-spacing
+    line-height: var(--lineHeight)
+    margin-bottom: calc(var(--blockGap) * -1)
 
   sub,
   sup
@@ -50,6 +111,7 @@ $acf-bg: #f3f3f4
   &.has-background
     padding: 1rem 1.5rem
     padding-left: 2.5rem
+    
 
 ///// IMAGE
 
@@ -100,7 +162,6 @@ $acf-bg: #f3f3f4
 
 ///// MEDIA TEXT
 
-
 .wp-block-media-text
   --columnMedia: minmax(0, 1fr)
   --columnContent: minmax(0, 1fr)
@@ -140,7 +201,89 @@ $acf-bg: #f3f3f4
 
     a
       color: inherit
+
+// GALLERY Thumbnails
+
+.wp-block-gallery.is-style-h-thumbnails
+  display: grid
+  grid-template-columns: repeat(var(--columns, 3), 1fr)
+  column-gap: 1rem
+  row-gap: 1rem
+
+  .wp-block-image
+    width: 100% !important
+    height: 100%
+    padding-bottom: 75%
+
+  .wp-block-image > div > img
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    height: 100%
+
+  figure.wp-block-image figcaption
+    padding: 1rem
+    text-align: left
   
+  strong
+    display: block
+    font-size: var(--mFontSize)
+    font-family: var(--hFontFamily)
+
+  .is-style-h-thumbnail-wide
+    grid-column: span 2
+    padding-bottom: calc(37.5% - 8px)
+
+  .is-style-h-thumbnail-tall
+    grid-row: span 2
+  
+///// COVER
+
+.has-custom-content-position
+  --alignX: center
+  --alignY: center
+
+  &[class*="is-position-top-"]
+    --alignY: flex-start
+
+  &[class*="is-position-bottom-"]
+    --alignY: flex-end
+
+  &[class*="-right"]
+    --alignX: flex-end
+
+  &[class*="-left"]
+    --alignX: flex-start
+
+.wp-block-cover
+  display: flex
+  align-items: stretch !important
+  justify-content: center !important
+
+.wp-block-cover.is-light .wp-block-cover__inner-container
+  color: var(--textInvert, white)
+
+// Change the custom position to be within --siteWidth
+.wp-block-cover .wp-block-cover__inner-container
+  display: flex
+  flex-direction: column
+  align-items: var(--alignX, center)
+  justify-content: var(--alignY, center)
+  width: var(--siteWidth, 1120px) !important
+
+  > *
+    width: 100%
+    max-width: var(--blogWidth, 650px)
+
+  .alignwide
+    max-width: var(--siteWidth, 1120px)
+
+  .wp-block-cover__inner-container
+    min-width: var(--blogWidth, 650px)
+    width: 100%
+
 
 ///// GROUP
 
@@ -184,6 +327,17 @@ $acf-bg: #f3f3f4
   padding: 1rem
   border-radius: var(--gRadius, 4px)
 
+.wp-block-columns.is-style-h-no-gap
+  column-gap: 0
+  
+  .block-editor-block-list__block.wp-block-column:not(:first-child)
+    margin-left: 0
+
+  .wp-block-column
+    border-radius: 0
+
+.wp-block-columns.is-style-h-wide-gap
+  column-gap: var(--wideGap)
 
 ///// CODE
 
@@ -208,6 +362,117 @@ pre.wp-block-code
   [data-block]
     padding-top: 0.5rem
     padding-bottom: 0.5rem
+
+///// SPACER
+
+.wp-block-spacer.is-style-h-negative
+  border: 1px dashed var(--gray)
+
+  &::before
+    content: ""
+    background: url('./minus.svg') no-repeat center center
+    background-size: 1.5rem auto
+    opacity: .2
+
+///// QUOTE
+
+// QUOTE Testimony
+.wp-block-quote.is-style-h-testimony
+  position: relative
+  border: none
+  padding: var(--blockGap)
+  padding-right: var(--wideGap)
+  box-shadow: var(--shadowThin)
+
+  &::before
+    content: ""
+    display: inline-block
+    background: url('./quote-right.svg') no-repeat center center
+    background-size: contain
+    opacity: .1
+
+    position: absolute
+    top: var(--blockGap)
+    right: var(--blockGap)
+    width: 2rem
+    height: 2rem
+
+
+  cite
+    font-style: normal
+    color: var(--text)
+
+    strong
+      display: block
+
+    img
+      float: left
+      object-fit: cover
+      object-position: center center
+      max-width: 2.5rem
+      max-height: 2.5rem
+      margin-right: 0.5rem
+      border-radius: 50%
+
+// QUOTE Timeline
+.wp-block-quote.is-style-h-timeline
+  --gap: 2rem
+  --x: 50%
+  --x2: 100%
+
+  position: relative
+  max-width: calc(var(--siteWidth) / 2 - var(--gap))
+  transform: translateX(calc(-20% - var(--gap)))
+  
+  border: none
+  padding: var(--blockGap)
+  box-shadow: var(--shadowThin)
+
+  cite
+    position: absolute
+    top: 50%
+    right: calc(-1 * var(--gap))
+    transform: translateY(-50%) translateX(var(--x2))
+    
+    margin-top: 0
+    padding: 0 0.5rem
+    background-color: var(--grayLight)
+    border-radius: var(--gRadius)
+
+    font-size: var(--fontSize)
+    font-weight: 700
+    font-style: normal
+    color: var(--text)
+
+  // Right
+  &.has-text-align-right
+    --x: -50%
+    --x2: -100%
+
+    text-align: left
+    transform: translateX(calc(20% + var(--gap)))
+
+    cite
+      left: calc(-1 * var(--gap))
+      right: auto
+    &::before,
+    &::after
+      left: calc(-1 * var(--gap))
+      right: auto
+
+  // Center
+  &.has-text-align-center
+    transform: none
+    max-width: var(--blogWidth)
+
+    cite
+      top: 0
+      left: 50%
+      right: auto
+      transform: translateX(-50%) translateY(-50%)
+
+    &::before
+      display: none
 
 
 ///// SOCIAL LINKS
