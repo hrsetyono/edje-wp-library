@@ -1,4 +1,5 @@
 import './h-gutenberg.sass';
+import './h-cover-mobile.jsx';
 
 const { wp } = window;
 

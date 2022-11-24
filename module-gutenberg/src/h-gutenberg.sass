@@ -1,14 +1,34 @@
 $acf-bg: #f3f3f4
 
-// Fixed bug where Wide column is almost full when on smaller screen
-.wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks
-  padding: 0 3rem
+.editor-styles-wrapper
+  background-color: var(--siteBg)
+
+.has-text-color,
+.has-inline-color
+  color: var(--textColor, var(--text))
+
+.has-background
+  background-color: var(--bgColor)
 
 .wp-block
+  max-width: var(--blogWidth)
+
+  .wp-block-columns &
+    max-width: none
+
+  b, strong
+    font-weight: 700
+
   // Fixed reusable block being constrained to narrow size
   &.is-reusable
     max-width: none
 
+  &[data-align="wide"]
+    max-width: calc(var(--siteWidth) - 100px)
+
+// Fixed bug where Wide column is almost full when on smaller screen
+.wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks
+  padding: 0 3rem
 
 // Change Styles selector to be like wp 6.0
 .block-editor-block-styles
@@ -111,6 +131,17 @@ div.editor-styles-wrapper [data-type="core/heading"]
   &.has-background
     padding: 1rem 1.5rem
     padding-left: 2.5rem
+
+///// GROUP
+
+.wp-block-group
+  padding-top: var(--blockGap)
+  padding-bottom: var(--blockGap)
+
+.wp-block-group.is-style-h-large-spacing
+  padding-top: var(--wideGap)
+  padding-bottom: var(--wideGap)
+
     
 
 ///// IMAGE
@@ -203,7 +234,6 @@ div.editor-styles-wrapper [data-type="core/heading"]
       color: inherit
 
 // GALLERY Thumbnails
-
 .wp-block-gallery.is-style-h-thumbnails
   display: grid
   grid-template-columns: repeat(var(--columns, 3), 1fr)
@@ -295,9 +325,6 @@ div.editor-styles-wrapper [data-type="core/heading"]
 .wp-block-group
   &:not(.has-background)
     border: 1px dashed var(--textDim, #888)
-
-  &.has-background
-    padding: 1.5rem
 
   > *
     max-width: var(--blogWidth, 650px)
@@ -489,6 +516,94 @@ pre.wp-block-code
 
   .is-style-pill-shape &
     border-radius: 20px
+
+///// LATEST POSTS
+
+.edit-post-visual-editor ul.wp-block-latest-posts
+  display: grid
+  grid-template-columns: repeat(var(--postsColumns, 1), 1fr)
+  column-gap: var(--postsGap, 1.5rem)
+  row-gap: var(--postsGap, 1.5rem)
+
+  list-style-type: none
+  padding-left: 0
+  clear: both
+
+  // the top spacing should follow Group sizing
+  &.alignwide,
+  &.alignfull
+    --blockGap: var(--wideGap)
+
+  li
+    clear: both
+    width: 100%
+    margin: 0
+
+  a
+    display: block
+    pointer-events: none
+
+  li > a
+    font-family: var(--hFontFamily)
+    font-size: var(--postsFontSize, var(--h5Size))
+
+  &.columns-1
+    --postsColumns: 1
+  &.columns-2
+    --postsColumns: 2
+  &.columns-3
+    --postsColumns: 3
+  &.columns-4
+    --postsColumns: 4
+  &.columns-5
+    --postsColumns: 5
+  &.columns-6
+    --postsColumns: 6
+
+  &.columns-4,
+  &.columns-5,
+  &.columns-6
+    --postsGap: 1rem
+    --postsFontSize: var(--h6Size)
+
+.wp-block-latest-posts__post-author,
+.wp-block-latest-posts__post-date
+  display: inline-block
+  color: var(--gray)
+  font-size: var(--sFontSize)
+
+.wp-block-latest-posts__post-author
+  margin-right: 1rem
+
+.wp-block-latest-posts__featured-image
+  margin-bottom: 0.5rem
+
+  a:hover
+    opacity: .75
+
+  &.alignleft,
+  &.alignright
+    max-width: 50%
+
+    .is-grid &
+      max-width: 40%
+
+  &.alignleft
+    float: left
+    margin-right: 1rem
+
+  &.alignright
+    float: right
+    margin-left: 1rem
+  
+  &.aligncenter,
+  .is-grid &
+    max-width: none
+
+    img
+      width: 100%
+      max-height: 150px
+      object-fit: cover
 
 
 ///// ACF GUTENBERG
