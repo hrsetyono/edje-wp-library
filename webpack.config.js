@@ -9,6 +9,7 @@ const entryPoints = {
   'h-faq': './module-block-faq/v2/index.jsx',
 
   'h-gutenberg': './module-gutenberg/src/h-gutenberg.js',
+
   'h-classic-editor': './module-gutenberg/src/h-classic-editor.scss',
   'h-comment': './module-comment/src/h-comment.js',
   'h-admin': './module-modify/src/h-admin.sass',

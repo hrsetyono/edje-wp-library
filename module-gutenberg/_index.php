@@ -1,16 +1,18 @@
 <?php
 
-add_action('plugins_loaded' , function() {
-  require_once __DIR__ . '/block-styles.php';
-  require_once __DIR__ . '/enqueue.php';
-});
+// add_action('plugins_loaded' , function() {
+// });
+
+require_once __DIR__ . '/core-text.php';
+require_once __DIR__ . '/core-media.php';
+require_once __DIR__ . '/core-design.php';
 
 if (is_admin()) {
   add_filter('safe_style_css', '_h_gutenberg_safe_style');
-} else {
-  add_filter('render_block_core/group', '_h_add_group_inner_container', 5, 2);
-  add_filter('render_block_core/buttons', '_h_add_buttons_alignment', 5, 2);
 
+  add_action('enqueue_block_editor_assets', '_h_enqueue_editor', 20);
+  add_action('admin_init', '_h_enqueue_classic_editor');
+} else {
   // remove group container class
   remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
   remove_filter('render_block', 'gutenberg_render_layout_support_flag', 10, 2);
@@ -33,43 +35,31 @@ function _h_gutenberg_safe_style($attr) {
   return $attr;
 }
 
-/**
- * Add back the Group's inner container missing from WP 5.9
- * 
- * @filter render_block_core/group
- */
-function _h_add_group_inner_container($content, $block) {
-  // Abort if still the old group
-  if (strpos($content, '__inner-container')) { return $content; }
 
-  $content = preg_replace(
-    '/(wp-block-group.+>)(.+)(<\/div>$)/Uis',
-    '$1<div class="wp-block-group__inner-container">$2</div>$3',
-    $content,
-  );
-  return $content;
+/**
+ * @action enqueue_block_editor_assets
+ */
+function _h_enqueue_editor() {
+  $disallowed_blocks = apply_filters('h_disallowed_blocks', [
+    'core/nextpage',
+    'core/more',
+    'core/pullquote',
+  ]);
+
+  wp_enqueue_style('h-gutenberg', H_DIST . '/h-gutenberg.css', [], H_VERSION);
+  wp_enqueue_script('h-gutenberg', H_DIST . '/h-gutenberg.js', [], H_VERSION, true);
+
+  wp_localize_script('h-gutenberg', 'localizeH', [
+    'disallowedBlocks' => $disallowed_blocks
+  ]);
 }
 
 /**
- * Add back the missing Buttons alignment class from WP 5.9
+ * Add custom CSS to Classic Editor
  * 
- * @filter render_block_core/buttons
+ * @action admin_init
  */
-function _h_add_buttons_alignment($content, $block) {
-  // Abort if still the old buttons
-  if (strpos($content, 'is-content-justification-')) { return $content; }
-
-  $justify = isset($block['attrs']['layout']['justifyContent'])
-    ? $block['attrs']['layout']['justifyContent']
-    : false;
-
-  if ($justify) {
-    $content = preg_replace(
-      '/class="wp-block-buttons/',
-      "$0 is-content-justification-{$justify} ",
-      $content
-    );
-  }
-
-  return $content;
+function _h_enqueue_classic_editor() {
+  $assets = plugin_dir_url(__FILE__) . 'css';
+  add_editor_style(H_DIST . '/h-classic-editor.css');
 }
