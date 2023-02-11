@@ -1,5 +1,5 @@
 import hEditor from './h-editor';
-import './h-comment.scss';
+import './h-comment.sass';
 
 /**
  * Create hEditor instance

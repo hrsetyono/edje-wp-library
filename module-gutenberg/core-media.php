@@ -71,7 +71,7 @@ function _h_body_class_cover_below_header($classes) {
   preg_match('/wp-block-cover.+is-style-h-below-header/', $post->post_content, $matches);
 
   if ($matches) {
-    $classes[] = 'h-has-cover-below-header';
+    $classes[] = 'h-has-transparent-header';
   }
   return $classes;
 }
