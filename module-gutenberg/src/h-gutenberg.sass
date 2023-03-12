@@ -3,6 +3,14 @@ $acf-bg: #f3f3f4
 .editor-styles-wrapper
   background-color: var(--siteBg)
 
+.is-root-container,
+.wp-block-group,
+.wp-block-cover__inner-container,
+.wp-block-media-text__content,
+.wp-block-column
+  > * + *
+    margin-top: var(--blockGap)
+
 .has-text-color,
 .has-inline-color
   color: var(--textColor, var(--text))
@@ -11,20 +19,20 @@ $acf-bg: #f3f3f4
   background-color: var(--bgColor)
 
 .wp-block
-  max-width: var(--blogWidth)
+  max-width: var(--contentSize)
 
   .wp-block-columns &
     max-width: none
 
-  b, strong
-    font-weight: 700
-
-  // Fixed reusable block being constrained to narrow size
-  &.is-reusable
-    max-width: none
-
   &[data-align="wide"]
-    max-width: calc(var(--siteWidth) - 100px)
+    max-width: calc(var(--wideSize) - 100px)
+
+// Fixed reusable block being constrained to narrow size
+div.editor-styles-wrapper .wp-block.is-reusable
+  max-width: none
+
+  .block-library-block__reusable-block-container > .wp-block
+    max-width: none
 
 // Fixed bug where Wide column is almost full when on smaller screen
 .wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks
@@ -58,7 +66,7 @@ $acf-bg: #f3f3f4
     color: var(--text, #333)
 
   p.is-style-h-no-spacing
-    margin-bottom: calc(var(--blockGap) * -1) !important
+    margin-top: 0 !important
 
 // empty paragraph
 [data-is-placeholder-visible="true"]
@@ -139,10 +147,8 @@ div.editor-styles-wrapper [data-type="core/heading"]
   padding-bottom: var(--blockGap)
 
 .wp-block-group.is-style-h-large-spacing
-  padding-top: var(--wideGap)
-  padding-bottom: var(--wideGap)
-
-    
+  padding-top: var(--blockWideGap)
+  padding-bottom: var(--blockWideGap)
 
 ///// IMAGE
 
@@ -295,44 +301,38 @@ div.editor-styles-wrapper [data-type="core/heading"]
 .wp-block-cover.is-light .wp-block-cover__inner-container
   color: var(--textInvert, white)
 
-// Change the custom position to be within --siteWidth
+// Change the custom position to be within --wideSize
 .wp-block-cover .wp-block-cover__inner-container
   display: flex
   flex-direction: column
   align-items: var(--alignX, center)
   justify-content: var(--alignY, center)
-  width: var(--siteWidth, 1120px) !important
+  width: var(--wideSize, 1120px) !important
 
+  // cover is bugged to not have alignment
   > *
     width: 100%
-    max-width: var(--blogWidth, 650px)
-
-  .alignwide
-    max-width: var(--siteWidth, 1120px)
-
-  .wp-block-cover__inner-container
-    min-width: var(--blogWidth, 650px)
-    width: 100%
+    max-width: var(--wideSize, 1120px)
 
 
 ///// GROUP
 
-// Center the [ + ] box when displaying empty group 
+// Center the [+] box when displaying empty group 
 .wp-block-group[data-type="core/group"] > .block-list-appender
   margin-right: auto
   margin-left: auto
 
 .wp-block-group
   &:not(.has-background)
-    border: 1px dashed var(--textDim, #888)
+    border: 1px dashed var(--grayDark, #888)
 
   > *
-    max-width: var(--blogWidth, 650px)
+    max-width: var(--contentSize, 650px)
     margin-right: auto
     margin-left: auto
 
   > *[data-align="wide"]
-    max-width: var(--siteWidth, 1000px)
+    max-width: var(--wideSize, 1000px)
 
 
 ///// FILE
@@ -364,7 +364,7 @@ div.editor-styles-wrapper [data-type="core/heading"]
     border-radius: 0
 
 .wp-block-columns.is-style-h-wide-gap
-  column-gap: var(--wideGap)
+  column-gap: var(--blockWideGap)
 
 ///// CODE
 
@@ -385,16 +385,16 @@ pre.wp-block-code
  
 ///// SEPARATOR
 
-[data-type="core/separator"]
-  [data-block]
-    padding-top: 0.5rem
-    padding-bottom: 0.5rem
+.wp-block[data-type="core/separator"]
+  padding-top: 0.5rem
+  padding-bottom: 0.5rem
 
 ///// SPACER
 
-.wp-block-spacer.is-style-h-negative
+.wp-block-spacer
   border: 1px dashed var(--gray)
 
+.wp-block-spacer.is-style-h-negative
   &::before
     content: ""
     background: url('./minus.svg') no-repeat center center
@@ -408,7 +408,7 @@ pre.wp-block-code
   position: relative
   border: none
   padding: var(--blockGap)
-  padding-right: var(--wideGap)
+  padding-right: var(--blockWideGap)
   box-shadow: var(--shadowThin)
 
   &::before
@@ -448,7 +448,7 @@ pre.wp-block-code
   --x2: 100%
 
   position: relative
-  max-width: calc(var(--siteWidth) / 2 - var(--gap))
+  max-width: calc(var(--wideSize) / 2 - var(--gap))
   transform: translateX(calc(-20% - var(--gap)))
   
   border: none
@@ -490,7 +490,7 @@ pre.wp-block-code
   // Center
   &.has-text-align-center
     transform: none
-    max-width: var(--blogWidth)
+    max-width: var(--contentSize)
 
     cite
       top: 0
@@ -532,7 +532,7 @@ pre.wp-block-code
   // the top spacing should follow Group sizing
   &.alignwide,
   &.alignfull
-    --blockGap: var(--wideGap)
+    --blockGap: var(--blockWideGap)
 
   li
     clear: both

@@ -6,7 +6,6 @@ register_block_style('core/image', [ 'name' => 'h-thumbnail-wide', 'label' => 'T
 register_block_style('core/image', [ 'name' => 'h-thumbnail-tall', 'label' => 'Thumbnail Tall' ]);
 
 register_block_style('core/media-text', [ 'name' => 'h-larger-image', 'label' => 'Larger Image' ]);
-
 register_block_style('core/media-text', [ 'name' => 'h-smaller-image', 'label' => 'Smaller Image' ]);
 
 register_block_style('core/cover', [ 'name' => 'h-below-header', 'label' => 'Below Header' ]);
@@ -68,6 +67,8 @@ function _h_render_responsive_cover($content, $block) {
  */
 function _h_body_class_cover_below_header($classes) {
   global $post;
+  if (!$post) { return $classes; }
+
   preg_match('/wp-block-cover.+is-style-h-below-header/', $post->post_content, $matches);
 
   if ($matches) {

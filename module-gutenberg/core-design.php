@@ -39,7 +39,7 @@ function _h_render_negative_spacer($content, $block) {
  */
 function _h_render_group_inner_container($content, $block) {
   // Abort if still the old group
-  if (strpos($content, '__inner-container')) { return $content; }
+  if (strpos($content, '$<div class="wp-block-group.+><div class="wp-block-group__inner-container')) { return $content; }
 
   $content = preg_replace(
     '/(wp-block-group.+>)(.+)(<\/div>$)/Uis',

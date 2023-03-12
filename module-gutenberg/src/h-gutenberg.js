@@ -85,6 +85,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
 
     // Group and Cover defaults to full
     case 'core/group':
+    case 'core/cover':
       settings.supports = {
         ...settings.supports,
         ...{
@@ -104,18 +105,6 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
           layout: {
             type: [Object],
             default: { inherit: true },
-          },
-        },
-      };
-      break;
-
-    case 'core/cover':
-      settings.attributes = {
-        ...settings.attributes,
-        ...{
-          align: {
-            type: 'string',
-            default: 'full',
           },
         },
       };
