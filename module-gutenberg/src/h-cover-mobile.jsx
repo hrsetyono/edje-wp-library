@@ -12,6 +12,26 @@ import {
 } from '@wordpress/components';
 
 /**
+ * Add extra attribute to Cover block for the mobile image
+ */
+addFilter('blocks.registerBlockType', 'extend-cover/attributes', (settings, name) => {
+  // Do nothing if it's another block than our defined ones.
+  if (!['core/cover'].includes(name)) {
+    return settings;
+  }
+
+  settings.attributes = {
+    ...settings.attributes,
+    hMobileMediaID: { type: 'number' },
+    hMobileMediaURL: { type: 'string' },
+    hMobileHeight: { type: 'string', default: '400px' },
+  };
+
+  return settings;
+});
+
+
+/**
  * Add a new setting in Inspector to upload mobile image
  */
 const addControl = createHigherOrderComponent((BlockEdit) => {
@@ -82,24 +102,5 @@ const addControl = createHigherOrderComponent((BlockEdit) => {
     }
   };
 }, 'withInspectorControl');
-
-/**
- * Add extra attribute to Cover block for the mobile image
- */
-addFilter('blocks.registerBlockType', 'extend-cover/attributes', (settings, name) => {
-  // Do nothing if it's another block than our defined ones.
-  if (!['core/cover'].includes(name)) {
-    return settings;
-  }
-
-  settings.attributes = {
-    ...settings.attributes,
-    hMobileMediaID: { type: 'number' },
-    hMobileMediaURL: { type: 'string' },
-    hMobileHeight: { type: 'string', default: '400px' },
-  };
-
-  return settings;
-});
 
 addFilter('editor.BlockEdit', 'extend-cover/edit', addControl);
