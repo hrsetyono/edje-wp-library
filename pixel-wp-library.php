@@ -63,7 +63,7 @@ class Pixel_WP_Library {
    */
   function add_doc_links($links, $file) {
     if ($file === plugin_basename(__FILE__)) {
-      $links[] = '<a target="_blank" rel="noopener noreferrer" href="https://github.com/hrsetyono/edje-wp-library/wiki/"> View Documentation » </a>';
+      $links[] = '<a target="_blank" rel="noopener noreferrer" href="https://github.com/pixelstudio-id/pixel-wp-library/wiki/"> View Documentation » </a>';
     }
 
     return $links;

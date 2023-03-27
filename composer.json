@@ -1,9 +1,9 @@
 {
-  "name": "pixelstudio/edje-wp-library",
-  "description": "Plugin to simplify WordPress complicated functions.",
+  "name": "pixelstudio/pixel-wp-library",
+  "description": "Collection of WordPress modules to be used together with pixel-wp-theme",
   "keywords": ["wordpress", "plugin", "library"],
   "type": "wordpress-plugin",
-  "homepage": "https://github.com/hrsetyono/edje-wp-library/",
+  "homepage": "https://github.com/pixelstudio-id/pixel-wp-library/",
   "authors": [
     {
       "name": "Pixel Studio",
