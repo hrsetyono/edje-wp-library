@@ -1,9 +1,9 @@
 {
-  "name": "edje-wp-library",
+  "name": "pixel-wp-library",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hrsetyono/edje-wp-library.git"
+    "url": "git+https://github.com/pixelstudio-id/pixel-wp-library.git"
   },
   "dependencies": {},
   "devDependencies": {

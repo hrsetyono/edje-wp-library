@@ -2,6 +2,7 @@ screenshot/
 npm-debug.log
 module-web-push/vendor/
 vendor/
+package.lock.json
 
 # Others
 sql/

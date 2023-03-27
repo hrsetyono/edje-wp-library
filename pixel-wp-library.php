@@ -1,20 +1,20 @@
 <?php
 /**
- * Plugin Name: Edje WP Library
- * Description: Simplify WordPress complicated functions. Designed to work with Edje Theme
- * Plugin URI: http://github.com/hrsetyono/edje-wp-library
- * Requires at least: 5.8
+ * Plugin Name: Pixel WP Library
+ * Description: Collection of WordPress modules to be used together with pixel-wp-theme
+ * Plugin URI: http://github.com/pixelstudio-id/pixel-wp-library
+ * Requires at least: 5.9
  * Requires PHP: 7.3
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 9.5.0
+ * Version: 5.9.0
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '9.5.0');
+define('H_VERSION', '5.9.0');
 define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 define('H_DIR', __DIR__); // for require
@@ -22,7 +22,7 @@ define('H_URL', plugin_dir_url(__FILE__)); // for linking assets
 define('H_DIST', plugin_dir_url(__FILE__) . '/dist');
 
 
-if (!class_exists('Edje_WP_Library')):
+if (!class_exists('Pixel_WP_Library')):
 
 require_once 'helper/_index.php';
 
@@ -40,7 +40,7 @@ require_once 'module-block-faq/_index.php';
 require_once 'module-block-icon/_index.php';
 
 
-class Edje_WP_Library {
+class Pixel_WP_Library {
   function __construct() {
     require_once 'activation-hook.php';
     register_activation_hook(H_BASE, [$this, 'register_activation_hook']);
@@ -70,7 +70,7 @@ class Edje_WP_Library {
   }
 }
 
-new Edje_WP_Library();
+new Pixel_WP_Library();
 endif;
 
 

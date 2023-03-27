@@ -1,4 +1,4 @@
-# Edje WordPress Library
+# Pixel WordPress Library
 
 ![Edje Wordpress](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/logo.jpg)
 
