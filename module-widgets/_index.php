@@ -20,6 +20,7 @@ add_action('after_setup_theme', function() {
   
   
   if (is_admin()) {
+    // Reverted the gutenberg widget into classic widget
     add_filter('gutenberg_use_widgets_block_editor', '__return_false');
     add_filter('use_widgets_block_editor', '__return_false');
 
@@ -180,7 +181,6 @@ function _h_load_acf_json_widgets($paths) {
 function _h_enqueue_widget_assets() {
   wp_enqueue_style('h-widgets', H_DIST . '/h-widgets.css', [], H_VERSION);
 }
-
 
 /////
 

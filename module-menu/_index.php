@@ -8,7 +8,7 @@ add_action('after_setup_theme', function() {
 
   add_action('admin_enqueue_scripts', '_h_enqueue_menu_assets', 100);
   add_filter('acf/settings/load_json', '_h_load_acf_json_menu', 20);
-});
+}, 20);
 
 
 /**
