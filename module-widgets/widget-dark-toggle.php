@@ -8,7 +8,7 @@ if (current_theme_supports('h-dark-mode')) {
 }
 
 
-class H_DarkToggle extends H_Widget { 
+class H_WidgetDarkToggle extends H_Widget { 
   function __construct() {
     parent::__construct('h_dark_toggle', __('- Dark Mode Toggle'), [
       'description' => __('Switch between dark/light mode')

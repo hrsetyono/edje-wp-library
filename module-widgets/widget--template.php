@@ -2,9 +2,9 @@
 /**
  * This is a template to create new widget
  */
-class H_WidgetName extends H_Widget { 
+class PX_WidgetName extends PX_Widget { 
   function __construct() {
-    parent::__construct('h_name', __('- Name'), [
+    parent::__construct('px_name', __('- Name'), [
       'description' => __('Short description here')
     ]);
   }
@@ -16,7 +16,7 @@ class H_WidgetName extends H_Widget {
       'acf_field' => get_field('acf_field', $widget_id),
     ];
 
-    $custom_render = apply_filters('h_widget_name', '', $data);
+    $custom_render = apply_filters('px_widget_name', '', $data);
 
     echo $args['before_widget'];
     echo $custom_render ? $custom_render : $this->render_widget($data);

@@ -79,8 +79,7 @@
                             "tumblr": "Tumblr",
                             "twitch": "Twitch",
                             "wechat": "WeChat"
-                        },
-                        "custom": "Custom"
+                        }
                     },
                     "default_value": [],
                     "allow_null": 0,

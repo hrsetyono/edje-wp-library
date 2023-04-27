@@ -1,0 +1,123 @@
+
+///// GROUP
+
+.wp-block.wp-block-group
+  padding-top: var(--space1)
+  padding-bottom: var(--space1)
+
+  &.alignfull
+    padding-left: 0 !important
+    padding-right: 0 !important
+
+  &:not(.has-background)
+    border: 1px dashed var(--grayDark, #888)
+
+  &.has-background.alignfull
+    padding-top: var(--space3)
+    padding-bottom: var(--space3)
+  
+  &.has-background:not(.alignfull)
+    padding: var(--space1)
+    border-radius: var(--gRadius)
+  
+  > *
+    max-width: var(--contentSize, 650px)
+    margin-right: auto
+    margin-left: auto
+
+  > *[data-align="wide"],
+  > .alignwide
+    max-width: var(--wideSize, 1000px)
+
+// Hide the unused control in Group Inspector
+.block-editor-block-variation-transforms + div
+  .block-editor-hooks__toggle-control
+    display: none
+
+  .block-editor-hooks__layout-controls
+    display: none
+
+    ~ p
+      display: none
+
+// Hide the Orientation control in Group Row Inspector
+.block-editor-block-variation-transforms + div
+  [data-wp-component="FlexItem"]:last-child
+    display: none
+
+// Center the [+] box when displaying empty group 
+.wp-block-group[data-type="core/group"] > .block-list-appender
+  margin-right: auto
+  margin-left: auto
+
+
+///// COLUMNS
+
+.wp-block-columns
+  margin-bottom: 0
+
+.wp-block-columns.has-background
+  border-radius: var(--gRadius, 4px)
+
+.wp-block-column.has-background
+  padding: var(--space0)
+  border-radius: var(--gRadius, 4px)
+
+div.wp-block-columns.is-style-h-no-gap
+  column-gap: 0
+  
+  .block-editor-block-list__block.wp-block-column:not(:first-child)
+    margin-left: 0
+
+  .wp-block-column
+    border-radius: 0
+
+div.wp-block-columns.is-style-h-wide-gap
+  column-gap: var(--blockWideGap)
+
+
+///// BUTTON
+
+.wp-block-button-wrapper
+  width: 100%
+
+[data-align="center"] .wp-block-button__inline-link
+  margin-right: auto
+  margin-left: auto
+
+
+ 
+///// SEPARATOR
+
+.wp-block[data-type="core/separator"]
+  // Add padding so it's easier to click
+  padding-top: var(--space-2)
+  padding-bottom: var(--space-2)
+
+  border: none
+  border-top: 2px solid var(--gray)
+  width: 120px
+
+  &.is-style-wide,
+  &.is-style-dots
+    width: auto
+
+  &.is-style-dots
+    letter-spacing: 1.5rem
+
+  &.has-text-color
+    background-color: transparent !important
+    border-color: var(--textColor)
+
+
+///// SPACER
+
+.wp-block-spacer
+  border: 1px dashed var(--gray)
+
+.wp-block-spacer.is-style-h-negative
+  &::before
+    content: ""
+    background: url('./minus.svg') no-repeat center center
+    background-size: 1.5rem auto
+    opacity: .2

@@ -4,7 +4,6 @@
 
 This plugin contains features that we keep using in our client's website. They are:
 
-1. [Custom Post Type](#custom-post-type)
 1. [Custom Table Columns](#custom-table-columns)
 1. [Mega Menu](#mega-menu)
 1. [Header and Footer Builder](#header-and-footer-builder)
@@ -14,36 +13,7 @@ This plugin contains features that we keep using in our client's website. They a
 1. [Comment Editor](#comment-editor)
 1. [Other Features](#other-features)
 
-**Requirement**: PHP 7.3 and WordPress 5.5.
-
------
-
-## Custom Post Type
-
-Read full documentation:
-
-- [Post Type »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Post-Type)
-- [Taxonomy »](https://github.com/hrsetyono/edje-wp-library/wiki/Custom-Taxonomy)
-
-Create custom post type:
-
-```php
-H::register_post_type('product' , [
-  'menu_icon' => 'dashicons-cart',
-  'slug' => 'p',
-  'supports' => ['comments', 'revisions']
-]);
-```
-
-![Edje WordPress - Product Custom Post Type](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-cpt.jpg)
-
-Create custom taxonomy:
-
-```php
-H::register_taxonomy('brand', 'product');
-```
-
-![Edje WordPress - Custom Taxonomy](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/register-tax.jpg)
+**Requirement**: PHP 7.4 and WordPress 6.2.
 
 ## Custom Table Columns
 

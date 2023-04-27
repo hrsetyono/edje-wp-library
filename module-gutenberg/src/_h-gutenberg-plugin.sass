@@ -1,0 +1,209 @@
+
+///// ACF GUTENBERG
+
+.acf-block-body
+  font-family: var(--fontFamily, sans-serif)
+
+  .acf-label,
+  .acf-input p,
+  .acf-label .description,
+  .acf-table
+    font-size: 13px
+
+%acf-wide-field
+  margin-right: -3rem
+  margin-left: -3rem
+
+// ACF Block - styled to be similar to Embed block
+div.acf-block-body .acf-fields
+  display: grid
+  justify-content: center
+  padding: 1.5rem 4.5rem
+  min-height: 200px
+  grid-template-columns: repeat(10, 1fr)
+  grid-column-gap: 1rem
+  grid-row-gap: 1rem
+  border: none
+
+
+  > *
+    width: 100% !important
+    grid-column: span 10
+
+  $widths: ( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 )
+  @each $w in $widths
+    > [data-width^="#{$w}"]
+      grid-column: span #{$w}
+
+  &::after
+    display: none
+
+  select
+    text-transform: capitalize
+
+  // single field
+  div.acf-field
+    padding: 0
+
+// Background color (also change the Embed block color)
+div.acf-block-body .acf-fields,
+div.components-placeholder
+  background-color: $acf-bg
+
+
+// MESSAGE Field
+div.acf-block-body div.acf-field.acf-field-message
+  align-self: flex-end
+  padding: 0.5rem 1rem
+  background-color: rgba(white, .5)
+
+  .acf-label
+    margin: 0
+    text-align: center
+    font-size: 14px
+
+  label
+    cursor: default
+
+  p
+    margin: 0
+    text-align: center
+
+
+// ACF RADIO field
+div.acf-block-body .acf-field-radio
+  .acf-label
+    margin-right: 1rem
+
+  .acf-radio-list
+    margin-bottom: 0
+
+// ACF GALLERY field
+div.acf-block-body
+  .acf-gallery-toolbar ul
+    margin-bottom: 0
+
+  .acf-gallery-main
+    right: 0 !important
+
+  .acf-gallery-side
+    position: absolute
+    z-index: 10
+  
+  .acf-gallery-side-info
+    width: auto
+    margin: -10px -10px 1em
+
+
+// ACF WYSIWYG field
+
+// Remove most buttons in TinyMCE Editor
+div.acf-block-component .acf-field-wysiwyg
+  [aria-label*="Underline"],
+  [aria-label*="Blockquote"],
+  [aria-label*="Strikethrough"],
+  [aria-label*="Align"],
+  [aria-label*="Undo"],
+  [aria-label*="Redo"],
+  [aria-label*="Fullscreen"],
+  [aria-label*="Read More"],
+  [aria-label*="Toolbar Toggle"]
+    display: none
+
+div.acf-block-component .acf-field-wysiwyg .mce-edit-area iframe
+  height: 200px
+
+
+// ACF RELATIONSHIP field
+
+div.acf-block-body .acf-relationship
+  @extend %acf-wide-field
+
+
+// ACF TAB field
+
+div.acf-block-body .acf-fields > .acf-tab-wrap
+  background-color: transparent
+
+  .acf-tab-group
+    margin-right: -4.5rem
+    margin-left: -4.5rem
+    padding-right: 4.5rem
+    padding-left: 4.5rem
+    border-top: none
+    
+    li.active a
+      background-color: $acf-bg
+
+
+// ACF REPEATER field
+
+div.acf-block-body .acf-repeater
+  @extend %acf-wide-field
+
+  .acf-table
+    border-collapse: collapse
+
+  .acf-row-handle
+    background-color: #f9f9f9
+
+  .acf-row-handle.order
+    border-right: 1px solid #dfdfdf
+
+div.acf-block-body .acf-repeater.-block
+  .acf-fields
+    padding: 0.5rem !important
+    border-bottom: 1px solid #dfdfdf
+
+
+div.acf-block-body .acf-repeater.-row
+  .acf-fields
+    grid-row-gap: 0
+  .acf-field
+    padding: 0.5rem
+  .acf-label
+    padding: 0
+  .acf-input
+    padding: 0 0.25rem
+
+
+// ACF FLEXIBLE CONTENT field
+
+div.acf-block-body .acf-flexible-content
+  @extend %acf-wide-field
+
+  .acf-fields
+    background-color: rgba(white, .1)
+
+// fields at sidebar
+div.edit-post-sidebar .acf-block-fields
+  padding-top: 1rem
+  padding-bottom: 1rem
+  margin: 0
+
+  div.acf-field
+    margin: 0
+    margin-bottom: 1rem
+    padding: 0 1rem
+    width: 100% !important
+
+    &.acf-field-message
+      display: none
+
+
+//
+.acf-block-post-list
+  a
+    pointer-events: none
+
+
+//// JETPACK
+
+// Hide the useless form block from selection
+.components-autocomplete__result.components-button
+  &[id*="block-jetpack/contact-form-"]
+    display: none
+
+.block-editor-block-types-list__list-item
+  [class*="editor-block-list-item-jetpack-contact-form-"]
+    opacity: .3

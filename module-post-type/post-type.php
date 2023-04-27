@@ -1,6 +1,8 @@
 <?php
 /**
  * Create CPT (Custom Post Type)
+ * 
+ * @deprecated 6.2.0 - use ACF instead
  */
 class H_PostType {
   private $post_type;

@@ -1,9 +1,7 @@
 <?php
+
 register_block_style('core/gallery', [ 'name' => 'h-slider', 'label' => 'Slider' ]);
 register_block_style('core/gallery', [ 'name' => 'h-thumbnails', 'label' => 'Thumbnails' ]);
-
-register_block_style('core/image', [ 'name' => 'h-thumbnail-wide', 'label' => 'Thumbnail Wide' ]);
-register_block_style('core/image', [ 'name' => 'h-thumbnail-tall', 'label' => 'Thumbnail Tall' ]);
 
 register_block_style('core/media-text', [ 'name' => 'h-larger-image', 'label' => 'Larger Image' ]);
 register_block_style('core/media-text', [ 'name' => 'h-smaller-image', 'label' => 'Smaller Image' ]);

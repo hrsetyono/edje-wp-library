@@ -1,0 +1,103 @@
+
+///// SOCIAL LINKS
+
+[data-type="core/social-links"]
+
+  .editor-block-list__layout
+    flex-wrap: wrap
+
+
+.wp-social-link
+  margin-bottom: 0.5rem
+  border-radius: var(--gRadius, 4px)
+
+  .is-style-pill-shape &
+    border-radius: 20px
+
+///// LATEST POSTS
+
+.edit-post-visual-editor ul.wp-block-latest-posts
+  display: grid
+  grid-template-columns: repeat(var(--postsColumns, 1), 1fr)
+  column-gap: var(--postsGap, 1.5rem)
+  row-gap: var(--postsGap, 1.5rem)
+
+  list-style-type: none
+  padding-left: 0
+  clear: both
+
+  // the top spacing should follow Group sizing
+  &.alignwide,
+  &.alignfull
+    --blockGap: var(--blockWideGap)
+
+  li
+    clear: both
+    width: 100%
+    margin: 0
+
+  a
+    display: block
+    pointer-events: none
+
+  li > a
+    font-family: var(--hFontFamily)
+    font-size: var(--postsFontSize, var(--h5Size))
+
+  &.columns-1
+    --postsColumns: 1
+  &.columns-2
+    --postsColumns: 2
+  &.columns-3
+    --postsColumns: 3
+  &.columns-4
+    --postsColumns: 4
+  &.columns-5
+    --postsColumns: 5
+  &.columns-6
+    --postsColumns: 6
+
+  &.columns-4,
+  &.columns-5,
+  &.columns-6
+    --postsGap: 1rem
+    --postsFontSize: var(--h6Size)
+
+.wp-block-latest-posts__post-author,
+.wp-block-latest-posts__post-date
+  display: inline-block
+  color: var(--gray)
+  font-size: var(--sFontSize)
+
+.wp-block-latest-posts__post-author
+  margin-right: 1rem
+
+.wp-block-latest-posts__featured-image
+  margin-bottom: 0.5rem
+
+  a:hover
+    opacity: .75
+
+  &.alignleft,
+  &.alignright
+    max-width: 50%
+
+    .is-grid &
+      max-width: 40%
+
+  &.alignleft
+    float: left
+    margin-right: 1rem
+
+  &.alignright
+    float: right
+    margin-left: 1rem
+  
+  &.aligncenter,
+  .is-grid &
+    max-width: none
+
+    img
+      width: 100%
+      max-height: 150px
+      object-fit: cover

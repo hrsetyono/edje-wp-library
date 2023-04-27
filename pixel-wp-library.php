@@ -3,18 +3,18 @@
  * Plugin Name: Pixel WP Library
  * Description: Collection of WordPress modules to be used together with pixel-wp-theme
  * Plugin URI: http://github.com/pixelstudio-id/pixel-wp-library
- * Requires at least: 5.9
+ * Requires at least: 6.2
  * Requires PHP: 7.3
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 5.9.1
+ * Version: 6.2.0
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '5.9.1');
+define('H_VERSION', '6.2.0');
 define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 define('H_DIR', __DIR__); // for require
@@ -79,7 +79,7 @@ endif;
 if (!class_exists('H')):
 
 /**
- * Alternate way to call Edje functions from each module's `_load.php`  
+ * Alternate way to call Edje functions from each module's `_load.php`
  * Example: to call `h_register_post_type()`, we can use `H::register_post_type()`
  */
 class H {

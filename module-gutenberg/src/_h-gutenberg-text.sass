@@ -1,0 +1,267 @@
+
+///// PARAGRAPH
+
+.editor-styles-wrapper
+  > *
+    font-family: var(--fontFamily, sans-serif)
+    font-size: var(--fontSize, 16px)
+    font-weight: var(--fontWeight, 400)
+    line-height: var(--lineHeight, 1.65)
+    color: var(--text, #333)
+  
+  p:first-child
+    margin-top: 0
+  p
+    margin-bottom: 0
+
+p.has-drop-cap:first-letter
+  font-size: 6rem
+  line-height: 4.5rem
+
+///// HEADING
+
+.editor-post-title__block .editor-post-title__input,
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6,
+.editor-styles-wrapper .has-drop-cap:not(:focus)::first-letter
+  font-family: var(--hFontFamily, sans-serif)
+  font-weight: var(--hFontWeight, 700)
+  text-transform: var(--hTextTransform, initial)
+  line-height: var(--hLineHeight, 1.25)
+  margin-bottom: 0
+
+.editor-styles-wrapper
+  h1
+    font-size: var(--h1Size, 46px)
+  h2
+    font-size: var(--h2Size, 38px)
+  h3
+    font-size: var(--h3Size, 30px)
+  h4
+    font-size: var(--h4Size, 24px)
+  h5
+    font-size: var(--h5Size, 20px)
+  h6
+    font-size: var(--h6Size, 16px)
+
+div.editor-styles-wrapper [data-type="core/heading"]
+  clear: both
+
+  &:first-child
+    margin-top: 0
+
+  &.has-background
+    padding: var(--space0) var(--space2)
+
+  sub,
+  sup
+    text-transform: uppercase
+    letter-spacing: 0.05em
+    font-size: 50%
+    font-weight: 400
+
+///// LIST
+
+[data-type="core/list"]
+  ol
+    list-style-type: lower-alpha
+
+  &.has-background
+    padding: 1rem 1.5rem
+    padding-left: 2.5rem
+
+
+///// CODE
+
+pre.wp-block-code
+  background-color: rgba(black, 0.05)
+
+  code
+    background-color: transparent
+
+
+///// TABLE
+
+.wp-block-table
+  --tableStripe: #eef2f7
+
+  display: flex
+  flex-direction: column
+  overflow-x: auto
+  margin-top: var(--blockGap)
+  margin-bottom: var(--blockGap)
+
+  table
+    border-collapse: collapse
+    border-spacing: 0
+    color: var(--text)
+
+  thead,
+  tfoot
+    background-color: var(--bgColor, #eef2f7)
+    color: var(--textColor, var(--text))
+    font-weight: 700
+    text-align: left
+
+  thead
+    border-bottom: 2px solid var(--text)
+  tfoot
+    border-top: 2px solid var(--text)
+  tbody
+    background-color: var(--textInvert)
+    color: var(--text)
+
+  th, td
+    padding: var(--space-2) var(--space0)
+    border: 1px solid rgba(black, .5) !important
+
+  &.is-style-h-full-color
+    tbody
+      background-color: var(--bgColor)
+      color: var(--textColor)
+
+  &.is-style-stripes
+    table
+      --tableStripe: rgba(var(--bgColorRGB), .1)
+
+    tbody tr:nth-child(odd)
+      background: var(--textInvert)
+    tbody tr:nth-child(even)
+      background-color: var(--tableStripe)
+
+
+
+///// QUOTE
+
+.wp-block-quote
+  padding: var(--space-2)
+  padding-left: var(--space3)
+  border-left: 3px solid
+
+  &.has-text-align-right
+    border-left: none
+    border-right: 3px solid
+    padding-left: var(--space-2)
+    padding-right: var(--space3)
+
+  &.has-text-align-center
+    border: none
+    padding-top: var(--space0)
+    padding-left: var(--space-2)
+  
+    &::before
+      content: ""
+      position: absolute
+      top: 0
+      width: 100px
+      height: 3px
+      background-color: var(--text)
+      transform: translateX(-50%)
+
+
+  cite
+    margin-top: var(--space0)
+    font-size: var(--sFontSize)
+    opacity: .5
+
+// QUOTE Testimony
+.wp-block-quote.is-style-h-testimony
+  position: relative
+  border: none
+  padding: var(--blockGap)
+  padding-right: var(--blockWideGap)
+  box-shadow: var(--shadowThin)
+
+  &::before
+    content: ""
+    display: inline-block
+    background: url('./quote-right.svg') no-repeat center center
+    background-size: contain
+    opacity: .1
+
+    position: absolute
+    top: var(--blockGap)
+    right: var(--blockGap)
+    width: 2rem
+    height: 2rem
+
+
+  cite
+    font-style: normal
+    color: var(--text)
+
+    strong
+      display: block
+
+    img
+      float: left
+      object-fit: cover
+      object-position: center center
+      max-width: 2.5rem
+      max-height: 2.5rem
+      margin-right: 0.5rem
+      border-radius: 50%
+
+// QUOTE Timeline
+.wp-block-quote.is-style-h-timeline
+  --gap: 2rem
+  --x: 50%
+  --x2: 100%
+
+  position: relative
+  max-width: calc(var(--wideSize) / 2 - var(--gap))
+  transform: translateX(calc(-20% - var(--gap)))
+  
+  border: none
+  padding: var(--blockGap)
+  box-shadow: var(--shadowThin)
+
+  cite
+    position: absolute
+    top: 50%
+    right: calc(-1 * var(--gap))
+    transform: translateY(-50%) translateX(var(--x2))
+    
+    margin-top: 0
+    padding: 0 0.5rem
+    background-color: var(--grayLight)
+    border-radius: var(--gRadius)
+
+    font-size: var(--fontSize)
+    font-weight: 700
+    font-style: normal
+    color: var(--text)
+
+  // Right
+  &.has-text-align-right
+    --x: -50%
+    --x2: -100%
+
+    text-align: left
+    transform: translateX(calc(20% + var(--gap)))
+
+    cite
+      left: calc(-1 * var(--gap))
+      right: auto
+    &::before,
+    &::after
+      left: calc(-1 * var(--gap))
+      right: auto
+
+  // Center
+  &.has-text-align-center
+    transform: none
+    max-width: var(--contentSize)
+
+    cite
+      top: 0
+      left: 50%
+      right: auto
+      transform: translateX(-50%) translateY(-50%)
+
+    &::before
+      display: none

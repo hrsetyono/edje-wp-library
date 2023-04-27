@@ -5,11 +5,13 @@ const { wp } = window;
 
 wp.domReady(() => {
   wp.blocks.unregisterBlockStyle('core/quote', 'plain');
-  wp.blocks.unregisterBlockStyle('core/image', 'rounded');
 
   window.localizeH.disallowedBlocks.forEach((name) => {
     wp.blocks.unregisterBlockType(name);
   });
+
+  // Disable useless Group variation
+  wp.blocks.unregisterBlockVariation('core/group', 'group-stack');
 });
 
 // Modify settings for Core blocks
@@ -27,9 +29,14 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     case 'core/heading':
       settings.supports = {
         ...settings.supports,
-        ...{
-          align: ['wide'],
-        },
+        align: ['wide'],
+      };
+      break;
+
+    case 'core/separator':
+      settings.supports = {
+        ...settings.supports,
+        align: ['wide'],
       };
       break;
 
@@ -38,9 +45,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     case 'core/audio':
       settings.supports = {
         ...settings.supports,
-        ...{
-          align: [],
-        },
+        align: [],
       };
       break;
 
@@ -48,9 +53,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     case 'core/social-links':
       settings.supports = {
         ...settings.supports,
-        ...{
-          align: ['center'],
-        },
+        align: ['center'],
       };
       break;
 
@@ -58,59 +61,155 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     case 'core/columns':
       settings.supports = {
         ...settings.supports,
-        ...{
-          align: ['wide'],
-        },
+        align: ['wide'],
       };
 
       settings.attributes = {
         ...settings.attributes,
-        ...{
-          align: {
-            type: 'string',
-            default: 'wide',
-          },
+        align: {
+          type: 'string',
+          default: 'wide',
         },
+      };
+      break;
+
+    // Remove layout setting in Child Column
+    case 'core/column':
+      settings.supports = {
+        ...settings.supports,
+        __experimentalLayout: false,
       };
       break;
 
     case 'core/button':
       settings.supports = {
         ...settings.supports,
-        ...{
-          __experimentalBorder: false,
-        },
+        __experimentalBorder: false,
       };
       break;
 
-    // Group and Cover defaults to full
+    // Group defaults to full and remove the Justification
     case 'core/group':
-    case 'core/cover':
       settings.supports = {
         ...settings.supports,
-        ...{
-          __experimentalLayout: false,
-          layout: false,
-          spacing: false,
-        },
+        // __experimentalLayout: false,
       };
 
       settings.attributes = {
         ...settings.attributes,
-        ...{
-          align: {
-            type: 'string',
-            default: 'full',
-          },
-          layout: {
-            type: [Object],
-            default: { inherit: true },
-          },
+        align: {
+          type: 'string',
+          default: 'full',
+        },
+        layout: {
+          type: [Object],
+          default: { inherit: true },
+        },
+      };
+      break;
+
+    // Cover defaults to Full
+    case 'core/cover':
+      settings.attributes = {
+        ...settings.attributes,
+        align: {
+          type: 'string',
+          default: 'full',
         },
       };
       break;
 
     default:
+      break;
+  }
+
+  // SPACING SETTINGS
+  if (!settings.supports) {
+    settings.supports = {};
+  }
+
+  switch (name) {
+    // Has both padding and margin
+    case 'core/group':
+    case 'core/columns':
+    case 'core/cover':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          padding: true,
+          margin: true,
+        },
+      };
+      break;
+
+    // Has margin with hidden padding
+    case 'core/paragraph':
+    case 'core/list':
+    case 'core/gallery':
+    case 'core/code':
+    case 'core/verse':
+    case 'core/preformatted':
+    case 'core/table':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        padding: true,
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          margin: true,
+        },
+      };
+      break;
+
+    // Only margin
+    case 'core/heading':
+    case 'core/quote':
+    case 'core/buttons':
+    case 'core/separator':
+    case 'core/image':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        padding: false,
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          margin: true,
+        },
+      };
+      break;
+
+    // Only padding
+    case 'core/column':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        padding: true,
+        margin: false,
+        __experimentalDefaultControls: {
+          padding: true,
+        },
+      };
+      break;
+
+    // Has nothing
+    default:
+      settings.supports = {
+        ...settings.supports,
+        spacing: false,
+      };
+      break;
+  }
+
+  // FONT SIZE Settings
+  switch (name) {
+    case 'core/paragraph':
+    case 'core/list':
+      settings.supports.typography = {
+        ...settings.supports.typography,
+        fontSize: true,
+      };
+      break;
+
+    default:
+      settings.supports.typography = false;
       break;
   }
 

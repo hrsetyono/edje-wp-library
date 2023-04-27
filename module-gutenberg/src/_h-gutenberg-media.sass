@@ -1,0 +1,224 @@
+
+///// IMAGE
+
+.wp-block-image
+  text-align: center // centering the caption
+
+// don't allow image resized beyond 100%
+.wp-block-image .components-resizable-box__container
+  max-width: 100% !important
+
+// fix floating
+div.editor-styles-wrapper
+  .wp-block.alignleft,
+  .wp-block.alignright
+    float: none
+    display: block
+    width: var(--contentSize)
+    margin-right: auto
+    margin-left: auto
+
+  .wp-block.alignleft > *:first-child
+    float: left
+    margin-right: var(--space1)
+
+  .wp-block.alignright > *:first-child
+    float: right
+    margin-left: var(--space1)
+
+.wp-block.alignleft,
+.wp-block.alignright
+  img
+    width: 100%
+
+  .components-resizable-box__container
+    width: 50% !important
+    height: auto !important
+
+  .components-resizable-box__handle
+    display: none
+
+.wp-block.alignleft
+  figcaption
+    text-align: left
+
+.wp-block.alignright
+  figcaption
+    text-align: right
+
+///// MEDIA TEXT
+
+.wp-block-media-text
+  --columnMedia: minmax(0, 1fr)
+  --columnContent: minmax(0, 1fr)
+  grid-template-columns: var(--columnMedia) var(--columnContent) !important
+
+  &.has-media-on-the-right
+    grid-template-columns: var(--columnContent) var(--columnMedia) !important
+
+
+  .components-resizable-box__container.has-show-handle .components-resizable-box__handle
+    display: none
+
+  &.is-style-h-larger-image
+    --columnMedia: 3fr
+    --columnContent: 2fr
+
+  &.is-style-h-smaller-image
+    --columnMedia: 2fr
+    --columnContent: 3fr
+
+
+///// GALLERY
+
+.wp-block-gallery
+  gap: 1rem !important
+
+// if not cropped, put caption below image
+.wp-block-gallery:not(.is-cropped)
+  figure
+    flex-direction: column
+  
+  .blocks-gallery-item figcaption.rich-text
+    position: relative
+    overflow-y: visible
+    margin-top: auto
+    padding-top: var(--space-2)
+    padding-bottom: var(--space-2)
+    background-image: none
+    color: var(--text, #222)
+
+    a
+      color: inherit
+
+// GALLERY Slider
+.wp-block-gallery.is-style-h-slider
+  position: relative
+
+  figure.wp-block-image
+    flex-grow: initial
+
+  &.has-child-selected figure.wp-block-image,
+  &.is-selected figure.wp-block-image,
+  figure.wp-block-image.is-selected
+    display: flex
+
+  figure:nth-child(n+4)
+    display: none
+
+  &::before
+    content: ""
+    position: absolute
+    top: 50%
+    left: -2rem
+    right: -1rem
+    transform: translateY(-50%)
+
+    display: inline-block
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBkPSJNMzQuNTIgMjM5LjAzTDIyOC44NyA0NC42OWM5LjM3LTkuMzcgMjQuNTctOS4zNyAzMy45NCAwbDIyLjY3IDIyLjY3YzkuMzYgOS4zNiA5LjM3IDI0LjUyLjA0IDMzLjlMMTMxLjQ5IDI1NmwxNTQuMDIgMTU0Ljc1YzkuMzQgOS4zOCA5LjMyIDI0LjU0LS4wNCAzMy45bC0yMi42NyAyMi42N2MtOS4zNyA5LjM3LTI0LjU3IDkuMzctMzMuOTQgMEwzNC41MiAyNzIuOTdjLTkuMzctOS4zNy05LjM3LTI0LjU3IDAtMzMuOTR6Ii8+PC9zdmc+) left center no-repeat, url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBkPSJNMjg1LjQ3NiAyNzIuOTcxTDkxLjEzMiA0NjcuMzE0Yy05LjM3MyA5LjM3My0yNC41NjkgOS4zNzMtMzMuOTQxIDBsLTIyLjY2Ny0yMi42NjdjLTkuMzU3LTkuMzU3LTkuMzc1LTI0LjUyMi0uMDQtMzMuOTAxTDE4OC41MDUgMjU2IDM0LjQ4NCAxMDEuMjU1Yy05LjMzNS05LjM3OS05LjMxNy0yNC41NDQuMDQtMzMuOTAxbDIyLjY2Ny0yMi42NjdjOS4zNzMtOS4zNzMgMjQuNTY5LTkuMzczIDMzLjk0MSAwTDI4NS40NzUgMjM5LjAzYzkuMzczIDkuMzcyIDkuMzczIDI0LjU2OC4wMDEgMzMuOTQxeiIvPjwvc3ZnPg==) right center no-repeat
+    pointer-events: none
+    height: 2rem
+
+// GALLERY Thumbnails
+figure.wp-block-gallery.is-style-h-thumbnails
+  display: grid
+  grid-template-columns: repeat(var(--columns, 3), 1fr)
+  column-gap: var(--space0)
+  row-gap: var(--space0)
+
+  .wp-block-image
+    width: 100% !important
+    height: 100%
+    padding-bottom: 75%
+
+  .wp-block-image > div > img
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    height: 100%
+
+  figure.wp-block-image figcaption
+    padding: 1rem
+    text-align: left
+  
+  strong
+    display: block
+    font-size: var(--mFontSize)
+    font-family: var(--hFontFamily)
+
+  .alignwide
+    grid-column: span 2
+    padding-bottom: calc(37.5% - 8px)
+
+  .alignfull
+    grid-row: span 2
+  
+  .blocks-gallery-caption
+    grid-column: span var(--columns, 3)
+
+  &.columns-1
+    --columns: 1
+  &.columns-2
+    --columns: 2
+  &.columns-3
+    --columns: 3
+  &.columns-4
+    --columns: 4
+  &.columns-5
+    --columns: 5
+  &.columns-6
+    --columns: 6
+  &.columns-7
+    --columns: 7
+  &.columns-8
+    --columns: 8
+
+///// COVER
+
+.has-custom-content-position
+  --alignX: center
+  --alignY: center
+
+  &[class*="is-position-top-"]
+    --alignY: flex-start
+
+  &[class*="is-position-bottom-"]
+    --alignY: flex-end
+
+  &[class*="-right"]
+    --alignX: flex-end
+
+  &[class*="-left"]
+    --alignX: flex-start
+
+.wp-block-cover
+  display: flex
+  align-items: stretch !important
+  justify-content: center !important
+
+// Change the custom position to be within --wideSize
+.wp-block-cover .wp-block-cover__inner-container
+  display: flex
+  flex-direction: column
+  align-items: var(--alignX, center)
+  justify-content: var(--alignY, center)
+  width: var(--wideSize, 1120px) !important
+
+  > *
+    width: 100%
+    max-width: var(--contentSize)
+  .alignwide
+    max-width: var(--wideSize)
+
+
+///// FILE
+
+.wp-block-file
+  background-color: rgba(black, .05)
+  padding: 1rem
+
+[data-type="core/file"]
+  .wp-block-file__content-wrapper
+    text-align: center

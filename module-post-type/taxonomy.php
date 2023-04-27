@@ -1,6 +1,8 @@
 <?php
 /**
  * Create Custom Taxonomy
+ * 
+ * @deprecated 6.2.0 - use ACF instead
  */
 class H_Taxonomy {
   private $taxonomy;
