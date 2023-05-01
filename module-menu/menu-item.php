@@ -14,21 +14,27 @@ function _h_mega_menu_classes($items) {
   foreach ($items as &$i) {
     // If parent item, check for mega menu ACF field
     if ($i->menu_item_parent === '0') {
-      $columns = get_field('mega_menu', $i);
-      $alignment = get_field('mega_menu_alignment', $i);
+      $style = get_field('dropdown_style', $i);
+      
+      if ($style === 'mega-menu' || $style === 'horizontal-menu') {  
+        $columns = get_field('dropdown_columns', $i);
+        $alignment = $columns < '4' ? get_field('dropdown_alignment', $i) : '';
 
-      if ($columns) {
-        $i->classes[] = "menu-item-has-mega-menu";
+        $i->classes[] = "{$style}-wrapper";
         $i->classes[] = "has-{$columns}-columns";
-        $i->classes[] = "is-align-{$alignment}";
+        $i->classes[] = $alignment ? "is-align-{$alignment}" : '';
+      }
+
+      if ($style === 'mega-menu') {
         $mega_menu_ids[] = $i->ID;
       }
 
       continue;
     }
-    // Add special class if it's under mega menu
+    // If it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
       $i->classes[] = 'mega-menu__column';
+      $i->url = '';
 
       // remove unnecessary class
       $key = array_search('menu-item', $i->classes);
@@ -65,10 +71,16 @@ function _h_menu_item_classes($items) {
       continue;
     }
 
-    // If title is "-", add empty class so it can be hidden
-    if ($i->title === '-') {
-      $i->title = '&nbsp;';
-      $i->classes[] = 'menu-item-empty-title';
+    // If title is "#" or "-", replace with empty one
+    switch ($i->title) {
+      case '-':
+        $i->title = '';
+        break;
+
+      case '#':
+        $i->title = '&nbsp;';
+        $i->classes[] = 'menu-item-empty-title';
+        break;
     }
 
     // If a child item, change the "menu-item" class into "submenu-item"
@@ -80,10 +92,10 @@ function _h_menu_item_classes($items) {
         $i->classes[$key] = 'submenu-item';
       }
     }
-
+    
     // Add style as extra class
     $styles = get_field('style', $i);
-    
+
     if (is_array($styles)) {
       foreach ($styles as $s) {
         $i->classes[] = "menu-item-$s";

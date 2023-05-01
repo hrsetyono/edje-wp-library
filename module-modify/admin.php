@@ -17,9 +17,6 @@ add_filter('wp_terms_checklist_args', '_h_fixed_position_on_term_checkboxes', 1,
 add_filter('intermediate_image_sizes_advanced', '_h_remove_mediumlarge_size');
 add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
 
-// add_action('admin_bar_menu', '_h_hide_avatar', 0);
-// add_action('admin_bar_menu', '_h_hide_avatar', 10);
-
 
 /**
  * Add CSS and JS to admin area
@@ -53,13 +50,4 @@ function _h_remove_mediumlarge_size($sizes) {
  */
 function _h_remove_wp_logo($wp_admin_bar) {
   $wp_admin_bar->remove_node('wp-logo');
-}
-
-/**
- * Remove gravatar in admin bar (cause it loads slowly)
- * @action admin_bar_menu 0
- * @action admin_bar_menu 10
- */
-function _h_hide_avatar() {
-  add_filter('pre_option_show_avatars', '__return_zero');
 }

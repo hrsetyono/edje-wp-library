@@ -3,33 +3,34 @@
   display: block
 
   .menu-item-depth-0 &,
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .menu-item-depth-1.h-mega-menu__child &
     display: none
 
 // Hide URL in first child of mega menu
 .field-url
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .menu-item-depth-1.h-mega-menu__child &
     display: none
 
-// Hide the mega-menu columns field other than in parent item
-.acf-field[data-name="mega_menu"]
+// Hide the Dropdown Style field other than in parent item
+.acf-field[data-name="dropdown_style"]
   display: none
 
   .menu-item-depth-0 &
     display: block
 
 // The warning that icon for Depth-0 only appear in Offcanvas
-.acf-field.acf-field-message.acf-field-62e0eebd17759
+.acf-field[data-name="icon"] .description
   display: none
 
   .menu-item.menu-item-depth-0 &
     display: block
+    margin-bottom: 0.5rem
 
 // Hide the notice about "Heading" having hidden URL and Description
 .acf-field.acf-field-62e3ca7737ea9
   display: none
 
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .menu-item-depth-1.h-mega-menu__child &
     display: block
 
 // Hide "has image" and "has background" in parent item
@@ -40,27 +41,26 @@
       display: none
 
 // Hide "has image" if not in mega menu
-.menu-item-depth-1,
-.menu-item-depth-2:not(.menu-item-under-mega-menu)
+.menu-item-depth-1.h-mega-menu__child
   .acf-field[data-name="style"] li:nth-child(2)
     display: none
 
 // Hide "has background" if not in mega menu
 .menu-item-depth-2,
-.menu-item-depth-1:not(.menu-item-under-mega-menu)
+.menu-item-depth-1:not(.h-mega-menu__child)
   .acf-field[data-name="style"] li:nth-child(3)
     display: none
 
 // Change the label for mega menu
 .item-type
-  .menu-item-is-mega-menu &,
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .h-mega-menu &,
+  .menu-item-depth-1.h-mega-menu__child &
     font-size: 0
     line-height: 1
   
 .item-type::before
-  .menu-item-is-mega-menu &,
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .h-mega-menu &,
+  .menu-item-depth-1.h-mega-menu__child &
     content: "Mega Menu"
     display: inline-block
     padding: 0.25rem
@@ -70,12 +70,12 @@
     font-size: 12px
     transform: translateY(-2px)
 
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .menu-item-depth-1.h-mega-menu__child &
     content: "Heading"
     border: 1px solid rgba(black, .1)
     background-color: transparent
 
 // Remove the "sub-item" label
 .is-submenu
-  .menu-item-depth-1.menu-item-under-mega-menu &
+  .menu-item-depth-1.h-mega-menu__child &
     display: none !important

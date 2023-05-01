@@ -25,11 +25,24 @@ function _h_render_responsive_cover($content, $block) {
   // If has mobile image
   if (isset($block['attrs']['hMobileMediaURL'])) {
     $image = $block['attrs']['hMobileMediaURL'];
-    $content = preg_replace(
-      '/<img class="wp-block-cover__image.+\/>/Ui',
-      "<picture><source srcset='{$image}' media='(max-width:767px)'>$0</picture>",
-      $content
-    );
+
+    preg_match('/<div role="img"/', $content, $is_fixed);
+
+    // If fixed background
+    if ($is_fixed) {
+      $content = preg_replace(
+        '/(<div role="img".+style=".+)(">)/Ui',
+        "$1;--hMobileMediaURL:url({$image});$2",
+        $content
+      );
+    }
+    else {
+      $content = preg_replace(
+        '/<img class="wp-block-cover__image.+\/>/Ui',
+        "<picture><source srcset='{$image}' media='(max-width:767px)'>$0</picture>",
+        $content
+      );
+    }
   }
 
   // If has mobile height

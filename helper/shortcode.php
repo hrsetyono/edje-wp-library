@@ -21,7 +21,7 @@ function _h_shortcode_button( $atts, $content = null ) {
   }
   // else, make it into do-nothing button
   else {
-    $content = "<a class='button'>" . $content . '</a>';
+    $content = "<span class='button'>" . $content . '</span>';
   }
 
   return $content;
