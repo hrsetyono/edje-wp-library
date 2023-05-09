@@ -54,9 +54,14 @@ function _h_render_group($content, $block) {
     $extra_classes .= "is-content-justification-{$justify} ";
   }
 
+  $valign = $block['attrs']['layout']['verticalAlignment'] ?? '';
+  if ($valign) {
+    $extra_classes .= "is-vertically-aligned-{$valign}";
+  }
+
   if ($extra_classes) {
     $content = preg_replace(
-      '/class="wp-block-group/',
+      '/^.<div class="wp-block-group/Uis',
       "$0 {$extra_classes} ",
       $content
     );

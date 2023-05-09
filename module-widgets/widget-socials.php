@@ -14,7 +14,7 @@ class H_WidgetSocials extends H_Widget {
     $widget_id = 'widget_' . $args['widget_id'];
     $data = [
       'widget_id' => $widget_id,
-      'items' => get_field('links', $widget_id),
+      'links' => get_field('links', $widget_id),
       'style' => get_field('link_style', $widget_id),
       'color' => get_field('color', $widget_id),
       'size' => get_field('size', $widget_id),
@@ -22,23 +22,25 @@ class H_WidgetSocials extends H_Widget {
 
       'before_title' => $args['before_title'],
       'after_title' => $args['after_title'],
-      'title' => trim(get_field('title', $widget_id)),
+      'heading' => trim(get_field('heading', $widget_id)),
     ];
 
     if (empty($data['style'])) {
       $data['style'] = get_field('style', $widget_id);
     }
 
-    $data['items'] = array_map(function($i) {
-      $name = $i['icon'];
-      $icon_data = H::get_social_icon($name);
+    $data['links'] = array_map(function($item) {
+      $name = $item['icon'];
 
-      $i['extra_classes'] = "wp-block-social-link wp-social-link-{$name}";
-      $i['svg'] = $icon_data['svg'];
+      $item['svg'] = $name === 'custom'
+        ? $item['svg_code']
+        : H::get_social_icon($name)['svg'];
+
+      $item['extra_classes'] = "wp-block-social-link wp-social-link-{$name}";
 
       // if link is totally empty
-      if (!is_array($i['link'])) {
-        $i['link'] = [
+      if (!is_array($item['link'])) {
+        $item['link'] = [
           'url' => '',
           'target' => '',
           'title' => '',
@@ -46,16 +48,16 @@ class H_WidgetSocials extends H_Widget {
       }
 
       // create label from link title
-      $label = $i['link']['title'] ?? '';
+      $label = $item['link']['title'] ?? '';
       if ($label) {
-        $i['label'] = H::markdown($label);
-        $i['extra_classes'] .= ' has-label ';
+        $item['label'] = H::markdown($label);
+        $item['extra_classes'] .= ' has-label ';
       } else {
-        $i['label'] = '';
+        $item['label'] = '';
       }
 
-      return $i;
-    }, $data['items']);
+      return $item;
+    }, $data['links']);
 
     $custom_render = apply_filters('h_widget_socials', '', $data);
 
@@ -66,7 +68,7 @@ class H_WidgetSocials extends H_Widget {
 
   function render_widget($data) {
     [
-      'items' => $items,
+      'links' => $links,
       'style' => $style,
       'color' => $color,
       'size' => $size,
@@ -74,7 +76,7 @@ class H_WidgetSocials extends H_Widget {
 
       'before_title' => $before_title,
       'after_title' => $after_title,
-      'title' => $title,
+      'heading' => $heading,
     ] = $data;
     
     $style_class = $style === 'default' ? '' : "";
@@ -84,25 +86,25 @@ class H_WidgetSocials extends H_Widget {
     $extra_classes = "{$style_class} is-style-{$style} has-{$color}-color {$size_class} {$orient_class}";
     ob_start() ?>
 
-    <?php if ($title): ?>
+    <?php if ($heading): ?>
       <?= $before_title ?>
-        <?= $title ?>
-      <?= $after_title ?>  
+        <?= $heading ?>
+      <?= $after_title ?>
     <?php endif; ?>
 
     <ul class="wp-block-social-links <?= $extra_classes ?>">
-      <?php foreach ($items as $i): ?>
-        <li class="wp-social-link <?= $i['extra_classes'] ?>">
+      <?php foreach ($links as $item): ?>
+        <li class="wp-social-link <?= $item['extra_classes'] ?>">
           <a
             class="wp-block-social-link-anchor"
-            href="<?= $i['link']['url'] ?>"
-            target='<?= $i['link']['target'] ?>'
+            href="<?= $item['link']['url'] ?>"
+            target='<?= $item['link']['target'] ?>'
             rel="noopener nofollow"
           >
             <figure class="wp-block-social-link__icon">
-              <?= $i['svg'] ?>
+              <?= $item['svg'] ?>
             </figure>
-            <?= $i['label'] ?>
+            <?= $item['label'] ?>
           </a>
         </li>
       <?php endforeach; ?>

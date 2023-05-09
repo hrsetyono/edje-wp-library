@@ -167,6 +167,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     case 'core/buttons':
     case 'core/separator':
     case 'core/image':
+    case 'core/latest-posts':
       settings.supports.spacing = {
         ...settings.supports.spacing,
         padding: false,

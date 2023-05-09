@@ -4,8 +4,8 @@
     "fields": [
         {
             "key": "field_60ccafd05fe9d",
-            "label": "Title",
-            "name": "title",
+            "label": "Heading",
+            "name": "heading",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -26,7 +26,7 @@
             "label": "Links",
             "name": "links",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "Select icon and enter the link",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -37,12 +37,12 @@
             "collapsed": "",
             "min": 1,
             "max": 0,
-            "layout": "table",
+            "layout": "block",
             "button_label": "+",
             "sub_fields": [
                 {
                     "key": "field_5f1e8544cf034",
-                    "label": "Icon",
+                    "label": "",
                     "name": "icon",
                     "type": "select",
                     "instructions": "",
@@ -79,7 +79,8 @@
                             "tumblr": "Tumblr",
                             "twitch": "Twitch",
                             "wechat": "WeChat"
-                        }
+                        },
+                        "custom": "Custom"
                     },
                     "default_value": [],
                     "allow_null": 0,
@@ -91,7 +92,7 @@
                 },
                 {
                     "key": "field_5f1e857ecf035",
-                    "label": "Link",
+                    "label": "",
                     "name": "link",
                     "type": "link",
                     "instructions": "",
@@ -103,6 +104,35 @@
                         "id": ""
                     },
                     "return_format": "array"
+                },
+                {
+                    "key": "field_64537622f18ea",
+                    "label": "",
+                    "name": "svg_code",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5f1e8544cf034",
+                                "operator": "==",
+                                "value": "custom"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 4,
+                    "placeholder": "Enter SVG Code",
+                    "new_lines": "",
+                    "parent_repeater": "field_5f1e8509cf033"
                 }
             ]
         },

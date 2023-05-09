@@ -198,6 +198,11 @@ figure.wp-block-gallery.is-style-h-thumbnails
   align-items: stretch !important
   justify-content: center !important
 
+  // fix if browser is dark mode, the text inside cover become white by default
+  *:not(.has-text-color)
+    color: var(--text)
+
+
 // Change the custom position to be within --wideSize
 .wp-block-cover .wp-block-cover__inner-container
   display: flex

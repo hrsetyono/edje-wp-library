@@ -26,6 +26,13 @@
   padding-left: 0
   clear: both
 
+  // fix alignwide because it's wrapped by plain <div> that has 650px max-width
+  &.alignwide
+    position: relative
+    left: -36%
+    width: var(--wideSize)
+    max-width: var(--wideSize)
+
   // the top spacing should follow Group sizing
   &.alignwide,
   &.alignfull

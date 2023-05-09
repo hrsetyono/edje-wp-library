@@ -7,6 +7,6 @@ require_once __DIR__ . '/Pagination.php';
 require_once __DIR__ . '/Markdown.php';
 
 
-add_action( 'plugins_loaded' , function() {
+add_action('plugins_loaded' , function() {
   require_once __DIR__ . '/shortcode.php';
-} );
+});

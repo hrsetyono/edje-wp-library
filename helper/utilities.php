@@ -1,6 +1,47 @@
 <?php
 
 /**
+ * Echo a variable. If string, use `<pre> to output without char limit. If object, dump both values and methods.
+ * 
+ * @param mixed $value
+ * @since 6.2.1
+ */
+function px_var_dump($value) {
+  if (is_string($value)) {
+    $string = htmlentities(print_r($value, true));
+    echo "<pre>{$string}</pre>";
+  }
+  elseif (is_object($value)) {
+    var_dump($value);
+    var_dump(get_class_methods($value));
+  }
+  else {
+    var_dump($value);
+  }
+}
+
+/**
+ * Dump all block settings in current post or page
+ * 
+ * @since 6.2.1
+ */
+function px_blocks_dump() {
+  global $post;
+  $blocks = parse_blocks($post->post_content);
+
+  foreach($blocks as $block) {
+    $inner_blocks = $block['innerBlocks'] ?? [];
+    unset($block['innerBlocks']);
+
+    var_dump($block);
+
+    foreach ($inner_blocks as $iblock) {
+      var_dump($iblock);
+    }
+  }
+}
+
+/**
  * Do a GET request.
  * 
  * Usage:  
