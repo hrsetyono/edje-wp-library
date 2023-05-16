@@ -10,24 +10,24 @@
 
 // fix floating
 div.editor-styles-wrapper
-  .wp-block.alignleft,
-  .wp-block.alignright
+  .wp-block-image.alignleft,
+  .wp-block-image.alignright
     float: none
     display: block
     width: var(--contentSize)
     margin-right: auto
     margin-left: auto
 
-  .wp-block.alignleft > *:first-child
+  .wp-block-image.alignleft > *:first-child
     float: left
     margin-right: var(--space1)
 
-  .wp-block.alignright > *:first-child
+  .wp-block-image.alignright > *:first-child
     float: right
     margin-left: var(--space1)
 
-.wp-block.alignleft,
-.wp-block.alignright
+.wp-block-image.alignleft,
+.wp-block-image.alignright
   img
     width: 100%
 
@@ -38,11 +38,11 @@ div.editor-styles-wrapper
   .components-resizable-box__handle
     display: none
 
-.wp-block.alignleft
+.wp-block-image.alignleft
   figcaption
     text-align: left
 
-.wp-block.alignright
+.wp-block-image.alignright
   figcaption
     text-align: right
 
@@ -92,19 +92,33 @@ div.editor-styles-wrapper
       color: inherit
 
 // GALLERY Slider
-.wp-block-gallery.is-style-h-slider
+.wp-block-gallery[class*="-slider"]
   position: relative
 
   figure.wp-block-image
     flex-grow: initial
 
+  &.columns-default
+    figure:nth-child(n+4)
+      display: none
+  &.columns-2
+    figure:nth-child(n+3)
+      display: none
+  &.columns-3
+    figure:nth-child(n+4)
+      display: none
+  &.columns-4
+    figure:nth-child(n+5)
+      display: none
+  &.columns-5
+    figure:nth-child(n+6)
+      display: none
+
   &.has-child-selected figure.wp-block-image,
   &.is-selected figure.wp-block-image,
   figure.wp-block-image.is-selected
     display: flex
-
-  figure:nth-child(n+4)
-    display: none
+  
 
   &::before
     content: ""

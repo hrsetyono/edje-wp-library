@@ -1,1 +1,23 @@
-#dashboard_right_now li[class*=dashicons]::before{padding-right:5px;color:#82878c}#dashboard_right_now li[class*=dashicons] a::before,#dashboard_right_now li[class*=dashicons]>span::before{content:"";padding:0}.tsf-seo-bar-inner-wrap .tsf-tooltip-wrap:nth-child(n+3) .tsf-seo-bar-good{display:none}table.tsf-term-meta~.tsf-term-meta,table.tsf-term-meta~h2{display:none}.acf-field[data-name=head_code] textarea,.acf-field[data-name=footer_code] textarea{font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace}
+#dashboard_right_now li[class*=dashicons]::before {
+  padding-right: 5px;
+  color: #82878c;
+}
+#dashboard_right_now li[class*=dashicons] a::before,
+#dashboard_right_now li[class*=dashicons] > span::before {
+  content: "";
+  padding: 0;
+}
+
+.tsf-seo-bar-inner-wrap .tsf-tooltip-wrap:nth-child(n+3) .tsf-seo-bar-good {
+  display: none;
+}
+
+table.tsf-term-meta ~ .tsf-term-meta,
+table.tsf-term-meta ~ h2 {
+  display: none;
+}
+
+.acf-field[data-name=head_code] textarea,
+.acf-field[data-name=footer_code] textarea {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+}

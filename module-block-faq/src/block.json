@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "px/faq",
+  "title": "FAQ",
+  "category": "layout",
+  "icon": "list-view",
+  "description": "Question with expandable answer",
+  "keywords": [ "faq", "question", "accordion", "answer", "toggle" ],
+  "version": "2.0.0",
+  "textdomain": "px",
+  "attributes": {
+    "question": {
+      "type": "string"
+    },
+    "answer": {
+      "type": "string"
+    },
+    "initiallyOpen": {
+      "type": "boolean",
+      "default": false
+    },
+    "noIndex": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": [ "top", "bottom" ]
+    },
+    "customClassName": false
+  },
+  "styles": [],
+  "example": {},
+  "variations": [],
+  "editorScript": "px-faq",
+  "editorStyle": "px-faq",
+  "render": "file:./render.php"
+}

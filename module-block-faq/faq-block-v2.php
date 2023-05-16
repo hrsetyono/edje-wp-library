@@ -10,64 +10,8 @@ function _h_register_faq_block_v2() {
   wp_register_script('h-faq', H_DIST . '/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true);
   wp_register_style('h-faq', H_DIST . '/h-faq.css', [ 'wp-edit-blocks' ], H_VERSION);
 
-  $default_atts = apply_filters('h_block_faq_defaults', [
-    'question' => [ 'type' => 'string' ],
-    'answer' => [ 'type' => 'string' ],
-
-    'textColor' => [ 'type' => 'string', 'default' => '' ],
-    'bgColor' => [ 'type' => 'string', 'default' => '' ],
-    'initiallyOpen' => [ 'type' => 'boolean', 'default' => false ],
-    'noIndex' => [ 'type' => 'boolean', 'default' => false ]
-  ]);
-
-  wp_localize_script('h-faq', 'hLocalizeFAQ', [
-    'defaultAtts' => $default_atts
-  ]);
-
-  register_block_type('h/faq', [
-    'editor_style' => 'h-faq',
-    'editor_script' => 'h-faq',
-    'render_callback' => function($atts) use ($default_atts) {
-      return _h_render_faq_block($atts, $default_atts);
-    }
-  ]);
+  register_block_type(__DIR__ . '/v2');
 }
-
-
-/**
- * 
- */
-function _h_render_faq_block($atts, $default_atts) {
-  // prevent loading in Editor screen
-  if (function_exists('get_current_screen')) { return; }
-
-  $default_values = array_map(function($a) {
-    return $a['default'] ?? '';
-  }, $default_atts);
-
-  $atts = wp_parse_args($atts, $default_values);
-
-  // Take over the rendering process, if any
-  $render = apply_filters('h_block_faq_render', '', $atts);
-  if ($render) {
-    return $render;
-  }
-
-  $extra_classes = $atts['className'] ?? '';
-  $extra_classes .= $atts['noIndex'] ? ' --noindex ' : ' ';
-
-  $is_open = $atts['initiallyOpen'] ? 'open ' : '';
-
-  $style = '';
-  $style .= $atts['textColor'] ? "--textColor: {$atts['textColor']};" : '';
-  $style .= $atts['bgColor'] ? "--bgColor: {$atts['bgColor']};" : '';
-
-  return "<details class='wp-block-h-faq {$extra_classes}' style='{$style}' {$is_open}>
-    <summary class='wp-block-h-faq__question'>{$atts['question']}</summary>
-    <div class='wp-block-h-faq__answer'>{$atts['answer']}</div>
-  </details>";
-}
-
 
 /**
  * Scrap the content for H-FAQ block and format its data as JSON LD

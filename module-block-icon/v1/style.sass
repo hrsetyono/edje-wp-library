@@ -1,0 +1,137 @@
+/**
+ * Note that these styles are loaded *before* editor styles, so that
+ * editor-specific styles using the same selectors will take precedence.
+ */
+.wp-block-h-icon
+  --iconSize: 60px
+  --iconPadding: 1rem
+
+  display: flex
+  align-items: flex-start
+
+  color: var(--textColor, inherit)
+  border-radius: 4px
+
+  &.is-style-boxed
+    --iconPadding: 0
+    --iconSize: 28px
+
+    padding: 1.25rem
+    background-color: var(--bgColor, #e5e5e5)
+
+  &:not(.is-style-boxed)
+    background-color: transparent
+
+  
+  // toolbar option
+  &.has-icon-position-left
+    figure
+      margin-right: 1rem
+
+  &.has-icon-position-right
+    figure
+      order: 1
+      margin-left: 1rem
+
+  &.has-icon-position-top
+    flex-wrap: wrap
+
+    figure
+      margin-bottom: 0.5rem
+    dl
+      flex: auto
+
+  &.has-text-align-center
+    justify-content: center
+
+  &.has-text-align-right
+    justify-content: flex-end
+
+  &.has-no-description
+    align-items: center
+
+
+// Figure
+.wp-block-h-icon__figure
+  display: flex
+  align-items: center
+  justify-content: center
+
+  min-width: var(--iconSize)
+  max-width: var(--iconSize)
+  width: var(--iconSize)
+  height: var(--iconSize)
+  margin: 0
+  padding: var(--iconPadding)
+  background-color: var(--bgColor, #e5e5e5)
+  border-radius: 50%
+
+  .is-style-boxed &
+    background-color: transparent
+
+  .use-image &
+    --iconSize: 60px
+    padding: 0
+    background-color: transparent
+
+  path,
+  rect
+    fill: var(--iconColor, currentColor)
+
+  svg
+    max-width: 100%
+    max-height: 100%
+
+
+// Content
+.wp-block-h-icon__content
+  flex: 1
+  width: 100%
+  margin: 0
+
+  // Hide the description if empty
+  .has-no-description &
+    dd
+      display: none
+
+      // Show the hidden description when block is selected
+      .wp-block.is-selected &
+        display: block
+
+  dt, dd, dd p
+    margin: 0
+  dt
+    font-family: var(--hFontFamily)
+    font-weight: 700
+    font-size: 1.5rem
+    line-height: 1
+  dd
+    margin-top: 0.5rem
+  dd p + p
+    margin-top: 0.5rem
+
+///// INSPECTOR
+
+.h-icon-control
+  display: flex
+  align-items: center
+  margin-bottom: 1rem
+
+  .h-svg-inline
+    display: flex
+    align-items: center
+    justify-content: center
+    border: 1px solid rgba(black, .2)
+    width: 60px
+    height: 60px
+    padding: 0.5rem
+    margin-left: 1rem
+    border-radius: var(--gRadius)
+
+    svg
+      width: 75%
+
+
+.wp-block-h-icon__image-preview
+  max-height: 200px
+  max-width: 100%

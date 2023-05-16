@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "h/faq",
+  "title": "FAQ",
+  "category": "layout",
+  "icon": "list-view",
+  "description": "Question with expandable answer",
+  "keywords": [ "faq", "question", "accordion", "answer", "toggle" ],
+  "version": "2.0.0",
+  "textdomain": "h",
+  "attributes": {
+    "question": {
+      "type": "string"
+    },
+    "answer": {
+      "type": "string"
+    },
+    "textColor": {
+      "type": "string",
+      "default": ""
+    },
+    "bgColor": {
+      "type": "string",
+      "default": ""
+    },
+    "initiallyOpen": {
+      "type": "boolean",
+      "default": false
+    },
+    "noIndex": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "styles": [],
+  "example": {},
+  "variations": [],
+  "editorScript": "h-faq",
+  "editorStyle": "h-faq",
+  "render": "file:./render.php"
+}

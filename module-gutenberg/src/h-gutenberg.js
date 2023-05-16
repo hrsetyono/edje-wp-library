@@ -143,7 +143,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
       };
       break;
 
-    // Has margin with hidden padding
+    // Has hidden margin and padding
     case 'core/paragraph':
     case 'core/list':
     case 'core/gallery':
@@ -155,9 +155,9 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
         ...settings.supports.spacing,
         padding: true,
         margin: ['top', 'bottom'],
-        __experimentalDefaultControls: {
-          margin: true,
-        },
+        // __experimentalDefaultControls: {
+        //   margin: true,
+        // },
       };
       break;
 
@@ -172,9 +172,9 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
         ...settings.supports.spacing,
         padding: false,
         margin: ['top', 'bottom'],
-        __experimentalDefaultControls: {
-          margin: true,
-        },
+        // __experimentalDefaultControls: {
+        //   margin: true,
+        // },
       };
       break;
 
@@ -184,18 +184,14 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
         ...settings.supports.spacing,
         padding: true,
         margin: false,
-        __experimentalDefaultControls: {
-          padding: true,
-        },
+        // __experimentalDefaultControls: {
+        //   padding: true,
+        // },
       };
       break;
 
-    // Has nothing
     default:
-      settings.supports = {
-        ...settings.supports,
-        spacing: false,
-      };
+      // do nothing
       break;
   }
 

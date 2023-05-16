@@ -1,11 +1,15 @@
-import { RichText,
+import {
+  useBlockProps,
+  RichText,
   InspectorControls,
   PanelColorSettings } from '@wordpress/block-editor';
-import { ToggleControl,
+import {
+  ToggleControl,
   PanelBody } from '@wordpress/components';
 
-export default function ( props ) {
+export default function (props) {
   let atts = props.attributes;
+  const blockProps = useBlockProps();
 
   return (<>
     <InspectorControls>
@@ -49,11 +53,13 @@ export default function ( props ) {
         ] } />
     </InspectorControls>
 
-    <div className={ props.className }
-      open={ atts.initiallyOpen }
-      style={ {
+    <div
+      {...blockProps}
+      open={atts.initiallyOpen}
+      style={{
         '--textColor': atts.textColor, '--bgColor': atts.bgColor
-      } }>
+      }}
+    >
 
       <RichText tagName='h4'
         className='wp-block-h-faq__question'

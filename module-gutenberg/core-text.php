@@ -20,11 +20,11 @@ function _px_render_rowspan_colspan($content, $block) {
 
   if ($has_span) {
     $content = preg_replace(
-      '/<td>\[(row|col)span\s(\d+)\]<br>/Ui',
-      '<td $1span="$2">',
+      '/<td(.*)>\[(row|col)span\s(\d+)\]<br>/Ui',
+      '<td $1 $2span="$3">',
       $content
     );
-    $content = preg_replace('/<td><\/td>/Ui', '', $content);
+    $content = preg_replace('/<td[^<]*><\/td>/Ui', '', $content);
   }
 
   return $content;

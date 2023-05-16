@@ -1,0 +1,79 @@
+// CSS for FAQ Editor
+// This loads before the block's CSS
+
+.editor-styles-wrapper div.wp-block-px-faq
+  position: relative
+  border: 2px solid var(--bgColor, var(--grayLight))
+  border-radius: var(--gRadius)
+  background-color: var(--siteBg) !important
+
+  .wp-block
+    margin-top: 0
+    p
+      margin: 0
+
+  .dashicons-before
+    cursor: pointer
+    position: absolute
+    top: 0.75rem
+    right: 0.75rem
+    padding: 0.25rem
+    width: 1.75rem
+    height: 1.75rem
+
+    color: var(--textColor, var(--text))
+    border-radius: var(--gRadius)
+
+    &:hover
+      background-color: var(--textColor, var(--text))
+      color: var(--bgColor, var(--grayLight))
+    &:active
+      transition: none
+      transform: translateY(1px)
+
+  
+
+
+.wp-block-px-faq .rich-text.px-block-faq__question
+  margin-top: 0
+  margin-bottom: 0
+  padding: 0.75rem
+  background-color: var(--bgColor, var(--grayLight))
+  font-weight: 400
+  font-size: 1rem
+  color: var(--textColor, var(--text))
+
+  &::before
+    content: "+"
+    display: inline-block
+    font-family: monospace
+    margin-right: 1rem
+
+  .is-selected &,
+  .is-typing &,
+  .has-child-selected &,
+  [open] &
+
+    &::before
+      content: "-"
+
+
+div.px-block-faq__answer
+  overflow: hidden
+  visibility: hidden
+  height: 0
+  font-size: 0.875rem
+  color: var(--text)
+
+  [data-type="px/faq"].is-selected &,
+  [data-type="px/faq"].is-typing &,
+  [data-type="px/faq"].has-child-selected &,
+  [open] &
+    visibility: visible
+    height: auto
+    padding: 1.5rem
+
+  p
+    margin: 0
+  p + p
+    margin-top: 0.5rem

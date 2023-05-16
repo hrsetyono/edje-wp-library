@@ -2,7 +2,7 @@
  * Note that these styles are loaded *before* editor styles, so that
  * editor-specific styles using the same selectors will take precedence.
  */
-.wp-block-h-icon
+div.px-block-icon
   --iconSize: 60px
   --iconPadding: 1rem
 
@@ -41,18 +41,30 @@
     dl
       flex: auto
 
-  &.has-text-align-center
+.editor-styles-wrapper div.px-block-icon
+  &.alignright,
+  &.alignleft
+    float: none
+    margin-right: auto
+    margin-left: auto
+  
+  &.aligncenter
     justify-content: center
+    text-align: center
 
-  &.has-text-align-right
+  &.alignright
     justify-content: flex-end
+    text-align: right
+  
+  &.alignleft
+    text-align: left
 
   &.has-no-description
     align-items: center
 
 
 // Figure
-.wp-block-h-icon__figure
+.px-block-icon__figure
   display: flex
   align-items: center
   justify-content: center
@@ -84,7 +96,7 @@
 
 
 // Content
-.wp-block-h-icon__content
+.px-block-icon__content
   flex: 1
   width: 100%
   margin: 0
@@ -94,9 +106,10 @@
     dd
       display: none
 
-      // Show the hidden description when block is selected
-      .wp-block.is-selected &
-        display: block
+  // Show the hidden description when block is selected
+  .wp-block.is-selected &
+    dd
+      display: block
 
   dt, dd, dd p
     margin: 0
@@ -112,12 +125,12 @@
 
 ///// INSPECTOR
 
-.h-icon-control
+.px-icon-control
   display: flex
   align-items: center
   margin-bottom: 1rem
 
-  .h-svg-inline
+  .px-svg-inline
     display: flex
     align-items: center
     justify-content: center
@@ -132,6 +145,6 @@
       width: 75%
 
 
-.wp-block-h-icon__image-preview
+.px-block-icon__image-preview
   max-height: 200px
   max-width: 100%
