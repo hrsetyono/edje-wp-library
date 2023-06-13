@@ -8,18 +8,18 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.2.2
+ * Version: 6.2.3
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '6.2.2');
+define('H_VERSION', '6.2.3');
 define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 define('H_DIR', __DIR__); // for require
 define('H_URL', plugin_dir_url(__FILE__)); // for linking assets
-define('H_DIST', plugin_dir_url(__FILE__) . '/dist');
+define('H_DIST', plugin_dir_url(__FILE__) . 'dist');
 
 
 if (!class_exists('Pixel_WP_Library')):
@@ -38,6 +38,9 @@ require_once 'module-menu/_index.php';
 require_once 'module-gutenberg/_index.php';
 require_once 'module-block-faq/_index.php';
 require_once 'module-block-icon/_index.php';
+require_once 'module-block-icon/_index.php';
+require_once 'module-classic-quote/index.php';
+require_once 'module-classic-list/index.php';
 
 
 class Pixel_WP_Library {
