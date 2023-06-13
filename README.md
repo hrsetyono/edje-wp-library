@@ -1,6 +1,6 @@
 # Pixel WordPress Library
 
-![Edje Wordpress](https://raw.github.com/hrsetyono/cdn/master/edje-wp-library/logo.jpg)
+This repo has been moved to https://github.com/pixelstudio-id/pixel-wp-library in order to fix the versioning.
 
 This plugin contains features that we keep using in our client's website. They are:
 
@@ -114,3 +114,5 @@ All these features are enabled by default:
 - Changed the login error message to "Sorry, your username or password is wrong" instead of giving hint of which one is wrong.
 - Changed the Wordpress logo in login page to the one you have set in Customizer > Site Identity.
 - Added `H::markdown($text)` function to parse markdown text.
+=======
+We are planning to follow WordPress version. So if our plugin version is 5.9.x that means it's for WP 5.9
